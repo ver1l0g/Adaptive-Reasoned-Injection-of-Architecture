@@ -1,0 +1,5 @@
+﻿=== CIFAR gray 5k: baseline vs patch-pooling A/B ===
+baseline (linear only) : 1.91909
+patch-pooling (gpnn3)  : 1.91909
+PATCH_POOLING commits  : 0
+same data/seed (bench_cifar_gray_5k.csv, seed 1)

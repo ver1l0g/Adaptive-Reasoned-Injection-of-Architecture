@@ -1,0 +1,5 @@
+LogisticRegression 5-fold CV accuracy: 0.925 +/- 0.027
+LogisticRegression 80/20 test accuracy: 0.975
+LogisticRegression 80/20 test BCE: 0.1008
+
+GP-NN target: BCE < 0.1008

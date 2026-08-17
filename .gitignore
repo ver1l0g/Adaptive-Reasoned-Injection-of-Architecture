@@ -1,0 +1,51 @@
+# ===== Build artifacts =====
+*.exe
+*.o
+*.obj
+build_err.txt
+
+# ===== Generated datasets (reproducible via problems/prepare_*.py) =====
+problems/*.csv
+problems/bench_*.csv
+problems/feynman/
+problems/korns/
+problems/tinyshakespeare.txt
+problems/cifar10/
+problems/cifar-10-batches-py/
+problems/*.tar.gz
+problems/*.tgz
+problems/cifar_test.bin
+
+# ===== Run outputs / logs / scratch =====
+problems/__pycache__/
+problems/bg_*
+problems/*_stdout.txt
+problems/*_stderr.txt
+problems/*_pid.txt
+problems/*_crash_*.txt
+problems/*_run.txt
+problems/lm_*_run.txt
+problems/temporal_*_run.txt
+problems/feynman_run_*.txt
+problems/korns_run_*.txt
+problems/*_log.txt
+problems/digits_output/
+problems/digits_s1_log.txt
+problems/digits_d6_log.txt
+problems/monitor_*.txt
+problems/OFFLINE_*.txt
+problems/watcher_done.txt
+problems/multiseed_results*.csv
+problems/feynman_results*.csv
+problems/korns_results*.csv
+
+# NOTE: cifar_ab_report.txt, cifar_gen_report.txt, baseline_results.txt are
+# deliberately TRACKED (small experiment records).
+
+# ===== Persistent-but-regenerable state =====
+subgraph_library.txt
+problems/subgraph_library.txt
+problems/checkpoints/
+
+# Keep test binary ignored too
+problems/tests/*.exe

@@ -1,0 +1,360 @@
+================================================================================
+  GP-NN Evolutionary Graph Training System — Design & Implementation Plan
+================================================================================
+
+Last updated: 2026-08-09
+Status: Phase 1–2 core working (bugs fixed), Phase 3–7 implemented, SGD verified.
+
+--------------------------------------------------------------------------------
+ARCHITECTURE OVERVIEW
+--------------------------------------------------------------------------------
+
+  main.cpp
+    └── EvolutionEngine::evolve()          [evolution.cpp ~line 224]
+          ├── Phase 1: evaluate_loss()     [evolution.cpp:136]
+          ├── Phase 2: train_parameters()  [evolution.cpp:189]
+          │     └── Graph::train()         [graph.cpp:505]
+          ├── Phase 3: diagnose()          [evolution.cpp:306]
+          │     └── compute_targets()      [evolution.cpp:367]
+          ├── Phase 4: search_blackboard() [evolution.cpp:399]
+          ├── Phase 5: form_hypothesis()   [evolution.cpp:437]
+          │     └── apply_shadow_routing() [evolution.cpp:496]
+          ├── Phase 6: compile()           [evolution.cpp:1010]
+          │     ├── graph_eliminate_dead_code()  [evolution.cpp:830]
+          │     ├── graph_fold_constants()       [evolution.cpp:852]
+          │     └── graph_compress_neurons()     [evolution.cpp:912]
+          └── Phase 7: validate_and_commit()     [evolution.cpp:970]
+
+  Supporting:
+    Graph::clone()                         [graph.cpp:425]
+    Graph::compute_importance()            [graph.cpp:425]
+    Graph::compute_error_attribution()     [graph.cpp:885]
+    Graph::search_improvements()           [graph.cpp:985]  (standalone utility)
+    serialize_graph() / deserialize_graph() [serialize.cpp]
+
+--------------------------------------------------------------------------------
+PHASE 1 — Execution & Evaluation (Forward Pass)
+--------------------------------------------------------------------------------
+
+  Concept:
+    Pass a batch of data through the current graph via strict dataflow.
+    Nodes fire only when all active input ports are satisfied. IF/IFELSE
+    gate inactive branches. ABSENT nodes route around missing data.
+    Final OUTPUT is scored against the dataset (MSE or BCE).
+
+  Implementation:  COMPLETE
+
+    Graph::execute()              graph.cpp:185–360
+      Wavefront propagation with dirty-flag incremental execution.
+      Clean nodes skip re-execution. Sources (INPUT/CONSTANT) seed
+      the ready queue. BFS through outgoing adjacency. After each
+      execute(), saves output into Connection::delay_buffer for
+      recurrent connections (truncated BPTT, k=1).
+
+    EvolutionEngine::evaluate_loss()  evolution.cpp:136–183
+      Feeds all training samples, measures MSE or BCE loss.
+      BCE: applies sigmoid to raw output (consistent with train()).
+      Populates blackboard_registry_ with per-sample node outputs.
+
+    NodeType::IF / IFELSE / ABSENT  node.cpp
+      Full implementation for all gating and fault-tolerance nodes.
+
+  Gaps:
+    - No per-sample branch-usage tracking on IFELSE (would improve
+      Phase 3 dead-branch detection).
+    - Successfully tested on linear regression (test_linear.csv):
+      loss 9.88 → 2.53 after 200 SGD iterations on single NEURON.
+      Single-NEURON tanh output is bounded to [-1,1]; targets are
+      [0.5,4.1], so loss floor is expected. Multi-neuron evolution
+      should resolve this.
+
+--------------------------------------------------------------------------------
+PHASE 2 — Micro-Evolution (Parameter Tuning)
+--------------------------------------------------------------------------------
+
+  Concept:
+    Before altering structure, maximize the current architecture via
+    gradient descent. Backpropagation flows backward from OUTPUT.
+    Gradients update NEURON weights/biases and CONSTANT values.
+    Runs until plateau, then triggers structural evolution.
+
+  Implementation:  COMPLETE
+
+    EvolutionEngine::train_parameters()  evolution.cpp:189–221
+      Orchestrates SGD + plateau detection.
+
+    Graph::train()                       graph.cpp:505–880
+      Batched SGD with momentum, weight decay, gradient clipping.
+      Collects trainable nodes once. Runs all samples forward
+      (capturing per-node outputs), then ONE batched backward pass
+      through reverse topological order, processing all samples
+      per node for L1 cache locality.
+
+      Weight update:  vel = mu*vel + avg_grad + wd*weight
+                       weight -= lr * vel
+
+      Gradient propagation through all 25+ node types:
+        NEURON     → dtanh = 1-out^2, chain rule through weights
+        CONSTANT   → accumulate gradient directly
+        ADD/SUB/MUL/DIV/NEG  → exact analytic gradients
+        RELU       → (x>0 ? 1 : 0)
+        SIGMOID    → out*(1-out)
+        TANH       → 1-out^2
+        IF/IFELSE/EQUAL/GREATER/LESS → save/restore per-sample state, STE
+
+      Gradient seeding at OUTPUT:
+        BCE:  stores sigmoid(raw), seed grad = sig_out - target
+        MSE:  stores raw, seed grad = raw - target
+
+    Bugs fixed:
+      - Backward pass iterated forward topological order instead of
+        reverse. rev_order was [NEURON, OUTPUT]; NEURON processed first
+        with zero gradient (skipped), then OUTPUT add_grad wrote to
+        NEURON — but NEURON was already processed. Fixed by iterating
+        rev_order.rbegin() → rend(). (graph.cpp:788)
+      - Double-tanh: ensure_minimal_architecture created INPUT → NEURON
+        → TANH → OUTPUT, but NEURON::execute() already applies tanh()
+        internally. Fixed: removed TANH, now INPUT → NEURON → OUTPUT.
+        (evolution.cpp:~120)
+      - BCE inconsistency: train() stores sigmoid and seeds sig_out-target,
+        but evaluate_loss/validate_and_commit used raw pred with BCE
+        formula. Fixed: added sigmoid before BCE in both. (evolution.cpp)
+
+  Gaps:
+    - No adaptive learning rate (Adam/RMSProp/ReduceLROnPlateau).
+    - No early stopping within the SGD phase; always runs full
+      sgd_epochs_per_phase (default 10).
+
+--------------------------------------------------------------------------------
+PHASE 3 — Diagnosis & Target Propagation (Finding the Gap)
+--------------------------------------------------------------------------------
+
+  Concept:
+    Analyze the stabilized graph to isolate the exact source of failure.
+    Graph Profiler flags nodes with high error variance, dead branches,
+    or constant outputs. Semantic target propagation works backward from
+    OUTPUT to calculate the exact values a failing node should have
+    produced. Creates a mini-dataset of (local-inputs → perfect-target).
+
+  Implementation:  COMPLETE (basic)
+
+    EvolutionEngine::diagnose()           evolution.cpp:306–362
+      1. Dead-branch detection: checks IFELSE output 0 near zero.
+      2. Constant-output detection: via blackboard_registry_ variance
+         across samples (threshold 0.001).
+      3. Blame analysis: delegates to Graph::compute_error_attribution().
+      4. For failing nodes: calls compute_targets(), builds mini-dataset.
+
+    Graph::compute_error_attribution()    graph.cpp:885–985
+      Perturbation-based per-blame. Perturbs each candidate node's
+      output by epsilon, re-executes graph, measures MSE delta.
+      Positive blame = node is helping. Negative = problem node.
+      Supports candidate subsampling with seed.
+
+    EvolutionEngine::compute_targets()    evolution.cpp:367–392
+      For each failing node: target_val = current_out - lr * error / importance.
+      Uses Graph::compute_importance() for gradient-based importance.
+      Records (local_inputs → target_val) for each sample.
+
+  Gaps:
+    - Dead-branch detection is a simplistic one-liner heuristic
+      (checking if IFELSE out0 ≈ 0), not per-sample branch-usage
+      tracking as the plan implies.
+    - No "Graph Profiler" as a distinct component; diagnosis is inline.
+    - No explicit analysis of error variance per node.
+    - No detection of "high error variance" as a separate signal from
+      perturbation-based blame.
+
+--------------------------------------------------------------------------------
+PHASE 4 — Pattern & Context Search (The Hypothesis / Blackboard)
+--------------------------------------------------------------------------------
+
+  Concept:
+    Local Check: can the current local inputs be mapped to the target
+    (linear offset? boolean boundary? non-linear curve?).
+    Global Check: search the Blackboard (registry of all raw INPUT nodes
+    and stable subgraph outputs) for correlated signals that provide
+    the missing context.
+
+  Implementation:  PARTIAL
+
+    EvolutionEngine::search_blackboard()  evolution.cpp:399–432
+      Computes absolute Pearson correlation between the target vector
+      and every signal in blackboard_registry_ (excluding self and
+      OUTPUT nodes). Returns top-N by |r| descending (default 20).
+      Distinguishes INPUT nodes from internal nodes.
+
+    EvolutionEngine::pearson_correlation() evolution.cpp:395–412
+      Standard cov(a,b) / sqrt(var(a)*var(b)) with zero-division guard.
+
+  Gaps:
+    - "Local Check" is entirely absent. The system cannot determine
+      whether a failure is a linear offset, boolean boundary, or
+      non-linear curve. It defers to Phase 5's form_hypothesis(), which
+      tries strategies in priority order regardless of the actual
+      nature of the failure.
+    - No explicit linear-offset detection (target - current_output
+      is constant?).
+    - No explicit boolean-boundary detection (all failing samples
+      share a condition like input_X < threshold?).
+    - No "can local inputs solve this?" check to decide between
+      NEURON injection (local solution) vs. CONTEXT_WIRE (needs
+      external data).
+
+--------------------------------------------------------------------------------
+PHASE 5 — Reasoned Assembly (Shadow Routing)
+--------------------------------------------------------------------------------
+
+  Concept:
+    Inject new nodes based on the Phase 4 hypothesis. All changes are
+    applied non-destructively to a cloned graph. Three strategies:
+      IFELSE_BOUNDARY_SPLIT → bimodal error, gated by condition
+      NEURON_TANH_INJECTION  → non-linear mapping needed
+      CONTEXT_WIRE          → missing correlated external signal
+
+  Implementation:  COMPLETE (single-hypothesis)
+
+    EvolutionEngine::form_hypothesis()    evolution.cpp:437–490
+      Priority order: CONTEXT_WIRE (|r|>0.5) > IFELSE (non-constant) >
+      NEURON_TANH (default fallback). Returns exactly one hypothesis.
+
+    EvolutionEngine::apply_shadow_routing()  evolution.cpp:496–750
+      Clones graph via Graph::clone(), applies structural modification:
+
+      CONTEXT_WIRE (501–530):
+        Wire from highly-correlated Blackboard signal to failing node.
+        Auto-expands NEURON input ports; replaces port 0 for fixed-
+        input-count nodes.
+
+      NEURON_TANH_INJECTION (532–560):
+        Insert NEURON → TANH chain after failing node. All outgoing
+        connections rewired from TANH instead.
+
+      IFELSE_BOUNDARY_SPLIT (562–610):
+        Create GREATER(failing_node, condition_source) → IFELSE.
+        Original downstream on TRUE branch, CONSTANT(0) on FALSE branch.
+        Note: plan mentions LESS; implementation uses GREATER. Both
+        accomplish the same bimodal split. Threshold uses median of
+        target values.
+
+  Gaps:
+    - Single hypothesis per diagnosis. If Phase 7 rejects it, the
+      system does not retry with the next-best strategy for the same
+      failure — it just moves to the next diagnosis.
+    - No hypothesis probability scoring; strategy selection is
+      deterministic.
+    - No multi-hypothesis queue within a single cycle.
+
+--------------------------------------------------------------------------------
+PHASE 6 — Graph Compilation (Distillation)
+--------------------------------------------------------------------------------
+
+  Concept:
+    Aggressively prune to prevent bloat and maintain interpretability.
+      Dead Code Elimination: remove nodes unreachable from any OUTPUT.
+      Constant Folding: collapse static arithmetic into CONSTANT nodes.
+      Neural Compression: merge sequential NEURON pairs via matrix
+      multiplication (blocked if SIGMOID/RELU/TANH sits between them).
+
+  Implementation:  COMPLETE
+
+    EvolutionEngine::compile()            evolution.cpp:1010–1018
+      Runs all 3 passes in sequence. Controlled by compile_enabled and
+      compile_interval (default: every 10 epochs).
+
+    graph_eliminate_dead_code()           evolution.cpp:830–850
+      Uses Graph::compute_reachable_ids() (backward BFS from OUTPUT).
+      Removes any non-INPUT node not in the reachable set.
+
+    graph_fold_constants()                evolution.cpp:852–910
+      Iterative: finds nodes whose transitive inputs are all CONSTANT,
+      executes graph, captures output, replaces node with CONSTANT.
+      Continues until no more folds are possible.
+
+    graph_compress_neurons()              evolution.cpp:912–1010
+      Finds adjacent NEURON → NEURON pairs. Merges weights via:
+        w_dst_new[j] = w_dst[j]  (for j where pred is not source)
+        w_dst_new[j] = w_dst[j] + w_dst_src * w_src_i  (source port)
+        bias_dst_new = bias_dst + w_dst_src * bias_src
+      Removes source NEURON. Chains >2 handled iteratively.
+
+  Gaps:
+    - Shadow graphs are not compiled before Phase 7 validation. This
+      could unfairly penalize structural additions that add bloat.
+    - No explicit multi-node neural chain detection before compression.
+
+--------------------------------------------------------------------------------
+PHASE 7 — Validation & Commit
+--------------------------------------------------------------------------------
+
+  Concept:
+    Evaluate the shadow graph against the validation dataset.
+      Success: error drops → commit shadow as new baseline.
+      Failure: error increases → sever new nodes, revert to Phase 2
+      baseline, try next hypothesis.
+
+  Implementation:  COMPLETE (basic)
+
+    EvolutionEngine::validate_and_commit()  evolution.cpp:970–1008
+      Runs shadow graph on validation samples. Compares loss.
+      If shadow_loss < baseline_loss - validation_threshold:
+        graph_ = std::move(shadow_graph)  (commit)
+      Otherwise: shadow unique_ptr destroyed  (revert via RAII)
+
+    BCE: correctly applies sigmoid before loss, consistent with
+    evaluate_loss() and train().
+
+  Gaps:
+    - No surgical severing of only the shadow-routed branches on
+      failure — relies on RAII unique_ptr ownership transfer, which
+      is clean but not the "sever new nodes" approach the plan
+      describes.
+    - No retry loop for alternate hypotheses on the same failure.
+    - No hypothesis priority reconsideration after failure.
+
+--------------------------------------------------------------------------------
+CURRENT STATUS SUMMARY
+--------------------------------------------------------------------------------
+
+  Phase 1  [COMPLETE]    Forward pass, gating, fault tolerance, scoring
+  Phase 2  [COMPLETE]    Batched SGD with momentum, all node types, fixed bugs
+  Phase 3  [COMPLETE]    Blame analysis, target propagation, mini-dataset
+  Phase 4  [PARTIAL]     Blackboard + Pearson correlation working; Local Check missing
+  Phase 5  [COMPLETE]    All 3 strategies; single-hypothesis only
+  Phase 6  [COMPLETE]    Dead code, constant fold, neural compression
+  Phase 7  [COMPLETE]    Validation/commit; no multi-hypothesis retry
+
+  Verified working end-to-end on test_linear.csv:
+    - 20 samples, 16 train / 4 validation, 2 inputs → 1 output
+    - Starter architecture: INPUT → NEURON → OUTPUT
+    - Initial loss: 9.878 → Final loss: 2.527 (200 SGD iterations, 20 epochs)
+    - Structural evolution phases trigger but produce no changes (no failures
+      detected beyond what parameter tuning is handling)
+
+  Limitations of current test setup:
+    - Single NEURON + tanh bounds output to [-1,1]; targets are [0.5,4.1].
+      Loss floor is inherent to the architecture, not a bug.
+    - Larger test cases with multi-neuron architectures would exercise
+      Phase 3–7 more meaningfully.
+
+--------------------------------------------------------------------------------
+ADDITIONAL COMPONENTS (Beyond 7-Phase Cycle)
+--------------------------------------------------------------------------------
+
+  Graph::search_improvements()          graph.cpp:985–1990
+    Standalone 1000+ line mutation search system. 6 operation types
+    (REPLACE, INSERT, REWIRE_INPUT, DELETE_BYPASS, REPLACE_INSERT,
+    DELETE_INSERT). Two-stage evaluation: quick pre-screen on sample
+    subset, then full evaluation. Analytical pre-screen scores candidate
+    node types via forward-only computation to pick top-3. NOT currently
+    integrated into the Phase 1–7 evolutionary cycle.
+
+  Serialization                          serialize.cpp / serialize.h
+    Full JSON save/load with custom parser. Handles version-tagged
+    format, NEURON weights/biases, CONSTANT values, recurrent flags.
+
+  Graph Utilities                        graph.cpp:2004–2309
+    compute_structural_hash(), is_output_constant(), get_ancestors(),
+    extract_subgraph(), compute_reachable_ids(), compute_utilization_ratio(),
+    compute_saturation_ratio(), has_input_to_output_path(),
+    count_reachable_outputs().

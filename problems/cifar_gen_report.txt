@@ -1,0 +1,6 @@
+﻿=== CIFAR gray generalization experiments (val-based selection) ===
+train-selected (old, 5k, 40ep): 1.91909 train / ~5.1 val (worse than 3.25 base rate)
+RGB 5k (train-selected):        1.61764 train
+5k  40ep val-selected: train=2.44326 val=3.424568
+20k 20ep val-selected: train=2.82587 val=3.126356
+val is mean BCE over 10 outputs; base rate = 3.25
