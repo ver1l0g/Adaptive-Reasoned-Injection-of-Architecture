@@ -2946,6 +2946,67 @@ if (profile.bounded
 // ============================================================================
 // apply_shadow_routing 鈥?clone graph; apply the structural modification
 // ============================================================================
+// ============================================================================
+// compute_gain_init — least-squares scale for freshly-injected features
+// ============================================================================
+double EvolutionEngine::compute_gain_init(Graph& shadow,
+                                          uint64_t feature_src,
+                                          uint64_t failing_id,
+                                          const FailureDiagnosis& diag) const {
+    if (diag.local_inputs.empty() || diag.targets.empty()) return 0.0;
+    size_t n = std::min(diag.local_inputs.size(), diag.targets.size());
+    if (n < 4) return 0.0;
+
+    // The residual target: what the failing node SHOULD output (targets)
+    // minus what it currently outputs. We reconstruct current outputs by
+    // executing the ORIGINAL (pre-injection) subgraph — approximated here
+    // by executing the shadow with the gain at 0: the ADD passes the
+    // failing node's output through unchanged, so reading the failing
+    // node's output in the shadow equals its original value regardless.
+    double sum_f = 0, sum_r = 0, sum_ff = 0, sum_fr = 0;
+    size_t used = 0;
+    for (size_t i = 0; i < n; ++i) {
+        for (const auto& kv : diag.local_inputs[i]) {
+            // local_inputs keys are upstream node ids — but only INPUT/
+            // CONSTANT nodes accept set_input_value. Internal nodes are
+            // recomputed by execute() anyway; skip them.
+            uint64_t sid = kv.first;
+            const Node* n = shadow.get_node(sid);
+            if (!n) {
+                auto it = input_data_to_graph_.find(sid);
+                if (it != input_data_to_graph_.end()) {
+                    sid = it->second;
+                    n = shadow.get_node(sid);
+                }
+                if (!n) continue;
+            }
+            if (n->get_type() == NodeType::INPUT
+                || n->get_type() == NodeType::CONSTANT) {
+                shadow.set_input_value(sid, kv.second);
+            }
+        }
+        // NOTE: const method — execute() mutates node caches. We work on a
+        // const_cast'd reference; safe because this is a throwaway shadow.
+        auto& sh = const_cast<Graph&>(shadow);
+        sh.execute();
+        Value f = shadow.get_any_node_output(feature_src);
+        Value cur = shadow.get_any_node_output(failing_id);
+        Value r = diag.targets[i] - cur;
+        sum_f += f; sum_r += r; sum_ff += f * f; sum_fr += f * r;
+        ++used;
+    }
+    if (used < 4) return 0.0;
+    double mf = sum_f / used, mr = sum_r / used;
+    double var_f = sum_ff / used - mf * mf;
+    if (var_f < 1e-12) return 0.0;
+    double cov = sum_fr / used - mf * mr;
+    double w = cov / var_f;
+    // Sanity clamp: |gain| ≤ 10 keeps tanh(bounded) features from exploding.
+    if (w > 10.0) w = 10.0;
+    if (w < -10.0) w = -10.0;
+    return w;
+}
+
 std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     const Hypothesis& hyp,
     const FailureDiagnosis& diag) {
@@ -3249,7 +3310,9 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             auto* dn = static_cast<NeuronNode*>(dst);
             size_t new_port = dn->get_num_weights();
             dn->set_input_count(new_port + 1);
-            dn->set_weight(new_port, 0.0);   // identity start
+            // Least-squares gain init (was 0.0): the quotient starts at the
+            // scale the residual wants.
+            dn->set_weight(new_port, compute_gain_init(*shadow, div_id, failing_id, diag));
             shadow->add_connection(div_id, 0, failing_id, new_port);
         } else {
             uint64_t neuron_id = shadow->add_node(NodeType::NEURON, "quotient_neuron");
@@ -3260,6 +3323,10 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                 static_cast<NeuronNode*>(nn)->set_bias(0.0);
             }
             shadow->add_connection(div_id, 0, neuron_id, 0);
+            if (nn && nn->get_type() == NodeType::NEURON) {
+                static_cast<NeuronNode*>(nn)->set_weight(
+                    0, compute_gain_init(*shadow, div_id, failing_id, diag));
+            }
 
             std::vector<Connection> outgoing;
             for (const auto& c : shadow->get_connections()) {
@@ -3326,6 +3393,12 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             static_cast<NeuronNode*>(gn)->set_bias(0.0);
         }
         shadow->add_connection(sin_id, 0, gain_id, 0);
+        // Least-squares gain init: sin component starts at optimal scale
+        // (was 0.0 — lost first-cycle validation races on Korns F4).
+        if (gn && gn->get_type() == NodeType::NEURON) {
+            static_cast<NeuronNode*>(gn)->set_weight(
+                0, compute_gain_init(*shadow, sin_id, failing_id, diag));
+        }
 
         // 4. ADD combiner (identity start)
         std::vector<Connection> outgoing;
@@ -3365,7 +3438,9 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         shadow->add_connection(mul_id, 0, div_id, 0);
         shadow->add_connection(c,     0, div_id, 1);
 
-        // Zero-gain NEURON (identity start; SGD learns the amplitude)
+        // Gain NEURON — least-squares init (was 0.0: the quotient-of-
+        // products starts at the scale the residual wants, immediately
+        // competitive in first-cycle validation; I.32.8's blocker).
         uint64_t gain_id = shadow->add_node(NodeType::NEURON, "divprod_gain");
         Node* gn = shadow->get_node(gain_id);
         if (gn && gn->get_type() == NodeType::NEURON) {
@@ -3374,6 +3449,10 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             static_cast<NeuronNode*>(gn)->set_bias(0.0);
         }
         shadow->add_connection(div_id, 0, gain_id, 0);
+        if (gn && gn->get_type() == NodeType::NEURON) {
+            static_cast<NeuronNode*>(gn)->set_weight(
+                0, compute_gain_init(*shadow, div_id, failing_id, diag));
+        }
 
         std::vector<Connection> outgoing;
         for (const auto& conn : shadow->get_connections()) {

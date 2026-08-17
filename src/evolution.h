@@ -371,6 +371,18 @@ private:
     std::unique_ptr<Graph> apply_shadow_routing(const Hypothesis& hyp,
                                                  const FailureDiagnosis& diag);
 
+    // Least-squares gain init for freshly-injected feature chains.
+    // Executes the shadow on diag's local_inputs, reads the feature values
+    // at `feature_src` and the residual (diag.targets − current output of
+    // `failing_id`), and returns w* = cov(feature, residual)/var(feature).
+    // Zero-init compounds lose first-cycle validation races to immediately-
+    // active stacks (observed: I.32.8); this starts the new structure at
+    // the magnitude the data wants. Falls back to 0.0 on degenerate input.
+    double compute_gain_init(Graph& shadow,
+                             uint64_t feature_src,
+                             uint64_t failing_id,
+                             const FailureDiagnosis& diag) const;
+
     // ========================================================================
     // Phase 6: Graph Compilation (Distillation)
     // ========================================================================
