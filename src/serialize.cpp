@@ -319,7 +319,11 @@ void deserialize_graph(Graph& graph, const std::string& json) {
 
         // Apply extras
         for (auto& [ek, ev] : info.extras) {
-            if (info.type == NodeType::NEURON && ek == "weights") {
+            // NEURON and LINEAR both carry weight arrays (LinearNode IS-A
+            // NeuronNode). Missing LINEAR here silently dropped all weights
+            // and left input slots unallocated (set_input crash on execute).
+            if ((info.type == NodeType::NEURON
+                 || info.type == NodeType::LINEAR) && ek == "weights") {
                 auto weights = parse_number_array(ev);
                 auto* neuron = dynamic_cast<NeuronNode*>(node.get());
                 if (neuron) {

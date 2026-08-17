@@ -74,6 +74,12 @@ int main(int argc, char* argv[]) {
     std::string save_graph_path;
     int save_interval = 25;
 
+    // Offline mode: load a serialized graph instead of evolving from
+    // scratch. With --max-epochs 0 this enables standalone analysis
+    // (--dump-graph) and evaluation (--eval-csv) of checkpointed graphs
+    // without any training.
+    std::string load_graph_path;
+
     // Dataset split + loss options.
     bool   no_shuffle = false;                          // preserve row order (sequence/recurrence tasks)
     Graph::LossType loss_type = Graph::LossType::MSE;   // --loss {mse,bce}
@@ -122,6 +128,8 @@ int main(int argc, char* argv[]) {
             save_graph_path = argv[++i];
         } else if (arg == "--save-interval" && i + 1 < argc) {
             save_interval = std::stoi(argv[++i]);
+        } else if (arg == "--load-graph" && i + 1 < argc) {
+            load_graph_path = argv[++i];
         } else if (arg == "--dump-graph") {
             dump_graph = true;
         } else if (arg == "--help") {
@@ -221,6 +229,21 @@ int main(int argc, char* argv[]) {
 
     // ---------- build initial graph (empty — EvolutionEngine seeds it) ----------
     auto graph = std::make_unique<Graph>();
+
+    // ---------- offline load (--load-graph) ----------
+    // Deserialize a checkpointed graph. The engine's ensure_minimal_
+    // architecture skips seeding for non-empty graphs and rebuilds the
+    // data-ID mappings from node names ("input_N"/"output_M").
+    if (!load_graph_path.empty()) {
+        try {
+            load_graph_from_file(*graph, load_graph_path);
+            std::cout << "  Loaded graph from " << load_graph_path
+                      << " (" << graph->node_count() << " nodes)\n";
+        } catch (...) {
+            std::cerr << "Error: failed to load graph from " << load_graph_path << "\n";
+            return 1;
+        }
+    }
 
     // ---------- configure evolution ----------
     EvolutionEngine::Config cfg;

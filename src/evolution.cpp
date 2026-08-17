@@ -146,7 +146,26 @@ EvolutionEngine::EvolutionEngine(std::unique_ptr<Graph> graph,
 // ensure_minimal_architecture — build starter graph if empty
 // ============================================================================
 void EvolutionEngine::ensure_minimal_architecture() {
-    if (graph_->node_count() > 0) return;
+    if (graph_->node_count() > 0) {
+        // Non-empty graph (loaded via --load-graph): rebuild the data-ID
+        // mappings from node names so train/eval route inputs correctly.
+        // The seeding path names nodes "input_<data_id>"/"output_<data_id>".
+        for (const auto& n : graph_->get_nodes()) {
+            const std::string& nm = n->get_name();
+            if (nm.rfind("input_", 0) == 0) {
+                try {
+                    uint64_t data_id = std::stoull(nm.substr(6));
+                    input_data_to_graph_[data_id] = n->get_id();
+                } catch (...) {}
+            } else if (nm.rfind("output_", 0) == 0) {
+                try {
+                    uint64_t data_id = std::stoull(nm.substr(7));
+                    output_data_to_graph_[data_id] = n->get_id();
+                } catch (...) {}
+            }
+        }
+        return;
+    }
 
     // Collect all unique INPUT and OUTPUT node IDs from the training data
     std::unordered_set<uint64_t> input_ids_set;
