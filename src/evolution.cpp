@@ -608,7 +608,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // shadow and commit it. This collapses the wall-clock cost
                 // of failed candidates — previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
-                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT"};
+                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT"};
 
                 struct ShadowSpec {
                     int         rank;
@@ -770,7 +770,9 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                      || committed_hyp_type
                         == static_cast<int>(Hypothesis::PATCH_POOLING)
                      || committed_hyp_type
-                        == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)) {
+                        == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
+                     || committed_hyp_type
+                        == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)) {
                     plateau_counter_ = -config::COMPOUND_COMMIT_GRACE_EPOCHS;
                     epochs_since_structural_ = -config::COMPOUND_COMMIT_GRACE_EPOCHS;
                     Logger::info("Compound grace period — " + std::to_string(config::COMPOUND_COMMIT_GRACE_EPOCHS)
@@ -2246,9 +2248,17 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                     return false;
                 };
 
+                // Demote divide-family ONLY when a degree-2 fit actually
+                // explains the residual (poly_r2 >= 0.95). When the fit
+                // fails (I.32.8 q²a²/c³: 0.937 — needs 1/c³), a quotient is
+                // precisely what's missing; LINEAR_OFFSET classification is
+                // then an artifact of the strong linear numerator term.
                 double dscore = config::SCORE_DIVIDE_BOOST;
                 if (ftype != FailureType::NON_LINEAR_CURVE
                     && ftype != FailureType::LINEAR_OFFSET) {
+                    dscore = config::SCORE_DIVIDE_BASE;
+                } else if (ftype == FailureType::LINEAR_OFFSET
+                           && profile.poly_r2 >= 0.95) {
                     dscore = config::SCORE_DIVIDE_BASE;
                 }
 
@@ -2270,6 +2280,37 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 if (have_vals) {
                     try_emit(da, db);
                     try_emit(db, da);
+                }
+
+                // COMPOUND_DIVIDE_PRODUCT: (a·b)/c — quotient-of-products
+                // for q²a²/c³-class residuals (I.32.8). Emitted when a
+                // third safe-denominator input exists besides the multiply
+                // pair. Uses the same denom_safe gate; validation arbitrates.
+                if (have_vals) {
+                    for (const auto& kv : input_data_to_graph_) {
+                        uint64_t c_id = kv.second;
+                        if (c_id == da || c_id == db) continue;
+                        if (!graph_->get_node(c_id)) continue;
+                        if (!denom_safe(kv.first)) continue;
+                        Hypothesis cdp;
+                        cdp.type = Hypothesis::COMPOUND_DIVIDE_PRODUCT;
+                        cdp.multiply_source_a = da;
+                        cdp.multiply_source_b = db;
+                        cdp.bool_source_a     = c_id;   // denominator (reuse field)
+                        double cscore = config::SCORE_COMPOUND_DIVIDE_PRODUCT;
+                        if (ftype != FailureType::NON_LINEAR_CURVE
+                            && ftype != FailureType::LINEAR_OFFSET) {
+                            cscore = config::SCORE_DIVIDE_BASE;
+                        } else if (ftype == FailureType::LINEAR_OFFSET
+                                   && profile.poly_r2 >= 0.95) {
+                            cscore = config::SCORE_DIVIDE_BASE;
+                        }
+                        candidates.push_back({std::move(cdp), cscore});
+                        Logger::info("Candidate emitted: COMPOUND_DIVIDE_PRODUCT ((input="
+                                    + std::to_string(da) + "*input=" + std::to_string(db)
+                                    + ")/input=" + std::to_string(c_id) + ")");
+                        break;  // one denominator candidate per cycle; SGD + future cycles explore others
+                    }
                 }
             }
         }
@@ -3311,6 +3352,55 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         shadow->add_connection(gain_id,    0, add_id, 1);
         for (const auto& c : outgoing) {
             shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
+        }
+        break;
+    }
+
+    case Hypothesis::COMPOUND_DIVIDE_PRODUCT: {
+        // DIVIDE(MULTIPLY(a,b), c) → NEURON(zero-gain) → ADD
+        //                                              ↑
+        //   failing_node ──────────────────────────────┘
+        //
+        // q²a²/c³-class targets (Feynman I.32.8). The raw quotient can be
+        // large, so a zero-gain output neuron gives identity start (same
+        // pattern as COMPOUND_SIN_PRODUCT's fix).
+
+        uint64_t a = hyp.multiply_source_a;
+        uint64_t b = hyp.multiply_source_b;
+        uint64_t c = hyp.bool_source_a;
+        if (a == 0 || b == 0 || c == 0) break;
+        if (!shadow->get_node(a) || !shadow->get_node(b) || !shadow->get_node(c)) break;
+
+        uint64_t mul_id = shadow->add_node(NodeType::MULTIPLY, "divprod_num");
+        shadow->add_connection(a, 0, mul_id, 0);
+        shadow->add_connection(b, 0, mul_id, 1);
+
+        uint64_t div_id = shadow->add_node(NodeType::DIVIDE, "divprod_quotient");
+        shadow->add_connection(mul_id, 0, div_id, 0);
+        shadow->add_connection(c,     0, div_id, 1);
+
+        // Zero-gain NEURON (identity start; SGD learns the amplitude)
+        uint64_t gain_id = shadow->add_node(NodeType::NEURON, "divprod_gain");
+        Node* gn = shadow->get_node(gain_id);
+        if (gn && gn->get_type() == NodeType::NEURON) {
+            static_cast<NeuronNode*>(gn)->set_input_count(1);
+            static_cast<NeuronNode*>(gn)->set_weight(0, 0.0);
+            static_cast<NeuronNode*>(gn)->set_bias(0.0);
+        }
+        shadow->add_connection(div_id, 0, gain_id, 0);
+
+        std::vector<Connection> outgoing;
+        for (const auto& conn : shadow->get_connections()) {
+            if (conn.src_node == failing_id) outgoing.push_back(conn);
+        }
+        for (const auto& conn : outgoing) {
+            shadow->remove_connection(conn.src_node, conn.src_port, conn.dst_node, conn.dst_port);
+        }
+        uint64_t add_id = shadow->add_node(NodeType::ADD, "divprod_combine");
+        shadow->add_connection(failing_id, 0, add_id, 0);
+        shadow->add_connection(gain_id,    0, add_id, 1);
+        for (const auto& conn : outgoing) {
+            shadow->add_connection(add_id, 0, conn.dst_node, conn.dst_port);
         }
         break;
     }
@@ -4562,7 +4652,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::SIN_INJECTION)
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
-            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)) {
+            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
+            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)) {
             train_cfg.epochs *= config::SHADOW_COMPOUND_SGD_MULTIPLIER;
         }
         train_cfg.learning_rate = cfg_.sgd_learning_rate;
@@ -4578,7 +4669,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
-            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)) {
+            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
+            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)) {
             train_cfg.learning_rate *= config::SHADOW_COMPOUND_LR_MULTIPLIER;
         }
         train_cfg.gradient_clip = cfg_.sgd_gradient_clip;
@@ -4674,7 +4766,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                 || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
                 || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
                 || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
-                || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT))
+                || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
+                || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT))
                && baseline_val > 1e-9
                && result.val_loss <= baseline_val * (1.0 + config::SHADOW_COMPOUND_VAL_TOLERANCE)) {
         // Compound tolerance: the MULTIPLY→NEURON→TANH architecture adds 4

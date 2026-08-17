@@ -629,6 +629,14 @@ constexpr double DIVIDE_DENOMINATOR_ABS_FLOOR         = 1e-3;  // or this absolu
 // (same estimation as SIN_INJECTION freq-init) closes the gap.
 constexpr double SCORE_COMPOUND_SIN_PRODUCT           = 0.96;  // above MULTIPLY plateau fallback; below PARITY_TREE
 
+// COMPOUND_DIVIDE_PRODUCT: DIVIDE(MULTIPLY(a,b), c) → NEURON(zero-init) → ADD.
+// For q²a²/c³-class targets (Feynman I.32.8, r^3 denominators) where the
+// numerator is itself a product — DIVIDE_INJECTION (raw a/b) and
+// MULTIPLY_INJECTION can't express the quotient-of-products. Denominator
+// safety-gated like DIVIDE_INJECTION. Zero-gain output neuron gives
+// identity start (raw quotients can be large).
+constexpr double SCORE_COMPOUND_DIVIDE_PRODUCT       = 0.955; // outranks speculative stack (0.95) in its narrow gate (poly_r2<0.95 + safe denom): the quotient-of-products IS the right first guess there
+
 // Subgraph library: when the needed-behavior fingerprint matches a stored
 // entry within this distance, boost the suggested hypothesis type's score.
 constexpr double LIBRARY_MATCH_THRESHOLD            = 2.0;

@@ -314,6 +314,7 @@ private:
             PARITY_TREE,             // linear-fold XOR tree over all binary inputs → OUTPUT (k-bit parity, XOR-5D)
             DIVIDE_INJECTION,        // quotient feature a/b (ratio targets: m/V, (u+v)/(1+uv)) — both orderings, denominator-safety-gated
             COMPOUND_SIN_PRODUCT,    // MULTIPLY(a,b) → NEURON(freq-init) → SIN → ADD (sin(x·y), x·sin(kx) targets: Korns F4/F8, Feynman I.29.16)
+            COMPOUND_DIVIDE_PRODUCT, // DIVIDE(MULTIPLY(a,b), c) → zero-gain NEURON → ADD (q²a²/c³-class: Feynman I.32.8)
         };
         Type     type = NONE;
 
