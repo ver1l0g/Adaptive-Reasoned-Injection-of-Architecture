@@ -1,5 +1,5 @@
-// ============================================================================
-// constants.h — Centralized configuration constants for the GP NN system
+﻿// ============================================================================
+// constants.h 鈥?Centralized configuration constants for the GP NN system
 // ============================================================================
 #pragma once
 
@@ -8,7 +8,7 @@
 #include <cstddef>
 #include <limits>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
 // Numeric type
@@ -37,12 +37,12 @@ constexpr double RANDOM_SMALL_MIN   = -0.5;   // for value perturbation
 constexpr double RANDOM_SMALL_MAX   =  0.5;
 
 // ============================================================================
-// Elitism — carry best individuals unchanged to next generation
+// Elitism 鈥?carry best individuals unchanged to next generation
 // ============================================================================
 constexpr int    ELITE_COUNT                  = 5;
 
 // ============================================================================
-// Restart — population re-seed on plateau
+// Restart 鈥?population re-seed on plateau
 // ============================================================================
 constexpr int    MAX_RESTARTS                 = 5;     // max restarts before giving up
 
@@ -52,31 +52,31 @@ constexpr int    MAX_RESTARTS                 = 5;     // max restarts before gi
 constexpr int    DEFAULT_TOURNAMENT_SIZE      = 3;     // tournament selection pressure
 
 // ============================================================================
-// Loss-guided breeding (Pattern #1 — XGBoost LossGuide-inspired PQ expansion)
+// Loss-guided breeding (Pattern #1 鈥?XGBoost LossGuide-inspired PQ expansion)
 // ============================================================================
 // Instead of uniform tournament selection, a priority queue ranks parents by
 // fitness improvement potential: fitness + LOSS_GUIDE_DELTA_WEIGHT * (fitness - parent_fitness).
 // When enabled, single-step mode allocates more offspring slots to higher-priority parents.
 constexpr bool   LOSS_GUIDED_BREEDING_ENABLED = true;  // enable loss-guided PQ parent selection
-constexpr double LOSS_GUIDE_DELTA_WEIGHT      = 0.3;   // weight on parent→child fitness delta
+constexpr double LOSS_GUIDE_DELTA_WEIGHT      = 0.3;   // weight on parent鈫抍hild fitness delta
 constexpr double LOSS_GUIDE_DECAY            = 0.85;   // repeated parent selection priority decay
 
 // ============================================================================
-// Crossover — recombination of subgraphs across parents
+// Crossover 鈥?recombination of subgraphs across parents
 // ============================================================================
 constexpr double CROSSOVER_RATE             = 0.3;    // probability of crossover vs pure mutation
 constexpr double CROSSOVER_UNIFIED_WEIGHT   = 0.5;    // blame weight in unified signal for crossover output selection
 constexpr int    CROSSOVER_MAX_ATTEMPTS     = 5;      // retries if crossover produces oversize graph
 
 // ============================================================================
-// Adaptive tournament — tournament size adjusts to population diversity
+// Adaptive tournament 鈥?tournament size adjusts to population diversity
 // ============================================================================
 constexpr int    ADAPTIVE_TOURNAMENT_MIN     = 2;     // min tournament size (high diversity)
 constexpr int    ADAPTIVE_TOURNAMENT_MAX     = 7;     // max tournament size (low diversity)
 constexpr int    ADAPTIVE_TOURNAMENT_INTERVAL = 5;    // gens between recalculating diversity
 
 // ============================================================================
-// Diversity — fitness sharing + crowding to maintain structural variety
+// Diversity 鈥?fitness sharing + crowding to maintain structural variety
 // ============================================================================
 constexpr double DIVERSITY_SHARING_SIGMA    = 0.15;   // sharing radius for fitness penalty
 constexpr double DIVERSITY_SHARING_ALPHA    = 1.0;    // shape parameter (1=linear)
@@ -84,13 +84,13 @@ constexpr int    DIVERSITY_CHECK_INTERVAL   = 5;      // gens between computing 
 constexpr double DIVERSITY_STRUCTURAL_THRESHOLD = 0.6; // similarity above which individuals are considered duplicates
 
 // ============================================================================
-// Cross-output block reuse — use blocks from other outputs when none exists
+// Cross-output block reuse 鈥?use blocks from other outputs when none exists
 // ============================================================================
 constexpr bool   CROSS_OUTPUT_BLOCK_ENABLED  = true;  // enable cross-output block lookup
 constexpr double CROSS_OUTPUT_BLOCK_BLAME_THRESHOLD = -1.0; // min |blame| for cross-output replacement
 
 // ============================================================================
-// Blame-based selection — prioritise harmful nodes/connections for mutation
+// Blame-based selection 鈥?prioritise harmful nodes/connections for mutation
 // ============================================================================
 constexpr double BLAME_SELECTION_FLOOR_WEIGHT = 0.1;   // minimum weight for non-harmful entities
 
@@ -108,7 +108,7 @@ constexpr double GRADIENT_NOISE_STDEV         = 0.05;  // exploration noise (std
 constexpr double LOGIC_STE_TEMPERATURE        = 1.0;   // softness for Straight-Through Estimator on logic/comparison nodes
 
 // ============================================================================
-// Error attribution — perturbation-based blame analysis
+// Error attribution 鈥?perturbation-based blame analysis
 // ============================================================================
 constexpr double ATTRIBUTION_DEFAULT_EPSILON       = 0.1;   // default perturbation epsilon
 constexpr int    ATTRIBUTION_MAX_SAMPLES           = 15;    // max samples for attribution in mutate() (was 10)
@@ -116,13 +116,13 @@ constexpr int    ATTRIBUTION_MAX_CANDIDATES        = 15;    // max candidate nod
 constexpr double CONSTANT_OUTPUT_BLAME_BOOST       = -10.0; // blame floor for constant-output nodes
 
 // ============================================================================
-// Constant output detection — degenerate-output identification
+// Constant output detection 鈥?degenerate-output identification
 // ============================================================================
 constexpr double CONSTANT_OUTPUT_SAME_SIGN_THRESHOLD = 0.5;   // sigmoid midpoint threshold
 constexpr double CONSTANT_OUTPUT_VARIANCE_THRESHOLD  = 0.001; // variance below which output is constant
 
 // ============================================================================
-// Training — SGD on weights/biases/constants
+// Training 鈥?SGD on weights/biases/constants
 // ============================================================================
 constexpr int    DEFAULT_TRAIN_EPOCHS               = 10;
 constexpr double DEFAULT_TRAIN_LEARNING_RATE        = 0.01;  // default for Adam (10x smaller than SGD's 0.1)
@@ -139,7 +139,7 @@ constexpr double DEFAULT_TRAIN_MOMENTUM             = 0.0;   // 0 = pure SGD; 0.
 constexpr double DEFAULT_TRAIN_WEIGHT_DECAY         = 0.0;   // 0 = no L2 reg; typical 5e-4
 
 // ============================================================================
-// Search improvements — node-type replacement search
+// Search improvements 鈥?node-type replacement search
 // ============================================================================
 constexpr int    SEARCH_IMPROVEMENT_DEFAULT_TOP_K   = 8;
 constexpr int    SEARCH_IMPROVEMENT_NUM_SUBSETS     = 3;
@@ -148,7 +148,7 @@ constexpr int    SEARCH_IMPROVEMENT_MAX_SAMPLES     = 50;
 constexpr int    SEARCH_IMPROVEMENT_TRIAL_SUBSET    = 10;   // samples for quick trial pre-screen in search_improvements
 
 // ============================================================================
-// Progressive evaluation gating — two-stage fitness evaluation
+// Progressive evaluation gating 鈥?two-stage fitness evaluation
 // ============================================================================
 constexpr int    FITNESS_QUICK_EVAL_SUBSET          = 10;   // sample count for quick-fitness pre-screen
 constexpr int    PROGRESSIVE_EVAL_QUICK_MULTIPLIER = 4;    // quick-eval 4x more individuals than eval_budget, then full-eval top eval_budget
@@ -177,34 +177,34 @@ constexpr int    MUTATION_SEQUENCE_MIN                =  1;  // min operators pe
 constexpr int    MUTATION_SEQUENCE_MAX                =  3;  // max operators per mutate() call
 
 // ============================================================================
-// Adaptive mutation — boosted mutation when evolution plateaus
+// Adaptive mutation 鈥?boosted mutation when evolution plateaus
 // ============================================================================
 // Minimum fitness improvement required to reset the stagnation counter.
 // Micro-improvements from value-only tuning (~1e-5 to 1e-4) should NOT count
-// as progress — only structural-level improvements (~5e-4+) reset stagnation.
+// as progress 鈥?only structural-level improvements (~5e-4+) reset stagnation.
 constexpr double FITNESS_IMPROVEMENT_THRESHOLD        = 0.0005;
 constexpr int    ADAPTIVE_MUTATION_THRESHOLD          = 30;  // gens without improvement before boost
 constexpr int    MUTATION_SEQUENCE_BOOST_MIN          =  3;  // min operators per mutate() when boosted
 constexpr int    MUTATION_SEQUENCE_BOOST_MAX          = 10;  // max operators per mutate() when boosted
 constexpr double BLOCK_POSTFIT_VALUE_LIMIT            = 1e6; // revert block insert if any output exceeds this
 constexpr double MUTATION_BOOST_PERTURB_SCALE         = 3.0; // scale factor for value perturbations when boosted
-constexpr int    MUTATION_SCALE_BASE_NODES            = 30;  // graph size at which mutation count scaling = 1.0×; larger graphs get sqrt(N/30)× more mutations
+constexpr int    MUTATION_SCALE_BASE_NODES            = 30;  // graph size at which mutation count scaling = 1.0脳; larger graphs get sqrt(N/30)脳 more mutations
 
 // ============================================================================
-// SGD deep fine-tuning — longer SGD runs on the elite
+// SGD deep fine-tuning 鈥?longer SGD runs on the elite
 // ============================================================================
 constexpr int    SGD_FINE_TUNE_INTERVAL               = 50;  // gens between deep fine-tuning sessions
-// SGD Top-K fine-tuning — instead of tuning only the #1 individual, tune top K
+// SGD Top-K fine-tuning 鈥?instead of tuning only the #1 individual, tune top K
 constexpr int    SGD_TOP_K_COUNT                     = 3;   // number of top individuals to fine-tune
 constexpr int    SGD_TOP_K_EPOCHS                    = 200; // epochs per individual in top-K mode
 
 // ============================================================================
-// Restart — save elite, reinitialize from it with increased population
+// Restart 鈥?save elite, reinitialize from it with increased population
 // ============================================================================
 constexpr int    RESTART_STAGNATION_THRESHOLD         = 80;  // gens without improvement before restart
-constexpr double RESTART_POPULATION_MULTIPLIER        = 1.15; // conservative growth — was 1.5 causing runaway 300→450→675
+constexpr double RESTART_POPULATION_MULTIPLIER        = 1.15; // conservative growth 鈥?was 1.5 causing runaway 300鈫?50鈫?75
 constexpr int    RESTART_POPULATION_MAX               = 2000;// cap to prevent multiplicative population bloat
-// Restart mutation range — higher than regular boost to force genuine topological
+// Restart mutation range 鈥?higher than regular boost to force genuine topological
 // changes during re-seeding.  Regular boost uses [3, 10]; restart uses [5, 15].
 constexpr int    RESTART_MUTATION_SEQUENCE_MIN        =  5;
 constexpr int    RESTART_MUTATION_SEQUENCE_MAX        = 15;
@@ -216,7 +216,7 @@ constexpr double RESTART_DIVERT_NON_ELITE_FRACTION    = 0.40;
 constexpr int    RESTART_POPULATION_INCREMENT         = 10;
 
 // ============================================================================
-// Dead-output recovery — detect and fix outputs that never fire
+// Dead-output recovery 鈥?detect and fix outputs that never fire
 // ============================================================================
 // After this many consecutive stagnant generations, check for dead outputs
 // and inject fresh subgraphs to revive them.
@@ -226,7 +226,7 @@ constexpr int    DEAD_OUTPUT_REBIRTH_NODES            = 3;    // nodes injected 
 constexpr double DEAD_OUTPUT_ESCALATION_FACTOR        = 0.3;
 
 // ============================================================================
-// Architecture perturbation escalator — force structural change on plateau
+// Architecture perturbation escalator 鈥?force structural change on plateau
 // ============================================================================
 // When stagnation exceeds this threshold, temporarily restrict mutations to
 // structural-only operators (add/remove node, add/remove connection) to force
@@ -236,9 +236,9 @@ constexpr int    ARCH_PERTURB_DURATION                = 5;    // gens to keep st
 constexpr int    ARCH_PERTURB_MAX_DURATION            = 15;   // max gens for structural-only mode (prevents infinite loop)
 
 // ============================================================================
-// Building Block Library — subgraph extraction and reuse
+// Building Block Library 鈥?subgraph extraction and reuse
 // ============================================================================
-// When |raw_output − target| < threshold for ALL samples of an output, the
+// When |raw_output 鈭?target| < threshold for ALL samples of an output, the
 // subgraph feeding that output is extracted and stored as a reusable block.
 constexpr double BLOCK_EXTRACTION_ACCURACY_THRESHOLD = 0.3;
 // Compose a full graph from best blocks every N generations.
@@ -253,7 +253,7 @@ constexpr double BLOCK_EXTRACTION_RELAXED_MULTIPLIER  = 2.0;   // multiplier on 
 constexpr double BLOCK_EXTRACTION_RELAXED_QUALITY     = 0.5;   // quality score weight when relaxed
 
 // ============================================================================
-// Memory pressure — graceful shutdown when system RAM runs low
+// Memory pressure 鈥?graceful shutdown when system RAM runs low
 // ============================================================================
 // When free physical RAM drops below this fraction of total RAM, the evolution
 // loop calls the MemoryCallback (if set) to save the best graph and exits.
@@ -355,7 +355,7 @@ constexpr int         DOT_FONT_SIZE          = 10;
 // ============================================================================
 constexpr int    FITNESS_EVAL_SAMPLES        = 30;
 constexpr double SIZE_PENALTY_COEFFICIENT    = 0.005;  // relaxed: allow exploration growth (was 0.02, too tight for 134-node baseline)
-constexpr int    DEFAULT_MAX_NODE_COUNT      = 200;   // hard cap — mutation refuses to add beyond this
+constexpr int    DEFAULT_MAX_NODE_COUNT      = 200;   // hard cap 鈥?mutation refuses to add beyond this
 constexpr double INVALID_EVAL_ERROR          = 1e6;
 constexpr Value  INVALID_FITNESS_FALLBACK    = 0.0;
 
@@ -367,10 +367,10 @@ constexpr double GAUSS_PIVOT_TOLERANCE           = 1e-12;  // zero threshold for
 constexpr double IMPORTANCE_MIN_FLOOR            = 1e-12;  // below this, importance-based selection treats weight as zero
 constexpr double IMPORTANCE_WEIGHT_FLOOR         = 1e-12;  // minimum clamped importance weight
 constexpr double IMPORTANCE_FALLBACK_WEIGHT      = 1e-6;   // default importance weight when no record exists
-constexpr double NEURON_FIT_ATANH_CLIP           = 0.999;  // clip atanh input to avoid infinity at ±1
+constexpr double NEURON_FIT_ATANH_CLIP           = 0.999;  // clip atanh input to avoid infinity at 卤1
 
 // ============================================================================
-// Search improvement penalties — complexity penalties for node-type selection
+// Search improvement penalties 鈥?complexity penalties for node-type selection
 // ============================================================================
 constexpr double SEARCH_REPLACE_SINK_PENALTY    = 1e6;    // SINK node in replace-type: prohibitively expensive
 constexpr double SEARCH_REPLACE_ABSENT_PENALTY  = 1.5;    // ABSENT node in replace-type: prefers deletion
@@ -380,7 +380,7 @@ constexpr double SEARCH_INSERT_ABSENT_PENALTY   = 1.5;    // ABSENT node in inse
 constexpr double SEARCH_INSERT_NEURON_PENALTY   = 1.05;   // NEURON node in insert-type search
 
 // ============================================================================
-// Blame & weight multipliers — for gradient-guided mutation selection
+// Blame & weight multipliers 鈥?for gradient-guided mutation selection
 // ============================================================================
 constexpr double DEPTH_WEIGHT_MIN_FLOOR          = 0.001;  // minimum depth weighting for deep nodes
 constexpr double BLAME_WEIGHT_MULTIPLIER         = 10.0;   // boost for error blame in selection weight
@@ -408,12 +408,12 @@ constexpr double OUTPUT_DIVERSIFY_ACTIVATION_PROB  = 0.8;    // probability of r
 constexpr double ANALYZE_ERRORS_THRESHOLD          = 0.3;    // minimum |error| for analyze_errors() notification
 
 // ============================================================================
-// UCB operator dispatch — multi-armed bandit selection of mutation operators
+// UCB operator dispatch 鈥?multi-armed bandit selection of mutation operators
 // ============================================================================
 // Operators are selected via weighted sampling where the weight for operator i is:
 //   w_i = rate + UCB_WEIGHT_FLOOR + exploration + fitness_bonus + recency + guidance_bonus
 constexpr double UCB_NEUTRAL_PRIOR              = 0.5;    // success rate for unexplored operators
-constexpr double UCB_FITNESS_DELTA_SCALE        = 5.0;    // scale factor: avg_fitness_delta → bonus
+constexpr double UCB_FITNESS_DELTA_SCALE        = 5.0;    // scale factor: avg_fitness_delta 鈫?bonus
 constexpr double UCB_FITNESS_DELTA_CAP          = 2.0;    // maximum fitness-delta bonus
 constexpr double UCB_MAX_EXPLORATION_CAP        = 2.0;    // cap on combined exploration multiplier
 constexpr double UCB_EXPLORATION_PREFACTOR      = 2.0;    // prefactor for sqrt term in exploration
@@ -429,9 +429,9 @@ constexpr uint32_t STRUCTURAL_HASH_GOLDEN_RATIO     = 0x9e3779b9;         // gol
 constexpr uint64_t THREAD_RNG_SEED_MULTIPLIER       = 0x9E3779B97F4A7C15ULL; // golden-ratio-like 64-bit seed
 
 // ============================================================================
-// Credit operators — dynamic structural vs value credit allocation
+// Credit operators 鈥?dynamic structural vs value credit allocation
 // ============================================================================
-// At progress p (0→1), structural credit weight = CREDIT_STRUCT_MAX_WEIGHT * (1-p),
+// At progress p (0鈫?), structural credit weight = CREDIT_STRUCT_MAX_WEIGHT * (1-p),
 // value credit weight = CREDIT_VALUE_MIN_WEIGHT + p * (1 - CREDIT_VALUE_MIN_WEIGHT).
 constexpr double CREDIT_STRUCT_MAX_WEIGHT           = 2.0;   // maximum structural credit weight (at progress=0)
 constexpr double CREDIT_VALUE_MIN_WEIGHT            = 0.5;   // minimum value credit weight (at progress=0)
@@ -495,7 +495,7 @@ constexpr int    DEFAULT_STRUCTURAL_COOLDOWN          = 10;
 // ============================================================================
 constexpr double DEFAULT_VALIDATION_FRACTION          = 0.2;   // train/val split fraction held out for Phase 7
 // Loss sentinel: initialize best_phase2_loss_ / best_overall_loss_ so any
-// real loss is smaller. NOTE: 1e9 is intentionally not infinity — kept for
+// real loss is smaller. NOTE: 1e9 is intentionally not infinity 鈥?kept for
 // behavior compatibility. Switch to std::numeric_limits<double>::max() only
 // if losses can legitimately exceed 1e9 (currently they cannot).
 constexpr double LOSS_SENTINEL_INF                    = 1e9;
@@ -503,11 +503,11 @@ constexpr double LOSS_SENTINEL_INF                    = 1e9;
 // ============================================================================
 // Numerical guards (backward pass, BCE log, plateau detection)
 // ============================================================================
-constexpr double BCE_LOG_CLAMP_EPSILON                = 1e-9;  // clamp sigmoid output before log() to avoid ±inf
+constexpr double BCE_LOG_CLAMP_EPSILON                = 1e-9;  // clamp sigmoid output before log() to avoid 卤inf
 constexpr double BACKWARD_DIV_EPSILON                 = 1e-10; // DivideNode backward denom floor (smaller than SAFE_DIV_EPSILON)
 constexpr double DIVIDE_FORWARD_EPSILON               = 1e-6;  // DivideNode forward |denominator| floor (sign-preserving clamp)
 constexpr double PLATEAU_RELATIVE_DENOM_FLOOR         = 1e-8;  // floor for |loss_before| in relative-improvement ratio
-constexpr double DEAD_BRANCH_SIGNAL_THRESHOLD         = 1e-6;  // |output| below this → IFELSE branch never fires
+constexpr double DEAD_BRANCH_SIGNAL_THRESHOLD         = 1e-6;  // |output| below this 鈫?IFELSE branch never fires
 constexpr int    ATTRIBUTION_SEED_RANGE               = 100000;// modulus for rng_() % N seed generation in diagnose()
 
 // ============================================================================
@@ -516,38 +516,38 @@ constexpr int    ATTRIBUTION_SEED_RANGE               = 100000;// modulus for rn
 constexpr double BOOLEAN_GAP_RATIO_THRESHOLD          = 0.25;  // sorted-target gap ratio above which to test cluster split
 constexpr double BOOLEAN_BETWEEN_WITHIN_RATIO         = 2.5;   // F-ratio (between/within variance) for BOOLEAN_BOUNDARY classification
 constexpr int    LINEAR_FIT_MAX_FEATURES              = 10;    // cap upstream-feature count for least-squares linear fit
-constexpr double LINEAR_FIT_R2_THRESHOLD              = 0.75;  // R² above which failure is classified LINEAR_OFFSET
+constexpr double LINEAR_FIT_R2_THRESHOLD              = 0.75;  // R虏 above which failure is classified LINEAR_OFFSET
 constexpr double CONTEXT_WIRE_CORR_TRIGGER            = 0.5;   // min Pearson r to consider CONTEXT_WIRE in form_hypothesis()
 
 // ============================================================================
-// ComplexityProfile diagnostic (Phase 3 — bottleneck signature analysis)
+// ComplexityProfile diagnostic (Phase 3 鈥?bottleneck signature analysis)
 // ============================================================================
 // Step 1 of the compound-hypothesis roadmap: compute a low-cost "fingerprint"
 // of the residual at the bottleneck node so hypothesis selection can be
 // driven by data instead of pure correlation. Used to detect signatures like
-// "bounded + oscillating + high pairwise interaction" → sin(x·y), which
-// requires a MULTIPLY→NEURON_TANH compound template rather than a single
+// "bounded + oscillating + high pairwise interaction" 鈫?sin(x路y), which
+// requires a MULTIPLY鈫扤EURON_TANH compound template rather than a single
 // hypothesis.
 constexpr int    PROFILE_SOBOL_BINS                   = 5;     // discretization bins per axis for Sobol pairwise index
 constexpr double PROFILE_PAIRWISE_INTERACTION_MIN     = 0.30;  // V_int / Var(r) above which "high pairwise interaction" flag is set
-constexpr double PROFILE_BOUNDED_RATIO_MAX            = 4.0;   // (max-min)/stddev below this ⇒ residual is "bounded" (e.g., sin)
-constexpr double PROFILE_SHARP_BOUNDARY_LIPSCHITZ     = 5.0;   // axis Lipschitz above this ⇒ "sharp boundary" (IFELSE signature)
+constexpr double PROFILE_BOUNDED_RATIO_MAX            = 4.0;   // (max-min)/stddev below this 鈬?residual is "bounded" (e.g., sin)
+constexpr double PROFILE_SHARP_BOUNDARY_LIPSCHITZ     = 5.0;   // axis Lipschitz above this 鈬?"sharp boundary" (IFELSE signature)
 
-// Compound-hypothesis detection (Phase 5 — COMPOUND_MULTIPLY_NEURON trigger).
+// Compound-hypothesis detection (Phase 5 鈥?COMPOUND_MULTIPLY_NEURON trigger).
 // Fires when the polynomial degree-2 fit shows a dominant cross-term (a_ij)
 // AND the residual is bounded (suggesting a nonlinear activation on top of
-// the product). This is the signature of sin(x·y), sigmoid(x·y), tanh(x·y).
-constexpr double PROFILE_COMPOUND_CROSS_TERM_RATIO    = 0.20;  // |a_ij| / max(|linear coef|) above this ⇒ cross-term is structurally meaningful
+// the product). This is the signature of sin(x路y), sigmoid(x路y), tanh(x路y).
+constexpr double PROFILE_COMPOUND_CROSS_TERM_RATIO    = 0.20;  // |a_ij| / max(|linear coef|) above this 鈬?cross-term is structurally meaningful
 constexpr double SCORE_COMPOUND_MULTIPLY_NEURON       = 0.96;  // ranks above all single-hypothesis candidates when signature matches
 constexpr int    SHADOW_COMPOUND_SGD_MULTIPLIER       = 3;     // extra SGD budget for compound shadows
 constexpr double SHADOW_COMPOUND_LR_MULTIPLIER        = 0.2;   // reduce LR for compound shadows so zero-init chains grow without disrupting existing weights
 constexpr double SHADOW_COMPOUND_VAL_TOLERANCE        = 0.02;  // compound accepted if val_loss <= baseline_val * (1 + tolerance)
 constexpr int    COMPOUND_COMMIT_GRACE_EPOCHS         = 50;    // after committing a compound, delay next plateau trigger by this many epochs (chain starts at identity, needs SGD time to grow)
 
-// Compound TANH series — K parallel NEURON→TANH chains summed via ADD.
+// Compound TANH series 鈥?K parallel NEURON鈫扵ANH chains summed via ADD.
 // Triggered when residual is BOUNDED, smooth (low Lipschitz), and still
-// high-variance (linear fit R² is misleading because the residual oscillates
-// around zero — signature of needing more curve capacity, e.g., sin(x)).
+// high-variance (linear fit R虏 is misleading because the residual oscillates
+// around zero 鈥?signature of needing more curve capacity, e.g., sin(x)).
 constexpr double SCORE_COMPOUND_TANH_SERIES          = 0.94;  // below COMPOUND_MULTIPLY_NEURON (0.96), above LINEAR_OFFSET fallbacks
 constexpr double COMPOUND_TANH_VAR_MIN               = 0.05;  // min residual variance to trigger (lower = residual already small)
 constexpr double COMPOUND_TANH_LIPSCHITZ_MAX         = 2.0;   // residual must be smooth (low 1st-derivative magnitude)
@@ -571,7 +571,7 @@ constexpr double ABSMUL_NONNEG_FRACTION              = 0.05;
 // help.
 constexpr double SCORE_RECURRENT_SELF_WIRE          = 0.10;
 
-// DEEP_INSERTION: serial NEURON→TANH residual chain after failing node.
+// DEEP_INSERTION: serial NEURON鈫扵ANH residual chain after failing node.
 // Adds depth (hierarchical feature extraction) rather than width.
 // Ranked between NEURON_TANH_INJECTION and compound hypotheses.
 constexpr double SCORE_DEEP_INSERTION              = 0.50;
@@ -581,57 +581,56 @@ constexpr double SCORE_DEEP_INSERTION              = 0.50;
 constexpr double SCORE_RECURRENT_XOR               = 0.97;
 
 // MULTI_LAYER_STACK: injects a K-width hidden layer + combining neuron.
-// Creates a 2-layer MLP: INPUT → K NEURONs → NEURON_combine → OUTPUT.
+// Creates a 2-layer MLP: INPUT 鈫?K NEURONs 鈫?NEURON_combine 鈫?OUTPUT.
 // Emitted for high-complexity problems (spirals, checkerboard) where
 // single-layer + width-expansion can't capture the decision boundary.
 constexpr double SCORE_MULTI_LAYER_STACK           = 0.60;
 constexpr int    MULTI_LAYER_STACK_K               = 4;     // hidden width
 constexpr int    MULTI_LAYER_STACK_K_MAX           = 8;     // ceiling for adaptive K
 constexpr int    MULTI_LAYER_STACK_MAX_INPUTS      = 128;   // don't stack on huge input dims (too many new weights)
-constexpr double MULTI_LAYER_STACK_BOOST_LIPSCHITZ = 100.0; // lipschitz above this → boost score to 0.95
+constexpr double MULTI_LAYER_STACK_BOOST_LIPSCHITZ = 100.0; // lipschitz above this 鈫?boost score to 0.95
 constexpr int    MULTI_LAYER_STACK_SGD_MULTIPLIER  = 6;     // extra SGD budget (stacks need more training)
 
 // PATCH_POOLING: local block averages for image-like inputs. Creates
-// patch_size×patch_size average-pool LINEAR nodes (uniform 1/k weights —
-// SGD refines them into learned filters) and feeds the pooled features
+// patch_size脳patch_size average-pool LINEAR nodes (uniform 1/k weights 鈥?// SGD refines them into learned filters) and feeds the pooled features
 // into the failing node. Gives the graph a coarse convolutional prior:
-// CIFAR 32×32 gray → 64 pooled 4×4 blocks + raw pixels.
+// CIFAR 32脳32 gray 鈫?64 pooled 4脳4 blocks + raw pixels.
 // Emitted only when input count is a perfect square (image-like layout).
 constexpr double SCORE_PATCH_POOLING              = 0.90;
 constexpr int    PATCH_POOL_PATCH_SIZE            = 4;     // px per side of each pooled block
-constexpr int    PATCH_POOL_MIN_SIDE              = 16;    // min image side (16² = 256 inputs)
+constexpr int    PATCH_POOL_MIN_SIDE              = 16;    // min image side (16虏 = 256 inputs)
 
-// PARITY_TREE: linear-fold XOR tree over all binary inputs → OUTPUT.
+// PARITY_TREE: linear-fold XOR tree over all binary inputs 鈫?OUTPUT.
 // Solves k-bit parity (XOR-5D) in ONE structural change. Greedy
 // incremental commits can't build intermediate XORs (each step gives zero
-// loss improvement), so the tree must be atomic. Exact function — no
+// loss improvement), so the tree must be atomic. Exact function 鈥?no
 // training needed; SGD only refines the OUTPUT scale/bias for confidence.
 constexpr double SCORE_PARITY_TREE                = 0.98;
 constexpr int    PARITY_TREE_MIN_INPUTS           = 3;     // 2-input parity = BOOLEAN_COMPOSE territory
 constexpr int    PARITY_TREE_MAX_INPUTS           = 16;    // tree cost is O(k); cap for safety
 
 // DIVIDE_INJECTION: quotient feature a/b for ratio targets (Feynman m/V,
-// (u+v)/(1+uv), q²a²/c³ — the operator MULTIPLY cannot express). Sources
+// (u+v)/(1+uv), q虏a虏/c鲁 鈥?the operator MULTIPLY cannot express). Sources
 // mirror MULTIPLY_INJECTION (poly fit / Sobol pair / blackboard top-2);
 // both orderings (a/b, b/a) emitted with per-candidate denominator safety
 // check: min |denominator| over training data must clear a floor relative
-// to its std (z-scored inputs live near 0 — raw ratios explode).
+// to its std (z-scored inputs live near 0 鈥?raw ratios explode).
 constexpr double SCORE_DIVIDE_BOOST                   = 0.94;  // just under MULTIPLY plateau fallback (0.95)
 constexpr double SCORE_DIVIDE_BASE                    = 0.06;  // unboosted baseline
-constexpr double DIVIDE_DENOMINATOR_MIN_REL           = 0.25;  // min |den| ≥ this × std(den values)
+constexpr double DIVIDE_DENOMINATOR_MIN_REL           = 0.25;  // min |den| 鈮?this 脳 std(den values)
 constexpr double DIVIDE_DENOMINATOR_ABS_FLOOR         = 1e-3;  // or this absolute floor (whichever is larger)
 
-// COMPOUND_SIN_PRODUCT: MULTIPLY(a,b) → NEURON(freq-init) → SIN → ADD.
-// For sin-of-product targets (Korns F4 x₁sin(x₀x₁), F8; Feynman I.29.16
-// A·sin(kx)). Single-op hypotheses can't express it: SIN_INJECTION takes
+// COMPOUND_SIN_PRODUCT: MULTIPLY(a,b) 鈫?NEURON(freq-init) 鈫?SIN 鈫?ADD.
+// For sin-of-product targets (Korns F4 x鈧乻in(x鈧€x鈧?, F8; Feynman I.29.16
+// A路sin(kx)). Single-op hypotheses can't express it: SIN_INJECTION takes
 // one input; MULTIPLY_INJECTION yields an unbounded product with no
 // oscillation. The composition with a FREQUENCY-INITED inner neuron
 // (same estimation as SIN_INJECTION freq-init) closes the gap.
 constexpr double SCORE_COMPOUND_SIN_PRODUCT           = 0.96;  // above MULTIPLY plateau fallback; below PARITY_TREE
 
-// COMPOUND_DIVIDE_PRODUCT: DIVIDE(MULTIPLY(a,b), c) → NEURON(zero-init) → ADD.
-// For q²a²/c³-class targets (Feynman I.32.8, r^3 denominators) where the
-// numerator is itself a product — DIVIDE_INJECTION (raw a/b) and
+// COMPOUND_DIVIDE_PRODUCT: DIVIDE(MULTIPLY(a,b), c) 鈫?NEURON(zero-init) 鈫?ADD.
+// For q虏a虏/c鲁-class targets (Feynman I.32.8, r^3 denominators) where the
+// numerator is itself a product 鈥?DIVIDE_INJECTION (raw a/b) and
 // MULTIPLY_INJECTION can't express the quotient-of-products. Denominator
 // safety-gated like DIVIDE_INJECTION. Zero-gain output neuron gives
 // identity start (raw quotients can be large).
@@ -643,17 +642,17 @@ constexpr double LIBRARY_MATCH_THRESHOLD            = 2.0;
 constexpr double LIBRARY_BOOST                      = 0.20;
 constexpr double LIBRARY_INJECT_THRESHOLD           = 1.0;   // tighter: inject candidates the gates blocked
 
-// Compound MULTIPLY3 — three-way product for sin(x·y·z)-class functions.
+// Compound MULTIPLY3 鈥?three-way product for sin(x路y路z)-class functions.
 // Triggered when 3+ inputs, bounded residual, but NO single cross-term
-// dominates (all pairwise interactions are moderate — the true feature is
-// the 3-way product x·y·z). Score is slightly below COMPOUND_MULTIPLY_NEURON
+// dominates (all pairwise interactions are moderate 鈥?the true feature is
+// the 3-way product x路y路z). Score is slightly below COMPOUND_MULTIPLY_NEURON
 // since it's a fallback when pairwise analysis fails to find a dominant pair.
 constexpr double SCORE_COMPOUND_MULTIPLY3_NEURON     = 0.93;
-constexpr double COMPOUND3_POLY_R2_MAX               = 0.85;  // degree-2 fit is poor → missing higher-order term
-constexpr double COMPOUND3_VAR_MIN                   = 0.05;  // residual still has meaningful variance     // number of parallel NEURON→TANH chains to inject
+constexpr double COMPOUND3_POLY_R2_MAX               = 0.85;  // degree-2 fit is poor 鈫?missing higher-order term
+constexpr double COMPOUND3_VAR_MIN                   = 0.05;  // residual still has meaningful variance     // number of parallel NEURON鈫扵ANH chains to inject
 
 // ============================================================================
-// Hypothesis candidate scoring (Phase 5 — generate_candidates ranking)
+// Hypothesis candidate scoring (Phase 5 鈥?generate_candidates ranking)
 // ============================================================================
 // Higher score = tried first. The proven NEURON_TANH_INJECTION fallback sits
 // at 0.1; new/experimental types (MULTIPLY_INJECTION, BOOLEAN_COMPOSE) sit
@@ -669,7 +668,7 @@ constexpr double SCORE_NTI_NONLINEAR_BOOST            = 0.7;   // NEURON_TANH_IN
 constexpr double SCORE_MULTIPLY_BASE                  = 0.05;  // MULTIPLY_INJECTION baseline (experimental)
 constexpr double SCORE_MULTIPLY_NONLINEAR_BOOST       = 0.45;  // MULTIPLY boost for NON_LINEAR_CURVE / LINEAR_OFFSET
 constexpr double SCORE_MULTIPLY_INTERACTION_BOOST     = 0.55;  // MULTIPLY boost when two top blackboard signals correlate
-constexpr double SCORE_MULTIPLY_PLATEAU_FALLBACK      = 0.95;  // MULTIPLY boost on plateau w/ ≥2 INPUT signals, non-binary (above CONTEXT_WIRE's correlation-based score)
+constexpr double SCORE_MULTIPLY_PLATEAU_FALLBACK      = 0.95;  // MULTIPLY boost on plateau w/ 鈮? INPUT signals, non-binary (above CONTEXT_WIRE's correlation-based score)
 constexpr double SCORE_BOOLEAN_COMPOSE                = 0.65;  // BOOLEAN_COMPOSE score for binary-classification problems
 constexpr double MULTIPLY_CORR_TRIGGER                = 0.4;   // min |r| of both top signals to trigger interaction boost
 constexpr double BINARY_LABEL_MIN_RANGE               = 0.1;   // min label range to consider binary classification
@@ -681,9 +680,9 @@ constexpr double BINARY_LABEL_MAX_WITHIN_VAR          = 0.05;  // max within-clu
 // ============================================================================
 constexpr double SHADOW_TRAIN_REGRESSION_FACTOR       = 1.5;   // shadow_train_loss may regress up to baseline * factor (catastrophic-damage guard)
 constexpr double SHADOW_TRAIN_MAX_REGRESSION_ABS      = 0.01;  // absolute drift tolerance (used when baseline is small)
-constexpr double SHADOW_TRAIN_MAX_REGRESSION_REL      = 0.10;  // relative drift tolerance (used when baseline is large — 10% allows XOR-style cold-start regressions)
+constexpr double SHADOW_TRAIN_MAX_REGRESSION_REL      = 0.10;  // relative drift tolerance (used when baseline is large 鈥?10% allows XOR-style cold-start regressions)
 constexpr double COMMIT_MIN_IMPROVEMENT               = 1e-9;  // tie-guard epsilon (strict-better)
-constexpr double COMMIT_MIN_IMPROVEMENT_FRACTION      = 0.01;  // required improvement ≥ 1% of baseline, capped by validation_threshold
+constexpr double COMMIT_MIN_IMPROVEMENT_FRACTION      = 0.01;  // required improvement 鈮?1% of baseline, capped by validation_threshold
 constexpr double COMMIT_RANK_BONUS_FRACTION           = 0.01;  // rank-aware tie-breaking: 1% of current_loss per rank step
 
 // ============================================================================
@@ -739,4 +738,4 @@ constexpr size_t INDEX_INVALID               = static_cast<size_t>(-1);
 constexpr double SENTINEL_NEG_INF            = -std::numeric_limits<double>::infinity();
 
 } // namespace config
-} // namespace gpnn
+} // namespace aria

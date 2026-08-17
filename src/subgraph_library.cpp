@@ -1,4 +1,4 @@
-#include "subgraph_library.h"
+﻿#include "subgraph_library.h"
 #include "constants.h"
 #include "node.h"
 #include <algorithm>
@@ -9,10 +9,10 @@
 #include <regex>
 #include <sstream>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
-// Probe bench generation — deterministic (fixed seed), covers [-1,1]^k
+// Probe bench generation 鈥?deterministic (fixed seed), covers [-1,1]^k
 // ============================================================================
 std::vector<std::vector<double>> generate_probe_bench(size_t k, size_t target) {
     std::vector<std::vector<double>> bench;
@@ -46,7 +46,7 @@ std::vector<std::vector<double>> generate_probe_bench(size_t k, size_t target) {
 }
 
 // ============================================================================
-// Compute fingerprint from raw (X[N×k], y[N]) — standalone feature extractor.
+// Compute fingerprint from raw (X[N脳k], y[N]) 鈥?standalone feature extractor.
 // Adapts the shape-descriptor math from EvolutionEngine::compute_complexity_
 // profile but operates on plain matrices, no graph/engine coupling.
 // ============================================================================
@@ -94,7 +94,7 @@ BehavioralFingerprint compute_fingerprint(const std::vector<std::vector<double>>
     size_t n_cross = k * (k - 1) / 2;
     size_t P = 1 + 2 * k + n_cross;
     if (N >= P + 2) {
-        // Build Phi[N×P] and solve (Phi^T Phi) β = Phi^T y
+        // Build Phi[N脳P] and solve (Phi^T Phi) 尾 = Phi^T y
         auto phi_col = [&](size_t i, size_t col) -> double {
             if (col == 0) return 1.0;
             if (col <= k) return X[i][col - 1];               // linear
@@ -130,7 +130,7 @@ BehavioralFingerprint compute_fingerprint(const std::vector<std::vector<double>>
             double s = 0; for (size_t c = col+1; c < P; ++c) s += M[col+c*P]*beta[c];
             if (std::abs(M[col+col*P]) > 1e-12) beta[col] = (beta[col]-s)/M[col+col*P]; else beta[col] = 0;
         }
-        // R²
+        // R虏
         double ss_res = 0, ss_tot = 0;
         for (size_t i = 0; i < N; ++i) {
             double pred = 0; for (size_t r = 0; r < P; ++r) pred += beta[r] * phi_col(i, r);
@@ -244,7 +244,7 @@ BehavioralFingerprint fingerprint_subgraph(const Graph& g,
 }
 
 // ============================================================================
-// Fingerprint distance — 0 = identical behavior, larger = more different.
+// Fingerprint distance 鈥?0 = identical behavior, larger = more different.
 // Flags dominate; continuous descriptors refine.
 // ============================================================================
 double fingerprint_distance(const BehavioralFingerprint& a,
@@ -254,7 +254,7 @@ double fingerprint_distance(const BehavioralFingerprint& a,
         return 1e9;
 
     double d = 0.0;
-    // Flag mismatches (each worth 1.0 — these are the primary discriminators)
+    // Flag mismatches (each worth 1.0 鈥?these are the primary discriminators)
     auto flag_diff = [&](bool fa, bool fb) { return (fa != fb) ? 1.0 : 0.0; };
     d += flag_diff(a.bounded, b.bounded);
     d += flag_diff(a.sharp_boundary, b.sharp_boundary);
@@ -281,14 +281,14 @@ double fingerprint_distance(const BehavioralFingerprint& a,
 }
 
 // ============================================================================
-// Canonicalize expression: variables→v, numbers→c
+// Canonicalize expression: variables鈫抳, numbers鈫抍
 // ============================================================================
 std::string canonicalize_expression(const std::string& expr) {
     std::string result = expr;
-    // Replace variables: x0, x1, x12, ... → v
+    // Replace variables: x0, x1, x12, ... 鈫?v
     std::regex var_re("x[0-9]+");
     result = std::regex_replace(result, var_re, "v");
-    // Replace all numeric constants (floats and integers) → c
+    // Replace all numeric constants (floats and integers) 鈫?c
     std::regex num_re("-?[0-9]+(\\.[0-9]+)?");
     result = std::regex_replace(result, num_re, "c");
     return result;
@@ -330,7 +330,7 @@ bool SubgraphLibrary::add(const SubgraphLibraryEntry& entry) {
     if (!entry.canonical_expression.empty()) {
         for (const auto& e : entries_) {
             if (e.canonical_expression == entry.canonical_expression) {
-                return false;  // duplicate — skip
+                return false;  // duplicate 鈥?skip
             }
         }
     }
@@ -416,7 +416,7 @@ std::vector<SubgraphLibraryEntry> extract_sub_expressions(
     // Patterns searched on the CANONICAL expression (v=variable, c=constant).
     // Each match is a reusable formula block.
     std::vector<PatternDef> patterns = {
-        // Product interaction: (v*v) — cross or self product
+        // Product interaction: (v*v) 鈥?cross or self product
         {"\\(v\\*v\\)",                          "product",       "x*y interaction feature"},
         // Sin oscillator component: sin(tanh(...))
         {"sin\\(tanh\\([^)]*\\)\\)",             "sin_component", "sin(tanh(wx+b)) oscillator"},
@@ -443,7 +443,7 @@ std::vector<SubgraphLibraryEntry> extract_sub_expressions(
                 entries.push_back(e);
             }
         } catch (...) {
-            // regex error — skip this pattern
+            // regex error 鈥?skip this pattern
         }
     }
 
@@ -461,4 +461,4 @@ std::vector<SubgraphLibraryEntry> extract_sub_expressions(
     return entries;
 }
 
-} // namespace gpnn
+} // namespace aria

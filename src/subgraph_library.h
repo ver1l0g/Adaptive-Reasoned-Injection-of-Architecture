@@ -1,17 +1,17 @@
-#pragma once
+﻿#pragma once
 
 #include "graph.h"
 #include <vector>
 #include <string>
 #include <unordered_map>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
-// BehavioralFingerprint — a compact feature vector that captures a subgraph's
+// BehavioralFingerprint 鈥?a compact feature vector that captures a subgraph's
 // I/O behavior on a standard probe bench. Both subgraph behavior and a
 // problem's needed-behavior produce one of these, so comparison is a simple
-// weighted feature distance — no graph re-execution at retrieval time.
+// weighted feature distance 鈥?no graph re-execution at retrieval time.
 //
 // Design: the features mirror the shape descriptors already used in
 // EvolutionEngine::compute_complexity_profile (bounded, interaction, sharp,
@@ -29,7 +29,7 @@ struct BehavioralFingerprint {
     double var         = 0.0;
     double min_val     = 0.0;
     double max_val     = 0.0;
-    double bound_ratio = 0.0;   // (max-min)/stddev — small => bounded
+    double bound_ratio = 0.0;   // (max-min)/stddev 鈥?small => bounded
 
     // ---- Polynomial degree-2 fit ----
     double poly_r2     = 0.0;   // 1 - SS_res/SS_tot of degree-2 fit
@@ -72,9 +72,9 @@ double fingerprint_distance(const BehavioralFingerprint& a,
 
 // ============================================================================
 // Compute a fingerprint from raw input/output data.
-// X: N×k input matrix (X[i][j] = sample i, input j).
+// X: N脳k input matrix (X[i][j] = sample i, input j).
 // y: N output values.
-// This is the standalone behavioral summarizer — no graph, no engine.
+// This is the standalone behavioral summarizer 鈥?no graph, no engine.
 // ============================================================================
 BehavioralFingerprint compute_fingerprint(const std::vector<std::vector<double>>& X,
                                           const std::vector<double>& y);
@@ -89,14 +89,14 @@ BehavioralFingerprint fingerprint_subgraph(const Graph& g,
                                            uint64_t output_node_id);
 
 // ============================================================================
-// SubgraphLibraryEntry — one stored subgraph template + its fingerprint +
+// SubgraphLibraryEntry 鈥?one stored subgraph template + its fingerprint +
 // provenance (which task/commit produced it).
 // ============================================================================
 struct SubgraphLibraryEntry {
     BehavioralFingerprint fingerprint;
     std::string source_task;          // task name that produced this
     std::string description;          // human-readable summary
-    std::string canonical_expression; // abstracted formula (variables→v, numbers→c)
+    std::string canonical_expression; // abstracted formula (variables鈫抳, numbers鈫抍)
     std::string pattern;              // recognized structural pattern (e.g. "abs_product", "sin_chain")
     // The subgraph structure itself (for future instantiation).
     // Stored as node types + connectivity (lightweight serialization).
@@ -104,7 +104,7 @@ struct SubgraphLibraryEntry {
 };
 
 // ============================================================================
-// SubgraphLibrary — a persistent collection of entries. Save/load to disk so
+// SubgraphLibrary 鈥?a persistent collection of entries. Save/load to disk so
 // the library accumulates across runs. Extraction is OFFLINE (post-evolution)
 // so evolution speed is unaffected.
 // ============================================================================
@@ -112,7 +112,7 @@ class SubgraphLibrary {
 public:
     // Add an entry (called post-evolution, not during evolve()).
     // If an entry with the same canonical_expression already exists, skip
-    // (dedup — prevents the library from accumulating near-identical entries).
+    // (dedup 鈥?prevents the library from accumulating near-identical entries).
     // Returns true if added, false if deduplicated.
     bool add(const SubgraphLibraryEntry& entry);
 
@@ -166,4 +166,4 @@ std::vector<SubgraphLibraryEntry> extract_sub_expressions(
     const std::string& canonical_expr,
     const std::string& source_task);
 
-} // namespace gpnn
+} // namespace aria

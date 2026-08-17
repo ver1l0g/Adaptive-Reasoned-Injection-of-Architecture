@@ -16,7 +16,7 @@
 #include <cstdio>
 #include <unordered_set>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
 // Graph constructor/destructor
@@ -3529,4 +3529,4 @@ std::string Graph::to_expression(uint64_t output_node_id) const {
     return build(output_node_id, 0);
 }
 
-} // namespace gpnn
+} // namespace aria

@@ -1,4 +1,4 @@
-#include "evolution.h"
+﻿#include "evolution.h"
 #include "logger.h"
 #include "constants.h"
 #include "subgraph_library.h"
@@ -11,11 +11,11 @@
 #include <queue>
 #include <unordered_map>
 
-namespace gpnn {
+namespace aria {
 
 void print_header() {
     std::cout << "================================================\n";
-    std::cout << "  GP-NN Evolutionary Graph Training System\n";
+    std::cout << "  ARIA — Adaptive Reasoned Injection of Architecture\n";
     std::cout << "================================================\n\n";
 }
 
@@ -39,10 +39,10 @@ void print_progress(int epoch, double loss, const std::string& phase) {
     std::cout << "|\r" << std::flush;
 }
 
-} // namespace gpnn
+} // namespace aria
 
 int main(int argc, char* argv[]) {
-    using namespace gpnn;
+    using namespace aria;
 
     // Unbuffered stdout: when redirected to a file (background runs),
     // block buffering would hide all progress until exit.
@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
         } else if (arg == "--dump-graph") {
             dump_graph = true;
         } else if (arg == "--help") {
-            std::cout << "Usage: gpnn --csv <file> --input-cols <N> [options]\n\n";
+            std::cout << "Usage: aria --csv <file> --input-cols <N> [options]\n\n";
             std::cout << "Options:\n";
             std::cout << "  --csv <file>        CSV dataset file (required)\n";
             std::cout << "  --input-cols <N>    Number of input columns (required)\n";
@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
     std::cout << "  Loaded " << full_data.size() << " samples\n";
 
     // ---------- normalize input features (z-score standardization) ----------
-    // Standardize each input feature to mean≈0, std≈1. Critical for
+    // Standardize each input feature to mean鈮?, std鈮?. Critical for
     // high-dimensional data with large value ranges (e.g. 64-pixel MNIST
     // with values in [0,16]). Without normalization, large feature magnitudes
     // cause sigmoid saturation and OUTPUT-scale collapse.
@@ -227,7 +227,7 @@ int main(int argc, char* argv[]) {
               << "  Validation: " << val_data.size()
               << (no_shuffle ? "  [order preserved]\n\n" : "\n\n");
 
-    // ---------- build initial graph (empty — EvolutionEngine seeds it) ----------
+    // ---------- build initial graph (empty 鈥?EvolutionEngine seeds it) ----------
     auto graph = std::make_unique<Graph>();
 
     // ---------- offline load (--load-graph) ----------
@@ -253,8 +253,7 @@ int main(int argc, char* argv[]) {
     cfg.sequence_mode = no_shuffle;  // sequence/recurrence candidates gated on this
     cfg.snapshot_interval = save_interval;
 
-    // Checkpoint path: problem-specific folder derived from the CSV name —
-    // checkpoints/<csv-stem>/graph.json (e.g. checkpoints/bench_digits/graph.json).
+    // Checkpoint path: problem-specific folder derived from the CSV name 鈥?    // checkpoints/<csv-stem>/graph.json (e.g. checkpoints/bench_digits/graph.json).
     // Explicit --save-graph overrides (uses the path verbatim as the FILE
     // path); "none" disables. Folder is created if missing.
     if (save_graph_path != "none") {
@@ -331,7 +330,7 @@ int main(int argc, char* argv[]) {
 
     // ---------- post-evolution: subgraph library extraction (OFFLINE) ----------
     // Compute a behavioral fingerprint of the evolved graph and add it to a
-    // persistent library. This does NOT slow evolution — it runs once, after
+    // persistent library. This does NOT slow evolution 鈥?it runs once, after
     // evolve() returns. On subsequent runs, the library is loaded and can be
     // queried to find previously-solved tasks with similar behavior.
     {
@@ -353,7 +352,7 @@ int main(int argc, char* argv[]) {
             if (expr.size() > 200) expr = expr.substr(0, 197) + "...";
             std::cout << "\n  [Expression] " << expr << "\n";
 
-            // Compute fingerprint (runs the graph on a probe bench — cheap, offline).
+            // Compute fingerprint (runs the graph on a probe bench 鈥?cheap, offline).
             BehavioralFingerprint fp = fingerprint_subgraph(engine.get_graph(), input_ids, first_output);
 
             // Build a short description from the fingerprint.
@@ -422,7 +421,7 @@ int main(int argc, char* argv[]) {
     // ---------- structural analysis (--dump-graph) ----------
     // Prints a machine-parseable summary of the final graph: node counts
     // by type, edges, trainable parameter count, and depth (longest
-    // INPUT→OUTPUT path, recurrent edges excluded). Consumed by
+    // INPUT鈫扥UTPUT path, recurrent edges excluded). Consumed by
     // analyze_graphs.py for cross-run distribution analysis.
     if (dump_graph) {
         const auto& gref = engine.get_graph();
@@ -448,7 +447,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // Depth: longest acyclic INPUT→OUTPUT path (Kahn levels).
+        // Depth: longest acyclic INPUT鈫扥UTPUT path (Kahn levels).
         // Recurrent edges are excluded (they're state, not depth).
         std::unordered_map<uint64_t, int> level;
         std::unordered_map<uint64_t, int> indeg;
@@ -501,8 +500,8 @@ int main(int argc, char* argv[]) {
 
     // ---------- held-out test-set evaluation (--eval-csv) ----------
     // Loads an external CSV with the same column layout, runs the trained
-    // graph on it, and prints per-output MSE / R² / MAE. R² is computed
-    // against the test targets' own mean — the SRBench convention.
+    // graph on it, and prints per-output MSE / R虏 / MAE. R虏 is computed
+    // against the test targets' own mean 鈥?the SRBench convention.
     if (!eval_csv_path.empty()) {
         Dataset eval_data = load_csv_dataset(eval_csv_path, input_cols, input_ids, output_ids, has_header);
         if (eval_data.empty()) {
@@ -549,7 +548,7 @@ int main(int argc, char* argv[]) {
     // ---------- post-training sweep ----------
     // Walk input x across [sweep_min, sweep_max] in step increments and print
     // (x, prediction). For piecewise/cliff tasks this reveals the empirical
-    // "switch point" — the x value where the model's output changes character.
+    // "switch point" 鈥?the x value where the model's output changes character.
     if (sweep_enabled) {
         // Take ownership of the trained graph (engine surrenders it).
         auto trained = engine.take_graph();

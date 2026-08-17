@@ -1,33 +1,33 @@
-// tests/main_tests.cpp — reasoning-pipeline regression tests for GP-NN.
+﻿// tests/main_tests.cpp 鈥?reasoning-pipeline regression tests for GP-NN.
 //
 // These tests exercise the internal Phase 3-5 reasoning (blackboard, diagnose,
 // complexity profile, candidate generation) that loss-only benchmarks cannot
 // reach. Each test is a regression guard for a specific latent bug found
 // during the diagnostic investigation:
 //
-//   test_blackboard_includes_inputs  — INPUT nodes used to be EXCLUDED from
+//   test_blackboard_includes_inputs  鈥?INPUT nodes used to be EXCLUDED from
 //                                      blackboard_registry_, so search_black-
 //                                      board() was empty on fresh graphs and
 //                                      MULTIPLY_INJECTION was never emitted.
-//   test_targets_are_real            — compute_targets used to look up
+//   test_targets_are_real            鈥?compute_targets used to look up
 //                                      sample.targets with the graph node id
 //                                      instead of the CSV data id, so target
 //                                      defaulted to 0 for every sample and the
 //                                      profiler fitted noise.
-//   test_interaction_detection       — the complexity profiler used to be
+//   test_interaction_detection       鈥?the complexity profiler used to be
 //                                      fooled by its own degree-2 poly fit
 //                                      (poly_r2~1.0) for y=x0*x1; it must now
 //                                      flag interaction_dominant and decode
 //                                      the (x0,x1) pair.
-//   test_multiply_emitted_on_fresh   — on a fresh INPUT->NEURON->OUTPUT graph
+//   test_multiply_emitted_on_fresh   鈥?on a fresh INPUT->NEURON->OUTPUT graph
 //                                      for y=x0*x1, generate_candidates() must
 //                                      include MULTIPLY_INJECTION (needs both
 //                                      fixes above).
 //
 // Build (no external deps):
 //   g++ -O2 -std=c++17 tests/main_tests.cpp src/node.cpp src/graph.cpp \
-//       src/evolution.cpp src/logger.cpp src/serialize.cpp -o tests/gpnn_tests
-//   ./tests/gpnn_tests   # exits 0 on success, 1 on any failure
+//       src/evolution.cpp src/logger.cpp src/serialize.cpp -o tests/aria_tests
+//   ./tests/aria_tests   # exits 0 on success, 1 on any failure
 
 #include "../../src/evolution.h"
 #include "../../src/logger.h"
@@ -38,15 +38,15 @@
 #include <string>
 #include <cmath>
 
-using namespace gpnn;
+using namespace aria;
 
 // ---- Friend accessor into EvolutionEngine's private reasoning pipeline ----
-// Defined INSIDE namespace gpnn so it matches the `friend class GpnnTestAccess;`
-// declaration in evolution.h (which forward-declares gpnn::GpnnTestAccess). One
+// Defined INSIDE namespace aria so it matches the `friend class ariaTestAccess;`
+// declaration in evolution.h (which forward-declares aria::ariaTestAccess). One
 // friend line grants access to every private member and nested type, so tests
 // can inspect the reasoning layer without enlarging the public API.
-namespace gpnn {
-class GpnnTestAccess {
+namespace aria {
+class ariaTestAccess {
 public:
     static const std::unordered_map<uint64_t, std::vector<Value>>& blackboard(const EvolutionEngine& e) {
         return e.blackboard_registry_;
@@ -96,13 +96,13 @@ public:
         return d;
     }
 };
-} // namespace gpnn
+} // namespace aria
 
 namespace {
 int g_pass = 0, g_fail = 0;
 void check(bool cond, const std::string& name, const std::string& detail = "") {
     if (cond) { std::cout << "[PASS] " << name << "\n"; ++g_pass; }
-    else      { std::cout << "[FAIL] " << name << (detail.empty() ? "" : "  — " + detail) << "\n"; ++g_fail; }
+    else      { std::cout << "[FAIL] " << name << (detail.empty() ? "" : "  鈥?" + detail) << "\n"; ++g_fail; }
 }
 
 Dataset make_dataset(const std::function<Value(const std::vector<Value>&)>& f,
@@ -145,7 +145,7 @@ void test_blackboard_includes_inputs() {
     e.evolve({});
     auto ids = input_node_ids(e);
     check(!ids.empty(), "blackboard: graph has >=1 INPUT node");
-    const auto& bb = GpnnTestAccess::blackboard(e);
+    const auto& bb = ariaTestAccess::blackboard(e);
     bool all_present = !ids.empty();
     for (auto id : ids) if (!bb.count(id)) all_present = false;
     check(all_present, "blackboard includes INPUT node outputs",
@@ -157,14 +157,14 @@ void test_blackboard_includes_inputs() {
 // variance), regressing the target=0 lookup bug.
 // ============================================================================
 void test_targets_are_real() {
-    // y = x0*x1 — a single NEURON cannot fit this, so the model stays at a
+    // y = x0*x1 鈥?a single NEURON cannot fit this, so the model stays at a
     // plateau and diagnose() surfaces the bottleneck via the structural-
     // inability path. compute_targets must then read the real per-sample target.
     auto full = make_dataset([](const std::vector<Value>& x){ return x[0] * x[1]; }, 2, 80, 11);
     Dataset train, val; full.split(train, val, 0.2, 0, true);
     EvolutionEngine e(std::make_unique<Graph>(), std::move(train), std::move(val), basic_cfg(2, 202));
     e.evolve({});
-    auto diags = GpnnTestAccess::diagnose(e);
+    auto diags = ariaTestAccess::diagnose(e);
     check(!diags.empty(), "targets: diagnose returns >=1 failure after plateau");
     if (diags.empty()) return;
     const auto& t = diags[0].targets;
@@ -179,7 +179,7 @@ void test_targets_are_real() {
 
 // ============================================================================
 // Test 3: complexity profiler must flag y=x0*x1 as interaction-dominant and
-// decode the (x0,x1) pair — pure unit test of compute_complexity_profile.
+// decode the (x0,x1) pair 鈥?pure unit test of compute_complexity_profile.
 // ============================================================================
 void test_interaction_detection() {
     auto full = make_dataset([](const std::vector<Value>& x){ return x[0] * x[1]; }, 2, 60, 31);
@@ -203,8 +203,8 @@ void test_interaction_detection() {
         m[ids[0]] = a; m[ids[1]] = b;
         li.push_back(std::move(m));
     }
-    auto diag = GpnnTestAccess::make_diag(ids[0], targets, li);
-    auto prof = GpnnTestAccess::profile(e, diag);
+    auto diag = ariaTestAccess::make_diag(ids[0], targets, li);
+    auto prof = ariaTestAccess::profile(e, diag);
     check(prof.interaction_dominant, "interaction: profiler flags interaction_dominant for y=x0*x1",
           "poly_r2=" + std::to_string(prof.poly_r2) +
           " max_coef_idx=" + std::to_string(prof.max_coef_index));
@@ -225,25 +225,25 @@ void test_multiply_emitted_on_fresh() {
     // the fresh INPUT->NEURON->OUTPUT shape.
     EvolutionEngine e(std::make_unique<Graph>(), std::move(train), std::move(val), basic_cfg(2, 404));
     e.evolve({});
-    auto diags = GpnnTestAccess::diagnose(e);
+    auto diags = ariaTestAccess::diagnose(e);
     check(!diags.empty(), "multiply-emitted: diagnose returns >=1 failure");
     if (diags.empty()) return;
     auto& d = diags[0];
 
-    auto signals = GpnnTestAccess::search_blackboard(e, d);
+    auto signals = ariaTestAccess::search_blackboard(e, d);
     check(!signals.empty(), "multiply-emitted: blackboard non-empty on fresh graph",
           "size=" + std::to_string(signals.size()));
 
-    auto ftype = GpnnTestAccess::classify(e, d);
-    auto prof  = GpnnTestAccess::profile(e, d);
-    auto cands = GpnnTestAccess::candidates(e, d, signals, ftype, prof);
-    bool has_multiply = GpnnTestAccess::has_multiply_candidate(cands);
+    auto ftype = ariaTestAccess::classify(e, d);
+    auto prof  = ariaTestAccess::profile(e, d);
+    auto cands = ariaTestAccess::candidates(e, d, signals, ftype, prof);
+    bool has_multiply = ariaTestAccess::has_multiply_candidate(cands);
     check(has_multiply, "multiply-emitted: MULTIPLY_INJECTION present in candidates",
           "n_candidates=" + std::to_string(cands.size()));
 }
 
 // ============================================================================
-// Test 5: recurrent BPTT — a self-recurrent NEURON must train on a sequence
+// Test 5: recurrent BPTT 鈥?a self-recurrent NEURON must train on a sequence
 // whose target depends on the previous timestep (running sum). Confirms the
 // train() backward pass routes gradient through delay_buffer (teacher-forced
 // k=1 BPTT). If this fails, recurrent weights get no gradient and d6 is

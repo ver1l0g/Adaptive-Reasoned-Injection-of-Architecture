@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <cstdint>
 #include <vector>
@@ -8,7 +8,7 @@
 #include <functional>
 #include <cmath>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
 // Value type used throughout the graph
@@ -16,7 +16,7 @@ namespace gpnn {
 using Value = double;
 
 // ============================================================================
-// Node types — add new types here for extensibility
+// Node types 鈥?add new types here for extensibility
 // ============================================================================
 enum class NodeType : uint32_t {
     // IO
@@ -38,28 +38,28 @@ enum class NodeType : uint32_t {
     SIGMOID,
     TANH,
 
-    SIN,     // 1 input, 1 output — sin(x) activation
+    SIN,     // 1 input, 1 output 鈥?sin(x) activation
 
-    LINEAR,  // N inputs, 1 output — identity: w·x + b (no activation, for BCE)
+    LINEAR,  // N inputs, 1 output 鈥?identity: w路x + b (no activation, for BCE)
 
     // Control flow
-    IF,      // 2 inputs (condition, value), 1 output — false → output 0 (sink-like)
-    IFELSE,  // 2 inputs (condition, value), 2 outputs — true-out / false-out
+    IF,      // 2 inputs (condition, value), 1 output 鈥?false 鈫?output 0 (sink-like)
+    IFELSE,  // 2 inputs (condition, value), 2 outputs 鈥?true-out / false-out
 
     // Logic & Comparison
-    EQUAL,         // 2 inputs, 1 output — 1 if input0 == input1, else 0
-    NOT_EQUAL,     // 2 inputs, 1 output — 1 if input0 != input1, else 0
-    GREATER,       // 2 inputs, 1 output — 1 if input0 >  input1, else 0
-    LESS,          // 2 inputs, 1 output — 1 if input0 <  input1, else 0
-    GREATER_EQUAL, // 2 inputs, 1 output — 1 if input0 >= input1, else 0
-    LESS_EQUAL,    // 2 inputs, 1 output — 1 if input0 <= input1, else 0
-    AND,           // 2 inputs, 1 output — 1 if both non-zero,  else 0
-    OR,            // 2 inputs, 1 output — 1 if either non-zero, else 0
-    NOT,           // 1 input,  1 output — 1 if input == 0,    else 0
-    XOR,           // 2 inputs, 1 output — 1 if boolean values differ, else 0
+    EQUAL,         // 2 inputs, 1 output 鈥?1 if input0 == input1, else 0
+    NOT_EQUAL,     // 2 inputs, 1 output 鈥?1 if input0 != input1, else 0
+    GREATER,       // 2 inputs, 1 output 鈥?1 if input0 >  input1, else 0
+    LESS,          // 2 inputs, 1 output 鈥?1 if input0 <  input1, else 0
+    GREATER_EQUAL, // 2 inputs, 1 output 鈥?1 if input0 >= input1, else 0
+    LESS_EQUAL,    // 2 inputs, 1 output 鈥?1 if input0 <= input1, else 0
+    AND,           // 2 inputs, 1 output 鈥?1 if both non-zero,  else 0
+    OR,            // 2 inputs, 1 output 鈥?1 if either non-zero, else 0
+    NOT,           // 1 input,  1 output 鈥?1 if input == 0,    else 0
+    XOR,           // 2 inputs, 1 output 鈥?1 if boolean values differ, else 0
 
     // Meta / topology sensing
-            ABSENT,        // 1 input,  1 output — 1 if connected but no signal, else 0
+            ABSENT,        // 1 input,  1 output 鈥?1 if connected but no signal, else 0
 };
 
 // Convert NodeType to/from string (for serialization)
@@ -94,7 +94,7 @@ public:
     void set_output(size_t index, Value val) { outputs_[index] = val; }
     bool is_input_filled(size_t index) const;
 
-    // Perturbation — for error-attribution analysis.
+    // Perturbation 鈥?for error-attribution analysis.
     // When non-zero, Graph::execute() adds this to each output after the node executes.
     void set_perturbation(Value p) { perturbation_ = p; }
     Value get_perturbation() const { return perturbation_; }
@@ -115,7 +115,7 @@ public:
     // Reset for next execution pass
     virtual void reset();
 
-    // Execute — compute outputs from inputs
+    // Execute 鈥?compute outputs from inputs
     virtual void execute() = 0;
 
     // Deep-copy this node (including node-specific state like weights/bias/value).
@@ -305,7 +305,7 @@ protected:
 };
 
 // ============================================================================
-// LinearNode — same as NEURON but WITHOUT the tanh activation.
+// LinearNode 鈥?same as NEURON but WITHOUT the tanh activation.
 // output = bias + sum(weight_i * input_i)   [identity activation]
 // Used as the starter node for BCE loss (logistic-regression equivalent).
 // The tanh in NEURON creates double-saturation (tanh + sigmoid) that kills
@@ -319,8 +319,8 @@ public:
     std::unique_ptr<Node> clone() const override;
     // Override init: use 1/sqrt(fan_in) instead of Xavier's sqrt(6/fan_in).
     // LINEAR output is unbounded, so Xavier (tuned for tanh) makes pre-sigmoid
-    // values too large → sigmoid saturation → vanishing gradients. The smaller
-    // scale keeps σ(w·x+b) ≈ 0.5 initially so gradients flow.
+    // values too large 鈫?sigmoid saturation 鈫?vanishing gradients. The smaller
+    // scale keeps 蟽(w路x+b) 鈮?0.5 initially so gradients flow.
     void set_input_count(size_t count) override;
 };
 
@@ -488,7 +488,7 @@ public:
 };
 
 // ============================================================================
-// Node factory — for extensible node creation
+// Node factory 鈥?for extensible node creation
 // ============================================================================
 using NodeFactory = std::function<std::unique_ptr<Node>(uint64_t, const std::string&)>;
 
@@ -510,4 +510,4 @@ private:
 // Register all built-in types (called once at startup)
 void register_builtin_node_types();
 
-} // namespace gpnn
+} // namespace aria

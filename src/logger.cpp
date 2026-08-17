@@ -1,7 +1,7 @@
-#include "logger.h"
+﻿#include "logger.h"
 #include "constants.h"
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
 // Static members
@@ -28,7 +28,7 @@ void Logger::init(bool verbose_mode, const std::string& log_file_path) {
         if (file_.is_open()) {
             use_file_ = true;
             file_ << "\n" << config::LOG_BANNER_SEPARATOR;
-            file_ << "  GP-NN Log — " << timestamp() << "\n";
+            file_ << "  GP-NN Log 鈥?" << timestamp() << "\n";
             if (verbose_) file_ << "  Verbose mode enabled\n";
             file_ << config::LOG_BANNER_SEPARATOR << "\n";
         }
@@ -41,7 +41,7 @@ void Logger::close() {
     std::lock_guard<std::mutex> lock(mutex_);
     if (file_.is_open()) {
         file_ << "\n" << config::LOG_BANNER_SEPARATOR;
-        file_ << "  Session ended — " << timestamp() << "\n";
+        file_ << "  Session ended 鈥?" << timestamp() << "\n";
         file_ << config::LOG_BANNER_SEPARATOR;
         file_.close();
     }
@@ -130,4 +130,4 @@ void Logger::decision(const std::string& label, const std::string& detail) {
     write_file(oss.str());
 }
 
-} // namespace gpnn
+} // namespace aria

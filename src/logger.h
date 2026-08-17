@@ -1,5 +1,5 @@
-#ifndef GPNN_LOGGER_H
-#define GPNN_LOGGER_H
+﻿#ifndef aria_LOGGER_H
+#define aria_LOGGER_H
 
 #include <string>
 #include <fstream>
@@ -10,10 +10,10 @@
 #include <iomanip>
 #include <iostream>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
-// Logger — thread-safe logging to console + file with verbose/decision levels
+// Logger 鈥?thread-safe logging to console + file with verbose/decision levels
 // ============================================================================
 // Usage:
 //   Logger::init(true, "output.txt");   // verbose on, write to file
@@ -34,14 +34,14 @@ public:
     static void close();
 
     // ------------------------------------------------------------------------
-    // Normal-level logging — always shown, describes WHAT the system does
+    // Normal-level logging 鈥?always shown, describes WHAT the system does
     // ------------------------------------------------------------------------
     static void info(const std::string& msg);
     static void phase(int epoch, const std::string& phase_name, const std::string& detail = "");
     static void warn(const std::string& msg);
 
     // ------------------------------------------------------------------------
-    // Verbose-level logging — only shown in verbose mode,
+    // Verbose-level logging 鈥?only shown in verbose mode,
     // describes WHAT DECISIONS the system makes and WHY
     // ------------------------------------------------------------------------
     static void verbose(const std::string& msg);
@@ -65,6 +65,6 @@ private:
     static bool        use_file_;
 };
 
-} // namespace gpnn
+} // namespace aria
 
-#endif // GPNN_LOGGER_H
+#endif // aria_LOGGER_H

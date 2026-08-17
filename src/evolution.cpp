@@ -1,4 +1,4 @@
-#include "evolution.h"
+﻿#include "evolution.h"
 #include "constants.h"
 #include "logger.h"
 #include "subgraph_library.h"
@@ -15,7 +15,7 @@
 #include <thread>
 #include <unordered_set>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
 // Dataset helpers
@@ -33,8 +33,7 @@ void Dataset::split(Dataset& train, Dataset& val, double val_fraction, unsigned 
         std::mt19937 rng(seed);
         std::shuffle(partitioned.begin(), partitioned.end(), rng);
     }
-    // When shuffle=false, preserve row order so the tail is validation —
-    // required for sequence/recurrence datasets where order is temporal.
+    // When shuffle=false, preserve row order so the tail is validation 鈥?    // required for sequence/recurrence datasets where order is temporal.
 
     size_t val_count = static_cast<size_t>(std::round(partitioned.size() * val_fraction));
     if (val_count == 0 && !partitioned.empty()) val_count = 1;
@@ -143,7 +142,7 @@ EvolutionEngine::EvolutionEngine(std::unique_ptr<Graph> graph,
 }
 
 // ============================================================================
-// ensure_minimal_architecture — build starter graph if empty
+// ensure_minimal_architecture 鈥?build starter graph if empty
 // ============================================================================
 void EvolutionEngine::ensure_minimal_architecture() {
     if (graph_->node_count() > 0) {
@@ -193,10 +192,10 @@ void EvolutionEngine::ensure_minimal_architecture() {
         output_data_to_graph_[id] = nid;
     }
 
-    // For each output, build INPUT → [NEURON|LINEAR] → OUTPUT chain.
-    // Use LINEAR (identity, no tanh) for BCE loss — avoids double-saturation
+    // For each output, build INPUT 鈫?[NEURON|LINEAR] 鈫?OUTPUT chain.
+    // Use LINEAR (identity, no tanh) for BCE loss 鈥?avoids double-saturation
     // (tanh + sigmoid) that kills gradients on high-dimensional classification.
-    // Use NEURON (tanh) for MSE loss — the nonlinearity is needed for
+    // Use NEURON (tanh) for MSE loss 鈥?the nonlinearity is needed for
     // expressive regression on bounded targets.
     NodeType starter_type = (cfg_.loss_type == Graph::LossType::BCE)
                             ? NodeType::LINEAR
@@ -211,13 +210,13 @@ void EvolutionEngine::ensure_minimal_architecture() {
             graph_->add_connection(input_node_ids[j], 0, neuron_id, j);
         }
 
-        // Node → OUTPUT
+        // Node 鈫?OUTPUT
         graph_->add_connection(neuron_id, 0, out_id, 0);
     }
 }
 
 // ============================================================================
-// evaluate_loss — forward pass all samples, compute average loss
+// evaluate_loss 鈥?forward pass all samples, compute average loss
 // ============================================================================
 double EvolutionEngine::evaluate_loss(const Dataset& data) {
     if (data.samples.empty()) return 0.0;
@@ -249,7 +248,7 @@ double EvolutionEngine::evaluate_loss(const Dataset& data) {
                 // value, which is exactly what search_blackboard() needs to
                 // correlate against the target and what MULTIPLY_INJECTION's
                 // input-source preference iterates over. Previously INPUTs
-                // were skipped, so for a fresh INPUT→NEURON→OUTPUT graph the
+                // were skipped, so for a fresh INPUT鈫扤EURON鈫扥UTPUT graph the
                 // blackboard held only the bottleneck NEURON (then excluded
                 // as the failing node), leaving search_blackboard() empty and
                 // MULTIPLY_INJECTION never emitted.
@@ -356,7 +355,7 @@ double EvolutionEngine::evaluate_loss(const Dataset& data) {
 }
 
 // ============================================================================
-// train_parameters — SGD training with plateau detection
+// train_parameters 鈥?SGD training with plateau detection
 // ============================================================================
 EvolutionEngine::TrainResult EvolutionEngine::train_parameters() {
     double loss_before = evaluate_loss(training_data_);
@@ -380,7 +379,7 @@ EvolutionEngine::TrainResult EvolutionEngine::train_parameters() {
     // same reason; mirror it here so the post-commit main-loop SGD uses the
     // same cautious LR.
     if (epochs_since_structural_ < 0) {
-        // MULTI_LAYER_STACK / PATCH_POOLING train fresh sub-networks — need
+        // MULTI_LAYER_STACK / PATCH_POOLING train fresh sub-networks 鈥?need
         // a milder reduction than the 0.2x used for zero-init residual chains.
         double lr_mult = (last_committed_hyp_type_
                           == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
@@ -405,7 +404,7 @@ EvolutionEngine::TrainResult EvolutionEngine::train_parameters() {
 
     double loss_after = evaluate_loss(training_data_);
 
-    // Plateau detection — use relative improvement rate
+    // Plateau detection 鈥?use relative improvement rate
     // Relative: (before - after) / max(|before|, small) > threshold
     // This avoids false plateau detection when loss is very small
     // (e.g., mse=0.02 where absolute delta never reaches 1e-4).
@@ -421,7 +420,7 @@ EvolutionEngine::TrainResult EvolutionEngine::train_parameters() {
                         + " -> " + std::to_string(loss_after)
                         + " (delta=" + std::to_string(loss_before - loss_after) + ")");
     } else if (relative_improvement > cfg_.plateau_min_improvement) {
-        // Relative improvement detected — still making progress
+        // Relative improvement detected 鈥?still making progress
         plateau_counter_ = 0;
         Logger::verbose("SGD relative improvement: " + std::to_string(relative_improvement)
                         + " (loss " + std::to_string(loss_before)
@@ -436,7 +435,7 @@ EvolutionEngine::TrainResult EvolutionEngine::train_parameters() {
     if (loss_after < best_overall_loss_) {
         best_overall_loss_ = loss_after;
         epochs_since_best_ = 0;  // reset outer-loop early-stop counter
-        // NOTE: no snapshot here — the deployed snapshot is validation-
+        // NOTE: no snapshot here 鈥?the deployed snapshot is validation-
         // selected once per epoch in evolve(). Train-based tracking only
         // drives early stopping and the divergence safety net.
         Logger::info("New best overall loss: " + std::to_string(loss_after));
@@ -446,7 +445,7 @@ EvolutionEngine::TrainResult EvolutionEngine::train_parameters() {
 }
 
 // ============================================================================
-// evolve — main 7-phase evolution loop
+// evolve 鈥?main 7-phase evolution loop
 // ============================================================================
 double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)> progress_cb) {
     // Initial evaluation
@@ -495,7 +494,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
             divergence_counter_ = 0;
         }
 
-        // ---- Handle plateau → Phases 3-5 ----
+        // ---- Handle plateau 鈫?Phases 3-5 ----
         // Scale plateau patience with input dimensionality: high-dimensional
         // tasks (e.g. 64-pixel MNIST) need more SGD epochs to converge the
         // base linear model before structural search interrupts.
@@ -519,7 +518,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
             structural_trigger = false;
             Logger::info("Structural search in cooldown (" + std::to_string(structural_cooldown_)
                         + " epochs left) at epoch " + std::to_string(epoch)
-                        + " — letting SGD settle");
+                        + " 鈥?letting SGD settle");
         }
 
         if (structural_trigger) {
@@ -562,7 +561,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                         }
                         for (auto oid : out_ids) compute_targets(growth, oid);
                         diagnoses.push_back(std::move(growth));
-                        Logger::info("diagnose() empty — injecting growth diagnosis for node "
+                        Logger::info("diagnose() empty 鈥?injecting growth diagnosis for node "
                                     + std::to_string(node->get_id()));
                         break;
                     }
@@ -586,14 +585,14 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                                    + " corr=" + std::to_string(signals[0].correlation));
                 }
 
-                // Phase 4b: Local Check — classify the failure type
+                // Phase 4b: Local Check 鈥?classify the failure type
                 FailureType ftype = classify_failure(diag);
                 const char* ftype_names[] = {"UNKNOWN", "LINEAR_OFFSET", "BOOLEAN_BOUNDARY", "NON_LINEAR_CURVE"};
                 Logger::decision("Classify failure", std::string("node=") + std::to_string(diag.failing_node)
                                 + " type=" + ftype_names[static_cast<int>(ftype)]);
 
                 // Phase 4c: Complexity profile of the residual at this bottleneck.
-                // Cheap (O(N·F²)) fingerprint of the residual shape. Used by
+                // Cheap (O(N路F虏)) fingerprint of the residual shape. Used by
                 // generate_candidates to emit compound hypotheses (e.g.
                 // MULTIPLY+NEURON_TANH for sin(xy)) when the signature matches.
                 ComplexityProfile profile = compute_complexity_profile(diag);
@@ -606,7 +605,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // Pre-create shadows for all viable candidates, then validate
                 // them concurrently. Pick the lowest-val_loss acceptable
                 // shadow and commit it. This collapses the wall-clock cost
-                // of failed candidates — previously N rejected candidates
+                // of failed candidates 鈥?previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
                 const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT"};
 
@@ -674,7 +673,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
 
                     // Pick the winner using a rank-aware policy.
                     //
-                    // Pure lowest-val_loss is too greedy — it picks marginally
+                    // Pure lowest-val_loss is too greedy 鈥?it picks marginally
                     // better rank-N hypotheses over proven rank-0/1 candidates,
                     // locking out productive search paths (e.g., T2.4 kept
                     // committing rank-2 NEURON_TANH for tiny gains while never
@@ -699,13 +698,13 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                         if (!results[i].acceptable) {
                             stats_.failed_commits++;
                             Logger::verbose("  rank=" + std::to_string(results[i].hyp_rank)
-                                           + " REJECT — " + results[i].reject_reason);
+                                           + " REJECT 鈥?" + results[i].reject_reason);
                             continue;
                         }
                         double effective = results[i].val_loss
                                          + rank_bonus * static_cast<double>(results[i].hyp_rank);
                         if (winner_idx < 0 || effective < winner_effective) {
-                            // Replace previous winner — release its shadow first
+                            // Replace previous winner 鈥?release its shadow first
                             if (winner_idx >= 0) {
                                 stats_.failed_commits++;
                                 Logger::verbose("  rank=" + std::to_string(results[winner_idx].hyp_rank)
@@ -743,7 +742,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
             // current_loss at plateau time is by definition worse than
             // best_phase2). Keeping the original baseline forces the next
             // plateau trigger to fire immediately, which means more aggressive
-            // structural search — exactly what we want when the engine is
+            // structural search 鈥?exactly what we want when the engine is
             // structurally stuck.
             if (structural_commit_succeeded) {
                 best_phase2_loss_ = current_loss;
@@ -753,7 +752,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // even if it didn't immediately beat best_overall_loss_. Reset
                 // the early-stop counter so bursty tasks aren't cut off mid-search.
                 epochs_since_best_ = 0;
-                // Compound grace period: the new MULTIPLY→NEURON→TANH chain
+                // Compound grace period: the new MULTIPLY鈫扤EURON鈫扵ANH chain
                 // starts with NEURON weight=0 (identity start). SGD needs many
                 // epochs to grow the weight from 0 to a useful value. Without
                 // this grace, plateau_patience=3 OR force_structural_every=20
@@ -775,10 +774,10 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                         == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)) {
                     plateau_counter_ = -config::COMPOUND_COMMIT_GRACE_EPOCHS;
                     epochs_since_structural_ = -config::COMPOUND_COMMIT_GRACE_EPOCHS;
-                    Logger::info("Compound grace period — " + std::to_string(config::COMPOUND_COMMIT_GRACE_EPOCHS)
+                    Logger::info("Compound grace period 鈥?" + std::to_string(config::COMPOUND_COMMIT_GRACE_EPOCHS)
                                 + " extra epochs before next structural attempt");
                 }
-                Logger::info("Plateau state reset — best_phase2=" + std::to_string(best_phase2_loss_));
+                Logger::info("Plateau state reset 鈥?best_phase2=" + std::to_string(best_phase2_loss_));
                 consecutive_structural_failures_ = 0;
 
                 // Degenerate-loop detection: if the same hypothesis type is
@@ -817,7 +816,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
             }
         }  // end if (plateau_triggered)
 
-            // Phase 6: Cleanup — Periodically clean the graph
+            // Phase 6: Cleanup 鈥?Periodically clean the graph
             if (cfg_.compile_enabled && (epoch % cfg_.compile_interval == 0)) {
                 Logger::verbose("Compile at epoch " + std::to_string(epoch));
                 auto cr = compile();
@@ -830,7 +829,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
             }
         }
 
-        // Update best (train loss — drives early stop + divergence net)
+        // Update best (train loss 鈥?drives early stop + divergence net)
         if (current_loss < best_overall_loss_) {
             best_overall_loss_ = current_loss;
             epochs_since_best_ = 0;
@@ -840,7 +839,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
         // VALIDATION loss (evaluated once per epoch, after SGD + structural
         // commits + compiles). This is the model that gets deployed. Without
         // it, train-based selection deploys the most-overfit epoch
-        // (CIFAR gray: train 1.9 / val 5.1 — worse than the 3.25 base rate).
+        // (CIFAR gray: train 1.9 / val 5.1 鈥?worse than the 3.25 base rate).
         if (!validation_data_.samples.empty()) {
             double val_loss = compute_validation_loss(*graph_);
             if (val_loss < best_val_loss_) {
@@ -857,7 +856,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
 
         // Periodic checkpoint: serialize the current best snapshot to disk
         // every snapshot_interval epochs. Crash/reboot insurance for long
-        // runs — the file on disk is always ≤ interval epochs stale.
+        // runs 鈥?the file on disk is always 鈮?interval epochs stale.
         if (!cfg_.snapshot_path.empty()
             && epoch % cfg_.snapshot_interval == 0
             && best_graph_snapshot_) {
@@ -875,7 +874,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
         // already-converged / noisy tasks and bounds thrash on stuck ones.
         if (cfg_.early_stop_patience > 0 && epochs_since_best_ >= cfg_.early_stop_patience) {
             Logger::info("Early stop at epoch " + std::to_string(epoch)
-                        + " — no best-loss improvement in "
+                        + " 鈥?no best-loss improvement in "
                         + std::to_string(cfg_.early_stop_patience) + " epochs"
                         + " (best=" + std::to_string(best_overall_loss_) + ")");
             break;
@@ -883,8 +882,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
     }
 
     // Deploy the best-generalizing graph.
-    // Val-selection active: always restore the best-validation snapshot —
-    // the final epoch typically has better TRAIN loss but worse validation
+    // Val-selection active: always restore the best-validation snapshot 鈥?    // the final epoch typically has better TRAIN loss but worse validation
     // (overfitting), so condition-on-train would never fire.
     // Fallback (no val data): restore best-train snapshot if SGD overshot.
     if (best_graph_snapshot_) {
@@ -918,7 +916,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
 }
 
 // ============================================================================
-// diagnose — blame analysis + target propagation
+// diagnose 鈥?blame analysis + target propagation
 // ============================================================================
 std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
     std::vector<FailureDiagnosis> results;
@@ -983,7 +981,7 @@ std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
         // Target propagation: only for OUTPUT nodes that this failing_node
         // actually feeds (forward-reachable). The previous loop ran
         // compute_targets for EVERY output, pooling all outputs' targets into
-        // one residual — for multi-output graphs (e.g. predicting [x, x^2,
+        // one residual 鈥?for multi-output graphs (e.g. predicting [x, x^2,
         // sin(x)] from one input) this blended three different functions into
         // a meaningless profile and no single structural fix could satisfy all
         // of them. Each output has its own bottleneck in the starter
@@ -1010,7 +1008,7 @@ std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
 
     // Structural inability fallback: when no node has negative blame but the
     // model is at a plateau (high loss), the topology itself is insufficient.
-    // Surface the node with the HIGHEST positive blame — perturbing it causes
+    // Surface the node with the HIGHEST positive blame 鈥?perturbing it causes
     // the largest error, meaning the graph depends on it most heavily and
     // would benefit from additional parallel structure (NEURON, CONTEXT_WIRE,
     // or IFELSE split). Using the real blame value (instead of 0.0) lets
@@ -1030,14 +1028,14 @@ std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
             // Emit one diagnosis PER output-specific positive-blame node.
             // build_diag scopes each to its own output (targets from only
             // the output it feeds), so each output gets its own structural
-            // fix attempt — the x² NEURON gets MULTIPLY-self, sin gets
+            // fix attempt 鈥?the x虏 NEURON gets MULTIPLY-self, sin gets
             // TANH_SERIES, etc.
             for (const auto& attr : attribution) {
                 if ((int)results.size() >= cfg_.max_failures_to_fix) break;
                 if (attr.blame <= 0.0) continue;
                 if (outputs_fed(attr.node_id) != 1) continue;
                 results.push_back(build_diag(attr));
-                Logger::info("Structural inability — output-specific bottleneck node "
+                Logger::info("Structural inability 鈥?output-specific bottleneck node "
                             + std::to_string(attr.node_id)
                             + " (blame=" + std::to_string(attr.blame) + ")");
             }
@@ -1052,7 +1050,7 @@ std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
             }
             if (global_best) {
                 results.push_back(build_diag(*global_best));
-                Logger::info("Structural inability detected — surfacing bottleneck node "
+                Logger::info("Structural inability detected 鈥?surfacing bottleneck node "
                             + std::to_string(global_best->node_id)
                             + " (blame=" + std::to_string(global_best->blame) + ")");
             }
@@ -1065,7 +1063,7 @@ std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
 }
 
 // ============================================================================
-// compute_targets — backward-pass target propagation for one failing node
+// compute_targets 鈥?backward-pass target propagation for one failing node
 // ============================================================================
 void EvolutionEngine::compute_targets(FailureDiagnosis& diag, uint64_t output_node_id) {
     // Collect INPUT node IDs
@@ -1077,10 +1075,10 @@ void EvolutionEngine::compute_targets(FailureDiagnosis& diag, uint64_t output_no
     // Collect upstream nodes (nodes that feed into diag.failing_node transitively)
     std::vector<uint64_t> upstream_ids = graph_->get_ancestors(diag.failing_node);
 
-    // Collect all nodes in the graph for local_inputs — any node could be upstream
+    // Collect all nodes in the graph for local_inputs 鈥?any node could be upstream
     // We'll store all node outputs as "local inputs" (candidates for reconnection)
     for (const auto& sample : training_data_.samples) {
-        // Set inputs — use input_data_to_graph_ to translate CSV column IDs
+        // Set inputs 鈥?use input_data_to_graph_ to translate CSV column IDs
         // (keys of sample.inputs) to graph node IDs. The old code iterated
         // graph node IDs and looked them up directly in sample.inputs, which
         // only worked by coincidence when node IDs matched column IDs.
@@ -1097,7 +1095,7 @@ void EvolutionEngine::compute_targets(FailureDiagnosis& diag, uint64_t output_no
 
         // Read the OUTPUT target for this sample. sample.targets is keyed by
         // the CSV DATA id (the key used in SampleIODesc.targets), NOT by the
-        // graph node id — translate the graph output_node_id back to its data
+        // graph node id 鈥?translate the graph output_node_id back to its data
         // id before lookup. Without this, the lookup misses and target
         // defaults to 0.0 for EVERY sample, silently starving the complexity
         // profiler of signal (it profiled current_out / noise instead of the
@@ -1117,7 +1115,7 @@ void EvolutionEngine::compute_targets(FailureDiagnosis& diag, uint64_t output_no
         // fragile: when the downstream OUTPUT has a large learned scale S,
         // importance == S and target_val collapses to (target-bias)/S, which
         // (a) loses ~log10(S) digits to cancellation and (b) leaves var_r ~ 0
-        // so the complexity profiler has no signal — interaction targets like
+        // so the complexity profiler has no signal 鈥?interaction targets like
         // y=x0*x1 were then mis-read as linear/constant.
         //
         // For DETECTION (does some input feature g(inputs) explain the
@@ -1140,7 +1138,7 @@ void EvolutionEngine::compute_targets(FailureDiagnosis& diag, uint64_t output_no
         for (auto uid : upstream_ids) {
             local_map[uid] = graph_->get_any_node_output(uid);
         }
-        // Also add INPUT nodes' raw values — translate CSV column IDs to
+        // Also add INPUT nodes' raw values 鈥?translate CSV column IDs to
         // graph node IDs via input_data_to_graph_ (same correct pattern).
         for (auto nid : input_node_ids) {
             local_map[nid] = 0.0;
@@ -1156,7 +1154,7 @@ void EvolutionEngine::compute_targets(FailureDiagnosis& diag, uint64_t output_no
 }
 
 // ============================================================================
-// pearson_correlation — Pearson r between two vectors
+// pearson_correlation 鈥?Pearson r between two vectors
 // ============================================================================
 double EvolutionEngine::pearson_correlation(const std::vector<Value>& a,
                                             const std::vector<Value>& b) {
@@ -1180,7 +1178,7 @@ double EvolutionEngine::pearson_correlation(const std::vector<Value>& a,
 }
 
 // ============================================================================
-// search_blackboard — correlation search across all graph signals
+// search_blackboard 鈥?correlation search across all graph signals
 // ============================================================================
 std::vector<EvolutionEngine::BlackboardSignal> EvolutionEngine::search_blackboard(
     const FailureDiagnosis& diag) {
@@ -1226,7 +1224,7 @@ std::vector<EvolutionEngine::BlackboardSignal> EvolutionEngine::search_blackboar
 }
 
 // ============================================================================
-// classify_failure — analyze mini-dataset to determine failure nature
+// classify_failure 鈥?analyze mini-dataset to determine failure nature
 // ============================================================================
 EvolutionEngine::FailureType EvolutionEngine::classify_failure(
     const FailureDiagnosis& diag) const {
@@ -1234,7 +1232,7 @@ EvolutionEngine::FailureType EvolutionEngine::classify_failure(
     const auto& targets = diag.targets;
     if (targets.empty()) return FailureType::UNKNOWN;
 
-    // --- Check 1: BOOLEAN_BOUNDARY — targets cluster into distinct groups ---
+    // --- Check 1: BOOLEAN_BOUNDARY 鈥?targets cluster into distinct groups ---
     {
         std::vector<Value> sorted = targets;
         std::sort(sorted.begin(), sorted.end());
@@ -1282,7 +1280,7 @@ EvolutionEngine::FailureType EvolutionEngine::classify_failure(
         }
     }
 
-    // --- Check 2: LINEAR_OFFSET — fit linear model, check R² ---
+    // --- Check 2: LINEAR_OFFSET 鈥?fit linear model, check R虏 ---
     if (diag.local_inputs.size() == targets.size() && targets.size() >= 3) {
         // Robustness: if all targets are identical, it's a constant (UNKNOWN)
         double t_var = 0.0, t_mean = 0.0;
@@ -1311,8 +1309,8 @@ EvolutionEngine::FailureType EvolutionEngine::classify_failure(
         size_t F = feature_ids.size();
         if (F == 0) return FailureType::NON_LINEAR_CURVE;
 
-        // Solve least squares: (X^T X) β = X^T y
-        // X is N×(F+1) with a constant-1 column for bias
+        // Solve least squares: (X^T X) 尾 = X^T y
+        // X is N脳(F+1) with a constant-1 column for bias
         // Simple closed-form using normal equations.
 
         // Compute X^T X
@@ -1340,7 +1338,7 @@ EvolutionEngine::FailureType EvolutionEngine::classify_failure(
             }
         }
 
-        // Gaussian elimination to solve for β
+        // Gaussian elimination to solve for 尾
         std::vector<double> beta = xty;  // starts as RHS
         std::vector<double> Atx = xtx;   // working copy
 
@@ -1352,7 +1350,7 @@ EvolutionEngine::FailureType EvolutionEngine::classify_failure(
                 double v = std::abs(Atx[row + col * (F + 1)]);
                 if (v > max_val) { max_val = v; max_row = row; }
             }
-            if (max_val < config::GAUSS_PIVOT_TOLERANCE) continue;  // singular — stop
+            if (max_val < config::GAUSS_PIVOT_TOLERANCE) continue;  // singular 鈥?stop
 
             // Swap rows
             if (max_row != col) {
@@ -1382,7 +1380,7 @@ EvolutionEngine::FailureType EvolutionEngine::classify_failure(
                 beta[col] = 0.0;
         }
 
-        // Compute R²
+        // Compute R虏
         double ss_total = 0.0, ss_residual = 0.0;
         for (size_t i = 0; i < N; ++i) {
             double pred = beta[0];  // bias
@@ -1406,7 +1404,7 @@ EvolutionEngine::FailureType EvolutionEngine::classify_failure(
 }
 
 // ============================================================================
-// compute_complexity_profile — fingerprint the residual at the bottleneck node
+// compute_complexity_profile 鈥?fingerprint the residual at the bottleneck node
 // ============================================================================
 // See evolution.h for the full design rationale. Key idea: classify_failure()
 // already does a linear fit and returns one of three buckets; this method goes
@@ -1433,7 +1431,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
     prof.num_samples = N;
     if (F == 0 || N < 4) return prof;
 
-    // Build X[N × F] using INPUT features only
+    // Build X[N 脳 F] using INPUT features only
     std::vector<std::vector<double>> X(N, std::vector<double>(F, 0.0));
     for (size_t i = 0; i < N; ++i) {
         for (size_t j = 0; j < F; ++j) {
@@ -1456,7 +1454,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
     prof.bounded = (prof.bound_ratio > 0.0 && prof.bound_ratio < config::PROFILE_BOUNDED_RATIO_MAX);
 
     // --- Degree-2 polynomial fit via Gaussian elimination ---
-    // Feature layout: [1, x_1..x_F, x_1²..x_F², x_1·x_2, x_1·x_3, ..., x_{F-1}·x_F]
+    // Feature layout: [1, x_1..x_F, x_1虏..x_F虏, x_1路x_2, x_1路x_3, ..., x_{F-1}路x_F]
     size_t n_cross = F * (F - 1) / 2;
     size_t P = 1 + 2 * F + n_cross;
     if (N >= P + 2) {
@@ -1475,7 +1473,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
             }
         }
 
-        // Normal equations: (Phi^T Phi) β = Phi^T y
+        // Normal equations: (Phi^T Phi) 尾 = Phi^T y
         std::vector<double> AtA(P * P, 0.0);
         std::vector<double> Aty(P, 0.0);
         for (size_t i = 0; i < N; ++i) {
@@ -1520,7 +1518,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
                 beta[col] = 0.0;
         }
 
-        // R²
+        // R虏
         double ss_res = 0.0, ss_tot = 0.0;
         for (size_t i = 0; i < N; ++i) {
             double pred = 0.0;
@@ -1533,7 +1531,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
 
         // Track the dominant non-bias polynomial term. Compound-hypothesis
         // detection uses this to check whether the strongest term is a
-        // cross-term (x_i·x_j interaction) vs a linear term.
+        // cross-term (x_i路x_j interaction) vs a linear term.
         for (size_t i = 1; i < prof.poly_coeffs.size(); ++i) {
             double v = std::abs(prof.poly_coeffs[i]);
             if (v > std::abs(prof.max_coef_value)) {
@@ -1544,7 +1542,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
 
         // Decode the dominant non-bias term into a concrete (a,b) input pair.
         // Layout: [0]=bias, [1..F]=lin x_i, [F+1..2F]=x_i^2,
-        // [2F+1..]=x_i*x_j (i<j). Used by MULTIPLY source selection — robust
+        // [2F+1..]=x_i*x_j (i<j). Used by MULTIPLY source selection 鈥?robust
         // where Sobol is noisy on low-variance residuals.
         if (F >= 1 && prof.poly_coeffs.size() >= 2 * F + 1
             && prof.max_coef_index >= 1 + F) {
@@ -1647,7 +1645,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
     }
 
     // --- Lipschitz estimate per input axis ---
-    // Sort by x_j, take max(|Δr|/|Δx_j|) over adjacent pairs.
+    // Sort by x_j, take max(|螖r|/|螖x_j|) over adjacent pairs.
     prof.lipschitz_per_axis.assign(F, 0.0);
     for (size_t j = 0; j < F; ++j) {
         std::vector<std::pair<double, double>> xv(N);
@@ -1668,7 +1666,7 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
     prof.sharp_boundary =
         (prof.lipschitz_max > config::PROFILE_SHARP_BOUNDARY_LIPSCHITZ);
 
-    // --- Sign-quadrant means for first two inputs (F≥2) ---
+    // --- Sign-quadrant means for first two inputs (F鈮?) ---
     // Order: (++, +-, -+, --)
     if (F >= 2) {
         std::vector<double> qsum(4, 0.0);
@@ -1687,10 +1685,10 @@ EvolutionEngine::compute_complexity_profile(const FailureDiagnosis& diag) const 
 }
 
 // ----------------------------------------------------------------------------
-// format_profile — single-line human-readable summary
+// format_profile 鈥?single-line human-readable summary
 // ----------------------------------------------------------------------------
 std::string EvolutionEngine::format_profile(const ComplexityProfile& p) const {
-    if (p.num_inputs == 0) return "[PROFILE] (empty — no INPUTs / too few samples)";
+    if (p.num_inputs == 0) return "[PROFILE] (empty 鈥?no INPUTs / too few samples)";
 
     std::ostringstream oss;
     oss << "[PROFILE] F=" << p.num_inputs
@@ -1700,7 +1698,7 @@ std::string EvolutionEngine::format_profile(const ComplexityProfile& p) const {
         << " poly_r2=" << p.poly_r2;
 
     // Polynomial coefficients (degree-2): show only the cross-term and largest
-    // |coeff| among non-bias terms — the full vector would flood the log.
+    // |coeff| among non-bias terms 鈥?the full vector would flood the log.
     if (!p.poly_coeffs.empty()) {
         size_t F = p.num_inputs;
         size_t cross_off = 1 + 2 * F;
@@ -1739,7 +1737,7 @@ std::string EvolutionEngine::format_profile(const ComplexityProfile& p) const {
 }
 
 // ============================================================================
-// form_hypothesis — choose a structural modification strategy
+// form_hypothesis 鈥?choose a structural modification strategy
 // ============================================================================
 EvolutionEngine::Hypothesis EvolutionEngine::form_hypothesis(
     const FailureDiagnosis& diag,
@@ -1747,14 +1745,14 @@ EvolutionEngine::Hypothesis EvolutionEngine::form_hypothesis(
 
     Hypothesis hyp;
 
-    // Strategy 1: CONTEXT_WIRE — if a strong correlated signal exists
+    // Strategy 1: CONTEXT_WIRE 鈥?if a strong correlated signal exists
     if (!blackboard.empty() && blackboard[0].correlation > config::CONTEXT_WIRE_CORR_TRIGGER) {
         hyp.type                = Hypothesis::CONTEXT_WIRE;
         hyp.wire_source_node    = blackboard[0].node_id;
         return hyp;
     }
 
-    // Strategy 2: IFELSE_BOUNDARY_SPLIT — if the failing node isn't constant
+    // Strategy 2: IFELSE_BOUNDARY_SPLIT 鈥?if the failing node isn't constant
     if (!diag.is_constant_output && diag.targets.size() >= 2) {
         // Find median of targets as split threshold
         std::vector<Value> sorted = diag.targets;
@@ -1781,13 +1779,13 @@ EvolutionEngine::Hypothesis EvolutionEngine::form_hypothesis(
         return hyp;
     }
 
-    // Strategy 3: NEURON_TANH_INJECTION — default fallback
+    // Strategy 3: NEURON_TANH_INJECTION 鈥?default fallback
     hyp.type = Hypothesis::NEURON_TANH_INJECTION;
     return hyp;
 }
 
 // ============================================================================
-// generate_candidates — produce scored, ranked hypotheses for retry loop
+// generate_candidates 鈥?produce scored, ranked hypotheses for retry loop
 // ============================================================================
 std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
     const FailureDiagnosis& diag,
@@ -1801,7 +1799,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
     };
     std::vector<ScoredHyp> candidates;
 
-    // Detect binary classification targets ONCE — used by both MULTIPLY
+    // Detect binary classification targets ONCE 鈥?used by both MULTIPLY
     // (to suppress the plateau-fallback for binary problems, where
     // BOOLEAN_COMPOSE is the right tool) and BOOLEAN_COMPOSE (which only
     // fires for binary problems).
@@ -1863,7 +1861,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         Hypothesis ibs;
         ibs.type = Hypothesis::IFELSE_BOUNDARY_SPLIT;
 
-        // Choose condition source FIRST (prefer INPUT) — needed to compute
+        // Choose condition source FIRST (prefer INPUT) 鈥?needed to compute
         // the threshold in the correct value space.
         if (!blackboard.empty()) {
             for (const auto& bs : blackboard) {
@@ -1881,9 +1879,9 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
 
         // Threshold = median of CONDITION SOURCE values, not targets.
         // IFELSE compares condition_source > threshold, so the threshold
-        // must be in the condition source's space (e.g., x ∈ [-5,5]).
+        // must be in the condition source's space (e.g., x 鈭?[-5,5]).
         // Using the target median places the boundary at the wrong position
-        // (e.g., median of y ∈ [-10,3] ≈ -3.5 instead of x boundary at 0).
+        // (e.g., median of y 鈭?[-10,3] 鈮?-3.5 instead of x boundary at 0).
         bool threshold_found = false;
         if (ibs.condition_source_node != 0) {
             auto reg_it = blackboard_registry_.find(ibs.condition_source_node);
@@ -1919,17 +1917,17 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         candidates.push_back({std::move(ibs), score});
     }
 
-    // --- Candidate 3: NEURON_TANH_INJECTION — always viable fallback ---
+    // --- Candidate 3: NEURON_TANH_INJECTION 鈥?always viable fallback ---
     {
         Hypothesis nti;
         nti.type = Hypothesis::NEURON_TANH_INJECTION;
         double score = config::SCORE_NTI_BASE;
-        // Boost for NON_LINEAR_CURVE — it's the best strategy here
+        // Boost for NON_LINEAR_CURVE 鈥?it's the best strategy here
         if (ftype == FailureType::NON_LINEAR_CURVE) score = config::SCORE_NTI_NONLINEAR_BOOST;
         candidates.push_back({std::move(nti), score});
     }
 
-    // --- Candidate 3b: DEEP_INSERTION — residual depth (hierarchical features) ---
+    // --- Candidate 3b: DEEP_INSERTION 鈥?residual depth (hierarchical features) ---
     {
         Node* fn = graph_->get_node(diag.failing_node);
         bool failing_is_trainable = fn && (fn->get_type() == NodeType::NEURON
@@ -1943,7 +1941,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             candidates.push_back({std::move(di), score});
         }
 
-        // --- Candidate 3c: MULTI_LAYER_STACK — 2-layer MLP for hard boundaries ---
+        // --- Candidate 3c: MULTI_LAYER_STACK 鈥?2-layer MLP for hard boundaries ---
         // Injects K parallel hidden neurons + a combining neuron, replacing
         // the single failing neuron with a proper hidden layer. Needed for
         // problems like spirals/checkerboard where no single-layer architecture
@@ -1965,7 +1963,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 mls.compound_K = config::MULTI_LAYER_STACK_K;
                 double score = config::SCORE_MULTI_LAYER_STACK;
                 if (profile.lipschitz_max > config::MULTI_LAYER_STACK_BOOST_LIPSCHITZ) {
-                    score = 0.95;  // extreme complexity → rank above everything
+                    score = 0.95;  // extreme complexity 鈫?rank above everything
                     mls.compound_K = config::MULTI_LAYER_STACK_K_MAX;
                 }
                 candidates.push_back({std::move(mls), score});
@@ -1975,14 +1973,13 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             }
         }
 
-        // --- Candidate 3d: PATCH_POOLING — coarse convolutional prior ---
-        // For image-like input layouts (input count a perfect square ≥
-        // PATCH_POOL_MIN_SIDE², or 3×square for pixel-interleaved RGB),
-        // inject one average-pool LINEAR node per patch_size² block.
+        // --- Candidate 3d: PATCH_POOLING 鈥?coarse convolutional prior ---
+        // For image-like input layouts (input count a perfect square 鈮?        // PATCH_POOL_MIN_SIDE虏, or 3脳square for pixel-interleaved RGB),
+        // inject one average-pool LINEAR node per patch_size虏 block.
         // Uniform 1/k weights = exact block mean; SGD refines them into
         // learned filters. Pooled features wire into the failing node at
         // zero-init (identity start). Skipped when pool nodes already
-        // exist (dedup — one pooling layer per graph).
+        // exist (dedup 鈥?one pooling layer per graph).
         if (failing_is_trainable) {
             int img_inputs = 0;
             bool has_pool = false;
@@ -1993,7 +1990,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             int channels = 1;
             int side = static_cast<int>(std::lround(std::sqrt(static_cast<double>(img_inputs))));
             if (side * side != img_inputs) {
-                // Try pixel-interleaved RGB: input count == 3·side²
+                // Try pixel-interleaved RGB: input count == 3路side虏
                 int s3 = static_cast<int>(std::lround(std::sqrt(img_inputs / 3.0)));
                 if (3 * s3 * s3 == img_inputs) { side = s3; channels = 3; }
             }
@@ -2014,26 +2011,26 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         }
     }
 
-    // --- Candidate 4: MULTIPLY_INJECTION — interaction / polynomial features ---
-    // Adds a product feature A*B (or A*A = A² if only one strong signal).
-    // Useful for: x*y interactions, x² curvature, quadratic surfaces,
-    // building blocks for circular boundaries (x²+y² via repeated commits).
+    // --- Candidate 4: MULTIPLY_INJECTION 鈥?interaction / polynomial features ---
+    // Adds a product feature A*B (or A*A = A虏 if only one strong signal).
+    // Useful for: x*y interactions, x虏 curvature, quadratic surfaces,
+    // building blocks for circular boundaries (x虏+y虏 via repeated commits).
     if (!blackboard.empty()) {
         Hypothesis mi;
         mi.type = Hypothesis::MULTIPLY_INJECTION;
 
         // Interaction-aware source selection.
         //
-        // For an interaction target (y ≈ x_i·x_j or x_i^2), each marginal
+        // For an interaction target (y 鈮?x_i路x_j or x_i^2), each marginal
         // input has ~zero Pearson correlation with the target (positives and
-        // negatives cancel), so the blackboard — ranked by single-feature
-        // |r| — orders the relevant inputs arbitrarily. Two robust signals
+        // negatives cancel), so the blackboard 鈥?ranked by single-feature
+        // |r| 鈥?orders the relevant inputs arbitrarily. Two robust signals
         // identify the right pair:
-        //   1. interaction_dominant — the degree-2 fit's dominant non-bias
+        //   1. interaction_dominant 鈥?the degree-2 fit's dominant non-bias
         //      term is a square/cross term, decoded to interact_a/interact_b.
         //      Robust even on low-variance residuals where Sobol is noisy
         //      (e.g. d4: 12 inputs, y=x0*x1).
-        //   2. high_pairwise_interaction — Sobol pairwise index exceeds
+        //   2. high_pairwise_interaction 鈥?Sobol pairwise index exceeds
         //      threshold (sobol_pair_a/b).
         // Prefer (1); fall back to (2); else blackboard order below.
         std::vector<uint64_t> graph_input_ids;
@@ -2045,7 +2042,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             size_t idx_a = std::min(profile.interact_a, graph_input_ids.size() - 1);
             size_t idx_b = std::min(profile.interact_b, graph_input_ids.size() - 1);
             // NOTE: do NOT force idx_a != idx_b here. A dominant square term
-            // (x_i^2) is a GENUINE self-product signal — overriding it to a
+            // (x_i^2) is a GENUINE self-product signal 鈥?overriding it to a
             // cross-product picks the wrong feature (regressed t31). The
             // self-product is supported by MULTIPLY_INJECTION routing.
             mi.multiply_source_a = graph_input_ids[idx_a];
@@ -2074,7 +2071,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // of intermediate signals (e.g., neuron*neuron). After the first
         // NEURON commit, the NEURON's output typically dominates the
         // blackboard by correlation, but multiplying two NEURON outputs
-        // is rarely what the problem needs — we want raw feature crosses.
+        // is rarely what the problem needs 鈥?we want raw feature crosses.
         // Fall back to top-2-by-correlation only if fewer than 2 INPUTs
         // are present in the blackboard.
         if (!sobol_pair_used) {
@@ -2087,7 +2084,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 mi.multiply_source_a = input_signals[0];
                 mi.multiply_source_b = input_signals[1];
             } else if (input_signals.size() == 1) {
-                // One INPUT available — pair it with the top-correlated signal
+                // One INPUT available 鈥?pair it with the top-correlated signal
                 // (which may be another INPUT or a useful intermediate).
                 mi.multiply_source_a = input_signals[0];
                 mi.multiply_source_b = (blackboard[0].node_id != input_signals[0])
@@ -2095,7 +2092,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                                      : (blackboard.size() >= 2 ? blackboard[1].node_id
                                                                : blackboard[0].node_id);
             } else {
-                // No INPUT signals in blackboard — fall back to top-2 correlation
+                // No INPUT signals in blackboard 鈥?fall back to top-2 correlation
                 mi.multiply_source_a = blackboard[0].node_id;
                 if (blackboard.size() >= 2) {
                     mi.multiply_source_b = blackboard[1].node_id;
@@ -2105,31 +2102,30 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             }
         }
 
-        double score = config::SCORE_MULTIPLY_BASE;  // baseline — experimental, ranks BELOW proven NEURON_TANH_INJECTION (0.1)
-        // Boost for NON_LINEAR_CURVE — products capture curvature that
-        // a single tanh neuron struggles with (e.g., x² outside [-1,1])
+        double score = config::SCORE_MULTIPLY_BASE;  // baseline 鈥?experimental, ranks BELOW proven NEURON_TANH_INJECTION (0.1)
+        // Boost for NON_LINEAR_CURVE 鈥?products capture curvature that
+        // a single tanh neuron struggles with (e.g., x虏 outside [-1,1])
         if (ftype == FailureType::NON_LINEAR_CURVE) score = std::max(score, config::SCORE_MULTIPLY_NONLINEAR_BOOST);
-        // Boost for LINEAR_OFFSET — many interaction-term problems
+        // Boost for LINEAR_OFFSET 鈥?many interaction-term problems
         // (y=x1*x2) get misclassified as LINEAR_OFFSET because the local
         // linear fit at the failing node looks okay-ish. The missing
         // feature is genuinely a product, not another linear signal.
         if (ftype == FailureType::LINEAR_OFFSET) score = std::max(score, config::SCORE_MULTIPLY_NONLINEAR_BOOST);
         // Boost when both top signals correlate strongly AND the target is
-        // continuous (interaction-term signal). Skip for BOOLEAN_BOUNDARY —
-        // products don't solve binary classification (e.g., XOR needs
-        // x1+x2-2·x1·x2, not just x1·x2).
+        // continuous (interaction-term signal). Skip for BOOLEAN_BOUNDARY 鈥?        // products don't solve binary classification (e.g., XOR needs
+        // x1+x2-2路x1路x2, not just x1路x2).
         if (ftype != FailureType::BOOLEAN_BOUNDARY && blackboard.size() >= 2) {
             double r1 = std::abs(blackboard[0].correlation);
             double r2 = std::abs(blackboard[1].correlation);
             if (r1 > config::MULTIPLY_CORR_TRIGGER && r2 > config::MULTIPLY_CORR_TRIGGER) score = std::max(score, config::SCORE_MULTIPLY_INTERACTION_BOOST);
         }
 
-        // Plateau fallback: symmetric polynomial features (y=x² on symmetric
-        // input, y=x1·x2 over 4 quadrants, y=x1²+x2²) have ~0 Pearson r
+        // Plateau fallback: symmetric polynomial features (y=x虏 on symmetric
+        // input, y=x1路x2 over 4 quadrants, y=x1虏+x2虏) have ~0 Pearson r
         // with the target because positive and negative contributions cancel,
-        // so the correlation-trigger above never fires — but the INPUT
+        // so the correlation-trigger above never fires 鈥?but the INPUT
         // signals themselves are clearly visible in the blackboard. When
-        // ≥2 INPUT signals exist and the problem isn't binary classification
+        // 鈮? INPUT signals exist and the problem isn't binary classification
         // (where BOOLEAN_COMPOSE is the right tool), the missing feature is
         // very likely a product. Boost above CONTEXT_WIRE (0.85) so MULTIPLY
         // gets tried before another linear wire commit bloats the graph.
@@ -2139,7 +2135,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
 
         // Dedup: if the graph already has a MULTIPLY node with the same
         // source pair, try the OTHER input's self-product. This fixes t23
-        // (y=x0²+x1²) where the poly fit keeps recommending the same
+        // (y=x0虏+x1虏) where the poly fit keeps recommending the same
         // feature after the first commit.
         auto multiply_exists = [&](uint64_t a, uint64_t b) -> bool {
             for (const auto& conn_pair : graph_->get_connections()) {
@@ -2201,7 +2197,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             uint64_t da = mi.multiply_source_a;
             uint64_t db = mi.multiply_source_b;
             if (da != 0 && db != 0 && da != db) {
-                // Reverse map: graph node id → data key, for reading raw
+                // Reverse map: graph node id 鈫?data key, for reading raw
                 // training-space denominator values.
                 std::unordered_map<uint64_t, uint64_t> graph_to_data;
                 for (const auto& kv : input_data_to_graph_) {
@@ -2212,7 +2208,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 bool have_vals = (da_it != graph_to_data.end() && db_it != graph_to_data.end());
 
                 // Denominator safety: min |values| must clear
-                // max(ABS_FLOOR, MIN_REL × std) over the training set.
+                // max(ABS_FLOOR, MIN_REL 脳 std) over the training set.
                 auto denom_safe = [&](uint64_t den_data_key) -> bool {
                     if (!have_vals) return false;
                     double mn = 1e18, sq = 0.0, sum = 0.0;
@@ -2250,7 +2246,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
 
                 // Demote divide-family ONLY when a degree-2 fit actually
                 // explains the residual (poly_r2 >= 0.95). When the fit
-                // fails (I.32.8 q²a²/c³: 0.937 — needs 1/c³), a quotient is
+                // fails (I.32.8 q虏a虏/c鲁: 0.937 鈥?needs 1/c鲁), a quotient is
                 // precisely what's missing; LINEAR_OFFSET classification is
                 // then an artifact of the strong linear numerator term.
                 double dscore = config::SCORE_DIVIDE_BOOST;
@@ -2282,8 +2278,8 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                     try_emit(db, da);
                 }
 
-                // COMPOUND_DIVIDE_PRODUCT: (a·b)/c — quotient-of-products
-                // for q²a²/c³-class residuals (I.32.8). Emitted when a
+                // COMPOUND_DIVIDE_PRODUCT: (a路b)/c 鈥?quotient-of-products
+                // for q虏a虏/c鲁-class residuals (I.32.8). Emitted when a
                 // third safe-denominator input exists besides the multiply
                 // pair. Uses the same denom_safe gate; validation arbitrates.
                 if (have_vals) {
@@ -2318,7 +2314,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         candidates.push_back({std::move(mi), score});
     }
 
-    // --- Candidate 5: BOOLEAN_COMPOSE — parity / multi-condition logic ---
+    // --- Candidate 5: BOOLEAN_COMPOSE 鈥?parity / multi-condition logic ---
     // Composes two signals via XOR/AND/OR (with implicit thresholding).
     //
     // Detection: we look at the GLOBAL training labels, not the local node
@@ -2338,26 +2334,26 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             bc.type           = Hypothesis::BOOLEAN_COMPOSE;
             bc.bool_source_a  = blackboard[0].node_id;
             bc.bool_source_b  = blackboard[1].node_id;
-            bc.bool_op        = NodeType::XOR;  // default — most expressive for parity
+            bc.bool_op        = NodeType::XOR;  // default 鈥?most expressive for parity
             bc.bool_threshold = 0.0;
-            double score = config::SCORE_BOOLEAN_COMPOSE;  // strong score — this is the right tool for binary problems
+            double score = config::SCORE_BOOLEAN_COMPOSE;  // strong score 鈥?this is the right tool for binary problems
             candidates.push_back({std::move(bc), score});
         }
     }
 
-    // --- Candidate 6: COMPOUND_MULTIPLY_NEURON — sin(xy)-class composition ---
+    // --- Candidate 6: COMPOUND_MULTIPLY_NEURON 鈥?sin(xy)-class composition ---
     // Fires when the complexity profile of the residual shows:
     //   (1) A dominant polynomial cross-term a_ij (structurally meaningful
-    //       relative to the linear coefficients), indicating an x_i·x_j
+    //       relative to the linear coefficients), indicating an x_i路x_j
     //       interaction is the missing feature; AND
     //   (2) The residual is BOUNDED (max-min range is small relative to
     //       stddev), indicating the missing function is a squashing curve
     //       (sin, tanh, sigmoid) applied to that product.
     //
     // Neither MULTIPLY_INJECTION alone (unbounded product, useless without a
-    // nonlinearity — fails validation) nor NEURON_TANH_INJECTION alone (no
+    // nonlinearity 鈥?fails validation) nor NEURON_TANH_INJECTION alone (no
     // interaction feature to bind to) can solve this class. The composition
-    // MULTIPLY → NEURON → TANH, validated as a single unit, can.
+    // MULTIPLY 鈫?NEURON 鈫?TANH, validated as a single unit, can.
     //
     // Skip for binary classification (BOOLEAN_COMPOSE is the right tool).
     if (!is_binary && profile.num_inputs >= 2 && profile.bounded) {
@@ -2388,11 +2384,11 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         if (cross_term_dominant) {
             // Pick the two RAW INPUT nodes identified by the Sobol pairwise
             // index as having the strongest interaction. The profile already
-            // computed sobol_pair_a and sobol_pair_b — these are input INDICES
+            // computed sobol_pair_a and sobol_pair_b 鈥?these are input INDICES
             // (0-based among INPUT nodes), not graph node IDs.
             //
             // CRITICAL: we must multiply RAW INPUTS (x_i, x_j), not intermediate
-            // neurons. MULTIPLY(neuron_a, neuron_b) cannot learn sin(x·y)
+            // neurons. MULTIPLY(neuron_a, neuron_b) cannot learn sin(x路y)
             // because the intermediate outputs are not the product features
             // the target depends on.
             std::vector<uint64_t> graph_input_ids;
@@ -2406,7 +2402,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 size_t idx_a = std::min(profile.sobol_pair_a, graph_input_ids.size() - 1);
                 size_t idx_b = std::min(profile.sobol_pair_b, graph_input_ids.size() - 1);
                 if (idx_a == idx_b) {
-                    // Avoid multiplying an input by itself — pick adjacent
+                    // Avoid multiplying an input by itself 鈥?pick adjacent
                     idx_b = (idx_a + 1) % graph_input_ids.size();
                 }
                 src_a = graph_input_ids[idx_a];
@@ -2420,13 +2416,13 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 candidates.push_back({std::move(compound), config::SCORE_COMPOUND_MULTIPLY_NEURON});
                 Logger::info("Compound candidate emitted: MULTIPLY(input="
                              + std::to_string(src_a) + ",input=" + std::to_string(src_b)
-                             + ")→NEURON→TANH (cross-term ratio triggered, sobol_pair="
+                             + ")鈫扤EURON鈫扵ANH (cross-term ratio triggered, sobol_pair="
                              + std::to_string(profile.sobol_pairwise) + ")");
             }
         }
     }
 
-    // --- Candidate 6.1: COMPOUND_MULTIPLY_ABS — |x*y|-class composition ---
+    // --- Candidate 6.1: COMPOUND_MULTIPLY_ABS 鈥?|x*y|-class composition ---
     // Emitted when interaction_dominant fires AND the target is sign-symmetric
     // (essentially non-negative, like |x*y|). The non-negativity gate is what
     // distinguishes a genuine |interaction| target from a plain signed product
@@ -2434,7 +2430,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
     // tool. Without this gate the candidate adds thrash to sign-varying
     // interaction tasks (t31 variance tripled) without helping them.
     if (!is_binary && profile.interaction_dominant && profile.num_inputs >= 2
-        && profile.poly_r2 < 0.95                             // abs fold => poor poly fit; perfect fit (x²) needs no abs
+        && profile.poly_r2 < 0.95                             // abs fold => poor poly fit; perfect fit (x虏) needs no abs
         && !diag.targets.empty()) {
         Value tmin = *std::min_element(diag.targets.begin(), diag.targets.end());
         Value tmax = *std::max_element(diag.targets.begin(), diag.targets.end());
@@ -2457,20 +2453,19 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 candidates.push_back({std::move(compound), config::SCORE_COMPOUND_MULTIPLY_NEURON});
                 Logger::info("Compound candidate emitted: MULTIPLY(input="
                              + std::to_string(graph_input_ids[idx_a]) + ",input="
-                             + std::to_string(graph_input_ids[idx_b]) + ")→ABS (sign-symmetric, interaction_dominant)");
+                             + std::to_string(graph_input_ids[idx_b]) + ")鈫扐BS (sign-symmetric, interaction_dominant)");
             }
         }
     }
 
-    // --- Candidate 6.5: COMPOUND_MULTIPLY3_NEURON — x*y*z-class 3-way product ---
+    // --- Candidate 6.5: COMPOUND_MULTIPLY3_NEURON 鈥?x*y*z-class 3-way product ---
     // Fires when 3+ inputs and the degree-2 polynomial fit is poor
     // (poly_r2 < threshold) because the missing feature is the 3-way product
-    // x·y·z, which degree-2 can't represent. NOTE: not gated on `bounded` —
-    // raw products (y=x*y*z) are unbounded; only the sin(x*y*z) subclass is
-    // bounded, and the NEURON→TANH handles squashing either way.
+    // x路y路z, which degree-2 can't represent. NOTE: not gated on `bounded` 鈥?    // raw products (y=x*y*z) are unbounded; only the sin(x*y*z) subclass is
+    // bounded, and the NEURON鈫扵ANH handles squashing either way.
     //
-    // Architecture: MULTIPLY(MULTIPLY(x,y),z) → NEURON → TANH → ADD
-    // The nested MULTIPLY computes x·y·z, then NEURON→TANON learns the target.
+    // Architecture: MULTIPLY(MULTIPLY(x,y),z) 鈫?NEURON 鈫?TANH 鈫?ADD
+    // The nested MULTIPLY computes x路y路z, then NEURON鈫扵ANON learns the target.
     if (!is_binary && profile.num_inputs >= 3
         && profile.poly_r2 < config::COMPOUND3_POLY_R2_MAX
         && profile.var_r > config::COMPOUND3_VAR_MIN) {
@@ -2503,14 +2498,14 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             Logger::info("Compound candidate emitted: MULTIPLY3(input="
                          + std::to_string(src_a) + "," + std::to_string(src_b)
                          + "," + std::to_string(src_c)
-                         + ")→NEURON→TANH (3-way product, poly_r2="
+                         + ")鈫扤EURON鈫扵ANH (3-way product, poly_r2="
                          + std::to_string(profile.poly_r2) + ")");
         }
     }
 
-    // --- Candidate 7a: SIN_INJECTION — sin(wx+b) for oscillating residuals ---
+    // --- Candidate 7a: SIN_INJECTION 鈥?sin(wx+b) for oscillating residuals ---
     // One SIN node = one sine component. For bounded smooth residuals that
-    // OSCILLATE (multiple sign changes when sorted by input — distinguishes
+    // OSCILLATE (multiple sign changes when sorted by input 鈥?distinguishes
     // sin(kx) from a step function which has only 1 sign change).
 if (profile.bounded
     && profile.var_r > config::COMPOUND_TANH_VAR_MIN
@@ -2543,10 +2538,10 @@ if (profile.bounded
             }
             // Frequency estimate from sign changes: each half-period is one
             // sign change, so periods = sign_changes/2 and
-            // w = 2π·periods / (x_max - x_min). x is in the graph's (normalized)
+            // w = 2蟺路periods / (x_max - x_min). x is in the graph's (normalized)
             // input space, so w is in the space the new NEURON weight lives in.
             // d2 (x mod 3 over normalized [0,12]): 8 sign changes, 4 periods,
-            // range ~3.46 → w ≈ 7.26 — exactly the frequency SGD was too slow
+            // range ~3.46 鈫?w 鈮?7.26 鈥?exactly the frequency SGD was too slow
             // to reach from zero-init.
             double freq_est = 0.0;
             if (sorted_xt.size() >= 2) {
@@ -2581,10 +2576,10 @@ if (profile.bounded
             candidates.push_back({std::move(sinj), config::SCORE_COMPOUND_TANH_SERIES});
             Logger::info("Candidate emitted: SIN_INJECTION (bounded oscillating residual)");
 
-            // --- COMPOUND_SIN_PRODUCT: MULTIPLY(a,b) → NEURON(freq) → SIN ---
+            // --- COMPOUND_SIN_PRODUCT: MULTIPLY(a,b) 鈫?NEURON(freq) 鈫?SIN ---
             // For sin-of-product signatures: residual oscillates when sorted
-            // by ANY single axis (sign_changes ≥ 3) AND the profile shows an
-            // interaction (interaction_dominant or sobol pairwise) — the
+            // by ANY single axis (sign_changes 鈮?3) AND the profile shows an
+            // interaction (interaction_dominant or sobol pairwise) 鈥?the
             // oscillation lives in the PRODUCT space, which single-axis SIN
             // can't express. Sources: same interaction pair MULTIPLY uses.
             if (profile.num_inputs >= 2
@@ -2606,7 +2601,7 @@ if (profile.bounded
                 csp.multiply_source_a = pa;
                 csp.multiply_source_b = pb;
                 // Reuse the single-axis frequency estimate as the inner
-                // neuron init — SGD refines it into product-space units.
+                // neuron init 鈥?SGD refines it into product-space units.
                 csp.sin_freq_init = (freq_est > 0.0) ? freq_est : 1.0;
                 candidates.push_back({std::move(csp), config::SCORE_COMPOUND_SIN_PRODUCT});
                 Logger::info("Candidate emitted: COMPOUND_SIN_PRODUCT (input="
@@ -2619,14 +2614,14 @@ if (profile.bounded
     }
 
     // --- COMPOUND_SIN_PRODUCT, unbounded path ---
-    // x·sin(x·y)-class targets (Korns F4): the residual includes a strong
-    // LINEAR component (2.3·x0) so the bounded gate above never fires, but
+    // x路sin(x路y)-class targets (Korns F4): the residual includes a strong
+    // LINEAR component (2.3路x0) so the bounded gate above never fires, but
     // the degree-2 fit leaves a non-polynomial remainder. Emit when:
-    // poly_r2 < 0.95 (a pure x·y product would fit degree-2 exactly).
+    // poly_r2 < 0.95 (a pure x路y product would fit degree-2 exactly).
     // Sources: interaction evidence if present; else the top-2 Lipschitz
     // axes (oscillation concentrates local slope on the participating
     // inputs). Default freq init 1.0: product-space oscillation over
-    // |p| ≲ 10 has O(1) frequency; SGD refines within the 3x budget.
+    // |p| 鈮?10 has O(1) frequency; SGD refines within the 3x budget.
     if (!profile.bounded
         && profile.num_inputs >= 2
         && profile.poly_r2 < 0.95) {
@@ -2661,7 +2656,7 @@ if (profile.bounded
                 }
                 pa = graph_input_ids[a1];
                 pb = graph_input_ids[a2];
-                score = 0.90;  // speculative pair choice — below MULTIPLY fallback
+                score = 0.90;  // speculative pair choice 鈥?below MULTIPLY fallback
             }
             if (pa != 0 && pb != 0 && pa != pb) {
                 Hypothesis csp;
@@ -2677,15 +2672,15 @@ if (profile.bounded
         }
     }
 
-    // --- Candidate 7: COMPOUND_TANH_SERIES — sin(x)-class smooth bounded ---
+    // --- Candidate 7: COMPOUND_TANH_SERIES 鈥?sin(x)-class smooth bounded ---
     // Triggered when residual is bounded + smooth + high-variance, but NOT
     // sharp-boundary (which would suggest IFELSE instead). This catches the
     // signature of "needs more curve capacity" that classify_failure()
     // misclassifies as LINEAR_OFFSET (the oscillation around zero inflates
-// the linear-fit R²).
+// the linear-fit R虏).
 //
 // NOTE: an earlier relaxation (drop !sharp + lipschitz ceiling) let this fire
-// for high-frequency sin like d3 — selection-correct but net-negative: the
+// for high-frequency sin like d3 鈥?selection-correct but net-negative: the
 // K tanh chains can't converge fast enough in the shadow budget, so d3 ended
 // up slightly worse (0.117 -> 0.122) and 7x more variable. The binding
 // constraint there is convergence rate / expressivity (sin(11x) needs ~22
@@ -2744,7 +2739,7 @@ if (profile.bounded
                 series.compound_K = config::COMPOUND_TANH_SERIES_K;
             candidates.push_back({std::move(series), config::SCORE_COMPOUND_TANH_SERIES});
             Logger::info("Compound candidate emitted: TANH_SERIES(input="
-                         + std::to_string(src) + ")×"
+                         + std::to_string(src) + ")脳"
                          + std::to_string(series.compound_K)
                          + " (bounded smooth residual, var_r="
                          + std::to_string(profile.var_r).substr(0, 6)
@@ -2752,7 +2747,7 @@ if (profile.bounded
         }
     }
 
-    // --- Candidate 8: RECURRENT_SELF_WIRE — sequence/memory targets ---
+    // --- Candidate 8: RECURRENT_SELF_WIRE 鈥?sequence/memory targets ---
     // Only attempted in sequence mode (cfg_.sequence_mode, set by --no-shuffle),
     // because memory-based targets need temporal order to carry state. Adds a
     // self-recurrent input to the failing NEURON; BPTT in train() grows it.
@@ -2769,7 +2764,7 @@ if (profile.bounded
         }
 
         // RECURRENT_XOR: for binary sequence tasks (running parity).
-        // A NEURON can't compute XOR of (input, prev_state) — XOR needs
+        // A NEURON can't compute XOR of (input, prev_state) 鈥?XOR needs
         // a dedicated node. Check if inputs are binary (2 distinct values).
         bool inputs_binary = true;
         {
@@ -2791,13 +2786,13 @@ if (profile.bounded
         }
     }
 
-    // --- Candidate 9: PARITY_TREE — k-bit parity as ONE atomic XOR tree ---
+    // --- Candidate 9: PARITY_TREE 鈥?k-bit parity as ONE atomic XOR tree ---
     // Greedy structural search can't build parity incrementally: every
     // intermediate XOR(x_i, x_j) gives ZERO loss improvement over the
     // base rate, so single-step validation rejects each partial tree.
     // The tree XOR(x0, XOR(x1, ...)) is exact, so inject it whole and
     // let validation see the finished function.
-    // Gate: binary inputs (≤2 distinct raw values), binary target,
+    // Gate: binary inputs (鈮? distinct raw values), binary target,
     // 3..16 inputs, not sequence mode (RECURRENT_XOR owns that), no
     // existing parity root (dedup).
     if (!cfg_.sequence_mode && is_binary) {
@@ -2812,7 +2807,7 @@ if (profile.bounded
             && k >= config::PARITY_TREE_MIN_INPUTS
             && k <= config::PARITY_TREE_MAX_INPUTS) {
             // Verify all inputs are binary (raw values; binary features
-            // skip normalization so they stay 0/1 or ±1).
+            // skip normalization so they stay 0/1 or 卤1).
             bool inputs_binary = true;
             {
                 std::set<Value> distinct;
@@ -2839,7 +2834,7 @@ if (profile.bounded
     // function shape), either BOOST an already-emitted candidate's score or
     // INJECT a candidate the profile gates blocked. Injection only fires on
     // strong matches (distance < LIBRARY_INJECT_THRESHOLD) and the validation
-    // gate still decides commit/reject — so it's safe to try.
+    // gate still decides commit/reject 鈥?so it's safe to try.
     if (library_ && !library_->entries().empty() && !diag.targets.empty()) {
         std::vector<uint64_t> lib_input_ids;
         for (const auto& node : graph_->get_nodes())
@@ -2861,8 +2856,7 @@ if (profile.bounded
 
                 // Use the CURRENT PROBLEM's profile (not the matched entry's)
                 // to select the hypothesis type. The library's role is to say
-                // "this behavior has been solved before" (fingerprint match) —
-                // a confidence signal + injection permission. The CURRENT
+                // "this behavior has been solved before" (fingerprint match) 鈥?                // a confidence signal + injection permission. The CURRENT
                 // problem's own shape determines WHICH tool to use.
                 double pr_range = profile.max_r - profile.min_r;
                 bool pr_sign_sym = (pr_range > 1e-9) ?
@@ -2895,7 +2889,7 @@ if (profile.bounded
                 }
 
                 // --- Injection: if the suggested type is NOT already emitted
-                // and the match is strong, inject it — bypassing the profile
+                // and the match is strong, inject it 鈥?bypassing the profile
                 // gates that would normally block it. Validation still decides.
                 if (!already_present && matches[0].distance < config::LIBRARY_INJECT_THRESHOLD) {
                     Hypothesis h;
@@ -2950,7 +2944,7 @@ if (profile.bounded
 }
 
 // ============================================================================
-// apply_shadow_routing — clone graph; apply the structural modification
+// apply_shadow_routing 鈥?clone graph; apply the structural modification
 // ============================================================================
 std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     const Hypothesis& hyp,
@@ -3012,20 +3006,18 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // When the failing node is a NEURON, add a PARALLEL neuron (not serial).
         //
         // WHY: The previous code inserted NEURON_B AFTER the existing NEURON_A,
-        // creating tanh(w_b * tanh(w_a · x) + b_b). This serial chain is WORSE
+        // creating tanh(w_b * tanh(w_a 路 x) + b_b). This serial chain is WORSE
         // than the original single neuron for XOR-like problems because:
         //   - It still has a single bottleneck through NEURON_A
         //   - Double tanh squashing causes vanishing gradients
         //   - XOR requires TWO parallel features, not a serial composition
         //
         // The fix creates a parallel architecture:
-        //   INPUT(s) → NEURON_A ──┐
-        //                          ├→ ADD → downstream (OUTPUT)
-        //   INPUT(s) → NEURON_B ──┘
-        //
+        //   INPUT(s) 鈫?NEURON_A 鈹€鈹€鈹?        //                          鈹溾啋 ADD 鈫?downstream (OUTPUT)
+        //   INPUT(s) 鈫?NEURON_B 鈹€鈹€鈹?        //
         // NEURON_B gets the SAME input connections as NEURON_A. The ADD node
         // combines them. This gives a 2-unit hidden layer with a linear output
-        // head — sufficient to solve XOR and approximate piecewise functions.
+        // head 鈥?sufficient to solve XOR and approximate piecewise functions.
         //
         // For non-NEURON failing nodes, keep the old serial approach (insert a
         // NEURON+TANH chain to add non-linear capacity where none existed).
@@ -3073,7 +3065,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             shadow->add_connection(failing_id,  0, add_id, 0);
             shadow->add_connection(new_neuron,  0, add_id, 1);
 
-            // Re-route: ADD → original downstream
+            // Re-route: ADD 鈫?original downstream
             for (const auto& c : outgoing) {
                 shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
             }
@@ -3106,17 +3098,17 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // Insert IFELSE to mask the failing node's output based on a domain split.
         //
         // The GREATER comparator must compare the RAW INPUT signal against a
-        // threshold constant — NOT the failing node's (tanh-squashed) output.
+        // threshold constant 鈥?NOT the failing node's (tanh-squashed) output.
         // This is the key fix: previously, GREATER(failing_node, condition_src)
         // split on the post-activation output (bounded [-1,1]), which could not
         // correctly partition the input domain.
         //
         // IFELSE semantics: input[0]=condition, input[1]=value.
-        //   condition=true  → output[0]=value, output[1]=0
-        //   condition=false → output[0]=0,       output[1]=value
+        //   condition=true  鈫?output[0]=value, output[1]=0
+        //   condition=false 鈫?output[0]=0,       output[1]=value
         //
         // We connect output[1] (false branch) to downstream. This creates a
-        // domain mask: "pass failing_node through when x ≤ threshold, output 0
+        // domain mask: "pass failing_node through when x 鈮?threshold, output 0
         // when x > threshold." For cliff/piecewise tasks where one region should
         // be suppressed, this is the correct behavior.
 
@@ -3125,7 +3117,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // Resolve condition_src: must be a node whose output represents the
         // input domain signal (preferably an INPUT node from the blackboard).
         if (condition_src == 0 || !shadow->get_node(condition_src)) {
-            // No blackboard signal available — fall back to failing_node as
+            // No blackboard signal available 鈥?fall back to failing_node as
             // condition source (degraded but better than no split).
             condition_src = failing_id;
         }
@@ -3153,7 +3145,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         shadow->add_connection(condition_src, 0, greater_id, 0);
         shadow->add_connection(threshold_id,  0, greater_id, 1);
 
-        // Wire GREATER → IFELSE(0) [condition], failing_node → IFELSE(1) [value]
+        // Wire GREATER 鈫?IFELSE(0) [condition], failing_node 鈫?IFELSE(1) [value]
         shadow->add_connection(greater_id, 0, ifelse_id, 0);
         shadow->add_connection(failing_id, 0, ifelse_id, 1);
 
@@ -3162,9 +3154,9 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             shadow->remove_connection(c.src_node, c.src_port, c.dst_node, c.dst_port);
         }
 
-        // Re-route: IFELSE output[1] (false branch: x ≤ threshold) → downstream.
-        // When x > threshold (true), output[1]=0 → downstream gets 0 (masked).
-        // When x ≤ threshold (false), output[1]=failing_node → downstream gets value.
+        // Re-route: IFELSE output[1] (false branch: x 鈮?threshold) 鈫?downstream.
+        // When x > threshold (true), output[1]=0 鈫?downstream gets 0 (masked).
+        // When x 鈮?threshold (false), output[1]=failing_node 鈫?downstream gets value.
         for (const auto& c : outgoing) {
             shadow->add_connection(ifelse_id, 1, c.dst_node, c.dst_port);
         }
@@ -3173,30 +3165,28 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::MULTIPLY_INJECTION: {
-        // Add a product feature A*B (or A² if B is missing/==A).
+        // Add a product feature A*B (or A虏 if B is missing/==A).
         //
         // Architecture:
-        //   src_a ──┐
-        //          MULTIPLY ──→ [feature output]
-        //   src_b ──┘
-        //
+        //   src_a 鈹€鈹€鈹?        //          MULTIPLY 鈹€鈹€鈫?[feature output]
+        //   src_b 鈹€鈹€鈹?        //
         // Routing:
         //   - If failing_node is NEURON: extend its input count by 1 and
         //     wire MULTIPLY output as a new input. The neuron's existing
         //     weights give the product a learnable coefficient for free.
-        //   - Otherwise: route MULTIPLY → fresh 1-input NEURON → ADD combiner
+        //   - Otherwise: route MULTIPLY 鈫?fresh 1-input NEURON 鈫?ADD combiner
         //     alongside the failing node's output. The fresh neuron provides
-        //     the learnable weight w·(A·B) + b.
+        //     the learnable weight w路(A路B) + b.
         //
         // Why: many targets need interaction terms (x*y) or polynomial
-        // features (x²) that a linear combination of inputs cannot express.
-        // A single NEURON with tanh can fit x² on [-1,1] but saturates
-        // outside that range — explicit MULTIPLY generalizes correctly.
+        // features (x虏) that a linear combination of inputs cannot express.
+        // A single NEURON with tanh can fit x虏 on [-1,1] but saturates
+        // outside that range 鈥?explicit MULTIPLY generalizes correctly.
 
         uint64_t src_a = hyp.multiply_source_a;
         uint64_t src_b = hyp.multiply_source_b;
         if (src_a == 0 || !shadow->get_node(src_a)) break;
-        if (src_b == 0) src_b = src_a;  // self-product → x²
+        if (src_b == 0) src_b = src_a;  // self-product 鈫?x虏
         if (!shadow->get_node(src_b)) break;
 
         uint64_t mul_id = shadow->add_node(NodeType::MULTIPLY, "feature_product");
@@ -3240,7 +3230,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     case Hypothesis::DIVIDE_INJECTION: {
         // Quotient feature: DIVIDE(num, den) wired like MULTIPLY_INJECTION.
         // For NEURON/LINEAR failing nodes, the new input port's weight is
-        // ZERO-INIT (identity start — the raw ratio can be large, so a
+        // ZERO-INIT (identity start 鈥?the raw ratio can be large, so a
         // random weight would disrupt the trained graph). Otherwise route
         // through a fresh 1-input NEURON + ADD combiner.
 
@@ -3289,12 +3279,10 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::COMPOUND_SIN_PRODUCT: {
-        // MULTIPLY(a,b) → NEURON(freq-init) → SIN → ADD
-        //                                     ↑
-        //   failing_node ─────────────────────┘
-        //
-        // sin-of-product targets (x·sin(x·y), A·sin(kx)). The inner NEURON
-        // starts at the estimated FREQUENCY (not zero — the point of this
+        // MULTIPLY(a,b) 鈫?NEURON(freq-init) 鈫?SIN 鈫?ADD
+        //                                     鈫?        //   failing_node 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        //
+        // sin-of-product targets (x路sin(x路y), A路sin(kx)). The inner NEURON
+        // starts at the estimated FREQUENCY (not zero 鈥?the point of this
         // hypothesis is a trained oscillator over the product; zero-init
         // would kill its gradient through sin(0)). SGD refines frequency
         // (weight) and phase (bias). ADD gives identity start for the
@@ -3306,7 +3294,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         if (src_b == 0) src_b = src_a;
         if (!shadow->get_node(src_b)) break;
 
-        // 1. MULTIPLY: x_i · x_j
+        // 1. MULTIPLY: x_i 路 x_j
         uint64_t mul_id = shadow->add_node(NodeType::MULTIPLY, "sinprod_product");
         shadow->add_connection(src_a, 0, mul_id, 0);
         shadow->add_connection(src_b, 0, mul_id, 1);
@@ -3326,7 +3314,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         shadow->add_connection(neuron_id, 0, sin_id, 0);
 
         // 3b. Zero-gain NEURON: identity start. The freq-init sin begins
-        // ACTIVE (full oscillation) — wiring it straight into ADD disrupts
+        // ACTIVE (full oscillation) 鈥?wiring it straight into ADD disrupts
         // the trained graph (shadow_train 35 vs baseline 4.5 on Korns F4).
         // A zero-weight neuron after the sin lets SGD grow the amplitude
         // while the frequency is already at its estimate.
@@ -3357,11 +3345,9 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::COMPOUND_DIVIDE_PRODUCT: {
-        // DIVIDE(MULTIPLY(a,b), c) → NEURON(zero-gain) → ADD
-        //                                              ↑
-        //   failing_node ──────────────────────────────┘
-        //
-        // q²a²/c³-class targets (Feynman I.32.8). The raw quotient can be
+        // DIVIDE(MULTIPLY(a,b), c) 鈫?NEURON(zero-gain) 鈫?ADD
+        //                                              鈫?        //   failing_node 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        //
+        // q虏a虏/c鲁-class targets (Feynman I.32.8). The raw quotient can be
         // large, so a zero-gain output neuron gives identity start (same
         // pattern as COMPOUND_SIN_PRODUCT's fix).
 
@@ -3406,15 +3392,13 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::COMPOUND_MULTIPLY_NEURON: {
-        // Compound composition: MULTIPLY(src_a, src_b) → NEURON → TANH → ADD
-        //                                                     ↑
-        //   failing_node ──────────────────────────────────────┘
-        //
+        // Compound composition: MULTIPLY(src_a, src_b) 鈫?NEURON 鈫?TANH 鈫?ADD
+        //                                                     鈫?        //   failing_node 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        //
         // Why a compound: MULTIPLY alone yields an unbounded product that
-        // validation rejects (raw x·y is not a useful feature for sin(x·y)).
+        // validation rejects (raw x路y is not a useful feature for sin(x路y)).
         // NEURON_TANH alone has no interaction feature to bind to. The
-        // composition MULTIPLY → NEURON → TANH, validated atomically, can
-        // learn sin(x·y) ≈ tanh(w·(x·y) + b) — a bounded function of the
+        // composition MULTIPLY 鈫?NEURON 鈫?TANH, validated atomically, can
+        // learn sin(x路y) 鈮?tanh(w路(x路y) + b) 鈥?a bounded function of the
         // product. This case is emitted by generate_candidates when the
         // complexity profile shows a dominant polynomial cross-term AND a
         // bounded residual.
@@ -3425,17 +3409,17 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         if (src_b == 0) src_b = src_a;
         if (!shadow->get_node(src_b)) break;
 
-        // 1. MULTIPLY node: x_i · x_j interaction feature.
+        // 1. MULTIPLY node: x_i 路 x_j interaction feature.
         uint64_t mul_id = shadow->add_node(NodeType::MULTIPLY, "compound_product");
         shadow->add_connection(src_a, 0, mul_id, 0);
         shadow->add_connection(src_b, 0, mul_id, 1);
 
         // 2. NEURON: provides learnable weight + bias on the product.
         //    ZERO-INIT (weight=0, bias=0) so the new chain contributes
-        //    nothing initially: TANH(0·x·y + 0) = TANH(0) = 0, and
-        //    ADD(old, 0) = old. The compound starts as identity — SGD then
+        //    nothing initially: TANH(0路x路y + 0) = TANH(0) = 0, and
+        //    ADD(old, 0) = old. The compound starts as identity 鈥?SGD then
         //    grows the chain's contribution as it learns. Without this,
-        //    random Xavier init produces TANH(random) ≢ 0, which disrupts
+        //    random Xavier init produces TANH(random) 鈮?0, which disrupts
         //    the well-trained output and causes catastrophic regression
         //    (shadow_train jumps from 0.089 to 0.35 every cycle).
         uint64_t neuron_id = shadow->add_node(NodeType::NEURON, "compound_neuron");
@@ -3447,7 +3431,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         }
         shadow->add_connection(mul_id, 0, neuron_id, 0);
 
-        // 3. TANH: bounded squashing nonlinearity — this is what makes the
+        // 3. TANH: bounded squashing nonlinearity 鈥?this is what makes the
         //    composition useful for sin/tanh/sigmoid of product targets.
         //    Without it, the NEURON output is unbounded and validation
         //    rejects the commit just like bare MULTIPLY.
@@ -3553,12 +3537,10 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::COMPOUND_MULTIPLY3_NEURON: {
-        // Three-way compound: MULTIPLY(MULTIPLY(a,b),c) → NEURON → TANH → ADD
-        //                                                          ↑
-        //   failing_node ───────────────────────────────────────────┘
-        //
-        // For sin(x·y·z)-class functions where no single pair dominates.
-        // The nested MULTIPLY computes the 3-way product, then NEURON→TANH
+        // Three-way compound: MULTIPLY(MULTIPLY(a,b),c) 鈫?NEURON 鈫?TANH 鈫?ADD
+        //                                                          鈫?        //   failing_node 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        //
+        // For sin(x路y路z)-class functions where no single pair dominates.
+        // The nested MULTIPLY computes the 3-way product, then NEURON鈫扵ANH
         // learns sin of it. Same zero-init identity start as MULTIPLY_NEURON.
 
         uint64_t src_a = hyp.multiply_source_a;
@@ -3568,7 +3550,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         if (src_b == 0 || !shadow->get_node(src_b)) break;
         if (src_c == 0 || !shadow->get_node(src_c)) break;
 
-        // 1. Nested MULTIPLY: (x·y)·z
+        // 1. Nested MULTIPLY: (x路y)路z
         uint64_t mul_ab = shadow->add_node(NodeType::MULTIPLY, "compound3_product_ab");
         shadow->add_connection(src_a, 0, mul_ab, 0);
         shadow->add_connection(src_b, 0, mul_ab, 1);
@@ -3576,7 +3558,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         shadow->add_connection(mul_ab, 0, mul_abc, 0);
         shadow->add_connection(src_c, 0, mul_abc, 1);
 
-        // 2. NEURON (zero-init): TANH(0·xyz + 0) = 0 → identity start.
+        // 2. NEURON (zero-init): TANH(0路xyz + 0) = 0 鈫?identity start.
         uint64_t neuron_id = shadow->add_node(NodeType::NEURON, "compound3_neuron");
         Node* nn = shadow->get_node(neuron_id);
         if (nn && nn->get_type() == NodeType::NEURON) {
@@ -3608,21 +3590,15 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::COMPOUND_TANH_SERIES: {
-        // Compound series of NEURON→TANH chains, summed via ADD alongside
+        // Compound series of NEURON鈫扵ANH chains, summed via ADD alongside
         // the failing node. Designed for smooth bounded residuals that need
         // more curve capacity than a single tanh can provide (e.g. sin(x)
         // over multiple periods).
         //
         // Architecture (K = COMPOUND_TANH_SERIES_K):
         //
-        //                      ┌─→ NEURON ─→ TANH ─┐
-        //   INPUT ────┬────────┼─→ NEURON ─→ TANH ─┼─→ ADD ──→ ADD ──→ ADD ──┐
-        //             │        └─→ NEURON ─→ TANH ─┘                         │
-        //             │                                                   ↓
-        //   failing_node ──────────────────────────────────────────────→ ADD (chain)
-        //                                                                │
-        //                                                                ↓
-        //                                                          (original outgoing)
+        //                      鈹屸攢鈫?NEURON 鈹€鈫?TANH 鈹€鈹?        //   INPUT 鈹€鈹€鈹€鈹€鈹攢鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹尖攢鈫?NEURON 鈹€鈫?TANH 鈹€鈹尖攢鈫?ADD 鈹€鈹€鈫?ADD 鈹€鈹€鈫?ADD 鈹€鈹€鈹?        //             鈹?       鈹斺攢鈫?NEURON 鈹€鈫?TANH 鈹€鈹?                        鈹?        //             鈹?                                                  鈫?        //   failing_node 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈫?ADD (chain)
+        //                                                                鈹?        //                                                                鈫?        //                                                          (original outgoing)
         //
         // Rationale: a sum of K tanh bumps can approximate K zeros of a
         // smooth function. sin(x) over [-5, 5] has 3 zero crossings,
@@ -3643,8 +3619,8 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                 static_cast<NeuronNode*>(nn)->set_input_count(1);
                 // Zero-init ALL chains with tiny deterministic symmetry breaking.
                 // Each chain k gets weight = epsilon * (k - K/2 + 0.5), so the
-                // initial TANH output ≈ epsilon·x ≈ 0 — near identity start.
-                // Without this, Xavier-init chains produce TANH(±1·x) ≈ ±1
+                // initial TANH output 鈮?epsilon路x 鈮?0 鈥?near identity start.
+                // Without this, Xavier-init chains produce TANH(卤1路x) 鈮?卤1
                 // which catastrophically disrupts the trained graph.
                 constexpr double TANH_SERIES_EPS = 1e-3;
                 double wk = TANH_SERIES_EPS * (static_cast<double>(k)
@@ -3705,7 +3681,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::SIN_INJECTION: {
-        // sin(wx+b): INPUT → NEURON(w init) → SIN → ADD.
+        // sin(wx+b): INPUT 鈫?NEURON(w init) 鈫?SIN 鈫?ADD.
         // For oscillating bounded residuals (sin(kx)) where TANH_SERIES
         // can't provide enough bumps. Multiple commits stack via ADD.
         // w inits to hyp.sin_freq_init when the emission estimated the
@@ -3739,13 +3715,11 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // Compose two boolean signals via XOR/AND/OR.
         //
         // Architecture (when sources need thresholding):
-        //   src_a ──→ GREATER ──┐
-        //                        XOR/AND/OR ──→ [feature output]
-        //   src_b ──→ GREATER ──┘
-        //
+        //   src_a 鈹€鈹€鈫?GREATER 鈹€鈹€鈹?        //                        XOR/AND/OR 鈹€鈹€鈫?[feature output]
+        //   src_b 鈹€鈹€鈫?GREATER 鈹€鈹€鈹?        //
         // Why threshold: XOR/AND/OR execute via `inputs_[i] != 0.0` truthiness.
         // For continuous inputs in [-1,1] or [0,1], almost every value is
-        // "truthy" — so XOR(0.3, 0.7) returns 0 (both truthy). Thresholding
+        // "truthy" 鈥?so XOR(0.3, 0.7) returns 0 (both truthy). Thresholding
         // via GREATER(src, threshold) gives true boolean semantics.
         //
         // Sources that already produce booleans (GREATER, XOR, etc.) skip
@@ -3837,11 +3811,9 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::DEEP_INSERTION: {
-        // Residual depth: failing_node → NEURON(zero-init) → TANH → ADD
-        //                                              ↑
-        //   failing_node ──────────────────────────────┘
-        //
-        // Creates a deeper processing path. At init: TANH(0·x+0)=0, so
+        // Residual depth: failing_node 鈫?NEURON(zero-init) 鈫?TANH 鈫?ADD
+        //                                              鈫?        //   failing_node 鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹€鈹?        //
+        // Creates a deeper processing path. At init: TANH(0路x+0)=0, so
         // ADD(old, 0) = old (identity start). SGD grows the NEURON weight
         // and bias, allowing the TANH to add nonlinear corrections to the
         // failing node's output. This adds DEPTH (hierarchical features)
@@ -3876,7 +3848,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         shadow->add_connection(failing_id, 0, add_id, 0);
         shadow->add_connection(tanh_id,   0, add_id, 1);
 
-        // 4. Re-route: ADD → original downstream
+        // 4. Re-route: ADD 鈫?original downstream
         for (const auto& c : outgoing) {
             shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
         }
@@ -3886,15 +3858,13 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     case Hypothesis::MULTI_LAYER_STACK: {
         // Replace the failing single neuron with a 2-layer MLP:
         //
-        //   INPUT(s) → NEURON_1a ──┐
-        //            → NEURON_1b ──→ NEURON_combine(K) → OUTPUT
-        //            → NEURON_1c ──┘
-        //             ...K total
+        //   INPUT(s) 鈫?NEURON_1a 鈹€鈹€鈹?        //            鈫?NEURON_1b 鈹€鈹€鈫?NEURON_combine(K) 鈫?OUTPUT
+        //            鈫?NEURON_1c 鈹€鈹€鈹?        //             ...K total
         //
         // The K first-layer neurons each receive the SAME inputs as the
         // failing node, with independent Xavier init (diverse features).
         // The combining neuron has near-zero init with tiny symmetry
-        // breaking so the stack starts as identity (output ≈ 0, leaving
+        // breaking so the stack starts as identity (output 鈮?0, leaving
         // the existing OUTPUT bias to carry the prediction). SGD then
         // grows the combining weights to select useful features.
 
@@ -3953,12 +3923,12 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             cnp->set_bias(0.0);
         }
 
-        // Wire hidden neurons → combining neuron
+        // Wire hidden neurons 鈫?combining neuron
         for (int k = 0; k < K; ++k) {
             shadow->add_connection(hidden_ids[k], 0, combine_id, k);
         }
 
-        // Route combining neuron → original downstream (REPLACE routing).
+        // Route combining neuron 鈫?original downstream (REPLACE routing).
         // The failing node is orphaned (dead-code-eliminated). The new
         // bottleneck becomes the combine neuron, so subsequent stacks
         // go DEEPER (stack of stacks = added layers). Empirically better
@@ -3971,16 +3941,14 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     }
 
     case Hypothesis::PATCH_POOLING: {
-        // Build one average-pool LINEAR node per patch_size² block of the
+        // Build one average-pool LINEAR node per patch_size虏 block of the
         // image, then wire all pooled features into the failing node.
         //
-        //   pixels of patch (py,px) ──→ LINEAR(pool_py_px, w=1/k each) ──┐
-        //                                                                   ├→ failing node (new ports, zero-init)
-        //   ... one per patch ...                                        ──┘
-        //
+        //   pixels of patch (py,px) 鈹€鈹€鈫?LINEAR(pool_py_px, w=1/k each) 鈹€鈹€鈹?        //                                                                   鈹溾啋 failing node (new ports, zero-init)
+        //   ... one per patch ...                                        鈹€鈹€鈹?        //
         // A LINEAR node with uniform 1/k weights computes the exact block
         // mean; SGD can refine weights into learned filters afterwards.
-        // Failing node's new input weights start at 0 → identity start.
+        // Failing node's new input weights start at 0 鈫?identity start.
 
         int patch = (hyp.compound_K > 0) ? hyp.compound_K : config::PATCH_POOL_PATCH_SIZE;
 
@@ -3989,8 +3957,8 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         for (const auto& n : shadow->get_nodes()) {
             if (n->get_type() == NodeType::INPUT) input_ids.push_back(n->get_id());
         }
-        // Layout: channels=1 → grayscale, index y*side+x.
-        //         channels=3 → pixel-interleaved RGB, index (y*side+x)*3+c.
+        // Layout: channels=1 鈫?grayscale, index y*side+x.
+        //         channels=3 鈫?pixel-interleaved RGB, index (y*side+x)*3+c.
         int channels = 1;
         int side = static_cast<int>(std::lround(std::sqrt(static_cast<double>(input_ids.size()))));
         if (side * side != static_cast<int>(input_ids.size())) {
@@ -4048,7 +4016,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                                                static_cast<size_t>(dy * patch + dx));
                     }
                 }
-                // Pooled feature → failing node's reserved port
+                // Pooled feature 鈫?failing node's reserved port
                 shadow->add_connection(pool_id, 0, failing_id,
                                        first_new_port + static_cast<size_t>(pool_idx));
                 ++pool_idx;
@@ -4063,9 +4031,8 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         //   output[t] = input[t] XOR output[t-1]
         //
         // Architecture:
-        //   INPUT ──→ XOR ←── (recurrent self-loop: own output[0])
-        //              ↓
-        //           downstream (OUTPUT)
+        //   INPUT 鈹€鈹€鈫?XOR 鈫愨攢鈹€ (recurrent self-loop: own output[0])
+        //              鈫?        //           downstream (OUTPUT)
         //
         // The XOR node uses truthiness (!= 0.0) semantics. For binary
         // inputs (0/1), this correctly computes running parity. The
@@ -4097,9 +4064,9 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // Create XOR node
         uint64_t xor_id = shadow->add_node(NodeType::XOR, "recurrent_xor");
 
-        // Wire INPUT → XOR(port 0)
+        // Wire INPUT 鈫?XOR(port 0)
         shadow->add_connection(input_src, 0, xor_id, 0);
-        // Wire XOR(self) recurrent → XOR(port 1)
+        // Wire XOR(self) recurrent 鈫?XOR(port 1)
         shadow->add_connection(xor_id, 0, xor_id, 1);
 
         // Route XOR output directly to OUTPUT node(s), replacing all
@@ -4116,7 +4083,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                     shadow->remove_connection(c.src_node, c.src_port,
                                              c.dst_node, c.dst_port);
                 }
-                // Connect XOR → OUTPUT
+                // Connect XOR 鈫?OUTPUT
                 shadow->add_connection(xor_id, 0, n->get_id(), 0);
                 // Reset OUTPUT scale/bias to pass-through
                 auto* on = static_cast<OutputNode*>(n.get());
@@ -4132,8 +4099,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         //   root = XOR(x0, XOR(x1, XOR(x2, ... )))
         // Exact k-bit parity in one structural change. XOR uses (in>0)
         // truthiness, so raw 0/1 inputs give 0/1 outputs. Root wires to
-        // every OUTPUT (replacing existing inputs, scale/bias reset) —
-        // SGD then grows scale/bias for confident sigmoid outputs.
+        // every OUTPUT (replacing existing inputs, scale/bias reset) 鈥?        // SGD then grows scale/bias for confident sigmoid outputs.
 
         std::vector<uint64_t> input_ids;
         for (const auto& n : shadow->get_nodes()) {
@@ -4155,7 +4121,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             if (root) root->set_name("parity_root");
         }
 
-        // Root → every OUTPUT (replace inputs; pass-through scale/bias)
+        // Root 鈫?every OUTPUT (replace inputs; pass-through scale/bias)
         for (auto& n : shadow->get_nodes()) {
             if (n->get_type() == NodeType::OUTPUT) {
                 std::vector<Connection> out_conns;
@@ -4168,7 +4134,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                 }
                 shadow->add_connection(acc, 0, n->get_id(), 0);
                 auto* on = static_cast<OutputNode*>(n.get());
-                on->set_scale(4.0);   // sigmoid(±4) ≈ 0.982 — confident start
+                on->set_scale(4.0);   // sigmoid(卤4) 鈮?0.982 鈥?confident start
                 on->set_bias(0.0);
             }
         }
@@ -4187,7 +4153,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
 // Phase 6: Graph compilation helpers
 // ============================================================================
 
-// is_purely_constant — check if a node and all its transitive inputs are CONSTANT
+// is_purely_constant 鈥?check if a node and all its transitive inputs are CONSTANT
 static bool is_purely_constant(const Graph& g, uint64_t node_id,
                                std::unordered_set<uint64_t>& visited) {
     if (!visited.insert(node_id).second) return true;  // already confirmed
@@ -4244,9 +4210,9 @@ int graph_fold_constants(Graph& graph) {
         changed = false;
 
         // Execute the graph once to populate all outputs
-        // Set all INPUT/needed nodes to 0 for execution — we only care about CONSTANTS
+        // Set all INPUT/needed nodes to 0 for execution 鈥?we only care about CONSTANTS
         // Actually, we need the graph to have SOME state. Let's just execute.
-        // But executing requires INPUT values. We'll use a different approach — just check
+        // But executing requires INPUT values. We'll use a different approach 鈥?just check
         // if all inputs settle at compile time.
 
         const auto& nodes = graph.get_nodes();
@@ -4319,7 +4285,7 @@ int graph_compress_neurons(Graph& graph) {
 
         const auto& conns = graph.get_connections();
 
-        // Build a map from node → outgoing connections
+        // Build a map from node 鈫?outgoing connections
         std::unordered_map<uint64_t, std::vector<Connection>> outgoing;
         std::unordered_map<uint64_t, std::vector<Connection>> incoming;
 
@@ -4328,7 +4294,7 @@ int graph_compress_neurons(Graph& graph) {
             incoming[c.dst_node].push_back(c);
         }
 
-        // Find pairs: NEURON/LINEAR A → NEURON/LINEAR B (same type only,
+        // Find pairs: NEURON/LINEAR A 鈫?NEURON/LINEAR B (same type only,
         // to avoid merging tanh with linear activation) where B has no other
         // inputs from B's port.
         for (const auto& [src_id, out_conns] : outgoing) {
@@ -4355,7 +4321,7 @@ int graph_compress_neurons(Graph& graph) {
                 if (!single_input) continue;
 
                 // Compress: merge src NEURON's weights into dst NEURON
-                // src → dst: src_output = bias_src + sum(w_src_i * x_i)
+                // src 鈫?dst: src_output = bias_src + sum(w_src_i * x_i)
                 // dst = bias_dst + w_dst_0 * src_output + sum(w_dst_j * other_inputs)
                 // Merged: dst = (bias_dst + w_dst_0 * bias_src) + sum(w_dst_0 * w_src_i * x_i) + sum(other)
 
@@ -4378,7 +4344,7 @@ int graph_compress_neurons(Graph& graph) {
 
                 Value dst_weight_on_src_port = (c.dst_port < dst_num_inputs) ? dn->get_weight(c.dst_port) : 0.0;
 
-                // Remove connection src → dst
+                // Remove connection src 鈫?dst
                 graph.remove_connection(c.src_node, c.src_port, c.dst_node, c.dst_port);
 
                 // For each input to src NEURON, add equivalent direct connections to dst
@@ -4389,7 +4355,7 @@ int graph_compress_neurons(Graph& graph) {
                     // Find who feeds src NEURON at port i
                     for (const auto& inc : incoming[src_id]) {
                         if (inc.dst_port == i) {
-                            // Add connection from inc.src_node → dst_node
+                            // Add connection from inc.src_node 鈫?dst_node
                             graph.add_connection(inc.src_node, inc.src_port, dst_id, dst_num_inputs + i);
                             break;
                         }
@@ -4426,7 +4392,7 @@ int graph_compress_neurons(Graph& graph) {
 }
 
 // ============================================================================
-// compute_validation_loss — evaluate any graph on validation_data_ (read-only)
+// compute_validation_loss 鈥?evaluate any graph on validation_data_ (read-only)
 // ============================================================================
 double EvolutionEngine::compute_validation_loss(Graph& g) {
     if (validation_data_.samples.empty()) return 0.0;
@@ -4468,7 +4434,7 @@ double EvolutionEngine::compute_validation_loss(Graph& g) {
 }
 
 // ============================================================================
-// evaluate_external — held-out test-set evaluation (per-output MSE / R² / MAE)
+// evaluate_external 鈥?held-out test-set evaluation (per-output MSE / R虏 / MAE)
 // ============================================================================
 std::vector<EvolutionEngine::ExternalEval> EvolutionEngine::evaluate_external(
     const Dataset& data) {
@@ -4524,7 +4490,7 @@ std::vector<EvolutionEngine::ExternalEval> EvolutionEngine::evaluate_external(
 }
 
 // ============================================================================
-// evaluate_external_softmax — comparable one-hot LM/classification metric
+// evaluate_external_softmax 鈥?comparable one-hot LM/classification metric
 // ============================================================================
 std::vector<double> EvolutionEngine::evaluate_external_softmax(const Dataset& data) {
     if (data.samples.empty()) return {};
@@ -4579,9 +4545,9 @@ std::vector<double> EvolutionEngine::evaluate_external_softmax(const Dataset& da
 }
 
 // ============================================================================
-// validate_shadow_only — full validation pipeline WITHOUT mutating graph_
+// validate_shadow_only 鈥?full validation pipeline WITHOUT mutating graph_
 // ============================================================================
-// Performs: compile → train → sanity check → validation loss → commit gate.
+// Performs: compile 鈫?train 鈫?sanity check 鈫?validation loss 鈫?commit gate.
 // Returns a ShadowValidationResult; caller inspects `acceptable` and decides
 // whether to commit. baseline_val is the current graph's validation loss
 // (precomputed by caller to avoid N redundant recomputations when validating
@@ -4632,15 +4598,14 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
     if (!training_data_.samples.empty()) {
         Graph::TrainConfig train_cfg;
         train_cfg.epochs = cfg_.sgd_epochs_per_phase;
-        // MULTI_LAYER_STACK trains K+1 neurons from near-scratch — needs
+        // MULTI_LAYER_STACK trains K+1 neurons from near-scratch 鈥?needs
         // the most budget (6x vs 3x for smaller compounds).
-        // PATCH_POOLING adds n_blocks² pool neurons + zero-init ports —
-        // also needs the large budget.
+        // PATCH_POOLING adds n_blocks虏 pool neurons + zero-init ports 鈥?        // also needs the large budget.
         if (hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)) {
             train_cfg.epochs *= config::MULTI_LAYER_STACK_SGD_MULTIPLIER;
         }
-        // Compound hypotheses add 4 new nodes (MULTIPLY→NEURON→TANH→ADD)
+        // Compound hypotheses add 4 new nodes (MULTIPLY鈫扤EURON鈫扵ANH鈫扐DD)
         // with random weights. The default budget isn't enough to train
         // them from scratch to beat a baseline that's been training for
         // hundreds of epochs. Give them extra room to converge.
@@ -4737,19 +4702,19 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
         }
     }
 
-    // Compute shadow's loss on validation set (sequential — validation set is
+    // Compute shadow's loss on validation set (sequential 鈥?validation set is
     // small, typically ~40 samples; no need for nested threading which would
     // oversubscribe when multiple candidates run in parallel).
     result.val_loss = compute_validation_loss(*shadow_graph);
 
     // Commit gate: two-sided relative scaling. Required improvement =
-    // max(epsilon, min(validation_threshold, 1% × baseline)).
+    // max(epsilon, min(validation_threshold, 1% 脳 baseline)).
     //   Large baselines: 1% branch dominates (noise protection, e.g. CIFAR
     //     at 1.9 where a 1e-3 gain is noise).
     //   Small baselines: the min() caps the requirement BELOW the absolute
-    //     threshold, so it shrinks with the baseline — near-converged tasks
+    //     threshold, so it shrinks with the baseline 鈥?near-converged tasks
     //     (loss < threshold) can still accept real improvements (observed:
-    //     DIVIDE improving val 3.1e-5 → 2.9e-5 was blocked by a flat 1e-3
+    //     DIVIDE improving val 3.1e-5 鈫?2.9e-5 was blocked by a flat 1e-3
     //     floor on Feynman ratio equations).
     double rel = baseline_val * config::COMMIT_MIN_IMPROVEMENT_FRACTION;
     double required_improvement = std::max(config::COMMIT_MIN_IMPROVEMENT,
@@ -4770,12 +4735,12 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT))
                && baseline_val > 1e-9
                && result.val_loss <= baseline_val * (1.0 + config::SHADOW_COMPOUND_VAL_TOLERANCE)) {
-        // Compound tolerance: the MULTIPLY→NEURON→TANH architecture adds 4
+        // Compound tolerance: the MULTIPLY鈫扤EURON鈫扵ANH architecture adds 4
         // fresh nodes with random weights. Even with 3x SGD budget, they
         // can't BEAT a baseline that's been training for hundreds of epochs
         // in a single validation pass. But the profile already confirmed
         // the architecture matches the residual signature (cross-term +
-        // bounded). Accept within 2% of baseline — future SGD cycles will
+        // bounded). Accept within 2% of baseline 鈥?future SGD cycles will
         // refine the new chain. Without this, sin(xy)-class problems are
         // permanently stuck at the first NEURON_TANH plateau.
         result.acceptable = true;
@@ -4791,7 +4756,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
 }
 
 // ============================================================================
-// Phase 7: validate_and_commit — single-candidate convenience wrapper
+// Phase 7: validate_and_commit 鈥?single-candidate convenience wrapper
 // ============================================================================
 // Validates one shadow and commits if acceptable. Kept for backward compat;
 // the parallel candidate loop in evolve() calls validate_shadow_only directly
@@ -4818,12 +4783,12 @@ bool EvolutionEngine::validate_and_commit(std::unique_ptr<Graph>& shadow_graph,
         return true;
     }
 
-    Logger::verbose("  validate: REJECT — " + result.reject_reason);
+    Logger::verbose("  validate: REJECT 鈥?" + result.reject_reason);
     return false;
 }
 
 // ============================================================================
-// compile — orchestrator for all three Phase 6 passes
+// compile 鈥?orchestrator for all three Phase 6 passes
 // ============================================================================
 EvolutionEngine::CompileResult EvolutionEngine::compile() {
     CompileResult result{};
@@ -4839,4 +4804,4 @@ EvolutionEngine::CompileResult EvolutionEngine::compile() {
     return result;
 }
 
-} // namespace gpnn
+} // namespace aria

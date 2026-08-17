@@ -49,3 +49,7 @@ problems/checkpoints/
 
 # Keep test binary ignored too
 problems/tests/*.exe
+
+# legacy binaries still referenced by in-flight chains (delete when chains finish)
+gpnn7.exe
+gpnn9.exe

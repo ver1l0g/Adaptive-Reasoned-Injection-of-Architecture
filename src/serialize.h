@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include "graph.h"
 #include <string>
 
-namespace gpnn {
+namespace aria {
 
 // Serialize a graph to a JSON string
 std::string serialize_graph(const Graph& graph);
@@ -15,4 +15,4 @@ void deserialize_graph(Graph& graph, const std::string& json);
 void save_graph_to_file(const Graph& graph, const std::string& filepath);
 void load_graph_from_file(Graph& graph, const std::string& filepath);
 
-} // namespace gpnn
+} // namespace aria

@@ -1,13 +1,13 @@
-#include "node.h"
+﻿#include "node.h"
 #include "constants.h"
 #include <stdexcept>
 #include <cmath>
 #include <cstdlib>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
-// NodeType ↔ string conversion
+// NodeType 鈫?string conversion
 // ============================================================================
 const char* node_type_to_string(NodeType type) {
     switch (type) {
@@ -164,11 +164,11 @@ void InputNode::set_value(Value value) {
 }
 
 void InputNode::execute() {
-    // No computation needed — value is set externally via set_value()
+    // No computation needed 鈥?value is set externally via set_value()
 }
 
 std::vector<Value> InputNode::backward_input_grads(Value /*output_grad*/) {
-    // Input node has no inputs — gradient stops here
+    // Input node has no inputs 鈥?gradient stops here
     return {};
 }
 
@@ -197,7 +197,7 @@ void OutputNode::execute() {
 }
 
 std::vector<Value> OutputNode::backward_input_grads(Value output_grad) {
-    // ∂out/∂in = scale
+    // 鈭俹ut/鈭俰n = scale
     return {output_grad * scale_};
 }
 
@@ -250,7 +250,7 @@ void ConstantNode::execute() {
 }
 
 std::vector<Value> ConstantNode::backward_input_grads(Value /*output_grad*/) {
-    // Constant has no inputs — gradient stops here
+    // Constant has no inputs 鈥?gradient stops here
     return {};
 }
 
@@ -284,11 +284,11 @@ SinkNode::SinkNode(uint64_t id, const std::string& name)
     : Node(id, NodeType::SINK, name, 1, 0) {}
 
 void SinkNode::execute() {
-    // Sink absorbs its input — nothing to output
+    // Sink absorbs its input 鈥?nothing to output
 }
 
 std::vector<Value> SinkNode::backward_input_grads(Value /*output_grad*/) {
-    // Sink produces no output — no gradient to propagate
+    // Sink produces no output 鈥?no gradient to propagate
     return {};
 }
 
@@ -307,7 +307,7 @@ void AddNode::execute() {
 }
 
 std::vector<Value> AddNode::backward_input_grads(Value output_grad) {
-    // ∂(a+b)/∂a = 1,  ∂(a+b)/∂b = 1
+    // 鈭?a+b)/鈭俛 = 1,  鈭?a+b)/鈭俠 = 1
     return {output_grad, output_grad};
 }
 
@@ -326,7 +326,7 @@ void SubtractNode::execute() {
 }
 
 std::vector<Value> SubtractNode::backward_input_grads(Value output_grad) {
-    // ∂(a-b)/∂a = 1,  ∂(a-b)/∂b = -1
+    // 鈭?a-b)/鈭俛 = 1,  鈭?a-b)/鈭俠 = -1
     return {output_grad, -output_grad};
 }
 
@@ -345,7 +345,7 @@ void MultiplyNode::execute() {
 }
 
 std::vector<Value> MultiplyNode::backward_input_grads(Value output_grad) {
-    // ∂(a*b)/∂a = b,  ∂(a*b)/∂b = a
+    // 鈭?a*b)/鈭俛 = b,  鈭?a*b)/鈭俠 = a
     Value a = inputs_[0];
     Value b = inputs_[1];
     return {output_grad * b, output_grad * a};
@@ -364,7 +364,7 @@ DivideNode::DivideNode(uint64_t id, const std::string& name)
 void DivideNode::execute() {
     // Epsilon-magnitude clamp: near-zero denominators produce huge outputs
     // (z-scored inputs live near 0). Clamp |b| to a small floor, preserving
-    // sign — keeps output finite and gradients bounded (mirrors the
+    // sign 鈥?keeps output finite and gradients bounded (mirrors the
     // BACKWARD_DIV_EPSILON guard in train()).
     Value b = inputs_[1];
     Value bmag = std::abs(b);
@@ -375,7 +375,7 @@ void DivideNode::execute() {
 }
 
 std::vector<Value> DivideNode::backward_input_grads(Value output_grad) {
-    // ∂(a/b)/∂a = 1/b,  ∂(a/b)/∂b = -a/b²
+    // 鈭?a/b)/鈭俛 = 1/b,  鈭?a/b)/鈭俠 = -a/b虏
     Value a = inputs_[0];
     Value b = inputs_[1];
     if (b == 0.0) return {0.0, 0.0};
@@ -397,7 +397,7 @@ void NegateNode::execute() {
 }
 
 std::vector<Value> NegateNode::backward_input_grads(Value output_grad) {
-    // ∂(-x)/∂x = -1
+    // 鈭?-x)/鈭倄 = -1
     return {-output_grad};
 }
 
@@ -461,9 +461,9 @@ void NeuronNode::execute() {
 }
 
 std::vector<Value> NeuronNode::backward_input_grads(Value output_grad) {
-    // Neuron: output = tanh(bias + Σ w_i * x_i)
-    // dtanh/dz = 1 - tanh²(z) = 1 - output²
-    // ∂out/∂x_i = dtanh/dz * w_i = (1 - output²) * w_i
+    // Neuron: output = tanh(bias + 危 w_i * x_i)
+    // dtanh/dz = 1 - tanh虏(z) = 1 - output虏
+    // 鈭俹ut/鈭倄_i = dtanh/dz * w_i = (1 - output虏) * w_i
     Value dtanh = 1.0 - outputs_[0] * outputs_[0];
     std::vector<Value> grads;
     grads.reserve(inputs_.size());
@@ -522,7 +522,7 @@ void ReLUNode::execute() {
 }
 
 std::vector<Value> ReLUNode::backward_input_grads(Value output_grad) {
-    // LeakyReLU: ∂/∂x = 1 if x > 0, else RELU_LEAKY_SLOPE
+    // LeakyReLU: 鈭?鈭倄 = 1 if x > 0, else RELU_LEAKY_SLOPE
     // Uses a small positive gradient for negative inputs to prevent gradient
     // vanishing, which would otherwise kill all upstream training.
     return {(inputs_[0] > 0.0) ? output_grad : output_grad * config::RELU_LEAKY_SLOPE};
@@ -543,7 +543,7 @@ void SigmoidNode::execute() {
 }
 
 std::vector<Value> SigmoidNode::backward_input_grads(Value output_grad) {
-    // ∂σ(x)/∂x = σ(x) * (1 - σ(x)) = output * (1 - output)
+    // 鈭傁?x)/鈭倄 = 蟽(x) * (1 - 蟽(x)) = output * (1 - output)
     Value s = outputs_[0];
     return {output_grad * s * (1.0 - s)};
 }
@@ -563,7 +563,7 @@ void TanhNode::execute() {
 }
 
 std::vector<Value> TanhNode::backward_input_grads(Value output_grad) {
-    // ∂tanh(x)/∂x = 1 - tanh²(x) = 1 - output²
+    // 鈭倀anh(x)/鈭倄 = 1 - tanh虏(x) = 1 - output虏
     Value t = outputs_[0];
     return {output_grad * (1.0 - t * t)};
 }
@@ -583,7 +583,7 @@ void SinNode::execute() {
 }
 
 std::vector<Value> SinNode::backward_input_grads(Value output_grad) {
-    // ∂sin(x)/∂x = cos(x)
+    // 鈭俿in(x)/鈭倄 = cos(x)
     return {output_grad * std::cos(inputs_[0])};
 }
 
@@ -592,14 +592,14 @@ std::unique_ptr<Node> SinNode::clone() const {
 }
 
 // ============================================================================
-// LinearNode — identity activation (w·x + b, no tanh)
+// LinearNode 鈥?identity activation (w路x + b, no tanh)
 // ============================================================================
 LinearNode::LinearNode(uint64_t id, const std::string& name)
     : NeuronNode(id, name, NodeType::LINEAR) {}
 
 void LinearNode::set_input_count(size_t count) {
     // Smaller init than NeuronNode's Xavier: 1/sqrt(fan_in) vs sqrt(6/fan_in).
-    // Keeps initial σ(w·x+b) ≈ 0.5 on high-dimensional inputs, preventing
+    // Keeps initial 蟽(w路x+b) 鈮?0.5 on high-dimensional inputs, preventing
     // sigmoid saturation that kills BCE gradients.
     if (count < config::NEURON_MIN_INPUT_COUNT) count = config::NEURON_MIN_INPUT_COUNT;
     inputs_.resize(count, 0.0);
@@ -620,11 +620,11 @@ void LinearNode::execute() {
         Value w = (i < weights_.size()) ? weights_[i] : 0.0;
         sum += w * inputs_[i];
     }
-    outputs_[0] = sum;  // no tanh — identity activation
+    outputs_[0] = sum;  // no tanh 鈥?identity activation
 }
 
 std::vector<Value> LinearNode::backward_input_grads(Value output_grad) {
-    // ∂out/∂x_i = w_i  (no tanh derivative)
+    // 鈭俹ut/鈭倄_i = w_i  (no tanh derivative)
     std::vector<Value> grads;
     grads.reserve(inputs_.size());
     for (size_t i = 0; i < inputs_.size(); ++i) {
@@ -657,7 +657,7 @@ void IfNode::execute() {
 
 std::vector<Value> IfNode::backward_input_grads(Value output_grad) {
     // STE: use sigmoid to smooth the condition gate
-    // soft(cond, val) ≈ sigmoid(cond/T) * val
+    // soft(cond, val) 鈮?sigmoid(cond/T) * val
     Value temp = config::LOGIC_STE_TEMPERATURE;
     Value sig = 1.0 / (1.0 + std::exp(-inputs_[0] / temp));
     // cond gradient: d/dcond [sigmoid(cond/T) * val] = sig*(1-sig)/T * val
@@ -691,7 +691,7 @@ void IfElseNode::execute() {
 std::vector<Value> IfElseNode::backward_input_grads(Value output_grad) {
     // STE: use sigmoid to smooth the condition gate
     // Dual-output node: only the active branch passes input[1] through.
-    // The inactive branch outputs 0 — its gradient does NOT route to input[1].
+    // The inactive branch outputs 0 鈥?its gradient does NOT route to input[1].
     // Condition gradient sign depends on which branch was active.
     Value temp = config::LOGIC_STE_TEMPERATURE;
     Value sig = 1.0 / (1.0 + std::exp(-inputs_[0] / temp));
@@ -730,7 +730,7 @@ void EqualNode::execute() {
 }
 
 std::vector<Value> EqualNode::backward_input_grads(Value output_grad) {
-    // STE: Gaussian soft-equality exp(-(a-b)²/(2T²))
+    // STE: Gaussian soft-equality exp(-(a-b)虏/(2T虏))
     // gradient pushes a and b toward each other
     Value diff = inputs_[0] - inputs_[1];
     Value temp = config::LOGIC_STE_TEMPERATURE;
@@ -752,7 +752,7 @@ void NotEqualNode::execute() {
 }
 
 std::vector<Value> NotEqualNode::backward_input_grads(Value output_grad) {
-    // STE: complement of Gaussian equality: 1 - exp(-(a-b)²/(2T²))
+    // STE: complement of Gaussian equality: 1 - exp(-(a-b)虏/(2T虏))
     // gradient pushes a and b away from each other
     Value diff = inputs_[0] - inputs_[1];
     Value temp = config::LOGIC_STE_TEMPERATURE;
@@ -776,7 +776,7 @@ void GreaterNode::execute() {
 }
 
 std::vector<Value> GreaterNode::backward_input_grads(Value output_grad) {
-    // STE: sigmoid((a-b)/T) — gradient pushes a up, b down
+    // STE: sigmoid((a-b)/T) 鈥?gradient pushes a up, b down
     Value diff = inputs_[0] - inputs_[1];
     Value temp = config::LOGIC_STE_TEMPERATURE;
     Value sig = 1.0 / (1.0 + std::exp(-diff / temp));
@@ -796,7 +796,7 @@ void LessNode::execute() {
 }
 
 std::vector<Value> LessNode::backward_input_grads(Value output_grad) {
-    // STE: sigmoid((b-a)/T) — gradient pushes a down, b up
+    // STE: sigmoid((b-a)/T) 鈥?gradient pushes a down, b up
     Value diff = inputs_[0] - inputs_[1];
     Value temp = config::LOGIC_STE_TEMPERATURE;
     Value sig = 1.0 / (1.0 + std::exp(-diff / temp));
@@ -816,7 +816,7 @@ void GreaterEqualNode::execute() {
 }
 
 std::vector<Value> GreaterEqualNode::backward_input_grads(Value output_grad) {
-    // STE: sigmoid((a-b)/T) — same soft approximation as GREATER
+    // STE: sigmoid((a-b)/T) 鈥?same soft approximation as GREATER
     Value diff = inputs_[0] - inputs_[1];
     Value temp = config::LOGIC_STE_TEMPERATURE;
     Value sig = 1.0 / (1.0 + std::exp(-diff / temp));
@@ -836,7 +836,7 @@ void LessEqualNode::execute() {
 }
 
 std::vector<Value> LessEqualNode::backward_input_grads(Value output_grad) {
-    // STE: sigmoid((b-a)/T) — same soft approximation as LESS
+    // STE: sigmoid((b-a)/T) 鈥?same soft approximation as LESS
     Value diff = inputs_[0] - inputs_[1];
     Value temp = config::LOGIC_STE_TEMPERATURE;
     Value sig = 1.0 / (1.0 + std::exp(-diff / temp));
@@ -859,7 +859,7 @@ void AndNode::execute() {
 
 std::vector<Value> AndNode::backward_input_grads(Value output_grad) {
     // STE: treat AND as soft f(a,b) = a * b
-    // ∂f/∂a = b,  ∂f/∂b = a
+    // 鈭俧/鈭俛 = b,  鈭俧/鈭俠 = a
     return {output_grad * inputs_[1], output_grad * inputs_[0]};
 }
 
@@ -876,7 +876,7 @@ void OrNode::execute() {
 
 std::vector<Value> OrNode::backward_input_grads(Value output_grad) {
     // STE: treat OR as soft f(a,b) = a + b - a*b
-    // ∂f/∂a = 1 - b,  ∂f/∂b = 1 - a
+    // 鈭俧/鈭俛 = 1 - b,  鈭俧/鈭俠 = 1 - a
     return {output_grad * (1.0 - inputs_[1]), output_grad * (1.0 - inputs_[0])};
 }
 
@@ -893,7 +893,7 @@ void NotNode::execute() {
 
 std::vector<Value> NotNode::backward_input_grads(Value output_grad) {
     // STE: treat NOT as soft f(a) = 1 - a
-    // ∂f/∂a = -1
+    // 鈭俧/鈭俛 = -1
     return {-output_grad};
 }
 
@@ -912,7 +912,7 @@ void XorNode::execute() {
 
 std::vector<Value> XorNode::backward_input_grads(Value output_grad) {
     // STE: treat XOR as soft f(a,b) = a + b - 2ab
-    // ∂f/∂a = 1 - 2b,  ∂f/∂b = 1 - 2a
+    // 鈭俧/鈭俛 = 1 - 2b,  鈭俧/鈭俠 = 1 - 2a
     return {output_grad * (1.0 - 2.0 * inputs_[1]),
             output_grad * (1.0 - 2.0 * inputs_[0])};
 }
@@ -928,9 +928,9 @@ AbsentNode::AbsentNode(uint64_t id, const std::string& name)
     : Node(id, NodeType::ABSENT, name, 1, 1) {}
 
 void AbsentNode::execute() {
-    // Connected but no signal → absent → true (1)
-    // Connected and signal     → present → false (0)
-    // Not connected at all     → false (0)
+    // Connected but no signal 鈫?absent 鈫?true (1)
+    // Connected and signal     鈫?present 鈫?false (0)
+    // Not connected at all     鈫?false (0)
     outputs_[0] = (is_input_connected(0) && !is_input_filled(0)) ? 1.0 : 0.0;
 }
 
@@ -1004,4 +1004,4 @@ void register_builtin_node_types() {
     reg.register_type(NodeType::ABSENT,       [](uint64_t id, const std::string& name) { return std::make_unique<AbsentNode>(id, name); });
 }
 
-} // namespace gpnn
+} // namespace aria

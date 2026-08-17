@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "node.h"
 #include "constants.h"
@@ -8,10 +8,10 @@
 #include <memory>
 #include <string>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
-// Connection — links one output port to one input port
+// Connection 鈥?links one output port to one input port
 // ============================================================================
 struct Connection {
     uint64_t src_node;
@@ -23,7 +23,7 @@ struct Connection {
 };
 
 // ============================================================================
-// Graph — container of nodes and connections
+// Graph 鈥?container of nodes and connections
 // ============================================================================
 class Graph {
 public:
@@ -34,7 +34,7 @@ public:
     Graph(Graph&&) = default;
     Graph& operator=(Graph&&) = default;
 
-    // Deep copy — creates an independent clone in memory (no serialization overhead)
+    // Deep copy 鈥?creates an independent clone in memory (no serialization overhead)
     std::unique_ptr<Graph> clone() const;
 
     // ---- Node management ----
@@ -95,8 +95,8 @@ public:
 
     // ---- Importance / gradient analysis ----
     // Runs a backward pass (backpropagation-inspired) to compute how sensitive
-    // the given output node's value is to each node in the graph (∂out/∂node).
-    // Returns a map of node_id → gradient. The output node itself gets grad=1.0.
+    // the given output node's value is to each node in the graph (鈭俹ut/鈭俷ode).
+    // Returns a map of node_id 鈫?gradient. The output node itself gets grad=1.0.
     // Call execute() first so that the graph has valid input/output values.
     std::unordered_map<uint64_t, Value> compute_importance(uint64_t output_node_id);
 
@@ -106,14 +106,14 @@ public:
     size_t compute_structural_hash() const;
 
     // ---- Error attribution (perturbation-based blame analysis) ----
-    // For each node with outputs, perturb its output by ε, re-execute, and measure
+    // For each node with outputs, perturb its output by 蔚, re-execute, and measure
     // how the error changes. Works on ALL node types including logic/comparison gates.
-    // blame > 0 → node hurts output (perturbing increases error: node is helping)
-    // blame < 0 → node harms output (perturbing decreases error: node is the problem)
+    // blame > 0 鈫?node hurts output (perturbing increases error: node is helping)
+    // blame < 0 鈫?node harms output (perturbing decreases error: node is the problem)
     // Results are sorted by |blame| descending.
     struct SampleIODesc {
-        std::unordered_map<uint64_t, Value> inputs;   // INPUT node_id → value
-        std::unordered_map<uint64_t, Value> targets;  // OUTPUT node_id → expected value
+        std::unordered_map<uint64_t, Value> inputs;   // INPUT node_id 鈫?value
+        std::unordered_map<uint64_t, Value> targets;  // OUTPUT node_id 鈫?expected value
     };
 
     // ---- Loss type for train() ----
@@ -156,7 +156,7 @@ public:
 
     // Train NEURON weights/biases and CONSTANT values via gradient descent
     // on the given samples. Uses the existing backward_input_grads()
-    // infrastructure to compute ∂loss/∂param for each trainable parameter,
+    // infrastructure to compute 鈭俵oss/鈭俻aram for each trainable parameter,
     // then applies SGD updates in-place.
     // Call this inside the fitness function before computing the error score.
     void train(const std::vector<SampleIODesc>& samples,
@@ -180,13 +180,13 @@ public:
     // ---- Node-type replacement search (uses error attribution) ----
     // For each of the top_k most blameworthy nodes (blame < 0), searches
     // for graph modifications that reduce MSE on the given samples:
-    //   REPLACE — swap node with a different non-NN type (variable input counts
+    //   REPLACE 鈥?swap node with a different non-NN type (variable input counts
     //              handled via random subsetting / INPUT-node filling).
-    //   INSERT  — insert a new non-NN node that intercepts a connection near
+    //   INSERT  鈥?insert a new non-NN node that intercepts a connection near
     //              the blameworthy node (pre- or post-processing).
-    //   DELETE  — remove the node and bypass it (cartesian product of
-    //              incoming × outgoing connections).
-    //   REPLACE_INSERT / DELETE_INSERT — two mutations in one trial.
+    //   DELETE  鈥?remove the node and bypass it (cartesian product of
+    //              incoming 脳 outgoing connections).
+    //   REPLACE_INSERT / DELETE_INSERT 鈥?two mutations in one trial.
     // Returns results sorted by improvement descending.
     enum class SearchOperation {
         REPLACE,
@@ -248,7 +248,7 @@ public:
 
     // Fraction of internal nodes (non-INPUT, non-OUTPUT) whose ALL input ports
     // have incoming connections. 0.0 = every node has spare ports, 1.0 = fully
-    // saturated — graph may need to grow to add new connection points.
+    // saturated 鈥?graph may need to grow to add new connection points.
     double compute_saturation_ratio() const;
 
     // ---- Connectivity diagnostics (for empty-seed / cold-start detection) ----
@@ -270,7 +270,7 @@ public:
     void add_node_existing(std::unique_ptr<Node> node);
     void add_connection_existing(Connection conn);
 
-    // ---- Symbolic expression (graph → readable formula) ----
+    // ---- Symbolic expression (graph 鈫?readable formula) ----
     // Converts the subgraph feeding the given OUTPUT node into a human-readable
     // math expression using arithmetic operators, function calls (tanh, sin,
     // etc.), and ternaries for logic nodes. INPUT nodes become x0, x1, ...;
@@ -296,7 +296,7 @@ private:
     mutable std::unordered_map<uint64_t, size_t> node_idx_;
     mutable bool caches_dirty_ = true;
 
-    // Structural hash cache — invalidated on any structural mutation
+    // Structural hash cache 鈥?invalidated on any structural mutation
     mutable bool hash_dirty_ = true;
     mutable size_t cached_hash_ = 0;
 
@@ -316,4 +316,4 @@ private:
     std::set<uint64_t> constant_outputs_;
 };
 
-} // namespace gpnn
+} // namespace aria

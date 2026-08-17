@@ -1,4 +1,4 @@
-#include "serialize.h"
+﻿#include "serialize.h"
 #include "constants.h"
 #include <fstream>
 #include <sstream>
@@ -6,7 +6,7 @@
 #include <cmath>
 #include <cctype>
 
-namespace gpnn {
+namespace aria {
 
 // ============================================================================
 // JSON string writing helper
@@ -109,7 +109,7 @@ static std::string unescape_json_string(const std::string& raw) {
     return result;
 }
 
-// Extract key→value pairs from a JSON object string (includes outer {})
+// Extract key鈫抳alue pairs from a JSON object string (includes outer {})
 static std::vector<std::pair<std::string, std::string>> extract_object_pairs(const std::string& obj_str) {
     std::vector<std::pair<std::string, std::string>> pairs;
     // obj_str looks like:  { ... }
@@ -333,7 +333,7 @@ void deserialize_graph(Graph& graph, const std::string& json) {
                     }
                 }
             } else {
-                // For string values, the raw value might be quoted — pass unquoted
+                // For string values, the raw value might be quoted 鈥?pass unquoted
                 if (!ev.empty() && ev.front() == '"') {
                     std::string unescaped = unescape_json_string(ev);
                     node->deserialize_extra(ek, unescaped);
@@ -394,4 +394,4 @@ void load_graph_from_file(Graph& graph, const std::string& filepath) {
     deserialize_graph(graph, oss.str());
 }
 
-} // namespace gpnn
+} // namespace aria
