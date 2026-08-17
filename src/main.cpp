@@ -504,6 +504,22 @@ int main(int argc, char* argv[]) {
                 std::cout << "  Eval MSE[out" << j << "]:  " << results[j].mse
                           << "   MAE: " << results[j].mae << "\n";
             }
+
+            // ---- Softmax cross-entropy + accuracy (comparable LM metric) ----
+            // When outputs form a one-hot class set (LM / classification),
+            // one-vs-rest BCE numbers are NOT comparable to published
+            // softmax-CE figures (unigram floor etc.). Compute proper
+            // softmax cross-entropy over ALL outputs per sample, plus
+            // top-1 accuracy, plus bits/unit (CE / ln 2).
+            if (results.size() >= 2 && cfg.loss_type == Graph::LossType::BCE) {
+                auto sm = engine.evaluate_external_softmax(eval_data);
+                if (sm.size() == 2) {
+                    constexpr double kLn2 = 0.6931471805599453;
+                    std::cout << "  Eval SoftmaxCE:   " << std::setprecision(6) << sm[0]
+                              << "   (" << (sm[0] / kLn2) << " bits/unit)" << "\n";
+                    std::cout << "  Eval Accuracy:    " << (100.0 * sm[1]) << "%\n";
+                }
+            }
         }
     }
 

@@ -4415,6 +4415,61 @@ std::vector<EvolutionEngine::ExternalEval> EvolutionEngine::evaluate_external(
 }
 
 // ============================================================================
+// evaluate_external_softmax — comparable one-hot LM/classification metric
+// ============================================================================
+std::vector<double> EvolutionEngine::evaluate_external_softmax(const Dataset& data) {
+    if (data.samples.empty()) return {};
+
+    // Sorted output data keys (stable class order)
+    std::vector<uint64_t> out_keys;
+    for (const auto& kv : data.samples[0].targets) out_keys.push_back(kv.first);
+    std::sort(out_keys.begin(), out_keys.end());
+    size_t K = out_keys.size();
+    if (K < 2) return {};
+
+    std::vector<uint64_t> graph_out(K, 0);
+    for (size_t j = 0; j < K; ++j) {
+        auto it = output_data_to_graph_.find(out_keys[j]);
+        if (it == output_data_to_graph_.end()) return {};
+        graph_out[j] = it->second;
+    }
+
+    double ce_sum = 0.0;
+    size_t correct = 0, count = 0;
+    graph_->reset_recurrent_state();
+    for (const auto& sample : data.samples) {
+        for (const auto& kv : sample.inputs) {
+            auto mi = input_data_to_graph_.find(kv.first);
+            if (mi != input_data_to_graph_.end())
+                graph_->set_input_value(mi->second, kv.second);
+        }
+        graph_->execute();
+
+        std::vector<Value> logits(K);
+        for (size_t j = 0; j < K; ++j)
+            logits[j] = graph_->get_output_value(graph_out[j]);
+        uint64_t truth = 0;
+        for (size_t j = 0; j < K; ++j) {
+            auto tit = sample.targets.find(out_keys[j]);
+            if (tit != sample.targets.end() && tit->second > 0.5) truth = j;
+        }
+
+        double mx = *std::max_element(logits.begin(), logits.end());
+        double denom = 0.0, best_val = -1e18;
+        size_t best = 0;
+        for (size_t j = 0; j < K; ++j) {
+            denom += std::exp(logits[j] - mx);
+            if (logits[j] > best_val) { best_val = logits[j]; best = j; }
+        }
+        ce_sum += -(logits[truth] - mx - std::log(denom));
+        if (best == truth) ++correct;
+        ++count;
+    }
+    if (count == 0) return {};
+    return { ce_sum / count, static_cast<double>(correct) / count };
+}
+
+// ============================================================================
 // validate_shadow_only — full validation pipeline WITHOUT mutating graph_
 // ============================================================================
 // Performs: compile → train → sanity check → validation loss → commit gate.

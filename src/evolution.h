@@ -143,6 +143,12 @@ public:
     struct ExternalEval { double mse; double r2; double mae; };
     std::vector<ExternalEval> evaluate_external(const Dataset& data);
 
+    // Softmax cross-entropy + top-1 accuracy over the FULL output set per
+    // sample — the comparable metric for one-hot LM/classification tasks
+    // (one-vs-rest BCE is not comparable to published softmax-CE floors).
+    // Returns {mean_ce_nats, accuracy_fraction}; empty vector on error.
+    std::vector<double> evaluate_external_softmax(const Dataset& data);
+
 private:
     // Test harness access (tests/main_tests.cpp). Friend keeps the public API
     // clean while letting unit tests inspect the private reasoning pipeline
