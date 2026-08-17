@@ -1,0 +1,7 @@
+* text=auto
+*.cpp text
+*.h text
+*.py text
+*.ps1 text
+*.bat text CRLF
+*.txt text
