@@ -486,6 +486,10 @@ private:
     int    consecutive_structural_failures_ = 0;
     int    structural_cooldown_             = 0;
     int    divergence_counter_              = 0;
+    // LR scaling after divergence restores: each restore halves the SGD
+    // learning rate (the same basin re-diverges at full LR — observed as a
+    // 20-epoch restore loop on I.32.8); recovers 5%/epoch back to 1.0.
+    double divergence_lr_mult_             = 1.0;
 
     // Degenerate-loop detection: tracks consecutive same-type commits that
     // don't improve best_overall_loss_. After 3 such, that hypothesis type

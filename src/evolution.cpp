@@ -362,7 +362,7 @@ EvolutionEngine::TrainResult EvolutionEngine::train_parameters() {
 
     Graph::TrainConfig train_cfg;
     train_cfg.epochs         = cfg_.sgd_epochs_per_phase;
-    train_cfg.learning_rate  = cfg_.sgd_learning_rate;
+    train_cfg.learning_rate  = cfg_.sgd_learning_rate * divergence_lr_mult_;
 
     // Compound grace-period LR attenuation.
     //
@@ -462,6 +462,10 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
         epochs_since_structural_++;
         ++epochs_since_best_;
         if (structural_cooldown_ > 0) --structural_cooldown_;
+        // Slow recovery of divergence-reduced LR (5%/epoch, capped at 1.0)
+        if (divergence_lr_mult_ < 1.0) {
+            divergence_lr_mult_ = std::min(1.0, divergence_lr_mult_ * 1.05);
+        }
 
         // ---- Phase 1+2: evaluate and SGD micro-evolution ----
         auto tr = train_parameters();
@@ -487,6 +491,13 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                     current_loss = evaluate_loss(training_data_);
                     best_phase2_loss_ = current_loss;
                     plateau_counter_ = 0;
+                    divergence_counter_ = 0;
+                    // Halve LR: re-entering the same basin at full LR just
+                    // re-diverges (restore loop observed on I.32.8).
+                    divergence_lr_mult_ *= 0.5;
+                    if (divergence_lr_mult_ < 0.01) divergence_lr_mult_ = 0.01;
+                    Logger::info("Divergence LR reduced to "
+                                + std::to_string(divergence_lr_mult_) + "x");
                 }
                 divergence_counter_ = 0;
             }
@@ -2288,34 +2299,55 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                     try_emit(db, da);
                 }
 
-                // COMPOUND_DIVIDE_PRODUCT: (a路b)/c 鈥?quotient-of-products
-                // for q虏a虏/c鲁-class residuals (I.32.8). Emitted when a
-                // third safe-denominator input exists besides the multiply
-                // pair. Uses the same denom_safe gate; validation arbitrates.
-                if (have_vals) {
+                // COMPOUND_DIVIDE_PRODUCT: pow(a*b, n)/pow(c, m) over ALL input
+                // TRIPLES (pair x denominator). The profile's single pair guess
+                // picked the wrong triple twice on I.32.8 ((a*c)^2/q^3 instead
+                // of (q*a)^2/c^3); permutation is cheap and validation
+                // arbitrates. Gated to 3..6 inputs; denom_safe per denominator.
+                if (have_vals && profile.num_inputs >= 3
+                    && profile.num_inputs <= 6) {
+                    std::vector<std::pair<uint64_t, uint64_t>> inputs;
                     for (const auto& kv : input_data_to_graph_) {
-                        uint64_t c_id = kv.second;
-                        if (c_id == da || c_id == db) continue;
-                        if (!graph_->get_node(c_id)) continue;
-                        if (!denom_safe(kv.first)) continue;
-                        Hypothesis cdp;
-                        cdp.type = Hypothesis::COMPOUND_DIVIDE_PRODUCT;
-                        cdp.multiply_source_a = da;
-                        cdp.multiply_source_b = db;
-                        cdp.bool_source_a     = c_id;   // denominator (reuse field)
-                        double cscore = config::SCORE_COMPOUND_DIVIDE_PRODUCT;
-                        if (ftype != FailureType::NON_LINEAR_CURVE
-                            && ftype != FailureType::LINEAR_OFFSET) {
-                            cscore = config::SCORE_DIVIDE_BASE;
-                        } else if (ftype == FailureType::LINEAR_OFFSET
-                                   && profile.poly_r2 >= 0.95) {
-                            cscore = config::SCORE_DIVIDE_BASE;
+                        if (graph_->get_node(kv.second)) inputs.push_back(kv);
+                    }
+                    std::vector<std::pair<int,int>> pows = {{1,1}};
+                    if (profile.poly_r2 < 0.95) {
+                        pows.push_back({2,3});
+                        pows.push_back({2,1});
+                        pows.push_back({1,2});
+                    }
+                    double cscore = config::SCORE_COMPOUND_DIVIDE_PRODUCT;
+                    if (ftype != FailureType::NON_LINEAR_CURVE
+                        && ftype != FailureType::LINEAR_OFFSET) {
+                        cscore = config::SCORE_DIVIDE_BASE;
+                    } else if (ftype == FailureType::LINEAR_OFFSET
+                               && profile.poly_r2 >= 0.95) {
+                        cscore = config::SCORE_DIVIDE_BASE;
+                    }
+                    for (size_t i = 0; i < inputs.size(); ++i) {
+                        for (size_t j = i + 1; j < inputs.size(); ++j) {
+                            for (size_t k = 0; k < inputs.size(); ++k) {
+                                if (k == i || k == j) continue;
+                                if (!denom_safe(inputs[k].first)) continue;
+                                uint64_t pa_ = inputs[i].second;
+                                uint64_t pb_ = inputs[j].second;
+                                uint64_t pc_ = inputs[k].second;
+                                for (auto& npair : pows) {
+                                    int np = npair.first, dp = npair.second;
+                                    Hypothesis cdp;
+                                    cdp.type = Hypothesis::COMPOUND_DIVIDE_PRODUCT;
+                                    cdp.multiply_source_a = pa_;
+                                    cdp.multiply_source_b = pb_;
+                                    cdp.bool_source_a     = pc_;
+                                    cdp.bool_source_b     = (static_cast<uint64_t>(np) << 8)
+                                                          | static_cast<uint64_t>(dp);
+                                    candidates.push_back({std::move(cdp), cscore});
+                                }
+                                Logger::info("Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input="
+                                            + std::to_string(pa_) + "*input=" + std::to_string(pb_)
+                                            + ")^n/input=" + std::to_string(pc_) + "^m");
+                            }
                         }
-                        candidates.push_back({std::move(cdp), cscore});
-                        Logger::info("Candidate emitted: COMPOUND_DIVIDE_PRODUCT ((input="
-                                    + std::to_string(da) + "*input=" + std::to_string(db)
-                                    + ")/input=" + std::to_string(c_id) + ")");
-                        break;  // one denominator candidate per cycle; SGD + future cycles explore others
                     }
                 }
             }
@@ -3449,13 +3481,38 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         if (a == 0 || b == 0 || c == 0) break;
         if (!shadow->get_node(a) || !shadow->get_node(b) || !shadow->get_node(c)) break;
 
-        uint64_t mul_id = shadow->add_node(NodeType::MULTIPLY, "divprod_num");
-        shadow->add_connection(a, 0, mul_id, 0);
-        shadow->add_connection(b, 0, mul_id, 1);
+        // Decode power variant: bool_source_b packs (num_pow<<8)|den_pow.
+        // Default 0 → (1,1). pow chain built via nested MULTIPLY.
+        int np = 1, dp = 1;
+        if (hyp.bool_source_b != 0) {
+            np = static_cast<int>((hyp.bool_source_b >> 8) & 0xFF);
+            dp = static_cast<int>(hyp.bool_source_b & 0xFF);
+            if (np < 1 || np > 3) np = 1;
+            if (dp < 1 || dp > 3) dp = 1;
+        }
+        // pow(base, k): k=1 → base; else nested MULTIPLY (base^2, then ^3)
+        auto build_pow = [&](uint64_t base, int k, const char* tag) -> uint64_t {
+            uint64_t cur = base;
+            for (int i = 2; i <= k; ++i) {
+                uint64_t p = shadow->add_node(NodeType::MULTIPLY,
+                                              std::string(tag) + "_pow" + std::to_string(i));
+                shadow->add_connection(cur, 0, p, 0);
+                shadow->add_connection(base, 0, p, 1);
+                cur = p;
+            }
+            return cur;
+        };
+
+        uint64_t num_base = shadow->add_node(NodeType::MULTIPLY, "divprod_num");
+        shadow->add_connection(a, 0, num_base, 0);
+        shadow->add_connection(b, 0, num_base, 1);
+        uint64_t num_powed = build_pow(num_base, np, "divprod_n");
+
+        uint64_t den_powed = build_pow(c, dp, "divprod_d");
 
         uint64_t div_id = shadow->add_node(NodeType::DIVIDE, "divprod_quotient");
-        shadow->add_connection(mul_id, 0, div_id, 0);
-        shadow->add_connection(c,     0, div_id, 1);
+        shadow->add_connection(num_powed, 0, div_id, 0);
+        shadow->add_connection(den_powed, 0, div_id, 1);
 
         // Gain NEURON — least-squares init (was 0.0: the quotient-of-
         // products starts at the scale the residual wants, immediately
