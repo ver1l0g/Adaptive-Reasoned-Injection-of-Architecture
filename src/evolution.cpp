@@ -4781,6 +4781,9 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
         // disrupting the well-trained existing graph. Without this, the
         // large residual gradients flowing through the new TANH chains
         // destabilise existing weights and cause catastrophic regression.
+        // EXEMPT: COMPOUND_DIVIDE_PRODUCT (gain-init puts it at the right
+        // scale immediately — the 0.2x LR under-trains the exact-feature
+        // variants during shadow validation, costing I.32.8 its races).
         if (hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_NEURON)
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_TANH_SERIES)
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY3_NEURON)
@@ -4789,8 +4792,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
-            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
-            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)) {
+            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)) {
             train_cfg.learning_rate *= config::SHADOW_COMPOUND_LR_MULTIPLIER;
         }
         train_cfg.gradient_clip = cfg_.sgd_gradient_clip;
