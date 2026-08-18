@@ -11,15 +11,23 @@
 namespace aria {
 
 // ============================================================================
-// Connection 鈥?links one output port to one input port
+// Connection — links one output port to one input port
 // ============================================================================
+constexpr size_t MAX_DELAY_TAPS = 4;   // ring-buffer depth (k=1..4 BPTT)
+
 struct Connection {
     uint64_t src_node;
     size_t   src_port;   // output port index on source node
     uint64_t dst_node;
-    size_t   dst_port;   // input port index on target node
+    size_t   dst_port;   // input port on target node
     bool     is_recurrent = false;   // auto-flagged when connection forms a cycle
-    Value    delay_buffer = 0.0;     // value carried from previous timestep (k=1 BPTT)
+    // Multi-tap delay ring: history[0] = previous timestep (k=1, the
+    // classic delay_buffer), history[1] = two steps back, etc.
+    // delay_taps = k (how far back this connection reads). Enables
+    // multi-step memory without deep unrolling (NARMA-30).
+    int      delay_taps = 0;         // 0 → legacy single-step behavior
+    Value    delay_buffer = 0.0;     // k=1 value (kept for serialization compat)
+    std::array<Value, MAX_DELAY_TAPS> history{};   // ring history
 };
 
 // ============================================================================
@@ -59,6 +67,12 @@ public:
                            uint64_t dst_node, size_t dst_port);
 
     const std::vector<Connection>& get_connections() const { return connections_; }
+
+    // Set the delay depth (taps) of an existing recurrent connection.
+    // Returns false if the connection doesn't exist. Used by RECURRENT_
+    // MULTI_TAP routing after add_connection flags the self-edge recurrent.
+    bool set_connection_delay_taps(uint64_t src, size_t sp,
+                                   uint64_t dst, size_t dp, int taps);
 
     // ---- Execution ----
     // Single-pass wave propagation. Input/Constant values must be set beforehand.

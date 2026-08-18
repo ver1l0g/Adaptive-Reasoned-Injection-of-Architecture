@@ -363,7 +363,11 @@ void deserialize_graph(Graph& graph, const std::string& json) {
                 else if (k == "dst_port") dst_port = static_cast<size_t>(num);
             }
         }
-        graph.add_connection_existing({src_node, src_port, dst_node, dst_port, is_recurrent, Value{0.0}});
+        Connection nc;
+        nc.src_node = src_node; nc.src_port = src_port;
+        nc.dst_node = dst_node; nc.dst_port = dst_port;
+        nc.is_recurrent = is_recurrent;
+        graph.add_connection_existing(std::move(nc));
     }
 
     graph.set_next_id(next_id);

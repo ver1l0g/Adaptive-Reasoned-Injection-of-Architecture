@@ -618,7 +618,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // shadow and commit it. This collapses the wall-clock cost
                 // of failed candidates 鈥?previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
-                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT"};
+                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP"};
 
                 struct ShadowSpec {
                     int         rank;
@@ -2835,6 +2835,22 @@ if (profile.bounded
             candidates.push_back({std::move(rxor), config::SCORE_RECURRENT_XOR});
             Logger::info("Candidate emitted: RECURRENT_XOR (binary sequence mode)");
         }
+
+        // RECURRENT_MULTI_TAP: long-sequence memory (NARMA-30 collapsed to
+        // mean prediction with single k=1 lines). K self-wires at delays
+        // 1..K. Emitted in sequence mode for trainable failing nodes.
+        {
+            const Node* fn2 = graph_->get_node(diag.failing_node);
+            if (fn2 && (fn2->get_type() == NodeType::NEURON
+                        || fn2->get_type() == NodeType::LINEAR)) {
+                Hypothesis rmt;
+                rmt.type = Hypothesis::RECURRENT_MULTI_TAP;
+                rmt.compound_K = config::RECURRENT_MULTI_TAP_K;
+                candidates.push_back({std::move(rmt), config::SCORE_RECURRENT_MULTI_TAP});
+                Logger::info("Candidate emitted: RECURRENT_MULTI_TAP (K="
+                            + std::to_string(config::RECURRENT_MULTI_TAP_K) + ")");
+            }
+        }
     }
 
     // --- Candidate 9: PARITY_TREE 鈥?k-bit parity as ONE atomic XOR tree ---
@@ -3835,6 +3851,30 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         break;
     }
 
+    case Hypothesis::RECURRENT_MULTI_TAP: {
+        // K self-recurrent inputs at delays 1..K. Each port reads the
+        // node's own output from k steps back via Connection::delay_taps
+        // (history ring). Zero-init weights: identity start; SGD learns
+        // which taps matter (NARMA-30 needs a ~30-step sum; even K=4 taps
+        // exponentially extends effective memory via composition).
+        Node* fn = shadow->get_node(failing_id);
+        if (!fn || (fn->get_type() != NodeType::NEURON
+                    && fn->get_type() != NodeType::LINEAR)) break;
+        auto* nn = static_cast<NeuronNode*>(fn);
+        int K = (hyp.compound_K > 0)
+              ? std::min(hyp.compound_K, static_cast<int>(MAX_DELAY_TAPS))
+              : config::RECURRENT_MULTI_TAP_K;
+        size_t first_port = nn->get_num_weights();
+        nn->set_input_count(first_port + static_cast<size_t>(K));
+        for (int k = 1; k <= K; ++k) {
+            size_t port = first_port + static_cast<size_t>(k - 1);
+            nn->set_weight(port, 0.0);
+            shadow->add_connection(failing_id, 0, failing_id, port);
+            shadow->set_connection_delay_taps(failing_id, 0, failing_id, port, k);
+        }
+        break;
+    }
+
     case Hypothesis::SIN_INJECTION: {
         // sin(wx+b): INPUT 鈫?NEURON(w init) 鈫?SIN 鈫?ADD.
         // For oscillating bounded residuals (sin(kx)) where TANH_SERIES
@@ -4769,6 +4809,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY3_NEURON)
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_ABS)
             || hyp_type == static_cast<int>(Hypothesis::RECURRENT_SELF_WIRE)
+            || hyp_type == static_cast<int>(Hypothesis::RECURRENT_MULTI_TAP)
             || hyp_type == static_cast<int>(Hypothesis::SIN_INJECTION)
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
@@ -4789,6 +4830,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY3_NEURON)
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_ABS)
             || hyp_type == static_cast<int>(Hypothesis::RECURRENT_SELF_WIRE)
+            || hyp_type == static_cast<int>(Hypothesis::RECURRENT_MULTI_TAP)
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
@@ -4895,6 +4937,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY3_NEURON)
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_ABS)
                 || hyp_type == static_cast<int>(Hypothesis::RECURRENT_SELF_WIRE)
+            || hyp_type == static_cast<int>(Hypothesis::RECURRENT_MULTI_TAP)
                 || hyp_type == static_cast<int>(Hypothesis::SIN_INJECTION)
                 || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
                 || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)

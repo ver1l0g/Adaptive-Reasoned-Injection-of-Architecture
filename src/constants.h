@@ -580,6 +580,12 @@ constexpr double SCORE_DEEP_INSERTION              = 0.50;
 // Only emitted in sequence mode with binary inputs.
 constexpr double SCORE_RECURRENT_XOR               = 0.97;
 
+// RECURRENT_MULTI_TAP: k self-recurrent inputs at delays 1..K (NARMA-30
+// needs ~30-step history; single k=1 lines decay exponentially and the
+// model collapses to mean prediction). Uses Connection::delay_taps.
+constexpr double SCORE_RECURRENT_MULTI_TAP         = 0.93;
+constexpr int    RECURRENT_MULTI_TAP_K             = 4;     // taps (max ring depth)
+
 // MULTI_LAYER_STACK: injects a K-width hidden layer + combining neuron.
 // Creates a 2-layer MLP: INPUT 鈫?K NEURONs 鈫?NEURON_combine 鈫?OUTPUT.
 // Emitted for high-complexity problems (spirals, checkerboard) where

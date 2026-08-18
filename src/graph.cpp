@@ -191,12 +191,28 @@ bool Graph::add_connection(uint64_t src_node, size_t src_port,
     auto ancestors = get_ancestors(src_node);
     bool is_recurrent = std::find(ancestors.begin(), ancestors.end(), dst_node) != ancestors.end();
 
-    connections_.push_back({src_node, src_port, dst_node, dst_port, is_recurrent, Value{0.0}});
+    Connection nc;
+    nc.src_node = src_node; nc.src_port = src_port;
+    nc.dst_node = dst_node; nc.dst_port = dst_port;
+    nc.is_recurrent = is_recurrent;
+    connections_.push_back(nc);
     dst->mark_input_connected(dst_port);
     invalidate_caches();
     // Only the new connection's downstream is affected — mark dst_node transitively dirty
     mark_transitively_dirty(dst_node);
     return true;
+}
+
+bool Graph::set_connection_delay_taps(uint64_t src, size_t sp,
+                                      uint64_t dst, size_t dp, int taps) {
+    for (auto& c : connections_) {
+        if (c.src_node == src && c.src_port == sp
+            && c.dst_node == dst && c.dst_port == dp) {
+            c.delay_taps = taps;
+            return true;
+        }
+    }
+    return false;
 }
 
 void Graph::remove_connection(uint64_t src_node, size_t src_port,
@@ -253,7 +269,12 @@ void Graph::execute() {
                 size_t dst_idx = nit->second;
                 if (executed[dst_idx]) continue;
                 auto& dst = nodes_[dst_idx];
-                Value input_val = conn->is_recurrent ? conn->delay_buffer : val;
+                Value input_val = conn->is_recurrent
+                    ? ((conn->delay_taps > 1
+                        && static_cast<size_t>(conn->delay_taps - 1) < MAX_DELAY_TAPS)
+                       ? conn->history[conn->delay_taps - 1]
+                       : conn->delay_buffer)
+                    : val;
                 dst->set_input(conn->dst_port, input_val);
                 if (dst->is_dirty() && dst->has_all_inputs()) {
                     dst->execute();
@@ -275,16 +296,18 @@ void Graph::execute() {
         }
     };
 
-    // 0. Pre-deliver recurrent delay_buffers to destination ports.
-    //    Recurrent connections carry state from the PREVIOUS timestep.
-    //    They must be delivered before the wavefront starts so that nodes
-    //    with recurrent inputs (e.g., a self-loop) have those inputs ready
-    //    and don't fall through to the zero-fill cycle handler.
+    // 0. Pre-deliver recurrent delay buffers to destination ports.
+    //    Multi-tap: read history[delay_taps-1] when k>1 (k=1 → history[0]
+    //    == delay_buffer, unchanged behavior).
     for (const auto& conn : connections_) {
         if (conn.is_recurrent) {
             Node* dst = get_node(conn.dst_node);
             if (dst) {
-                dst->set_input(conn.dst_port, conn.delay_buffer);
+                Value v = (conn.delay_taps > 1
+                           && static_cast<size_t>(conn.delay_taps - 1) < MAX_DELAY_TAPS)
+                          ? conn.history[conn.delay_taps - 1]
+                          : conn.delay_buffer;
+                dst->set_input(conn.dst_port, v);
             }
         }
     }
@@ -355,13 +378,20 @@ void Graph::execute() {
         }
     }
 
-    // Save current outputs into recurrent connection delay buffers
-    // for the next timestep (truncated BPTT, k=1).
+    // Save current outputs into recurrent connection history rings
+    // for future timesteps (multi-tap BPTT). history[0]=t-1 (also mirrored
+    // to delay_buffer for serialization compat), history[1]=t-2, ...
     for (auto& conn : connections_) {
         if (conn.is_recurrent) {
             Node* node = get_node(conn.src_node);
             if (node && conn.src_port < node->get_num_outputs()) {
-                conn.delay_buffer = node->get_output(conn.src_port);
+                Value v = node->get_output(conn.src_port);
+                // Shift ring: [h3,h2,h1,h0] <- [h2,h1,h0,v]
+                for (size_t i = MAX_DELAY_TAPS - 1; i > 0; --i) {
+                    conn.history[i] = conn.history[i - 1];
+                }
+                conn.history[0] = v;
+                conn.delay_buffer = v;
             }
         }
     }
@@ -375,6 +405,7 @@ void Graph::reset_recurrent_state() {
     for (auto& conn : connections_) {
         if (conn.is_recurrent) {
             conn.delay_buffer = Value{0.0};
+            conn.history.fill(Value{0.0});
         }
     }
 }
@@ -498,7 +529,10 @@ std::unique_ptr<Graph> Graph::clone() const {
     g->connections_ = connections_;   // flat copy, IDs are identity
     // Recurrent delay buffers start fresh in the clone
     for (auto& conn : g->connections_) {
-        if (conn.is_recurrent) conn.delay_buffer = Value{0.0};
+        if (conn.is_recurrent) {
+            conn.delay_buffer = Value{0.0};
+            conn.history.fill(Value{0.0});
+        }
     }
     g->next_id_ = next_id_;
     g->constant_outputs_ = constant_outputs_;  // carry forward constant-output markings

@@ -309,6 +309,7 @@ private:
             SIN_INJECTION,           // NEURON(zero-init) 鈫?SIN 鈫?ADD (sin(wx+b) for oscillating residuals)
             DEEP_INSERTION,          // failing_node 鈫?NEURON(zero-init) 鈫?TANH 鈫?ADD (residual depth for hierarchical features)
             RECURRENT_XOR,           // Recurrent XOR node for running parity (d6): output = input XOR prev_output
+            RECURRENT_MULTI_TAP,     // K self-recurrent inputs at delays 1..K (long memory: NARMA-30)
             MULTI_LAYER_STACK,       // K parallel hidden NEURONs + combining NEURON (2-layer MLP for spirals/checkerboard)
             PATCH_POOLING,           // patch_size虏 average-pool LINEAR nodes for image-like inputs (coarse conv prior)
             PARITY_TREE,             // linear-fold XOR tree over all binary inputs 鈫?OUTPUT (k-bit parity, XOR-5D)
