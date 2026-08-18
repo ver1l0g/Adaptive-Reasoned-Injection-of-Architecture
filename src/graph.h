@@ -143,6 +143,12 @@ public:
         // per epoch instead of 1. Critical for high-dimensional tasks (MNIST)
         // where full-batch GD is too slow to converge.
         int    batch_size = 0;
+        // Wall-clock watchdog (seconds; 0 = off). Training aborts at epoch
+        // boundaries once exceeded. Guards shadow validations against
+        // live-locks (observed: pooled-CIFAR shadow spun 40+ min on one
+        // thread with no progress). Shadow callers set this; the main
+        // loop leaves it off.
+        int    watchdog_seconds = 0;
         std::unordered_map<uint64_t, uint64_t> input_data_to_graph;
         std::unordered_map<uint64_t, uint64_t> output_data_to_graph;
         TrainConfig()

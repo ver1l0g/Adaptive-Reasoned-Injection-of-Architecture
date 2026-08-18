@@ -1,5 +1,6 @@
 ﻿#include "graph.h"
 #include "serialize.h"
+#include "logger.h"
 #include <algorithm>
 #include <cmath>
 #include <chrono>
@@ -775,8 +776,20 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
         }
     };
 
+    // Watchdog start (0 = disabled)
+    const auto wd_start = std::chrono::steady_clock::now();
+    bool watchdog_fired = false;
+
     for (int epoch = 0; epoch < cfg.epochs; ++epoch) {
         double epoch_loss = 0.0;
+        // Wall-clock watchdog: abort at epoch boundary when over budget.
+        if (cfg.watchdog_seconds > 0
+            && std::chrono::duration_cast<std::chrono::seconds>(
+                   std::chrono::steady_clock::now() - wd_start).count()
+               >= cfg.watchdog_seconds) {
+            watchdog_fired = true;
+            break;
+        }
         // Reset recurrent state at the start of each epoch so temporal
         // tasks (running parity/sum) start fresh from sample 0.
         if (epoch > 0) reset_recurrent_state();
@@ -1223,6 +1236,10 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                 }
             }
         }
+    }
+    if (watchdog_fired) {
+        Logger::info("Train watchdog fired: aborted after "
+                    + std::to_string(cfg.watchdog_seconds) + "s wall (live-lock guard)");
     }
     set_all_dirty();
 }

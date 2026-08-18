@@ -4802,6 +4802,17 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
         train_cfg.batch_size = (cfg_.sequence_mode || training_data_.samples.size() < 500)
                                ? 0 : config::DEFAULT_SGD_BATCH_SIZE;
         train_cfg.early_stop_patience = 0;  // always run full SGD budget for shadow validation
+        // Wall-clock watchdog: shadows must not live-lock (pooled-CIFAR
+        // shadow spun 40+ min). Budget scales with dataset size and the
+        // heavy-hypothesis multiplier: ~0.15s/sample/50-epochs for full-
+        // batch small sets, bounded 2-15 min.
+        {
+            double per_epoch_sec = 0.003 * static_cast<double>(training_data_.samples.size());
+            int budget_sec = static_cast<int>(per_epoch_sec * train_cfg.epochs * 0.6);
+            if (budget_sec < 120)  budget_sec = 120;
+            if (budget_sec > 900)  budget_sec = 900;
+            train_cfg.watchdog_seconds = budget_sec;
+        }
         train_cfg.input_data_to_graph = input_data_to_graph_;
         train_cfg.output_data_to_graph = output_data_to_graph_;
         shadow_graph->train(training_data_.samples, train_cfg);
