@@ -1957,13 +1957,23 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                                  || (ftype == FailureType::NON_LINEAR_CURVE
                                      && profile.var_r > 0.3
                                      && profile.poly_r2 < 0.9);
+            // Stack-dominance gate (I.32.8 lesson): when the degree-2 fit
+            // fails with a dominant cross-term, the residual signature is
+            // product/quotient-shaped, NOT curve-capacity-shaped. Stacks
+            // still get emitted (generic capacity), but the extreme-
+            // lipschitz boost is suppressed so feature hypotheses
+            // (DIVIDE_PRODUCT, MULTIPLY) can win the validation race.
+            bool product_signature = profile.poly_r2 < 0.95
+                                  && (profile.interaction_dominant
+                                      || profile.max_coef_index >= 1 + profile.num_inputs);
             if (high_complexity && graph_input_count <= config::MULTI_LAYER_STACK_MAX_INPUTS) {
                 Hypothesis mls;
                 mls.type = Hypothesis::MULTI_LAYER_STACK;
                 mls.compound_K = config::MULTI_LAYER_STACK_K;
                 double score = config::SCORE_MULTI_LAYER_STACK;
-                if (profile.lipschitz_max > config::MULTI_LAYER_STACK_BOOST_LIPSCHITZ) {
-                    score = 0.95;  // extreme complexity 鈫?rank above everything
+                if (profile.lipschitz_max > config::MULTI_LAYER_STACK_BOOST_LIPSCHITZ
+                    && !product_signature) {
+                    score = 0.95;  // extreme complexity → rank above everything
                     mls.compound_K = config::MULTI_LAYER_STACK_K_MAX;
                 }
                 candidates.push_back({std::move(mls), score});
@@ -2328,8 +2338,17 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
     // GREATER(src, threshold) before the boolean op, since XOR/AND/OR use
     // != 0.0 truthiness which is wrong for continuous values.
     if (blackboard.size() >= 2) {
-        // is_binary was computed once at the top of generate_candidates.
-        if (is_binary) {
+        // is_binary was computed once at the top of generate_candidates —
+        // on the FIRST output only. Many-class one-hot tasks (char-LM:
+        // 65 outputs) look binary per-output, and boolean composition
+        // crowds out smooth statistics (observed: 5-7 BOOLEAN_COMPOSE
+        // commits per char-LM run, each useless). Gate: emit only when
+        // the graph has ≤4 OUTPUT nodes (true boolean problems).
+        size_t output_count = 0;
+        for (const auto& n : graph_->get_nodes()) {
+            if (n->get_type() == NodeType::OUTPUT) ++output_count;
+        }
+        if (is_binary && output_count <= 4) {
             Hypothesis bc;
             bc.type           = Hypothesis::BOOLEAN_COMPOSE;
             bc.bool_source_a  = blackboard[0].node_id;
