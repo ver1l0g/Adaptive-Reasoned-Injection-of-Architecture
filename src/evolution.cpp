@@ -1925,6 +1925,25 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         double score = config::SCORE_IFELSE_BASE + config::SCORE_IFELSE_GAP_WEIGHT * gap_ratio;
         if (ftype == FailureType::BOOLEAN_BOUNDARY)      score = std::max(score, config::SCORE_IFELSE_BOOLEAN_BOOST);
         else if (ftype == FailureType::LINEAR_OFFSET)     score = std::max(score, config::SCORE_IFELSE_LINEAR_BOOST);
+
+        // Family-switch fatigue (stripes20 lesson): when MANY IFELSE commits
+        // have already landed (count them in the graph) the incremental-
+        // assembly path is stalling — one-boundary-per-commit can't reach a
+        // 20-region target before the budget ends. Demote IFELSE so other
+        // families (stacks for region boundaries, SIN for periodic stripes)
+        // get validated. Heuristic: each 5 committed IFELSE nodes cost 0.1.
+        {
+            int ifelse_count = 0;
+            for (const auto& n : graph_->get_nodes()) {
+                if (n->get_type() == NodeType::IFELSE) ++ifelse_count;
+            }
+            if (ifelse_count >= 5) {
+                double fatigue = 0.1 * static_cast<double>((ifelse_count - 5) / 5 + 1);
+                score = std::max(0.05, score - fatigue);
+                Logger::verbose("IFELSE fatigue: " + std::to_string(ifelse_count)
+                               + " committed, score -" + std::to_string(fatigue));
+            }
+        }
         candidates.push_back({std::move(ibs), score});
     }
 
@@ -1968,24 +1987,35 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                                  || (ftype == FailureType::NON_LINEAR_CURVE
                                      && profile.var_r > 0.3
                                      && profile.poly_r2 < 0.9);
-            // Stack-dominance gate (I.32.8 lesson): when the degree-2 fit
-            // fails with a dominant cross-term, the residual signature is
-            // product/quotient-shaped, NOT curve-capacity-shaped. Stacks
-            // still get emitted (generic capacity), but the extreme-
-            // lipschitz boost is suppressed so feature hypotheses
-            // (DIVIDE_PRODUCT, MULTIPLY) can win the validation race.
-            bool product_signature = profile.poly_r2 < 0.95
-                                  && (profile.interaction_dominant
-                                      || profile.max_coef_index >= 1 + profile.num_inputs);
-            if (high_complexity && graph_input_count <= config::MULTI_LAYER_STACK_MAX_INPUTS) {
-                Hypothesis mls;
-                mls.type = Hypothesis::MULTI_LAYER_STACK;
-                mls.compound_K = config::MULTI_LAYER_STACK_K;
-                double score = config::SCORE_MULTI_LAYER_STACK;
-                if (profile.lipschitz_max > config::MULTI_LAYER_STACK_BOOST_LIPSCHITZ
-                    && !product_signature) {
-                    score = 0.95;  // extreme complexity → rank above everything
-                    mls.compound_K = config::MULTI_LAYER_STACK_K_MAX;
+             // Stack-dominance gate (I.32.8 lesson): when the degree-2 fit
+             // fails with a dominant cross-term, the residual signature is
+             // product/quotient-shaped, NOT curve-capacity-shaped. Stacks
+             // still get emitted (generic capacity), but the extreme-
+             // lipschitz boost is suppressed so feature hypotheses
+             // (DIVIDE_PRODUCT, MULTIPLY) can win the validation race.
+             bool product_signature = profile.poly_r2 < 0.95
+                                   && (profile.interaction_dominant
+                                       || profile.max_coef_index >= 1 + profile.num_inputs);
+             // Memory-signature gate (NARMA-30 lesson): in sequence mode with
+             // few inputs, plateau means "missing temporal structure" — the
+             // recurrent family (MULTI_TAP, SELF_WIRE) owns that domain,
+             // whether or not recurrence exists yet. Suppress the stack
+             // boost and demote stacks below recurrence scores.
+             bool memory_signature = cfg_.sequence_mode && profile.num_inputs <= 3;
+             if (high_complexity && graph_input_count <= config::MULTI_LAYER_STACK_MAX_INPUTS) {
+                 Hypothesis mls;
+                 mls.type = Hypothesis::MULTI_LAYER_STACK;
+                 mls.compound_K = config::MULTI_LAYER_STACK_K;
+                 double score = config::SCORE_MULTI_LAYER_STACK;
+                 if (profile.lipschitz_max > config::MULTI_LAYER_STACK_BOOST_LIPSCHITZ
+                     && !product_signature && !memory_signature) {
+                     score = 0.95;  // extreme complexity → rank above everything
+                     mls.compound_K = config::MULTI_LAYER_STACK_K_MAX;
+                 }
+                // In the memory-signature regime, actively DEMOTE stacks below
+                // recurrence hypotheses so MULTI_TAP gets validated first.
+                if (memory_signature) {
+                    score = std::min(score, config::SCORE_RECURRENT_MULTI_TAP - 0.05);
                 }
                 candidates.push_back({std::move(mls), score});
                 Logger::info("Candidate emitted: MULTI_LAYER_STACK (lipschitz="
