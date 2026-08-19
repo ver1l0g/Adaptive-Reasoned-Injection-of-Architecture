@@ -874,8 +874,14 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
         // VALIDATION loss (evaluated once per epoch, after SGD + structural
         // commits + compiles). This is the model that gets deployed. Without
         // it, train-based selection deploys the most-overfit epoch
-        // (CIFAR gray: train 1.9 / val 5.1 鈥?worse than the 3.25 base rate).
-        if (!validation_data_.samples.empty()) {
+        // (CIFAR gray: train 1.9 / val 5.1 — worse than the 3.25 base rate).
+        // PERF: only evaluate when the graph moved this epoch — the candidate
+        // val model can only improve when the graph did (train improved or a
+        // structural commit landed). Saves ~200 sequential executes on every
+        // stagnant plateau epoch.
+        bool graph_moved = (current_loss < best_overall_loss_)
+                        || epochs_since_structural_ <= 0;
+        if (!validation_data_.samples.empty() && graph_moved) {
             double val_loss = compute_validation_loss(*graph_);
             if (val_loss < best_val_loss_) {
                 best_val_loss_ = val_loss;
@@ -884,7 +890,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 Logger::verbose("New best val loss: " + std::to_string(val_loss)
                                + " (train " + std::to_string(current_loss) + ")");
             }
-        } else if (current_loss < best_overall_loss_) {
+        } else if (validation_data_.samples.empty() && current_loss < best_overall_loss_) {
             // No validation data: fall back to train-based snapshot
             best_graph_snapshot_ = graph_->clone();
         }
