@@ -1,0 +1,9 @@
+﻿[13:18] reg t31
+  Final loss:           0.101817
+
+[13:23] temporal battery
+lorenz3      val=0.054848     train=0.0538108    commits=RECURRENT_MULTI_TAPx1,PATCH_POOLINGx2,MULTIPLY_INJECTIONx2 (20s)
+lorenz       val=0.01845      train=0.0194571    commits=RECURRENT_SELF_WIREx4,MULTI_LAYER_STACKx3 (107s)
+narma10_lag  val=0.005        train=0.00693866   commits=MULTI_LAYER_STACKx4,PATCH_POOLINGx1 (95s)
+narma10      val=0.00629      train=0.00910547   commits=MULTI_LAYER_STACKx3,PATCH_POOLINGx2,DEEP_INSERTIONx1,NEURON_TANH_INJECTIONx1 (40s)
+

@@ -112,6 +112,23 @@ constexpr double LOGIC_STE_TEMPERATURE        = 1.0;   // softness for Straight-
 // ============================================================================
 constexpr double ATTRIBUTION_DEFAULT_EPSILON       = 0.1;   // default perturbation epsilon
 constexpr int    ATTRIBUTION_MAX_SAMPLES           = 15;    // max samples for attribution in mutate() (was 10)
+
+// PERF: compute_targets sample cap. Target/profiler estimation runs every
+// structural cycle (per-epoch on plateau); 800+ samples cost ~100s/cycle
+// for estimates that converge by ~100 samples. Strided subsample.
+constexpr int    COMPUTE_TARGETS_MAX_SAMPLES       = 200;
+
+// PERF: after EVERY structural cycle (commit or not), skip this many epochs
+// before the next one. Marginal commits reset the long-cooldown counter, so
+// without this, cycles can fire every epoch once plateau patience expires
+// (measured: I.47.23 spent 60+ consecutive cycles x 65s at loss 1e-6).
+constexpr int    STRUCTURAL_INTER_CYCLE_GAP       = 3;
+
+// Below this training loss, plateau-triggered structural search is skipped
+// (nothing can pass the scaled commit gate; force-structural still probes).
+// Feynman-style tasks converge to 1e-6..1e-8; d9-style noise floors sit at
+// 0.03+ and still get full search.
+constexpr double CONVERGED_LOSS_FLOOR             = 1e-4;
 constexpr int    ATTRIBUTION_MAX_CANDIDATES        = 15;    // max candidate nodes for blame analysis
 constexpr double CONSTANT_OUTPUT_BLAME_BOOST       = -10.0; // blame floor for constant-output nodes
 

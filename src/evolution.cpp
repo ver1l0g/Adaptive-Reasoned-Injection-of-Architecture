@@ -521,6 +521,20 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
             && epochs_since_structural_ >= cfg_.force_structural_every);
         bool structural_trigger = (plateau_counter_ >= effective_patience || force_structural);
 
+        // PERF/correctness: converged-loss guard. When the training loss is
+        // already at noise level (e.g. 1e-6), NO structural change can beat
+        // the scaled commit gate — cycling is pure waste (I.47.23: 60 cycles
+        // at loss 8e-6, each ~65s). Skip unless force_structural (the periodic
+        // probe still fires, bounded by inter-cycle gap).
+        if (structural_trigger && !force_structural
+            && best_overall_loss_ < config::CONVERGED_LOSS_FLOOR) {
+            structural_trigger = false;
+            Logger::verbose("Structural search skipped: loss "
+                          + std::to_string(best_overall_loss_)
+                          + " below converged floor "
+                          + std::to_string(config::CONVERGED_LOSS_FLOOR));
+        }
+
         // Structural cooldown: after a run of failed structural cycles, back
         // off and let SGD settle on the current architecture. Repeatedly
         // firing structural every epoch when every candidate gets rejected is
@@ -789,7 +803,17 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                                 + " extra epochs before next structural attempt");
                 }
                 Logger::info("Plateau state reset 鈥?best_phase2=" + std::to_string(best_phase2_loss_));
+                Logger::info("Plateau state reset — best_phase2=" + std::to_string(best_phase2_loss_));
                 consecutive_structural_failures_ = 0;
+
+                // PERF: inter-cycle breathing room. A committed-but-marginal
+                // change resets the failure counter, so back-to-back structural
+                // cycles can still fire every epoch (I.47.23: cycles at 41,42,
+                // 43,44... each ~65s of shadow validation at loss 1e-6). A
+                // short fixed gap after EVERY cycle bounds structural spend.
+                if (structural_cooldown_ < config::STRUCTURAL_INTER_CYCLE_GAP) {
+                    structural_cooldown_ = config::STRUCTURAL_INTER_CYCLE_GAP;
+                }
 
                 // Degenerate-loop detection: if the same hypothesis type is
                 // committed repeatedly without meaningful best-loss improvement,
@@ -1086,9 +1110,16 @@ void EvolutionEngine::compute_targets(FailureDiagnosis& diag, uint64_t output_no
     // Collect upstream nodes (nodes that feed into diag.failing_node transitively)
     std::vector<uint64_t> upstream_ids = graph_->get_ancestors(diag.failing_node);
 
-    // Collect all nodes in the graph for local_inputs 鈥?any node could be upstream
-    // We'll store all node outputs as "local inputs" (candidates for reconnection)
-    for (const auto& sample : training_data_.samples) {
+    // Collect all nodes in the graph for local_inputs (any node could be upstream)
+    // PERF: cap the sample count for target estimation. This runs on EVERY
+    // plateau-triggered structural cycle (per-epoch after patience), and was
+    // measured at ~100s/cycle on 800-sample datasets (I.47.23: 68s gaps).
+    // 200 strided samples give the same quality estimates at 4x less cost.
+    const size_t n_total = training_data_.samples.size();
+    const size_t n_cap = static_cast<size_t>(config::COMPUTE_TARGETS_MAX_SAMPLES);
+    const size_t stride = (n_total > n_cap) ? (n_total / n_cap) : 1;
+    for (size_t s_idx = 0; s_idx < n_total; s_idx += stride) {
+        const auto& sample = training_data_.samples[s_idx];
         // Set inputs 鈥?use input_data_to_graph_ to translate CSV column IDs
         // (keys of sample.inputs) to graph node IDs. The old code iterated
         // graph node IDs and looked them up directly in sample.inputs, which
