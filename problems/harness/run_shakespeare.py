@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Char-LM harness: window 8 -> 16 -> 32, reports bits/char.
 
 BCE (natural log, summed over 65 outputs) / ln(2) = bits per char.
 Reference: unigram 4.78, char-RNN ~1.6, good char-LM ~1.4 on this corpus.
-Window CSVs are shuffled — no --no-shuffle.
+Window CSVs are shuffled 鈥?no --no-shuffle.
 
 PARSE-BUG FIX: subprocess stdout is now tee'd to a per-run log file
 (lm_<task>_run.txt) BEFORE parsing, so results survive harness crashes,
@@ -20,9 +20,9 @@ V = 65
 LN2 = 0.6931471805599453
 
 TASKS = [
-    ("w8",  8,  "bench_shakespeare_w8.csv"),
-    ("w16", 16, "bench_shakespeare_w16.csv"),
-    ("w32", 32, "bench_shakespeare_w32.csv"),
+    ("w8",  8,  "suite-language/bench_shakespeare_w8.csv"),
+    ("w16", 16, "suite-language/bench_shakespeare_w16.csv"),
+    ("w32", 32, "suite-language/bench_shakespeare_w32.csv"),
 ]
 
 VAL_RE  = re.compile(r"Restored best-val graph snapshot \(val=([0-9.eE+-]+)")

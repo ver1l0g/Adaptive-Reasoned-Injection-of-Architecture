@@ -1,4 +1,4 @@
-# ===== Build artifacts =====
+﻿# ===== Build artifacts =====
 *.exe
 *.o
 *.obj
@@ -53,3 +53,13 @@ problems/tests/*.exe
 # legacy binaries still referenced by in-flight chains (delete when chains finish)
 gpnn7.exe
 gpnn9.exe
+
+# ===== Reorganized problems layout =====
+problems/archives/
+problems/checkpoints/
+problems/cifar10/
+problems/cifar-10-batches-py/
+problems/digits_output/
+problems/suite-*/*.csv
+problems/suite-language/tinyshakespeare.txt
+problems/gpnn_test.exe

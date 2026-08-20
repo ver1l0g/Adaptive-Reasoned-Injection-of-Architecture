@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
-"""Feynman subset harness: run gpnn on all 25 equations, report test R².
+﻿#!/usr/bin/env python3
+"""Feynman subset harness: run gpnn on all 25 equations, report test R虏.
 
-Sequential (one equation at a time) — designed to coexist with other
-background chains. Writes results incrementally to feynman_results.csv
+Sequential (one equation at a time) 鈥?designed to coexist with other
+background chains. Writes results incrementally to results/feynman_results.csv
 so progress survives interruption. SRBench-style thresholds:
-  R² > 0.9999 = exact recovery, R² > 0.99 = solved.
+  R虏 > 0.9999 = exact recovery, R虏 > 0.99 = solved.
 """
 import csv, os, re, subprocess, sys, time
 
@@ -27,15 +27,15 @@ EXPR_RE = re.compile(r"\[Expression\]\s*(.*)")
 def main():
     results = []
     start = time.time()
-    with open("feynman_results.csv", "w", newline="") as f:
+    with open("results/feynman_results.csv", "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["eq", "vars", "test_r2", "train_loss", "wall_s", "expression"])
         for i, (eid, nvars) in enumerate(EQS):
             t0 = time.time()
             logpath = f"feynman_run_{eid}.txt"
-            args = [EXE, "--csv", f"feynman/{eid}.csv",
+            args = [EXE, "--csv", f"suite-feynman/{eid}.csv",
                     "--input-cols", str(nvars),
-                    "--eval-csv", f"feynman/{eid}_test.csv",
+                    "--eval-csv", f"suite-feynman/{eid}_test.csv",
                     "--max-epochs", str(EPOCHS), "--seed", str(SEED)]
             # Tee stdout to a per-equation log (crash-safe: parse from disk)
             try:

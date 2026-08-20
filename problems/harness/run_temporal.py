@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Temporal memory harness: lorenz3 (control) -> lorenz -> narma10_lag -> narma10.
 Run logs tee'd to temporal_<task>_run.txt (crash-safe parsing)."""
 import re, subprocess, sys, time
@@ -8,10 +8,10 @@ EXE = sys.argv[1] if len(sys.argv) > 1 else "../gpnn7.exe"
 EPOCHS = int(sys.argv[2]) if len(sys.argv) > 2 else 200
 
 TASKS = [
-    ("lorenz3",     ["--csv","bench_lorenz3.csv","--input-cols","3","--output-cols","3"]),
-    ("lorenz",      ["--csv","bench_lorenz.csv","--input-cols","1"]),
-    ("narma10_lag", ["--csv","bench_narma10_lag.csv","--input-cols","10"]),
-    ("narma10",     ["--csv","bench_narma10.csv","--input-cols","1"]),
+    ("lorenz3",     ["--csv","suite-temporal/bench_lorenz3.csv","--input-cols","3","--output-cols","3"]),
+    ("lorenz",      ["--csv","suite-temporal/bench_lorenz.csv","--input-cols","1"]),
+    ("narma10_lag", ["--csv","suite-temporal/bench_narma10_lag.csv","--input-cols","10"]),
+    ("narma10",     ["--csv","suite-temporal/bench_narma10.csv","--input-cols","1"]),
 ]
 
 VAL_RE  = re.compile(r"Restored best-val graph snapshot \(val=([0-9.eE+-]+)")

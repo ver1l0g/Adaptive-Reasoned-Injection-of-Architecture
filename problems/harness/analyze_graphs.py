@@ -1,12 +1,12 @@
-#!/usr/bin/env python3
-"""analyze_graphs.py — aggregate structural analysis of gpnn runs.
+﻿#!/usr/bin/env python3
+"""analyze_graphs.py 鈥?aggregate structural analysis of gpnn runs.
 
 Two input modes:
   1. Dump files (stdout logs containing "[Graph]" lines):
        python analyze_graphs.py run1.log run2.log ...
      Aggregates node-type distribution, depth, params across runs.
-  2. Expression CSVs (e.g. feynman_results.csv with an expression column):
-       python analyze_graphs.py --expr feynman_results.csv
+  2. Expression CSVs (e.g. results/feynman_results.csv with an expression column):
+       python analyze_graphs.py --expr results/feynman_results.csv
      Counts operator frequencies in recovered formulas.
 """
 import csv, re, sys

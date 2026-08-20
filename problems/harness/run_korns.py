@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Korns harness: 9 problems, test R2 per problem. Sequential; light."""
 import csv, re, subprocess, sys, time
 
@@ -10,13 +10,13 @@ LOSS_RE = re.compile(r"Final loss:\s*([0-9.eE+-]+)")
 
 def main():
     results = []
-    with open("korns_results.csv", "w", newline="") as f:
+    with open("results/korns_results.csv", "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["prob", "test_r2", "train_loss", "wall_s"])
         for i, fid in enumerate(["F1","F2","F3","F4","F5","F6","F7","F8","F9"]):
             t0 = time.time()
-            args = [EXE, "--csv", f"korns/{fid}.csv", "--input-cols", "5",
-                    "--eval-csv", f"korns/{fid}_test.csv",
+            args = [EXE, "--csv", f"suite-korns/{fid}.csv", "--input-cols", "5",
+                    "--eval-csv", f"suite-korns/{fid}_test.csv",
                     "--max-epochs", str(EPOCHS), "--seed", "1"]
             # Tee stdout to a per-problem log (crash-safe: parse from disk)
             logpath = f"korns_run_{fid}.txt"

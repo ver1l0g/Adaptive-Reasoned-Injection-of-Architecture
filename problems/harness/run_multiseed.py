@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Multi-seed benchmark harness for GP-NN.
 
 Runs each task across N seeds and reports per-task final-loss statistics
@@ -12,7 +12,7 @@ Usage:
     python run_multiseed.py --tasks d4 d5 t31     # subset
     python run_multiseed.py --jobs 1              # sequential (accurate timing)
 
-Final-loss numbers go to stdout (table) and to multiseed_results.csv.
+Final-loss numbers go to stdout (table) and to results/multiseed_results.csv.
 
 NOTE: the engine uses ~20 internal threads, so running many gpnn.exe
 concurrently oversubscribes. Loss statistics are unaffected; only wall-time
@@ -28,23 +28,23 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Task registry: name -> (csv, input-cols, [extra args])
 TASKS = {
-    "t21": ("bench_t21_three_region.csv",       1, []),
-    "t22": ("bench_t22_windowed_sine.csv",      1, []),
-    "t23": ("bench_t23_quadratic.csv",          2, []),
-    "t24": ("bench_t24_quadrant_xor.csv",       2, []),
-    "t31": ("bench_t31_three_way_product.csv",  3, []),
-    "t32": ("bench_t32_sine_of_product.csv",    2, []),
-    "t33": ("bench_t33_absolute_value.csv",     1, []),
-    "t34": ("bench_t34_xor3_parity.csv",        3, []),
-    "d1":  ("bench_d1_step.csv",                1, []),
-    "d2":  ("bench_d2_mod3.csv",                1, []),
-    "d3":  ("bench_d3_two_sines.csv",           1, []),
-    "d4":  ("bench_d4_irrelevant12.csv",       12, []),
-    "d5":  ("bench_d5_extrap_cliff.csv",        1, ["--sweep", "1.0", "3.0", "0.25"]),
-    "d6":  ("bench_d6_seq_parity.csv",          1, ["--no-shuffle"]),
-    "d7":  ("bench_d7_multiout.csv",            1, ["--output-cols", "3"]),
-    "d8":  ("bench_d8_compose_absprod.csv",     2, []),
-    "d9":  ("bench_d9_noise.csv",               2, []),
+    "t21": ("suite-standard/bench_t21_three_region.csv",       1, []),
+    "t22": ("suite-standard/bench_t22_windowed_sine.csv",      1, []),
+    "t23": ("suite-standard/bench_t23_quadratic.csv",          2, []),
+    "t24": ("suite-standard/bench_t24_quadrant_xor.csv",       2, []),
+    "t31": ("suite-standard/bench_t31_three_way_product.csv",  3, []),
+    "t32": ("suite-standard/bench_t32_sine_of_product.csv",    2, []),
+    "t33": ("suite-standard/bench_t33_absolute_value.csv",     1, []),
+    "t34": ("suite-standard/bench_t34_xor3_parity.csv",        3, []),
+    "d1":  ("suite-standard/bench_d1_step.csv",                1, []),
+    "d2":  ("suite-standard/bench_d2_mod3.csv",                1, []),
+    "d3":  ("suite-standard/bench_d3_two_sines.csv",           1, []),
+    "d4":  ("suite-standard/bench_d4_irrelevant12.csv",       12, []),
+    "d5":  ("suite-standard/bench_d5_extrap_cliff.csv",        1, ["--sweep", "1.0", "3.0", "0.25"]),
+    "d6":  ("suite-standard/bench_d6_seq_parity.csv",          1, ["--no-shuffle"]),
+    "d7":  ("suite-standard/bench_d7_multiout.csv",            1, ["--output-cols", "3"]),
+    "d8":  ("suite-standard/bench_d8_compose_absprod.csv",     2, []),
+    "d9":  ("suite-standard/bench_d9_noise.csv",               2, []),
 }
 
 FINAL_RE = re.compile(r"Final loss:\s*([0-9.eE+-]+)")
@@ -131,12 +131,12 @@ def main():
             print(f"{name:<5} {0:>3}  (all failed)")
             rows.append((name, 0, None, None, None, None))
 
-    with open("multiseed_results.csv", "w", newline="") as f:
+    with open("results/multiseed_results.csv", "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["task", "n_ok", "mean", "std", "min", "max"])
         for r in rows:
             w.writerow([r[0], r[1]] + ["" if v is None else f"{v:.9g}" for v in r[2:]])
-    print(f"\nWrote multiseed_results.csv")
+    print(f"\nWrote results/multiseed_results.csv")
 
 
 if __name__ == "__main__":
