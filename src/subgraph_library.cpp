@@ -350,6 +350,24 @@ std::vector<SubgraphLibrary::Match> SubgraphLibrary::find_matches(
     return matches;
 }
 
+std::vector<SubgraphLibrary::Match> SubgraphLibrary::find_matches_excluding_self(
+    const BehavioralFingerprint& needed, size_t top_k,
+    const std::string& current_task) const {
+    // Self-echo guard: entries sourced from the CURRENT task are skipped —
+    // a task matching its own earlier save re-injects what it already
+    // tried (hetero3: 65 self-injects for 1 commit). Cross-task transfer
+    // is the library's entire purpose.
+    std::vector<Match> matches;
+    for (size_t i = 0; i < entries_.size(); ++i) {
+        if (entries_[i].source_task == current_task) continue;
+        if (!entries_[i].fingerprint.arity_compatible(needed.num_inputs)) continue;
+        matches.push_back({i, fingerprint_distance(needed, entries_[i].fingerprint)});
+    }
+    std::sort(matches.begin(), matches.end(), [](const Match& a, const Match& b) { return a.distance < b.distance; });
+    if (matches.size() > top_k) matches.resize(top_k);
+    return matches;
+}
+
 bool SubgraphLibrary::save(const std::string& filepath) const {
     std::ofstream f(filepath);
     if (!f) return false;

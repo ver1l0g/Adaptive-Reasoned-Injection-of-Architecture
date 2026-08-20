@@ -118,6 +118,11 @@ constexpr int    ATTRIBUTION_MAX_SAMPLES           = 15;    // max samples for a
 // for estimates that converge by ~100 samples. Strided subsample.
 constexpr int    COMPUTE_TARGETS_MAX_SAMPLES       = 200;
 
+// PERF: shadow-validation subsample cap. Shadows only need to RANK
+// candidates; ranking is stable at ~8k samples. Measured: charLM w8 spent
+// ~16 min per structural cycle training ~8 shadows on 48k samples.
+constexpr int    SHADOW_TRAIN_MAX_SAMPLES          = 8000;
+
 // PERF: after EVERY structural cycle (commit or not), skip this many epochs
 // before the next one. Marginal commits reset the long-cooldown counter, so
 // without this, cycles can fire every epoch once plateau patience expires

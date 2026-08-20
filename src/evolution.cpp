@@ -3069,8 +3069,23 @@ if (profile.bounded
                 }
             }
             BehavioralFingerprint needed = compute_fingerprint(X, diag.targets);
-            auto matches = library_->find_matches(needed, 1);
-            if (!matches.empty() && matches[0].distance < config::LIBRARY_MATCH_THRESHOLD) {
+
+            // === Matcher guards (library-audit fixes) ===
+            // G1: degenerate fingerprints refuse to match. When the needed-
+            // behavior's variance ~ 0 (e.g. charLM residuals: all features
+            // near-constant), the fingerprint vector is mostly zeros and
+            // EVERY zero-variance task matches every other at distance~0
+            // (observed: w1 -> narma10 at dist=0.000 — pure noise).
+            bool degenerate = needed.var < 1e-8;
+            // G2: self-echo. A task matching its OWN earlier library entry
+            // injects what it already tried (hetero3: 65 self-injects, 1
+            // commit). Retrieve matches EXCLUDING entries sourced from the
+            // current task; cross-task transfer is the entire point.
+            auto matches = library_->find_matches_excluding_self(
+                needed, 1, current_task_name_);
+            if (!degenerate
+                && !matches.empty()
+                && matches[0].distance < config::LIBRARY_MATCH_THRESHOLD) {
                 const auto& matched_entry = library_->entry(matches[0].index);
                 const auto& mfp = matched_entry.fingerprint;
 
@@ -4837,9 +4852,20 @@ double EvolutionEngine::compute_validation_loss(Graph& g) {
     // on all training samples first, which leaves the recurrent state
     // at the correct position for the start of validation. Resetting
     // would break running-parity / running-sum tasks.
+    //
+    // PERF: strided subsample on large validation sets (>= 2x the cap).
+    // Shadow validation calls this per candidate per cycle; on 48k-sample
+    // tasks the val split is ~12k, and sequential evaluation of 12k
+    // executes x 8 candidates was a measurable share of cycle time.
+    // Sequence mode keeps full data (temporal continuity).
+    const size_t v_total = validation_data_.samples.size();
+    const size_t v_cap = static_cast<size_t>(config::SHADOW_TRAIN_MAX_SAMPLES);
+    const size_t v_stride = (!cfg_.sequence_mode && v_total > v_cap) ? (v_total / v_cap) : 1;
+
     double total_loss = 0.0;
     int count = 0;
-    for (const auto& sample : validation_data_.samples) {
+    for (size_t v_i = 0; v_i < v_total; v_i += v_stride) {
+        const auto& sample = validation_data_.samples[v_i];
         for (const auto& kv : sample.inputs) {
             auto map_it = input_data_to_graph_.find(kv.first);
             if (map_it != input_data_to_graph_.end()) {
@@ -5120,7 +5146,26 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
         }
         train_cfg.input_data_to_graph = input_data_to_graph_;
         train_cfg.output_data_to_graph = output_data_to_graph_;
-        shadow_graph->train(training_data_.samples, train_cfg);
+        // PERF: shadow validation trains on a CAPPED SUBSAMPLE. Shadows only
+        // need to RANK candidates — the ranking is stable at ~8k samples
+        // (relative val differences >> subsample noise), while training all
+        // ~8 shadows on the full 48k set cost ~16 min per structural cycle
+        // (measured on charLM w8). The WINNER gets full-data SGD after
+        // commit. Sequence mode keeps full data (temporal order matters).
+        if (cfg_.sequence_mode
+            || training_data_.samples.size() <= static_cast<size_t>(config::SHADOW_TRAIN_MAX_SAMPLES)) {
+            shadow_graph->train(training_data_.samples, train_cfg);
+        } else {
+            std::vector<Graph::SampleIODesc> sub;
+            size_t n_total = training_data_.samples.size();
+            size_t cap = static_cast<size_t>(config::SHADOW_TRAIN_MAX_SAMPLES);
+            size_t stride = n_total / cap;
+            sub.reserve(n_total / stride + 1);
+            for (size_t i = 0; i < n_total; i += stride) {
+                sub.push_back(training_data_.samples[i]);
+            }
+            shadow_graph->train(sub, train_cfg);
+        }
     }
 
     // Sanity check: shadow's loss on the training data (the data it was just
@@ -5210,6 +5255,9 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
     // Compute shadow's loss on validation set (sequential 鈥?validation set is
     // small, typically ~40 samples; no need for nested threading which would
     // oversubscribe when multiple candidates run in parallel).
+    // Compute shadow's loss on validation set (sequential; strided-subsampled
+    // inside compute_validation_loss for large sets — ranking-stable, and
+    // large-dataset val sets are proportional so this matters).
     result.val_loss = compute_validation_loss(*shadow_graph);
 
     // Commit gate: two-sided relative scaling. Required improvement =

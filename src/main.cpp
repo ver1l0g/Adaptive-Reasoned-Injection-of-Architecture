@@ -297,6 +297,12 @@ int main(int argc, char* argv[]) {
     SubgraphLibrary global_lib;
     if (global_lib.load("subgraph_library.txt")) {
         engine.set_library(&global_lib);
+        {
+            std::string tn = csv_path;
+            auto sl = tn.find_last_of("/\\");
+            if (sl != std::string::npos) tn = tn.substr(sl + 1);
+            engine.set_task_name(tn);
+        }
         std::cout << "  Loaded subgraph library: " << global_lib.size() << " entries\n";
     }
 

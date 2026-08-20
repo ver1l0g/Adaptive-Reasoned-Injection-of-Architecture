@@ -122,6 +122,12 @@ public:
     std::vector<Match> find_matches(const BehavioralFingerprint& needed,
                                     size_t top_k = 3) const;
 
+    // Same, but skipping entries sourced from `current_task` — prevents the
+    // self-echo loop (a task matching its own earlier save).
+    std::vector<Match> find_matches_excluding_self(
+        const BehavioralFingerprint& needed, size_t top_k,
+        const std::string& current_task) const;
+
     // Save / load (simple text format).
     bool save(const std::string& filepath) const;
     bool load(const std::string& filepath);

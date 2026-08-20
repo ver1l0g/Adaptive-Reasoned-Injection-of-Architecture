@@ -48,6 +48,11 @@ public:
     // candidate generation. nullptr = no library (no overhead). The engine
     // does NOT own the pointer.
     void set_library(const SubgraphLibrary* lib) { library_ = lib; }
+
+    // Task identity for library self-echo prevention: entries sourced from
+    // this task are excluded from matching (a task matching its own save
+    // injects what it already tried).
+    void set_task_name(const std::string& name) { current_task_name_ = name; }
 public:
     struct Config {
         int   max_epochs              = config::DEFAULT_EVOLUTION_MAX_EPOCHS;     // outer evolution epochs
@@ -515,6 +520,7 @@ private:
 
     // Subgraph library (behavioral prior for candidate scoring). Non-owning.
     const SubgraphLibrary* library_ = nullptr;
+    std::string current_task_name_;   // for library self-echo guard
 };
 
 // ============================================================================
