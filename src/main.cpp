@@ -297,13 +297,48 @@ int main(int argc, char* argv[]) {
     SubgraphLibrary global_lib;
     if (global_lib.load("subgraph_library.txt")) {
         engine.set_library(&global_lib);
-        {
-            std::string tn = csv_path;
-            auto sl = tn.find_last_of("/\\");
-            if (sl != std::string::npos) tn = tn.substr(sl + 1);
-            engine.set_task_name(tn);
-        }
         std::cout << "  Loaded subgraph library: " << global_lib.size() << " entries\n";
+    }
+    {
+        std::string tn = csv_path;
+        auto sl = tn.find_last_of("/\\");
+        if (sl != std::string::npos) tn = tn.substr(sl + 1);
+        engine.set_task_name(tn);
+    }
+
+    // ---------- M1.1: load failure library (negative experience prior) ----------
+    static std::vector<EvolutionEngine::FailureRecord> failure_lib_storage;
+    {
+        std::ifstream inf("failure_library.txt");
+        if (inf) {
+            std::string line;
+            while (std::getline(inf, line)) {
+                std::istringstream ss(line);
+                EvolutionEngine::FailureRecord fr;
+                std::string quoted_task;
+                ss >> std::quoted(quoted_task) >> fr.hyp_type >> fr.val_delta;
+                fr.task = quoted_task;
+                if (!std::getline(inf, line)) break;
+                std::istringstream fs(line);
+                BehavioralFingerprint& fp = fr.fingerprint;
+                size_t qn = 0;
+                fs >> fp.num_inputs >> fp.num_outputs
+                   >> fp.mean >> fp.var >> fp.min_val >> fp.max_val
+                   >> fp.bound_ratio >> fp.poly_r2
+                   >> fp.max_linear_coef >> fp.max_nonlin_coef >> fp.max_coef_index
+                   >> fp.interaction_dominant >> fp.interact_a >> fp.interact_b
+                   >> fp.sobol_pairwise >> fp.bounded >> fp.sharp_boundary
+                   >> fp.sign_symmetric >> fp.lipschitz_max >> qn;
+                fp.quadrant_means.resize(qn);
+                for (size_t q = 0; q < qn; ++q) fs >> fp.quadrant_means[q];
+                if (fs) failure_lib_storage.push_back(std::move(fr));
+            }
+            if (!failure_lib_storage.empty()) {
+                engine.set_failure_library(&failure_lib_storage);
+                std::cout << "  Loaded failure library: " << failure_lib_storage.size()
+                          << " records\n";
+            }
+        }
     }
 
     // ---------- run evolution ----------
@@ -420,6 +455,35 @@ int main(int argc, char* argv[]) {
                 std::cout << "  [Library] Extracted " << sub_added << " sub-expression block(s)";
                 lib.save(lib_path);
                 std::cout << " (library now has " << lib.size() << " entries)\n";
+            }
+        }
+    }
+
+    // ---------- M1.1: failure library write (append session failures) ----------
+    {
+        const auto& fails = engine.session_failures();
+        if (!fails.empty()) {
+            const std::string fl_path = "failure_library.txt";
+            std::ofstream outf(fl_path, std::ios::app);
+            if (outf) {
+                for (const auto& fr : fails) {
+                    const auto& fp = fr.fingerprint;
+                    outf << std::quoted(fr.task) << "\t"
+                         << fr.hyp_type << "\t"
+                         << std::setprecision(8) << fr.val_delta << "\n"
+                         << fp.num_inputs << " " << fp.num_outputs << " "
+                         << fp.mean << " " << fp.var << " " << fp.min_val << " " << fp.max_val << " "
+                         << fp.bound_ratio << " " << fp.poly_r2 << " "
+                         << fp.max_linear_coef << " " << fp.max_nonlin_coef << " " << fp.max_coef_index << " "
+                         << fp.interaction_dominant << " " << fp.interact_a << " " << fp.interact_b << " "
+                         << fp.sobol_pairwise << " " << fp.bounded << " " << fp.sharp_boundary << " "
+                         << fp.sign_symmetric << " " << fp.lipschitz_max << " "
+                         << fp.quadrant_means.size();
+                    for (auto q : fp.quadrant_means) outf << " " << q;
+                    outf << "\n";
+                }
+                std::cout << "  [FailureLib] Appended " << fails.size()
+                          << " failure records to " << fl_path << "\n";
             }
         }
     }

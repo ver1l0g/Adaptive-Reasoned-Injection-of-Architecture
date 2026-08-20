@@ -2,6 +2,7 @@
 
 #include "graph.h"
 #include "constants.h"
+#include "subgraph_library.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -53,6 +54,19 @@ public:
     // this task are excluded from matching (a task matching its own save
     // injects what it already tried).
     void set_task_name(const std::string& name) { current_task_name_ = name; }
+
+    // ---- Failure library (M1.1: learn from rejected candidates) ----
+    // Every shadow REJECT records (residual fingerprint at that cycle,
+    // hypothesis family, val delta). Written to failure_library.txt at run
+    // end; loaded and consulted by generate_candidates to DOWN-WEIGHT
+    // hypothesis families that repeatedly failed on similar residuals.
+    struct FailureRecord {
+        BehavioralFingerprint fingerprint;
+        int   hyp_type;
+        double val_delta;    // result.val_loss - baseline_val (>0 = made it worse)
+        std::string task;
+    };
+    void set_failure_library(const std::vector<FailureRecord>* fl) { failure_library_ = fl; }
 public:
     struct Config {
         int   max_epochs              = config::DEFAULT_EVOLUTION_MAX_EPOCHS;     // outer evolution epochs
@@ -521,6 +535,20 @@ private:
     // Subgraph library (behavioral prior for candidate scoring). Non-owning.
     const SubgraphLibrary* library_ = nullptr;
     std::string current_task_name_;   // for library self-echo guard
+
+
+public:
+    // The residual fingerprint of the CURRENT cycle, set by
+    // generate_candidates for the shadow-validation loop to attach to
+    // failure records (avoiding recomputation).
+    BehavioralFingerprint current_cycle_fp_;
+    bool current_cycle_fp_valid_ = false;
+
+    const std::vector<FailureRecord>& session_failures() const { return session_failures_; }
+
+private:
+    const std::vector<FailureRecord>* failure_library_ = nullptr;
+    std::vector<FailureRecord> session_failures_;
 };
 
 // ============================================================================

@@ -681,6 +681,14 @@ constexpr double SCORE_COMPOUND_DIVIDE_PRODUCT       = 0.955; // outranks specul
 // Subgraph library: when the needed-behavior fingerprint matches a stored
 // entry within this distance, boost the suggested hypothesis type's score.
 constexpr double LIBRARY_MATCH_THRESHOLD            = 2.0;
+
+// M1.1 failure library: how strongly rejected families are down-weighted.
+// Penalty applies per matching failure record (residual fingerprint within
+// FAILURE_MATCH_RADIUS), summed then capped at FAILURE_PENALTY_MAX so no
+// family is banned outright — reachable, just deprioritized.
+constexpr double FAILURE_MATCH_RADIUS              = 1.5;   // fingerprint distance
+constexpr double FAILURE_PENALTY_UNIT              = 0.08;  // per matching failure
+constexpr double FAILURE_PENALTY_MAX               = 0.40;  // cap (score floor 0.01)
 constexpr double LIBRARY_BOOST                      = 0.20;
 constexpr double LIBRARY_INJECT_THRESHOLD           = 1.0;   // tighter: inject candidates the gates blocked
 

@@ -754,12 +754,22 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                     int winner_idx = -1;
                     double winner_effective = 0.0;
                     for (size_t i = 0; i < results.size(); ++i) {
-                        if (!results[i].acceptable) {
-                            stats_.failed_commits++;
-                            Logger::verbose("  rank=" + std::to_string(results[i].hyp_rank)
-                                           + " REJECT 鈥?" + results[i].reject_reason);
-                            continue;
-                        }
+                          if (!results[i].acceptable) {
+                              stats_.failed_commits++;
+                              Logger::verbose("  rank=" + std::to_string(results[i].hyp_rank)
+                                             + " REJECT — " + results[i].reject_reason);
+                              // M1.1: record the failure for the failure
+                              // library (cross-task negative experience).
+                              if (current_cycle_fp_valid_) {
+                                  FailureRecord fr;
+                                  fr.fingerprint = current_cycle_fp_;
+                                  fr.hyp_type = results[i].hyp_type;
+                                  fr.val_delta = results[i].val_loss - baseline_val;
+                                  fr.task = current_task_name_;
+                                  session_failures_.push_back(std::move(fr));
+                              }
+                              continue;
+                          }
                         double effective = results[i].val_loss
                                          + rank_bonus * static_cast<double>(results[i].hyp_rank);
                         if (winner_idx < 0 || effective < winner_effective) {
@@ -1880,6 +1890,8 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         double    score;
     };
     std::vector<ScoredHyp> candidates;
+    // M1.1: failure-library penalties (populated in the library-prior block)
+    std::unordered_map<int, double> family_penalty;
 
     // Detect binary classification targets ONCE 鈥?used by both MULTIPLY
     // (to suppress the plateau-fallback for binary problems, where
@@ -3070,6 +3082,33 @@ if (profile.bounded
             }
             BehavioralFingerprint needed = compute_fingerprint(X, diag.targets);
 
+            // M1.1: expose this cycle's residual fingerprint to the shadow
+            // loop (failure records) — valid for this generate_candidates call.
+            current_cycle_fp_ = needed;
+            current_cycle_fp_valid_ = true;
+
+            // M1.1 READ SIDE: down-weight families that repeatedly failed
+            // on similar residuals (loaded failure library). Penalty is
+            // per-family: max over matching failures of
+            // FAILURE_PENALTY * count_capped. Applied AFTER candidates are
+            // built (below) to avoid restructuring every emission block.
+            if (failure_library_ && !failure_library_->empty()) {
+                for (const auto& fr : *failure_library_) {
+                    if (fr.fingerprint.num_inputs != needed.num_inputs) continue;
+                    double d = fingerprint_distance(needed, fr.fingerprint);
+                    if (d < config::FAILURE_MATCH_RADIUS) {
+                        family_penalty[fr.hyp_type] += config::FAILURE_PENALTY_UNIT;
+                    }
+                }
+                // Cap per-family penalty so nothing is banned outright on
+                // a couple of old failures — families stay reachable.
+                for (auto& kv : family_penalty) {
+                    if (kv.second > config::FAILURE_PENALTY_MAX) {
+                        kv.second = config::FAILURE_PENALTY_MAX;
+                    }
+                }
+            }
+
             // === Matcher guards (library-audit fixes) ===
             // G1: degenerate fingerprints refuse to match. When the needed-
             // behavior's variance ~ 0 (e.g. charLM residuals: all features
@@ -3165,6 +3204,25 @@ if (profile.bounded
                                  + ") -> " + hnames[static_cast<int>(suggested)]
                                  + " [gate-bypass]");
                 }
+            }
+        }
+    }
+
+    // M1.1: apply failure-library penalties just before sorting. This is
+    // the single choke point through which every emitted candidate flows,
+    // regardless of which emission block produced it. (family_penalty is
+    // populated in the library-prior block when a failure library loaded;
+    // empty otherwise.)
+    if (!family_penalty.empty()) {
+        for (auto& c : candidates) {
+            auto pit = family_penalty.find(static_cast<int>(c.hyp.type));
+            if (pit != family_penalty.end() && pit->second > 0.0) {
+                double before = c.score;
+                c.score = std::max(0.01, c.score - pit->second);
+                Logger::verbose("Failure-prior: type="
+                               + std::to_string(static_cast<int>(c.hyp.type))
+                               + " score " + std::to_string(before)
+                               + " -> " + std::to_string(c.score));
             }
         }
     }
