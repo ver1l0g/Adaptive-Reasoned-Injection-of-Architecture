@@ -269,7 +269,7 @@ void Graph::execute() {
                 size_t dst_idx = nit->second;
                 if (executed[dst_idx]) continue;
                 auto& dst = nodes_[dst_idx];
-                Value input_val = conn->is_recurrent
+                Value input_val = (conn->is_recurrent || conn->delay_taps > 0)
                     ? ((conn->delay_taps > 1
                         && static_cast<size_t>(conn->delay_taps - 1) < MAX_DELAY_TAPS)
                        ? conn->history[conn->delay_taps - 1]
@@ -299,8 +299,10 @@ void Graph::execute() {
     // 0. Pre-deliver recurrent delay buffers to destination ports.
     //    Multi-tap: read history[delay_taps-1] when k>1 (k=1 → history[0]
     //    == delay_buffer, unchanged behavior).
+    //    M4.1: delayed FORWARD edges (delay-line input features) get the
+    //    same pre-delivery so their taps read t-k values.
     for (const auto& conn : connections_) {
-        if (conn.is_recurrent) {
+        if (conn.is_recurrent || conn.delay_taps > 0) {
             Node* dst = get_node(conn.dst_node);
             if (dst) {
                 Value v = (conn.delay_taps > 1
@@ -378,11 +380,17 @@ void Graph::execute() {
         }
     }
 
-    // Save current outputs into recurrent connection history rings
-    // for future timesteps (multi-tap BPTT). history[0]=t-1 (also mirrored
-    // to delay_buffer for serialization compat), history[1]=t-2, ...
+    // Save current outputs into history rings for future timesteps
+    // (multi-tap). history[0]=t-1 (also mirrored to delay_buffer for
+    // serialization compat), history[1]=t-2, ...
+    //
+    // M4.1 fix: history is saved for ANY delayed edge, not just recurrent
+    // ones. Delay-line features read INPUT[t-k] via delay_taps>0 on a
+    // FORWARD edge (input -> feature); those edges need history tracking
+    // too, or the taps always read the initial zeros. is_recurrent edges
+    // keep their existing behavior exactly.
     for (auto& conn : connections_) {
-        if (conn.is_recurrent) {
+        if (conn.is_recurrent || conn.delay_taps > 0) {
             Node* node = get_node(conn.src_node);
             if (node && conn.src_port < node->get_num_outputs()) {
                 Value v = node->get_output(conn.src_port);
@@ -391,7 +399,7 @@ void Graph::execute() {
                     conn.history[i] = conn.history[i - 1];
                 }
                 conn.history[0] = v;
-                conn.delay_buffer = v;
+                if (conn.is_recurrent) conn.delay_buffer = v;
             }
         }
     }
@@ -403,7 +411,7 @@ void Graph::execute() {
 
 void Graph::reset_recurrent_state() {
     for (auto& conn : connections_) {
-        if (conn.is_recurrent) {
+        if (conn.is_recurrent || conn.delay_taps > 0) {
             conn.delay_buffer = Value{0.0};
             conn.history.fill(Value{0.0});
         }
@@ -413,6 +421,17 @@ void Graph::reset_recurrent_state() {
 bool Graph::has_recurrent_connections() const {
     for (const auto& conn : connections_) {
         if (conn.is_recurrent) return true;
+    }
+    return false;
+}
+
+bool Graph::has_temporal_state() const {
+    // True when ANY edge carries temporal state — recurrent self-loops OR
+    // delayed forward edges (delay-line input features). Callers that need
+    // sequential execution (train()'s thread clones would otherwise start
+    // with zeroed history) must check this, not just recurrence.
+    for (const auto& conn : connections_) {
+        if (conn.is_recurrent || conn.delay_taps > 0) return true;
     }
     return false;
 }
@@ -527,9 +546,9 @@ std::unique_ptr<Graph> Graph::clone() const {
         g->nodes_.push_back(n->clone());
     }
     g->connections_ = connections_;   // flat copy, IDs are identity
-    // Recurrent delay buffers start fresh in the clone
+    // Recurrent + delayed-edge history starts fresh in the clone
     for (auto& conn : g->connections_) {
-        if (conn.is_recurrent) {
+        if (conn.is_recurrent || conn.delay_taps > 0) {
             conn.delay_buffer = Value{0.0};
             conn.history.fill(Value{0.0});
         }
@@ -802,7 +821,7 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
     //      gave each ~2 samples — spawn overhead dominated. Cap threads so
     //      each gets >= MIN_SAMPLES_PER_THREAD samples.
     int max_threads;
-    if (!config::EVOLUTION_PARALLEL || has_recurrent_connections()
+    if (!config::EVOLUTION_PARALLEL || has_temporal_state()
         || nodes_.size() < config::TRAIN_SMALL_GRAPH_NODES) {
         max_threads = 1;
     } else {

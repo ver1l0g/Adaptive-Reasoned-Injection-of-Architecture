@@ -83,6 +83,9 @@ public:
     // Call before starting a new sequence of graph executions.
     void reset_recurrent_state();
     bool has_recurrent_connections() const;
+    // Recurrence OR delayed forward edges (delay-line features): any edge
+    // carrying cross-timestep state. train() uses this to force sequential.
+    bool has_temporal_state() const;
 
     // Set the output value of an Input or Constant node.
     void set_input_value(uint64_t node_id, Value value);

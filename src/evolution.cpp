@@ -228,7 +228,7 @@ double EvolutionEngine::evaluate_loss(const Dataset& data) {
     const auto& samples = data.samples;
     int ns = static_cast<int>(samples.size());
 
-    int num_threads = (config::EVOLUTION_PARALLEL && !graph_->has_recurrent_connections())
+    int num_threads = (config::EVOLUTION_PARALLEL && !graph_->has_temporal_state())
         ? std::min(config::EVOLUTION_NUM_THREADS, ns)
         : 1;
 
