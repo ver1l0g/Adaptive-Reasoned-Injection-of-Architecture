@@ -116,8 +116,9 @@ int main(int argc, char* argv[]) {
             std::string lt = argv[++i];
             if (lt == "bce")      loss_type = Graph::LossType::BCE;
             else if (lt == "mse") loss_type = Graph::LossType::MSE;
+            else if (lt == "sce") loss_type = Graph::LossType::SOFTMAX_CE;
             else {
-                std::cerr << "Error: --loss must be 'mse' or 'bce' (got '" << lt << "')\n";
+                std::cerr << "Error: --loss must be 'mse', 'bce' or 'sce' (got '" << lt << "')\n";
                 return 1;
             }
         } else if (arg == "--seed" && i + 1 < argc) {
@@ -147,7 +148,7 @@ int main(int argc, char* argv[]) {
             std::cout << "  --save-interval <N> Checkpoint interval in epochs (default: 25)\n";
             std::cout << "  --sweep <min> <max> <step>  After training, sweep input x across [min,max] and print predictions\n";
             std::cout << "  --no-shuffle          Preserve CSV row order in train/val split (sequence/recurrence tasks)\n";
-            std::cout << "  --loss <mse|bce>      Loss function (default: mse)\n";
+            std::cout << "  --loss <mse|bce|sce>  Loss function (default: mse; sce = softmax cross-entropy for one-hot outputs)\n";
             std::cout << "  --seed <N>            RNG seed (default: " << config::DEFAULT_SEED << ", 0 = random)\n";
             return 0;
         }
@@ -533,7 +534,9 @@ int main(int argc, char* argv[]) {
             // softmax-CE figures (unigram floor etc.). Compute proper
             // softmax cross-entropy over ALL outputs per sample, plus
             // top-1 accuracy, plus bits/unit (CE / ln 2).
-            if (results.size() >= 2 && cfg.loss_type == Graph::LossType::BCE) {
+            if (results.size() >= 2
+                && (cfg.loss_type == Graph::LossType::BCE
+                    || cfg.loss_type == Graph::LossType::SOFTMAX_CE)) {
                 auto sm = engine.evaluate_external_softmax(eval_data);
                 if (sm.size() == 2) {
                     constexpr double kLn2 = 0.6931471805599453;

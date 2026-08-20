@@ -131,7 +131,12 @@ public:
     };
 
     // ---- Loss type for train() ----
-    enum class LossType { BCE, MSE };
+    // MSE: raw outputs, grad = 2*(pred-target)
+    // BCE: sigmoid outputs, grad = sig-target (one-vs-rest, independent)
+    // SOFTMAX_CE: raw logits stored; grad = softmax(z)_c - y_c over ALL
+    //   OUTPUT nodes jointly (outputs compete — the coupling that lets
+    //   bigram/context statistics become learnable; charLM fix).
+    enum class LossType { BCE, MSE, SOFTMAX_CE };
 
     // ---- Weight training (SGD) ----
     struct TrainConfig {

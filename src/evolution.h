@@ -432,6 +432,13 @@ private:
     // value sets during execution.
     double compute_validation_loss(Graph& g);
 
+    // Per-sample softmax-CE for the EXECUTED graph (outputs already set):
+    // softmax over all OUTPUT nodes' raw values, -log p_true. Returns 0
+    // when no one-hot target found. Used by every eval path when
+    // loss_type == SOFTMAX_CE (eval loops are per-target; the joint
+    // softmax needs all outputs at once).
+    double sample_softmax_ce(const std::unordered_map<uint64_t, Value>& targets) const;
+
     // ========================================================================
     // Helpers
     // ========================================================================

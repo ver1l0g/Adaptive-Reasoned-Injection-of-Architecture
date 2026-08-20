@@ -197,7 +197,8 @@ void EvolutionEngine::ensure_minimal_architecture() {
     // (tanh + sigmoid) that kills gradients on high-dimensional classification.
     // Use NEURON (tanh) for MSE loss 鈥?the nonlinearity is needed for
     // expressive regression on bounded targets.
-    NodeType starter_type = (cfg_.loss_type == Graph::LossType::BCE)
+    NodeType starter_type = (cfg_.loss_type == Graph::LossType::BCE
+                             || cfg_.loss_type == Graph::LossType::SOFTMAX_CE)
                             ? NodeType::LINEAR
                             : NodeType::NEURON;
     for (auto out_id : output_node_ids) {
@@ -252,28 +253,31 @@ double EvolutionEngine::evaluate_loss(const Dataset& data) {
                 // blackboard held only the bottleneck NEURON (then excluded
                 // as the failing node), leaving search_blackboard() empty and
                 // MULTIPLY_INJECTION never emitted.
-                Value out = graph_->get_any_node_output(node->get_id());
-                blackboard_registry_[node->get_id()].push_back(out);
-            }
-            for (const auto& kv : sample.targets) {
-                auto map_it = output_data_to_graph_.find(kv.first);
-                if (map_it == output_data_to_graph_.end()) continue;
-                Value pred   = graph_->get_output_value(map_it->second);
-                Value target = kv.second;
-                Value diff   = pred - target;
-                if (cfg_.loss_type == Graph::LossType::BCE) {
-                    Value sig_pred = 1.0 / (1.0 + std::exp(-pred));
-                    Value eps = config::BCE_LOG_CLAMP_EPSILON;
-                    Value clamped = std::max(eps, std::min(1.0 - eps, sig_pred));
-                    total_loss += -(target * std::log(clamped) + (1.0 - target) * std::log(1.0 - clamped));
-                } else {
-                    total_loss += diff * diff;
-                }
-            }
-            sample_count++;
-        }
-        return sample_count > 0 ? total_loss / sample_count : 0.0;
-    }
+                  Value out = graph_->get_any_node_output(node->get_id());
+                  blackboard_registry_[node->get_id()].push_back(out);
+              }
+              if (cfg_.loss_type == Graph::LossType::SOFTMAX_CE) {
+                  total_loss += sample_softmax_ce(sample.targets);
+              } else
+              for (const auto& kv : sample.targets) {
+                  auto map_it = output_data_to_graph_.find(kv.first);
+                  if (map_it == output_data_to_graph_.end()) continue;
+                  Value pred   = graph_->get_output_value(map_it->second);
+                  Value target = kv.second;
+                  Value diff   = pred - target;
+                  if (cfg_.loss_type == Graph::LossType::BCE) {
+                      Value sig_pred = 1.0 / (1.0 + std::exp(-pred));
+                      Value eps = config::BCE_LOG_CLAMP_EPSILON;
+                      Value clamped = std::max(eps, std::min(1.0 - eps, sig_pred));
+                      total_loss += -(target * std::log(clamped) + (1.0 - target) * std::log(1.0 - clamped));
+                  } else {
+                      total_loss += diff * diff;
+                  }
+              }
+              sample_count++;
+          }
+          return sample_count > 0 ? total_loss / sample_count : 0.0;
+      }
 
     // ---- Parallel: split samples into chunks, clone graph per thread ----
     int chunk_size = (ns + num_threads - 1) / num_threads;
@@ -323,7 +327,37 @@ double EvolutionEngine::evaluate_loss(const Dataset& data) {
                     Value target = kv.second;
                     Value diff   = pred - target;
 
-                    if (cfg_.loss_type == Graph::LossType::BCE) {
+                    if (cfg_.loss_type == Graph::LossType::SOFTMAX_CE) {
+                        // Joint softmax-CE over all outputs of this sample
+                        // (local_graph, not graph_: this is the threaded path).
+                        // Computed ONCE per sample (first target iteration).
+                        bool first_target = true;
+                        if (!first_target) break;
+                        std::vector<std::pair<Value,Value>> sm_pairs;
+                        sm_pairs.reserve(sample.targets.size());
+                        for (const auto& kv2 : sample.targets) {
+                            auto mi2 = output_data_to_graph_.find(kv2.first);
+                            if (mi2 == output_data_to_graph_.end()) continue;
+                            sm_pairs.emplace_back(
+                                local_graph->get_output_value(mi2->second), kv2.second);
+                        }
+                        if (sm_pairs.size() >= 2) {
+                            double mx = -1e300;
+                            for (auto& pr : sm_pairs)
+                                mx = std::max(mx, static_cast<double>(pr.first));
+                            double den = 0.0;
+                            for (auto& pr : sm_pairs)
+                                den += std::exp(static_cast<double>(pr.first) - mx);
+                            double lse = mx + std::log(den);
+                            for (auto& pr : sm_pairs) {
+                                if (pr.second > 0.5) {
+                                    tr.loss += lse - static_cast<double>(pr.first);
+                                    break;
+                                }
+                            }
+                        }
+                        break;   // once per sample, not per target
+                    } else if (cfg_.loss_type == Graph::LossType::BCE) {
                         Value sig_pred = 1.0 / (1.0 + std::exp(-pred));
                         Value eps = config::BCE_LOG_CLAMP_EPSILON;
                         Value clamped = std::max(eps, std::min(1.0 - eps, sig_pred));
@@ -4656,6 +4690,29 @@ int graph_compress_neurons(Graph& graph) {
 // ============================================================================
 // compute_validation_loss 鈥?evaluate any graph on validation_data_ (read-only)
 // ============================================================================
+double EvolutionEngine::sample_softmax_ce(
+    const std::unordered_map<uint64_t, Value>& targets) const {
+    // Gather (graph output value, target) pairs for all mapped outputs.
+    std::vector<std::pair<Value, Value>> pairs;   // (logit, target)
+    for (const auto& kv : targets) {
+        auto mi = output_data_to_graph_.find(kv.first);
+        if (mi == output_data_to_graph_.end()) continue;
+        const Node* n = graph_->get_node(mi->second);
+        if (!n || n->get_type() != NodeType::OUTPUT) continue;
+        pairs.emplace_back(graph_->get_output_value(mi->second), kv.second);
+    }
+    if (pairs.size() < 2) return 0.0;
+    double mx = -1e300;
+    for (auto& p : pairs) mx = std::max(mx, static_cast<double>(p.first));
+    double denom = 0.0;
+    for (auto& p : pairs) denom += std::exp(static_cast<double>(p.first) - mx);
+    double lse = mx + std::log(denom);
+    for (auto& p : pairs) {
+        if (p.second > 0.5) return lse - static_cast<double>(p.first);
+    }
+    return 0.0;
+}
+
 double EvolutionEngine::compute_validation_loss(Graph& g) {
     if (validation_data_.samples.empty()) return 0.0;
 
@@ -4675,6 +4732,30 @@ double EvolutionEngine::compute_validation_loss(Graph& g) {
             }
         }
         g.execute();
+        if (cfg_.loss_type == Graph::LossType::SOFTMAX_CE) {
+            // Joint softmax-CE on graph g (arbitrary, not graph_).
+            double mx = -1e300;
+            std::vector<std::pair<Value,Value>> prs;
+            for (const auto& kv2 : sample.targets) {
+                auto mi2 = output_data_to_graph_.find(kv2.first);
+                if (mi2 == output_data_to_graph_.end()) continue;
+                Value lg = g.get_output_value(mi2->second);
+                prs.emplace_back(lg, kv2.second);
+                mx = std::max(mx, static_cast<double>(lg));
+            }
+            if (prs.size() >= 2) {
+                double den = 0.0;
+                for (auto& pr : prs)
+                    den += std::exp(static_cast<double>(pr.first) - mx);
+                double lse = mx + std::log(den);
+                for (auto& pr : prs) {
+                    if (pr.second > 0.5) {
+                        total_loss += lse - static_cast<double>(pr.first);
+                        break;
+                    }
+                }
+            }
+        } else
         for (const auto& kv : sample.targets) {
             auto map_it = output_data_to_graph_.find(kv.first);
             if (map_it == output_data_to_graph_.end()) continue;
@@ -4934,7 +5015,16 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
         shadow_graph->reset_recurrent_state();
         double shadow_train_loss = 0.0;
         int train_count = 0;
-        for (const auto& sample : training_data_.samples) {
+        // PERF: strided subsample for the sanity gate — it's a diagnostic
+        // (catastrophic-regression check), not a training signal; 200 strided
+        // samples estimate the loss to well within the gate's 1.5x margin.
+        // Was ALL samples sequentially per candidate (up to ~15 candidates
+        // per structural cycle).
+        const size_t st_total = training_data_.samples.size();
+        const size_t st_cap = static_cast<size_t>(config::COMPUTE_TARGETS_MAX_SAMPLES);
+        const size_t st_stride = (st_total > st_cap) ? (st_total / st_cap) : 1;
+        for (size_t st_i = 0; st_i < st_total; st_i += st_stride) {
+            const auto& sample = training_data_.samples[st_i];
             for (const auto& kv : sample.inputs) {
                 auto map_it = input_data_to_graph_.find(kv.first);
                 if (map_it != input_data_to_graph_.end()) {
@@ -4942,6 +5032,29 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                 }
             }
             shadow_graph->execute();
+            if (cfg_.loss_type == Graph::LossType::SOFTMAX_CE) {
+                double mx = -1e300;
+                std::vector<std::pair<Value,Value>> prs;
+                for (const auto& kv2 : sample.targets) {
+                    auto mi2 = output_data_to_graph_.find(kv2.first);
+                    if (mi2 == output_data_to_graph_.end()) continue;
+                    Value lg = shadow_graph->get_output_value(mi2->second);
+                    prs.emplace_back(lg, kv2.second);
+                    mx = std::max(mx, static_cast<double>(lg));
+                }
+                if (prs.size() >= 2) {
+                    double den = 0.0;
+                    for (auto& pr : prs)
+                        den += std::exp(static_cast<double>(pr.first) - mx);
+                    double lse = mx + std::log(den);
+                    for (auto& pr : prs) {
+                        if (pr.second > 0.5) {
+                            shadow_train_loss += lse - static_cast<double>(pr.first);
+                            break;
+                        }
+                    }
+                }
+            } else
             for (const auto& kv : sample.targets) {
                 auto map_it = output_data_to_graph_.find(kv.first);
                 if (map_it == output_data_to_graph_.end()) continue;

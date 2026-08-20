@@ -801,11 +801,27 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
     }
     // Sync trainable weights from main graph into all clones.
     // Clones preserve node order, so index i in clone == index i in main.
+    // PERF: only nodes with TRAINABLE state can change during training —
+    // NEURON/LINEAR (weights/bias), OUTPUT (scale/bias), CONSTANT (value).
+    // Skipping INPUT and stateless arithmetic nodes avoids ~1000 virtual
+    // copy calls per batch on image-shaped graphs (1024 INPUTs of 1044
+    // nodes on CIFAR).
+    std::vector<size_t> sync_idx;
+    sync_idx.reserve(nodes_.size());
+    for (size_t i = 0; i < nodes_.size(); ++i) {
+        auto t = nodes_[i]->get_type();
+        if (t == NodeType::NEURON || t == NodeType::LINEAR
+            || t == NodeType::OUTPUT || t == NodeType::CONSTANT) {
+            sync_idx.push_back(i);
+        }
+    }
     auto sync_clones = [&]() {
         for (auto& tg : thread_graphs) {
             const auto& cnodes = tg->get_nodes();
-            for (size_t i = 0; i < nodes_.size() && i < cnodes.size(); ++i) {
-                nodes_[i]->copy_state_to(cnodes[i].get());
+            for (size_t i : sync_idx) {
+                if (i < cnodes.size()) {
+                    nodes_[i]->copy_state_to(cnodes[i].get());
+                }
             }
         }
     };
@@ -885,16 +901,17 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                 for (size_t ni = 0; ni < nodes_.size(); ++ni) {
                     auto& n = nodes_[ni];
                     auto t = n->get_type();
-                    if (t == NodeType::OUTPUT) {
-                        Value raw = dynamic_cast<OutputNode*>(n.get())->get_value();
-                        if (cfg.loss_type == LossType::MSE) {
-                            node_outputs[ni][si] = raw;
-                        } else {
-                            Value sig = 1.0 / (1.0 + std::exp(-raw));
-                            node_outputs[ni][si] = sig;
-                        }
-                    } else if (n->get_num_outputs() > 0) {
-                        node_outputs[ni][si] = n->get_output(0);
+                      if (t == NodeType::OUTPUT) {
+                          Value raw = dynamic_cast<OutputNode*>(n.get())->get_value();
+                          if (cfg.loss_type == LossType::MSE
+                              || cfg.loss_type == LossType::SOFTMAX_CE) {
+                              node_outputs[ni][si] = raw;
+                          } else {
+                              Value sig = 1.0 / (1.0 + std::exp(-raw));
+                              node_outputs[ni][si] = sig;
+                          }
+                      } else if (n->get_num_outputs() > 0) {
+                          node_outputs[ni][si] = n->get_output(0);
                     } else {
                         node_outputs[ni][si] = 0.0;
                     }
@@ -941,7 +958,7 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                             if (t2 == NodeType::OUTPUT) {
                                 Node* tn = thread_graph->get_node(n->get_id());
                                 Value raw = dynamic_cast<OutputNode*>(tn)->get_value();
-                                if (lt == LossType::MSE) {
+                                if (lt == LossType::MSE || lt == LossType::SOFTMAX_CE) {
                                     node_outputs[ni][si] = raw;
                                 } else {
                                     Value sig = 1.0 / (1.0 + std::exp(-raw));
@@ -962,6 +979,55 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
 
         // ---- Batched backward pass ----
         // Seed loss gradients on output nodes
+        // Collect the OUTPUT node indices once (for softmax coupling).
+        std::vector<size_t> sm_out_idxs;
+        if (cfg.loss_type == LossType::SOFTMAX_CE) {
+            for (auto& kv : samples[batch_start].targets) {
+                uint64_t gid = kv.first;
+                if (!cfg.output_data_to_graph.empty()) {
+                    auto mi = cfg.output_data_to_graph.find(kv.first);
+                    if (mi == cfg.output_data_to_graph.end()) continue;
+                    gid = mi->second;
+                }
+                auto oi = node_idx_.find(gid);
+                if (oi != node_idx_.end()) sm_out_idxs.push_back(oi->second);
+            }
+        }
+
+        if (cfg.loss_type == LossType::SOFTMAX_CE) {
+            // Softmax cross-entropy: p = softmax(logits) over ALL outputs
+            // jointly; seed grad_c = p_c - y_c. The coupling (pushing down
+            // rivals when one output fires) is what makes context statistics
+            // learnable — independent one-vs-rest gradients cannot express
+            // "u is likely BECAUSE q fired and others are not".
+            for (int si = 0; si < actual_bs; ++si) {
+                const auto& sample = samples[batch_start + si];
+                double mx = -1e300;
+                for (size_t oi_ : sm_out_idxs) {
+                    mx = std::max(mx, static_cast<double>(node_outputs[oi_][si]));
+                }
+                double denom = 0.0;
+                for (size_t oi_ : sm_out_idxs) {
+                    denom += std::exp(static_cast<double>(node_outputs[oi_][si]) - mx);
+                }
+                for (size_t oi_ : sm_out_idxs) {
+                    uint64_t gid2 = nodes_[oi_]->get_id();
+                    // target for this output: reverse-map graph id -> data key
+                    Value y = 0.0;
+                    for (const auto& kv : sample.targets) {
+                        auto mi = cfg.output_data_to_graph.find(kv.first);
+                        if (mi != cfg.output_data_to_graph.end()
+                            && mi->second == gid2) { y = kv.second; break; }
+                    }
+                    Value p = static_cast<Value>(
+                        std::exp(static_cast<double>(node_outputs[oi_][si]) - mx) / denom);
+                    Value grad = p - y;
+                    if (grad > cfg.gradient_clip) grad = cfg.gradient_clip;
+                    else if (grad < -cfg.gradient_clip) grad = -cfg.gradient_clip;
+                    node_grads[oi_][si] = grad;
+                }
+            }
+        } else
         for (auto& kv : samples[batch_start].targets) {
             uint64_t data_key = kv.first;
             uint64_t graph_node_id = data_key;
@@ -1231,7 +1297,35 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
         }
 
         // Accumulate this batch's loss into epoch_loss
-        {
+        if (cfg.loss_type == LossType::SOFTMAX_CE && !sm_out_idxs.empty()) {
+            // Per-sample softmax-CE over the joint output set (raw logits
+            // in node_outputs). Mirrors the gradient seeding.
+            double batch_loss_acc = 0.0;
+            for (int si = 0; si < actual_bs; ++si) {
+                double mx = -1e300;
+                for (size_t oi_ : sm_out_idxs) {
+                    mx = std::max(mx, static_cast<double>(node_outputs[oi_][si]));
+                }
+                double denom = 0.0;
+                for (size_t oi_ : sm_out_idxs) {
+                    denom += std::exp(static_cast<double>(node_outputs[oi_][si]) - mx);
+                }
+                double lse = mx + std::log(denom);   // log-sum-exp
+                // -log p_true = lse - logit_true
+                for (size_t oi_ : sm_out_idxs) {
+                    uint64_t gid2 = nodes_[oi_]->get_id();
+                    for (const auto& kv : samples[batch_start + si].targets) {
+                        auto mi = cfg.output_data_to_graph.find(kv.first);
+                        if (mi != cfg.output_data_to_graph.end()
+                            && mi->second == gid2 && kv.second > 0.5) {
+                            batch_loss_acc += lse - static_cast<double>(node_outputs[oi_][si]);
+                            break;
+                        }
+                    }
+                }
+            }
+            epoch_loss += batch_loss_acc;
+        } else {
             double batch_loss = 0.0;
             for (int si = 0; si < actual_bs; ++si) {
                 for (auto& kv : samples[batch_start + si].targets) {
@@ -1241,7 +1335,9 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                     if (oi == node_idx_.end()) continue;
                     Value pred = node_outputs[oi->second][si];
                     Value target = kv.second;
-                    if (cfg.loss_type == LossType::BCE) {
+                    if (cfg.loss_type == LossType::SOFTMAX_CE) {
+                        continue;
+                    } else if (cfg.loss_type == LossType::BCE) {
                         Value sig = 1.0 / (1.0 + std::exp(-pred));
                         constexpr double bce_eps = 1e-9;
                         double clamped = std::max(bce_eps, std::min(1.0 - bce_eps, sig));
