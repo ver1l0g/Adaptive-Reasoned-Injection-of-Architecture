@@ -123,6 +123,13 @@ constexpr int    COMPUTE_TARGETS_MAX_SAMPLES       = 200;
 // ~16 min per structural cycle training ~8 shadows on 48k samples.
 constexpr int    SHADOW_TRAIN_MAX_SAMPLES          = 8000;
 
+// PERF (CPU audit): train() threading guards. Below SMALL_GRAPH nodes the
+// 20-thread spawn per batch costs more than the per-sample execute work
+// (measured: 2.7/20 core avg on ~70-node charLM graphs). And each thread
+// needs >= MIN_SAMPLES_PER_THREAD samples to amortize spawn overhead.
+constexpr size_t TRAIN_SMALL_GRAPH_NODES          = 150;
+constexpr int    TRAIN_MIN_SAMPLES_PER_THREAD     = 8;
+
 // PERF: after EVERY structural cycle (commit or not), skip this many epochs
 // before the next one. Marginal commits reset the long-cooldown counter, so
 // without this, cycles can fire every epoch once plateau patience expires

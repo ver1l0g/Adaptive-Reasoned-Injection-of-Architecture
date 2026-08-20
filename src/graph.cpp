@@ -792,9 +792,23 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
     // each batch via copy_state_to (cheap, no allocation). Replacing the
     // old clone-per-batch approach cuts dominant cost on high-dim graphs
     // (CIFAR: 1044 nodes × 10 threads × 125 batches of deep clones/epoch).
-    int max_threads = (config::EVOLUTION_PARALLEL && !has_recurrent_connections())
-        ? std::min(config::EVOLUTION_NUM_THREADS, static_cast<int>(ns))
-        : 1;
+    //
+    // PERF (CPU audit): two utilization guards.
+    //  (a) Small-graph threshold: below ~150 nodes the per-sample execute()
+    //      is microseconds — 20-thread spawn/join per batch costs more than
+    //      the work itself (measured 2.7/20 cores avg on charLM w1, ~70
+    //      nodes: threads thrash). Sequential is FASTER there.
+    //  (b) Min work per thread: with mini-batch 32, min(20,32)=20 threads
+    //      gave each ~2 samples — spawn overhead dominated. Cap threads so
+    //      each gets >= MIN_SAMPLES_PER_THREAD samples.
+    int max_threads;
+    if (!config::EVOLUTION_PARALLEL || has_recurrent_connections()
+        || nodes_.size() < config::TRAIN_SMALL_GRAPH_NODES) {
+        max_threads = 1;
+    } else {
+        int by_work = static_cast<int>(ns) / config::TRAIN_MIN_SAMPLES_PER_THREAD;
+        max_threads = std::max(1, std::min(config::EVOLUTION_NUM_THREADS, by_work));
+    }
     std::vector<std::unique_ptr<Graph>> thread_graphs;
     for (int t = 0; t < max_threads; ++t) {
         thread_graphs.push_back(clone());
