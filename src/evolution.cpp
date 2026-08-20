@@ -666,7 +666,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // shadow and commit it. This collapses the wall-clock cost
                 // of failed candidates 鈥?previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
-                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP"};
+                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION"};
 
                 struct ShadowSpec {
                     int         rank;
@@ -2096,6 +2096,58 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         }
 
         // --- Candidate 3d: PATCH_POOLING 鈥?coarse convolutional prior ---
+        // --- Candidate 3e: MUX_INJECTION — select between two signals ---
+        // MUX(cond, a, b): piecewise/regime targets (stripes, cliffs,
+        // switching behavior). Condition = top blackboard INPUT thresholded
+        // via GREATER (MUX's execute uses !=0 truthiness; raw continuous
+        // values would misroute); branches a,b = next two signals. Zero-
+        // gain NEURON on the output gives identity start.
+        if (failing_is_trainable && blackboard.size() >= 3) {
+            // Condition source: prefer an INPUT (raw feature, thresholdable);
+            // fall back to any blackboard signal. Branches: next two signals
+            // (INPUTs first, then neurons — stripes20 has ONE input but a
+            // rich blackboard of internal features after the first commits).
+            std::vector<uint64_t> cond_pool, branch_pool;
+            for (const auto& bs : blackboard) {
+                if (bs.is_input) cond_pool.push_back(bs.node_id);
+                branch_pool.push_back(bs.node_id);
+            }
+            uint64_t cond = 0;
+            if (!cond_pool.empty()) cond = cond_pool[0];
+            else cond = blackboard[0].node_id;
+            // branches: first two blackboard signals that aren't the cond
+            std::vector<uint64_t> srcs;
+            for (uint64_t s : branch_pool) {
+                if (s != cond) srcs.push_back(s);
+                if (srcs.size() >= 2) break;
+            }
+            if (srcs.size() >= 2) {
+                // threshold = median of condition source values
+                Value thr = 0.0;
+                auto rit = blackboard_registry_.find(cond);
+                if (rit != blackboard_registry_.end() && rit->second.size() >= 2) {
+                    std::vector<Value> sorted_v = rit->second;
+                    std::sort(sorted_v.begin(), sorted_v.end());
+                    thr = sorted_v[sorted_v.size() / 2];
+                }
+                Hypothesis mx;
+                mx.type = Hypothesis::MUX_INJECTION;
+                mx.multiply_source_a = srcs[0];   // branch a
+                mx.multiply_source_b = srcs[1];   // branch b
+                mx.bool_source_a    = cond;       // condition source
+                mx.split_threshold  = thr;
+                double mx_score = config::SCORE_MUX_INJECTION;
+                if (ftype == FailureType::BOOLEAN_BOUNDARY
+                    || profile.lipschitz_max > config::PROFILE_SHARP_BOUNDARY_LIPSCHITZ) {
+                    mx_score = config::SCORE_MUX_INJECTION_BOOST;
+                }
+                candidates.push_back({std::move(mx), mx_score});
+                Logger::info("Candidate emitted: MUX_INJECTION (cond=node="
+                            + std::to_string(cond) + " thr=" + std::to_string(thr)
+                            + " a=node=" + std::to_string(srcs[0])
+                            + " b=node=" + std::to_string(srcs[1]) + ")");
+            }
+        }
         // For image-like input layouts (input count a perfect square 鈮?        // PATCH_POOL_MIN_SIDE虏, or 3脳square for pixel-interleaved RGB),
         // inject one average-pool LINEAR node per patch_size虏 block.
         // Uniform 1/k weights = exact block mean; SGD refines them into
@@ -3949,6 +4001,69 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // Self-recurrent: own output[0] -> new input port. add_connection
         // detects the cycle (node is its own ancestor) and sets is_recurrent.
         shadow->add_connection(failing_id, 0, failing_id, new_port);
+        break;
+    }
+
+    case Hypothesis::MUX_INJECTION: {
+        // GREATER(cond_src, thr) → MUX(g, a, b) → zero-gain NEURON → ADD
+        //
+        //   cond_src ──→ GREATER ──┐
+        //   a ────────────────────→ MUX ──→ NEURON(0) ──→ ADD → downstream
+        //   b ────────────────────→↑                        ↑
+        //   failing_node ──────────────────────────────────┘
+        //
+        // The GREATER thresholding gives the condition true boolean
+        // semantics (MUX execute uses !=0 truthiness). Zero-gain output
+        // neuron = identity start; SGD grows the selected branch's share.
+
+        uint64_t a = hyp.multiply_source_a;
+        uint64_t b = hyp.multiply_source_b;
+        uint64_t cs = hyp.bool_source_a;
+        if (a == 0 || b == 0 || cs == 0) break;
+        if (!shadow->get_node(a) || !shadow->get_node(b) || !shadow->get_node(cs)) break;
+
+        uint64_t thr_id = shadow->add_node(NodeType::CONSTANT, "mux_threshold");
+        Node* cn = shadow->get_node(thr_id);
+        if (cn && cn->get_type() == NodeType::CONSTANT) {
+            static_cast<ConstantNode*>(cn)->set_value(hyp.split_threshold);
+        }
+
+        uint64_t gt_id = shadow->add_node(NodeType::GREATER, "mux_cond");
+        shadow->add_connection(cs, 0, gt_id, 0);
+        shadow->add_connection(thr_id, 0, gt_id, 1);
+
+        uint64_t mux_id = shadow->add_node(NodeType::MUX, "mux_select");
+        shadow->add_connection(gt_id, 0, mux_id, 0);   // condition
+        shadow->add_connection(a, 0, mux_id, 1);       // true branch
+        shadow->add_connection(b, 0, mux_id, 2);       // false branch
+
+        uint64_t gain_id = shadow->add_node(NodeType::NEURON, "mux_gain");
+        Node* gn = shadow->get_node(gain_id);
+        if (gn && gn->get_type() == NodeType::NEURON) {
+            static_cast<NeuronNode*>(gn)->set_input_count(1);
+            static_cast<NeuronNode*>(gn)->set_weight(0, 0.0);
+            static_cast<NeuronNode*>(gn)->set_bias(0.0);
+        }
+        shadow->add_connection(mux_id, 0, gain_id, 0);
+        // least-squares gain init: the selection starts at optimal scale
+        if (gn && gn->get_type() == NodeType::NEURON) {
+            static_cast<NeuronNode*>(gn)->set_weight(
+                0, compute_gain_init(*shadow, mux_id, failing_id, diag));
+        }
+
+        std::vector<Connection> outgoing;
+        for (const auto& conn : shadow->get_connections()) {
+            if (conn.src_node == failing_id) outgoing.push_back(conn);
+        }
+        for (const auto& conn : outgoing) {
+            shadow->remove_connection(conn.src_node, conn.src_port, conn.dst_node, conn.dst_port);
+        }
+        uint64_t add_id = shadow->add_node(NodeType::ADD, "mux_combine");
+        shadow->add_connection(failing_id, 0, add_id, 0);
+        shadow->add_connection(gain_id, 0, add_id, 1);
+        for (const auto& conn : outgoing) {
+            shadow->add_connection(add_id, 0, conn.dst_node, conn.dst_port);
+        }
         break;
     }
 

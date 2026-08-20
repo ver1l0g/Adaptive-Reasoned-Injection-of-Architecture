@@ -1772,6 +1772,7 @@ std::vector<Graph::NodeImprovementResult> Graph::search_improvements(
         case NodeType::TANH:           return std::tanh(in(0));
         case NodeType::IF:             return in(0) > 0.0 ? in(1) : 0.0;
         case NodeType::IFELSE:         return in(0) > 0.0 ? in(1) : 0.0;
+          case NodeType::MUX:          return in(0) > 0.0 ? in(1) : in(2);
         case NodeType::EQUAL:          return (in(0) == in(1)) ? 1.0 : 0.0;
         case NodeType::NOT_EQUAL:      return (in(0) != in(1)) ? 1.0 : 0.0;
         case NodeType::GREATER:        return (in(0) > in(1)) ? 1.0 : 0.0;
@@ -3663,6 +3664,9 @@ std::string Graph::to_expression(uint64_t output_node_id) const {
             case NodeType::IFELSE:
                 if (port == 0) result = "(" + in_expr(0) + "?" + in_expr(1) + ":0)";
                 else           result = "(" + in_expr(0) + "?0:" + in_expr(1) + ")";
+                break;
+            case NodeType::MUX:
+                result = "(" + in_expr(0) + "?" + in_expr(1) + ":" + in_expr(2) + ")";
                 break;
             case NodeType::SINK:   result = "0"; break;
             case NodeType::ABSENT: result = "absent(" + in_expr(0) + ")"; break;

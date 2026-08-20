@@ -310,22 +310,24 @@ constexpr double NODE_INSERT_WEIGHTS[NODE_INSERT_WEIGHT_COUNT] = {
     0.5,                   // ABSENT
 };
 
-constexpr size_t NODE_REPLACE_WEIGHT_COUNT = 24;
-constexpr NodeType NODE_REPLACE_WEIGHT_TYPES[NODE_REPLACE_WEIGHT_COUNT] = {
-    NodeType::CONSTANT,      NodeType::SINK,
-    NodeType::ADD,           NodeType::SUBTRACT,     NodeType::MULTIPLY,  NodeType::DIVIDE,
-    NodeType::NEGATE,        NodeType::NEURON,       NodeType::RELU,
-    NodeType::SIGMOID,       NodeType::TANH,         NodeType::IF,        NodeType::IFELSE,
-    NodeType::EQUAL,         NodeType::NOT_EQUAL,    NodeType::GREATER,   NodeType::LESS,
-    NodeType::GREATER_EQUAL, NodeType::LESS_EQUAL,
-    NodeType::AND,           NodeType::OR,            NodeType::NOT,       NodeType::XOR,
-    NodeType::ABSENT,
-};
-constexpr double NODE_REPLACE_WEIGHTS[NODE_REPLACE_WEIGHT_COUNT] = {
-    1.0, 0.3,              // CONSTANT, SINK
-    0.4, 0.4, 0.4, 0.4,   // ADD, SUBTRACT, MULTIPLY, DIVIDE (reduced: not useful for raw pixels)
-    0.4, 5.0, 5.0,         // NEGATE, NEURON (strongly boosted), RELU (strongly boosted)
-    5.0, 5.0, 0.3, 0.3,   // SIGMOID, TANH (strongly boosted), IF, IFELSE (reduced: control-flow harms gradient flow)
+  constexpr size_t NODE_REPLACE_WEIGHT_COUNT = 25;
+  constexpr NodeType NODE_REPLACE_WEIGHT_TYPES[NODE_REPLACE_WEIGHT_COUNT] = {
+      NodeType::CONSTANT,      NodeType::SINK,
+      NodeType::ADD,           NodeType::SUBTRACT,     NodeType::MULTIPLY,  NodeType::DIVIDE,
+      NodeType::NEGATE,        NodeType::NEURON,       NodeType::RELU,
+      NodeType::SIGMOID,       NodeType::TANH,         NodeType::IF,        NodeType::IFELSE,
+      NodeType::MUX,
+      NodeType::EQUAL,         NodeType::NOT_EQUAL,    NodeType::GREATER,   NodeType::LESS,
+      NodeType::GREATER_EQUAL, NodeType::LESS_EQUAL,
+      NodeType::AND,           NodeType::OR,            NodeType::NOT,       NodeType::XOR,
+      NodeType::ABSENT,
+  };
+  constexpr double NODE_REPLACE_WEIGHTS[NODE_REPLACE_WEIGHT_COUNT] = {
+      1.0, 0.3,              // CONSTANT, SINK
+      0.4, 0.4, 0.4, 0.4,   // ADD, SUBTRACT, MULTIPLY, DIVIDE (reduced: not useful for raw pixels)
+      0.4, 5.0, 5.0,         // NEGATE, NEURON (strongly boosted), RELU (strongly boosted)
+      5.0, 5.0, 0.3, 0.3,   // SIGMOID, TANH (strongly boosted), IF, IFELSE (reduced: control-flow harms gradient flow)
+      0.6,                   // MUX (mildly boosted: selection primitive)
     1.0, 1.0, 1.0, 1.0,   // EQUAL, NOT_EQUAL, GREATER, LESS (boosted: enable logic node utilization)
     1.0, 1.0,              // GREATER_EQUAL, LESS_EQUAL
     1.0, 1.0, 1.0, 1.0,   // AND, OR, NOT, XOR (boosted: enable logic node utilization)
@@ -601,6 +603,11 @@ constexpr double SCORE_RECURRENT_XOR               = 0.97;
 // needs ~30-step history; single k=1 lines decay exponentially and the
 // model collapses to mean prediction). Uses Connection::delay_taps.
 constexpr double SCORE_RECURRENT_MULTI_TAP         = 0.93;
+
+// MUX_INJECTION: MUX(cond,a,b) select-between-signals (piecewise/regime
+// targets). Boosted when the residual has sharp boundaries.
+constexpr double SCORE_MUX_INJECTION               = 0.40;
+constexpr double SCORE_MUX_INJECTION_BOOST         = 0.90;
 constexpr int    RECURRENT_MULTI_TAP_K             = 4;     // taps (max ring depth)
 
 // MULTI_LAYER_STACK: injects a K-width hidden layer + combining neuron.

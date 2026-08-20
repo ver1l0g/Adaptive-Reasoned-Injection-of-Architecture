@@ -45,6 +45,7 @@ enum class NodeType : uint32_t {
     // Control flow
     IF,      // 2 inputs (condition, value), 1 output 鈥?false 鈫?output 0 (sink-like)
     IFELSE,  // 2 inputs (condition, value), 2 outputs 鈥?true-out / false-out
+    MUX,     // 3 inputs (condition, a, b), 1 output — a if cond else b (inverse of IFELSE)
 
     // Logic & Comparison
     EQUAL,         // 2 inputs, 1 output 鈥?1 if input0 == input1, else 0
@@ -382,6 +383,26 @@ public:
     std::vector<Value> backward_input_grads(Value output_grad) override;
 private:
     int forward_active_branch_ = 0;  // 0 = true branch (output[0]), 1 = false branch (output[1])
+};
+
+// ============================================================================
+// MultiplexerNode — the INVERSE of IFELSE.
+// IFELSE: (condition, value) → 2 outputs (true-out / false-out) — used to
+// SPLIT a signal by condition downstream.
+// MUX: (condition, a, b) → 1 output = a if condition else b — used to
+// SELECT between two already-computed signals. This is the shape that
+// learns piecewise/k-switching functions (W[sel] — a row-selected weight,
+// the same primitive a bigram model needs).
+// ============================================================================
+class MultiplexerNode : public Node {
+public:
+    MultiplexerNode(uint64_t id, const std::string& name);
+    size_t get_min_inputs() const override { return 3; }
+    void execute() override;
+    std::unique_ptr<Node> clone() const override;
+    std::vector<Value> backward_input_grads(Value output_grad) override;
+private:
+    int forward_active_branch_ = 0;  // 0 = a (condition true), 1 = b
 };
 
 // ============================================================================

@@ -28,6 +28,7 @@ const char* node_type_to_string(NodeType type) {
     case NodeType::LINEAR:   return "LINEAR";
         case NodeType::IF:           return "IF";
         case NodeType::IFELSE:       return "IFELSE";
+        case NodeType::MUX:        return "MUX";
         case NodeType::EQUAL:        return "EQUAL";
         case NodeType::NOT_EQUAL:    return "NOT_EQUAL";
         case NodeType::GREATER:      return "GREATER";
@@ -61,6 +62,7 @@ NodeType node_type_from_string(const std::string& str) {
     if (str == "LINEAR")   return NodeType::LINEAR;
     if (str == "IF")           return NodeType::IF;
     if (str == "IFELSE")       return NodeType::IFELSE;
+    if (str == "MUX")        return NodeType::MUX;
     if (str == "EQUAL")        return NodeType::EQUAL;
     if (str == "NOT_EQUAL")    return NodeType::NOT_EQUAL;
     if (str == "GREATER")      return NodeType::GREATER;
@@ -671,6 +673,46 @@ std::unique_ptr<Node> IfNode::clone() const {
     return std::make_unique<IfNode>(id_, name_);
 }
 
+// ============================================================================
+// MultiplexerNode — the inverse of IFELSE (select between two signals)
+// ============================================================================
+MultiplexerNode::MultiplexerNode(uint64_t id, const std::string& name)
+    : Node(id, NodeType::MUX, name, 3, 1) {}
+
+void MultiplexerNode::execute() {
+    // input[0] = condition, input[1] = a (true branch), input[2] = b (false)
+    if (inputs_[0] != 0.0) {
+        outputs_[0] = inputs_[1];
+        forward_active_branch_ = 0;
+    } else {
+        outputs_[0] = inputs_[2];
+        forward_active_branch_ = 1;
+    }
+}
+
+std::vector<Value> MultiplexerNode::backward_input_grads(Value output_grad) {
+    // STE (straight-through estimator) with sigmoid smoothing, mirroring
+    // IfElseNode: gradients route to the active value input, plus a small
+    // condition gradient pushing the selection boundary.
+    Value temp = config::LOGIC_STE_TEMPERATURE;
+    Value sig = 1.0 / (1.0 + std::exp(-inputs_[0] / temp));
+    Value sig_deriv = sig * (1.0 - sig) / temp;
+
+    // Condition gradient: positive pushes toward a, negative toward b
+    Value cond_grad = output_grad * sig_deriv * (inputs_[1] - inputs_[2]);
+
+    // Value gradients: active branch passes through; inactive gets the
+    // smoothed minority share (keeps both branches trainable near the
+    // boundary — hard-zeroing stalls the losing branch).
+    Value g_a = output_grad * sig;
+    Value g_b = output_grad * (1.0 - sig);
+    return {cond_grad, g_a, g_b};
+}
+
+std::unique_ptr<Node> MultiplexerNode::clone() const {
+    return std::make_unique<MultiplexerNode>(id_, name_);
+}
+
 IfElseNode::IfElseNode(uint64_t id, const std::string& name)
     : Node(id, NodeType::IFELSE, name, 2, 2) {}
 
@@ -990,6 +1032,7 @@ void register_builtin_node_types() {
     reg.register_type(NodeType::SIN,      [](uint64_t id, const std::string& name) { return std::make_unique<SinNode>(id, name); });
     reg.register_type(NodeType::IF,       [](uint64_t id, const std::string& name) { return std::make_unique<IfNode>(id, name); });
     reg.register_type(NodeType::IFELSE,   [](uint64_t id, const std::string& name) { return std::make_unique<IfElseNode>(id, name); });
+    reg.register_type(NodeType::MUX,      [](uint64_t id, const std::string& name) { return std::make_unique<MultiplexerNode>(id, name); });
 
     reg.register_type(NodeType::EQUAL,        [](uint64_t id, const std::string& name) { return std::make_unique<EqualNode>(id, name); });
     reg.register_type(NodeType::NOT_EQUAL,    [](uint64_t id, const std::string& name) { return std::make_unique<NotEqualNode>(id, name); });

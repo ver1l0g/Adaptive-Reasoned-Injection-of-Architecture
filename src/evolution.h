@@ -312,6 +312,7 @@ private:
             RECURRENT_MULTI_TAP,     // K self-recurrent inputs at delays 1..K (long memory: NARMA-30)
             MULTI_LAYER_STACK,       // K parallel hidden NEURONs + combining NEURON (2-layer MLP for spirals/checkerboard)
             PATCH_POOLING,           // patch_size虏 average-pool LINEAR nodes for image-like inputs (coarse conv prior)
+            MUX_INJECTION,           // MUX(cond, a, b) -> zero-gain NEURON -> ADD: select between two signals by thresholded condition (piecewise/regime-switch targets)
             PARITY_TREE,             // linear-fold XOR tree over all binary inputs 鈫?OUTPUT (k-bit parity, XOR-5D)
             DIVIDE_INJECTION,        // quotient feature a/b (ratio targets: m/V, (u+v)/(1+uv)) 鈥?both orderings, denominator-safety-gated
             COMPOUND_SIN_PRODUCT,    // MULTIPLY(a,b) 鈫?NEURON(freq-init) 鈫?SIN 鈫?ADD (sin(x路y), x路sin(kx) targets: Korns F4/F8, Feynman I.29.16)
