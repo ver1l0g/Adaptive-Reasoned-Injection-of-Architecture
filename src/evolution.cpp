@@ -666,7 +666,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // shadow and commit it. This collapses the wall-clock cost
                 // of failed candidates 鈥?previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
-                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION"};
+                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION", "DELAY_LINE"};
 
                 struct ShadowSpec {
                     int         rank;
@@ -688,10 +688,17 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                     }
                     Logger::decision("Try hypothesis", std::string("rank=") + std::to_string(hyp_idx)
                                     + " type=" + hyp_names[static_cast<int>(hyp.type)]);
+                    // PHASE LOG (narma30 debug): confirm DELAY_LINE reaches
+                    // the routing stage at all, and why not if not.
+                    if (hyp.type == Hypothesis::DELAY_LINE) {
+                        Logger::info("  [DELAY_LINE-DBG] reached routing (rank="
+                                    + std::to_string(hyp_idx) + ")");
+                    }
 
                     std::unique_ptr<Graph> shadow = apply_shadow_routing(hyp, diag);
                     if (!shadow) {
-                        Logger::verbose("  shadow routing failed for rank=" + std::to_string(hyp_idx));
+                        Logger::verbose("  shadow routing failed for rank=" + std::to_string(hyp_idx)
+                                      + " type=" + hyp_names[static_cast<int>(hyp.type)]);
                         hyp_idx++;
                         continue;
                     }
@@ -2096,9 +2103,12 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                      mls.compound_K = config::MULTI_LAYER_STACK_K_MAX;
                  }
                 // In the memory-signature regime, actively DEMOTE stacks below
-                // recurrence hypotheses so MULTI_TAP gets validated first.
+                // recurrence hypotheses so MULTI_TAP/DELAY_LINE get validated
+                // first (narma30 lesson: sin-product at 0.96 also outranked
+                // the memory family and won every race while the model
+                // stayed at mean prediction).
                 if (memory_signature) {
-                    score = std::min(score, config::SCORE_RECURRENT_MULTI_TAP - 0.05);
+                    score = std::min(score, config::SCORE_DELAY_LINE - 0.06);
                 }
                 candidates.push_back({std::move(mls), score});
                 Logger::info("Candidate emitted: MULTI_LAYER_STACK (lipschitz="
@@ -2880,6 +2890,12 @@ if (profile.bounded
                 csp.multiply_source_a = pa;
                 csp.multiply_source_b = pb;
                 csp.sin_freq_init = 1.0;
+                // Memory-signature demotion (narma30 lesson): oscillation
+                // hypotheses must not outrank the memory family when the
+                // missing structure is temporal.
+                if (cfg_.sequence_mode && profile.num_inputs <= 3) {
+                    score = std::min(score, config::SCORE_DELAY_LINE - 0.05);
+                }
                 candidates.push_back({std::move(csp), score});
                 Logger::info("Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input="
                             + std::to_string(pa) + "*input=" + std::to_string(pb)
@@ -3014,6 +3030,26 @@ if (profile.bounded
                 candidates.push_back({std::move(rmt), config::SCORE_RECURRENT_MULTI_TAP});
                 Logger::info("Candidate emitted: RECURRENT_MULTI_TAP (K="
                             + std::to_string(config::RECURRENT_MULTI_TAP_K) + ")");
+
+                // DELAY_LINE: k delayed copies of the raw input u[t-1..t-k]
+                // as features (narma10_lag proved lag features suffice).
+                // Delay-line dedup: skip if the failing node already has
+                // delayed input edges wired in.
+                bool has_delay_line = false;
+                for (const auto& c : graph_->get_connections()) {
+                    if (c.dst_node == diag.failing_node && c.delay_taps > 0) {
+                        has_delay_line = true;
+                        break;
+                    }
+                }
+                if (!has_delay_line) {
+                    Hypothesis dl;
+                    dl.type = Hypothesis::DELAY_LINE;
+                    dl.compound_K = config::DELAY_LINE_K;
+                    candidates.push_back({std::move(dl), config::SCORE_DELAY_LINE});
+                    Logger::info("Candidate emitted: DELAY_LINE (k="
+                                + std::to_string(config::DELAY_LINE_K) + " input lags)");
+                }
             }
         }
     }
@@ -4140,6 +4176,78 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         break;
     }
 
+    case Hypothesis::DELAY_LINE: {
+        // k delayed copies of the raw INPUT signal as failing-node features:
+        //
+        //   INPUT(u) ──[taps=1]──→ failing node port p
+        //   INPUT(u) ──[taps=2]──→ failing node port p+1
+        //   ...
+        //   INPUT(u) ──[taps=k]──→ failing node port p+k-1
+        //
+        // Delayed FORWARD edges (delay_taps>0, not recurrent): execute()
+        // maintains history rings for them (M4.1 gap fix). Zero-init
+        // weights: identity start; SGD learns which lags matter. Commits
+        // stack: a second DELAY_LINE commit extends the lag window.
+
+        // Find the INPUT that feeds the failing node — TRANSITIVELY. After
+        // stack commits the bottleneck is downstream of NEURONs with no
+        // direct INPUT edge; walk ancestors to reach the raw signal.
+        uint64_t input_src = 0;
+        {
+            // Direct edge first (common case)
+            for (const auto& c : shadow->get_connections()) {
+                if (c.dst_node == failing_id) {
+                    const Node* sn = shadow->get_node(c.src_node);
+                    if (sn && sn->get_type() == NodeType::INPUT) {
+                        input_src = c.src_node;
+                        break;
+                    }
+                }
+            }
+            if (input_src == 0) {
+                // Transitive: any INPUT among the failing node's ancestors.
+                // Prefer the primary (first-seen in connection order) INPUT.
+                for (const auto& c : shadow->get_connections()) {
+                    const Node* sn = shadow->get_node(c.src_node);
+                    if (sn && sn->get_type() == NodeType::INPUT) {
+                        // is this input an ancestor of failing_id?
+                        auto anc = shadow->get_ancestors(failing_id);
+                        if (std::find(anc.begin(), anc.end(), c.src_node) != anc.end()) {
+                            input_src = c.src_node;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if (input_src == 0) {
+            Logger::info("  [DELAY_LINE-DBG] routing break: no INPUT ancestor for failing node "
+                        + std::to_string(failing_id));
+            break;
+        }
+
+        Node* fn = shadow->get_node(failing_id);
+        if (!fn || (fn->get_type() != NodeType::NEURON
+                    && fn->get_type() != NodeType::LINEAR)) break;
+        auto* nn = static_cast<NeuronNode*>(fn);
+
+        int k = (hyp.compound_K > 0)
+              ? std::min(hyp.compound_K, static_cast<int>(MAX_DELAY_TAPS))
+              : config::DELAY_LINE_K;
+        size_t first_port = nn->get_num_weights();
+        nn->set_input_count(first_port + static_cast<size_t>(k));
+        for (int lag = 1; lag <= k; ++lag) {
+            size_t port = first_port + static_cast<size_t>(lag - 1);
+            nn->set_weight(port, 0.0);
+            // INPUT -> failing node, delayed by `lag` steps. add_connection
+            // won't flag this recurrent (no cycle); delay_taps carries the
+            // temporal read. set AFTER the connection exists.
+            shadow->add_connection(input_src, 0, failing_id, port);
+            shadow->set_connection_delay_taps(input_src, 0, failing_id, port, lag);
+        }
+        break;
+    }
+
     case Hypothesis::RECURRENT_MULTI_TAP: {
         // K self-recurrent inputs at delays 1..K. Each port reads the
         // node's own output from k steps back via Connection::delay_taps
@@ -5157,6 +5265,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_ABS)
             || hyp_type == static_cast<int>(Hypothesis::RECURRENT_SELF_WIRE)
             || hyp_type == static_cast<int>(Hypothesis::RECURRENT_MULTI_TAP)
+            || hyp_type == static_cast<int>(Hypothesis::DELAY_LINE)
             || hyp_type == static_cast<int>(Hypothesis::SIN_INJECTION)
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
@@ -5178,6 +5287,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_ABS)
             || hyp_type == static_cast<int>(Hypothesis::RECURRENT_SELF_WIRE)
             || hyp_type == static_cast<int>(Hypothesis::RECURRENT_MULTI_TAP)
+            || hyp_type == static_cast<int>(Hypothesis::DELAY_LINE)
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
@@ -5339,6 +5449,7 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_ABS)
                 || hyp_type == static_cast<int>(Hypothesis::RECURRENT_SELF_WIRE)
             || hyp_type == static_cast<int>(Hypothesis::RECURRENT_MULTI_TAP)
+            || hyp_type == static_cast<int>(Hypothesis::DELAY_LINE)
                 || hyp_type == static_cast<int>(Hypothesis::SIN_INJECTION)
                 || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
                 || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)

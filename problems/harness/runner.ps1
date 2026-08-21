@@ -1,4 +1,4 @@
-# runner.ps1 — self-contained idempotent overnight queue for ARIA.
+﻿# runner.ps1 — self-contained idempotent overnight queue for ARIA.
 # Launch: double-click RUN_QUEUE.bat (in the same folder). Do NOT close the
 # console window that opens (minimize it). The runner survives independently
 # of any editor/session; it dies only on shutdown/logoff.
@@ -79,10 +79,10 @@ function RunStage($name, $tag, $doneMarker, $exe, $arglist, $maxMin, $resultPatt
 
 # --- Group A: regression gate (d9, t31 were lost when the monitor died) ---
 RunStage "reg d9"  "reg_d9_q"  "Evolution Complete" "..\aria6.exe" @(
-    '--csv','bench_d9_noise.csv','--input-cols','2',
+    '--csv','suite-standard/bench_d9_noise.csv','--input-cols','2',
     '--max-epochs','60','--seed','1','--save-graph','none') 30 @('Final loss')
 RunStage "reg t31" "reg_t31_q" "Evolution Complete" "..\aria6.exe" @(
-    '--csv','bench_t31_three_way_product.csv','--input-cols','3',
+    '--csv','suite-standard/bench_t31_three_way_product.csv','--input-cols','3',
     '--max-epochs','60','--seed','1','--save-graph','none') 30 @('Final loss')
 
 # --- Group B: temporal battery (harness prints narma10 line at end) ---
@@ -100,22 +100,22 @@ RunStage "limits battery (aria6)" "limits_q" "firstpos8" "python" @(
 
 # --- Group E: char-LM ladder w/ softmax-CE (the language numbers) ---
 RunStage "charLM w8" "lmw8_q" "SoftmaxCE" "..\aria6.exe" @(
-    '--csv','bench_shakespeare_w8.csv','--input-cols','8','--output-cols','65',
+    '--csv','suite-language/bench_shakespeare_w8.csv','--input-cols','8','--output-cols','65',
     '--loss','bce','--max-epochs','30','--seed','1','--save-graph','none',
-    '--eval-csv','bench_shakespeare_w8.csv') 240 @('SoftmaxCE','Accuracy','Restored best-val')
+    '--eval-csv','suite-language/bench_shakespeare_w8.csv') 240 @('SoftmaxCE','Accuracy','Restored best-val')
 RunStage "charLM w16" "lmw16_q" "SoftmaxCE" "..\aria6.exe" @(
-    '--csv','bench_shakespeare_w16.csv','--input-cols','16','--output-cols','65',
+    '--csv','suite-language/bench_shakespeare_w16.csv','--input-cols','16','--output-cols','65',
     '--loss','bce','--max-epochs','30','--seed','1','--save-graph','none',
-    '--eval-csv','bench_shakespeare_w16.csv') 300 @('SoftmaxCE','Accuracy','Restored best-val')
+    '--eval-csv','suite-language/bench_shakespeare_w16.csv') 300 @('SoftmaxCE','Accuracy','Restored best-val')
 RunStage "charLM w32" "lmw32_q" "SoftmaxCE" "..\aria6.exe" @(
-    '--csv','bench_shakespeare_w32.csv','--input-cols','32','--output-cols','65',
+    '--csv','suite-language/bench_shakespeare_w32.csv','--input-cols','32','--output-cols','65',
     '--loss','bce','--max-epochs','30','--seed','1','--save-graph','none',
-    '--eval-csv','bench_shakespeare_w32.csv') 360 @('SoftmaxCE','Accuracy','Restored best-val')
+    '--eval-csv','suite-language/bench_shakespeare_w32.csv') 360 @('SoftmaxCE','Accuracy','Restored best-val')
 
 # --- Group F: I.32.8 with gates (continuing the arc) ---
 RunStage "I.32.8 (aria6 gates)" "i328_q" "Held-out Evaluation" "..\aria6.exe" @(
-    '--csv','feynman/I.32.8.csv','--input-cols','3',
-    '--eval-csv','feynman/I.32.8_test.csv',
+    '--csv','suite-feynman/I.32.8.csv','--input-cols','3',
+    '--eval-csv','suite-feynman/I.32.8_test.csv',
     '--max-epochs','150','--seed','1','--save-graph','none') 40 @('Eval R2','Final loss')
 
 Log "=== overnight queue COMPLETE — read QUEUE_RESULTS.txt ==="

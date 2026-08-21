@@ -620,6 +620,13 @@ constexpr double SCORE_RECURRENT_MULTI_TAP         = 0.93;
 // targets). Boosted when the residual has sharp boundaries.
 constexpr double SCORE_MUX_INJECTION               = 0.40;
 constexpr double SCORE_MUX_INJECTION_BOOST         = 0.90;
+
+// DELAY_LINE: k delayed copies of the input signal (u[t-1..t-k]) wired as
+// features of the failing node via delay_taps forward edges. For long-memory
+// sequence targets (narma30: 30-step history; narma10_lag solved at 0.005
+// when the lags were GIVEN — this hypothesis lets the engine build them).
+constexpr double SCORE_DELAY_LINE                  = 0.94;  // ranks above MULTI_TAP (0.93): lags carry more raw information than self-state taps
+constexpr int    DELAY_LINE_K                      = 4;     // taps per commit (MAX_DELAY_TAPS ring depth; commits stack)
 constexpr int    RECURRENT_MULTI_TAP_K             = 4;     // taps (max ring depth)
 
 // MULTI_LAYER_STACK: injects a K-width hidden layer + combining neuron.
