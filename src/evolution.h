@@ -328,15 +328,19 @@ private:
             SIN_INJECTION,           // NEURON(zero-init) 鈫?SIN 鈫?ADD (sin(wx+b) for oscillating residuals)
             DEEP_INSERTION,          // failing_node 鈫?NEURON(zero-init) 鈫?TANH 鈫?ADD (residual depth for hierarchical features)
             RECURRENT_XOR,           // Recurrent XOR node for running parity (d6): output = input XOR prev_output
-            RECURRENT_MULTI_TAP,     // K self-recurrent inputs at delays 1..K (long memory: NARMA-30)
             MULTI_LAYER_STACK,       // K parallel hidden NEURONs + combining NEURON (2-layer MLP for spirals/checkerboard)
-            PATCH_POOLING,           // patch_size虏 average-pool LINEAR nodes for image-like inputs (coarse conv prior)
-            MUX_INJECTION,           // MUX(cond, a, b) -> zero-gain NEURON -> ADD: select between two signals by thresholded condition (piecewise/regime-switch targets)
-            DELAY_LINE,             // k delayed copies of INPUT (u[t-1..t-k]) as features via delay_taps forward edges (narma30-class long memory)
-            PARITY_TREE,             // linear-fold XOR tree over all binary inputs 鈫?OUTPUT (k-bit parity, XOR-5D)
-            DIVIDE_INJECTION,        // quotient feature a/b (ratio targets: m/V, (u+v)/(1+uv)) 鈥?both orderings, denominator-safety-gated
-            COMPOUND_SIN_PRODUCT,    // MULTIPLY(a,b) 鈫?NEURON(freq-init) 鈫?SIN 鈫?ADD (sin(x路y), x路sin(kx) targets: Korns F4/F8, Feynman I.29.16)
-            COMPOUND_DIVIDE_PRODUCT, // DIVIDE(MULTIPLY(a,b), c) 鈫?zero-gain NEURON 鈫?ADD (q虏a虏/c鲁-class: Feynman I.32.8)
+            PATCH_POOLING,           // patch_size^2 average-pool LINEAR nodes for image-like inputs (coarse conv prior)
+            PARITY_TREE,             // linear-fold XOR tree over all binary inputs -> OUTPUT (k-bit parity, XOR-5D)
+            DIVIDE_INJECTION,        // quotient feature a/b (ratio targets) - both orderings, denominator-safety-gated
+            COMPOUND_SIN_PRODUCT,    // MULTIPLY(a,b) -> NEURON(freq-init) -> SIN -> ADD (sin(x*y) targets: Korns F4/F8)
+            COMPOUND_DIVIDE_PRODUCT, // DIVIDE(MULTIPLY(a,b), c) -> zero-gain NEURON -> ADD (q^2a^2/c^3: Feynman I.32.8)
+            RECURRENT_MULTI_TAP,     // K self-recurrent inputs at delays 1..K (long memory: NARMA-30)
+            MUX_INJECTION,           // MUX(cond, a, b) -> zero-gain NEURON -> ADD (piecewise/regime targets)
+            DELAY_LINE,              // k delayed copies of INPUT (u[t-1..t-k]) via delay_taps edges (narma30)
+            // NOTE: enum order MUST match hyp_names[] in evolution.cpp exactly
+            // (values are cast to int for gates+logs). A mid-list insert once
+            // silently desynced them, breaking every SIN_PRODUCT/DIVIDE gate.
+            // Append-only from here on.
         };
         Type     type = NONE;
 
