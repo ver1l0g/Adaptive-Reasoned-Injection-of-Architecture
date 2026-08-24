@@ -862,11 +862,37 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                         // Commit the winning shadow. validate_shadow_only
                         // received the shadow by reference and did NOT move
                         // it, so ownership remains in specs[winner_idx].shadow.
+                        bool was_recall = (results[winner_idx].hyp_rank == -1);
                         graph_ = std::move(specs[winner_idx].shadow);
                         stats_.structural_changes++;
+                        if (was_recall) {
+                            // M1.2 recall commit: the swapped-in graph carries
+                            // its own node-ID space. Rebuild the data-ID maps
+                            // from input_N/output_M node names (same
+                            // convention as --load-graph) or every subsequent
+                            // set_input_value maps to stale IDs (access
+                            // violation).
+                            input_data_to_graph_.clear();
+                            output_data_to_graph_.clear();
+                            for (const auto& n : graph_->get_nodes()) {
+                                const std::string& nm = n->get_name();
+                                try {
+                                    if (nm.rfind("input_", 0) == 0) {
+                                        input_data_to_graph_[std::stoull(nm.substr(6))] = n->get_id();
+                                    } else if (nm.rfind("output_", 0) == 0) {
+                                        output_data_to_graph_[std::stoull(nm.substr(7))] = n->get_id();
+                                    }
+                                } catch (...) {}
+                            }
+                            Logger::info("  [RECALL] prior graph COMMITTED — maps rebuilt ("
+                                        + std::to_string(input_data_to_graph_.size()) + " in / "
+                                        + std::to_string(output_data_to_graph_.size()) + " out)");
+                        }
                         current_loss = evaluate_loss(training_data_);
                         Logger::info("  COMMIT rank=" + std::to_string(results[winner_idx].hyp_rank)
-                                    + " type=" + hyp_names[results[winner_idx].hyp_type]
+                                    + " type=" + (results[winner_idx].hyp_type < 0
+                                                  ? std::string("RECALL")
+                                                  : hyp_names[results[winner_idx].hyp_type])
                                     + " val_loss=" + std::to_string(results[winner_idx].val_loss)
                                     + " train_loss=" + std::to_string(results[winner_idx].train_loss)
                                     + " new train_loss=" + std::to_string(current_loss));
