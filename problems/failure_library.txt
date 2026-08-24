@@ -330,3 +330,249 @@
 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
 "bench_shakespeare_w1_10k.csv"	3	0.00041624204
 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00077633525
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00016593395
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00017318587
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00017441658
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00019856511
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0094509256
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.0059701515
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.0059141081
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.0058767116
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.0059312284
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0073512974
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.0060156862
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00032576066
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00044072161
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00043888576
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00045672937
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00041207203
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0059524034
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.0062113993
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.0062099688
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.0061946798
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.0062146421
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0084373267
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.0062274438
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0022884105
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00055504673
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00053804026
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00056347135
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00054038209
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0045921954
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.0060832507
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.0060535435
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.0060554389
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.006018213
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.006026044
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.006007227
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00045903594
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00049252009
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00049099541
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00050757196
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00048289035
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0061947735
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.0061684538
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.0061019261
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.0061464999
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.0061600796
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.0062019243
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.0061132959
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00025116988
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00035541657
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00038514672
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00036630774
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00038493877
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00025116988
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00035541657
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00038675598
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00037564207
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00037894245
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00025116986
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00035541657
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00038273809
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00036630771
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00037171211
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00031219155
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00044772657
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00031917025
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00039703568
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00043475011
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00031219155
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00044772652
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00031909433
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00051304548
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00043197605
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00031219155
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00044772657
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00033397786
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00039703568
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00043358296
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00033975454
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00046432219
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00043336614
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00049045641
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00040287342
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00033975454
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00046432219
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00042510132
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00043536677
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00041022224
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00033975454
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00046432219
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00043375253
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00043536634
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00040882635
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00035369273
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00052418117
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00045055784
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00053659961
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00045913147
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00035369273
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00052418117
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00045127541
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00046718593
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00046179925
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00035369273
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00052418117
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00045222101
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00046718594
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00046007193
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00041624204
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00056243032
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00053982557
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00055928966
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00051455031
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00041624204
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00056243019
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00053981386
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00053507545
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00051445779
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	3	0.00041624204
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	1	0.00056243019
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	2	0.00053975345
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	21	0.00053507545
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0
+"bench_shakespeare_w1_10k.csv"	4	0.00051445885
+1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0

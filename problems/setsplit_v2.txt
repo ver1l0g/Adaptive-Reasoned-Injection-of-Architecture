@@ -1,0 +1,1357 @@
+
+============================================================
+  GP-NN Log 鈥?2026-08-24 18:57:31.466
+  Verbose mode enabled
+============================================================
+
+2026-08-24 18:57:31.567 [VERBOSE] SGD improved: loss 0.525748 -> 0.247029 (delta=0.278719)
+2026-08-24 18:57:31.567 [INFO] New best overall loss: 0.247029
+2026-08-24 18:57:31.576 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.247029)
+2026-08-24 18:57:31.585 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.247029)
+2026-08-24 18:57:31.594 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.247029)
+2026-08-24 18:57:31.597 [INFO] Plateau triggered at epoch 4 (counter=3, loss=0.247228)
+2026-08-24 18:57:31.600 [VERBOSE] attr node=3 type=NEURON base=0.247228 pert=0.257307 blame=0.010079
+2026-08-24 18:57:31.600 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.010079)
+2026-08-24 18:57:31.601 [VERBOSE] diag results: 1 failures
+2026-08-24 18:57:31.601 [VERBOSE] diagnose() returned 1 failure(s)
+2026-08-24 18:57:31.601 [VERBOSE] Diagnosing node 3 blame=0.010079
+2026-08-24 18:57:31.602 [VERBOSE] Top blackboard signal: node=1 corr=0.000000
+2026-08-24 18:57:31.602 [DECISION] Classify failure | node=3 type=NON_LINEAR_CURVE
+2026-08-24 18:57:31.602 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:57:31.602 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-24 18:57:31.602 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:57:31.603 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:57:31.603 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.938028, 19 sign changes)
+2026-08-24 18:57:31.604 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:57:31.605 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:57:31.605 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:57:31.605 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:57:31.605 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:57:31.606 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:57:31.606 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 18:57:31.606 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:57:31.607 [INFO]   [RECALL] prior graph injected as candidate (1 inputs / 1 outputs, from checkpoints/bench_stripes20/graph.json)
+2026-08-24 18:57:31.607 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:57:31.608 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:57:31.608 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 18:57:31.609 [DECISION] Try hypothesis | rank=3 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:57:31.609 [DECISION] Try hypothesis | rank=4 type=NEURON_TANH_INJECTION
+2026-08-24 18:57:31.609 [DECISION] Try hypothesis | rank=5 type=DEEP_INSERTION
+2026-08-24 18:57:31.610 [DECISION] Try hypothesis | rank=6 type=MULTIPLY_INJECTION
+2026-08-24 18:57:31.610 [DECISION] Try hypothesis | rank=7 type=CONTEXT_WIRE
+2026-08-24 18:57:32.604 [VERBOSE]   rank=3 REJECT — training loss drifted up (shadow_train=0.304091 vs baseline_loss=0.247228, delta=0.056864, max_allowed=0.024723)
+2026-08-24 18:57:32.604 [VERBOSE]   rank=4 REJECT — val_loss=0.248888 did not beat baseline_val=0.248826 by required=0.000000
+2026-08-24 18:57:32.605 [VERBOSE]   rank=6 REJECT — val_loss=0.249726 did not beat baseline_val=0.248826 by required=0.000000
+2026-08-24 18:57:32.605 [VERBOSE]   rank=7 REJECT — val_loss=0.248871 did not beat baseline_val=0.248826 by required=0.000000
+2026-08-24 18:57:32.605 [INFO]   [RECALL] prior graph COMMITTED — maps rebuilt (1 in / 1 out)
+2026-08-24 18:57:32.608 [INFO]   COMMIT rank=-1 type=RECALL val_loss=0.241015 train_loss=0.228629 new train_loss=0.235221
+2026-08-24 18:57:32.609 [INFO] Plateau state reset 鈥?best_phase2=0.235221
+2026-08-24 18:57:32.609 [INFO] Plateau state reset — best_phase2=0.235221
+2026-08-24 18:57:32.610 [VERBOSE] New best val loss: 0.241015 (train 0.235221)
+2026-08-24 18:57:32.629 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.235221)
+2026-08-24 18:57:32.657 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.235221)
+2026-08-24 18:57:32.680 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.235221)
+2026-08-24 18:57:32.682 [INFO] Plateau triggered at epoch 7 (counter=3, loss=0.237414)
+2026-08-24 18:57:32.689 [VERBOSE] attr node=4 type=NEURON base=0.237414 pert=0.235546 blame=-0.001868
+2026-08-24 18:57:32.690 [VERBOSE] attr node=23 type=NEURON base=0.237414 pert=0.239065 blame=0.001651
+2026-08-24 18:57:32.690 [VERBOSE] attr node=21 type=NEURON base=0.237414 pert=0.237761 blame=0.000347
+2026-08-24 18:57:32.690 [VERBOSE] attr node=20 type=NEURON base=0.237414 pert=0.237109 blame=-0.000306
+2026-08-24 18:57:32.691 [VERBOSE] attr node=19 type=NEURON base=0.237414 pert=0.237626 blame=0.000212
+2026-08-24 18:57:32.691 [VERBOSE] attr node=22 type=NEURON base=0.237414 pert=0.237221 blame=-0.000193
+2026-08-24 18:57:32.692 [VERBOSE] attr node=13 type=NEURON base=0.237414 pert=0.237368 blame=-0.000046
+2026-08-24 18:57:32.692 [VERBOSE] attr node=7 type=NEURON base=0.237414 pert=0.237391 blame=-0.000023
+2026-08-24 18:57:32.692 [VERBOSE] attr node=18 type=NEURON base=0.237414 pert=0.237394 blame=-0.000021
+2026-08-24 18:57:32.692 [VERBOSE] attr node=9 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.693 [VERBOSE] attr node=10 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.693 [VERBOSE] attr node=15 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.693 [VERBOSE] attr node=17 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.694 [VERBOSE] attr node=11 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.694 [VERBOSE] attr node=12 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.694 [VERBOSE] attr node=16 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.694 [VERBOSE] attr node=14 type=NEURON base=0.237414 pert=0.237414 blame=0.000000
+2026-08-24 18:57:32.699 [VERBOSE] diag results: 6 failures
+2026-08-24 18:57:32.699 [VERBOSE] diagnose() returned 6 failure(s)
+2026-08-24 18:57:32.700 [VERBOSE] Diagnosing node 4 blame=-0.001868
+2026-08-24 18:57:32.700 [VERBOSE] Top blackboard signal: node=15 corr=0.000000
+2026-08-24 18:57:32.700 [DECISION] Classify failure | node=4 type=NON_LINEAR_CURVE
+2026-08-24 18:57:32.701 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:57:32.701 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-24 18:57:32.701 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:57:32.702 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=15 b=node=23)
+2026-08-24 18:57:32.702 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:57:32.702 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.938028, 19 sign changes)
+2026-08-24 18:57:32.702 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:57:32.703 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:57:32.703 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:57:32.704 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:57:32.704 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:57:32.704 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:57:32.705 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:57:32.705 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:57:32.705 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 18:57:32.706 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:57:32.706 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:57:32.706 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:57:32.707 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 18:57:32.707 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 18:57:32.709 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:57:32.709 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 18:57:32.710 [DECISION] Try hypothesis | rank=6 type=DEEP_INSERTION
+2026-08-24 18:57:32.710 [DECISION] Try hypothesis | rank=7 type=BOOLEAN_COMPOSE
+2026-08-24 18:57:32.711 [DECISION] Try hypothesis | rank=8 type=MULTIPLY_INJECTION
+2026-08-24 18:57:32.711 [DECISION] Try hypothesis | rank=9 type=CONTEXT_WIRE
+2026-08-24 18:57:35.941 [VERBOSE]   rank=1 REJECT — val_loss=0.248761 did not beat baseline_val=0.243455 by required=0.000000
+2026-08-24 18:57:35.942 [VERBOSE]   rank=3 REJECT — val_loss=0.250058 did not beat baseline_val=0.243455 by required=0.000000
+2026-08-24 18:57:35.943 [VERBOSE]   rank=6 REJECT — val_loss=0.250147 did not beat baseline_val=0.243455 by required=0.000000
+2026-08-24 18:57:35.943 [VERBOSE]   rank=9 REJECT — val_loss=0.250046 did not beat baseline_val=0.243455 by required=0.000000
+2026-08-24 18:57:35.950 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.243207 train_loss=0.231464 new train_loss=0.236440
+2026-08-24 18:57:35.952 [VERBOSE] Diagnosing node 20 blame=-0.000306
+2026-08-24 18:57:35.952 [VERBOSE] Top blackboard signal: node=14 corr=0.000000
+2026-08-24 18:57:35.953 [DECISION] Classify failure | node=20 type=NON_LINEAR_CURVE
+2026-08-24 18:57:35.954 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:57:35.955 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-24 18:57:35.955 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:57:35.956 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=14 b=node=28)
+2026-08-24 18:57:35.957 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:57:35.958 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:57:35.959 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:57:35.960 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:57:35.960 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:57:35.961 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:57:35.962 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:57:35.962 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:57:35.963 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:57:35.964 [DECISION] Try hypothesis | rank=1 type=MUX_INJECTION
+2026-08-24 18:57:35.966 [DECISION] Try hypothesis | rank=2 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:57:35.967 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 18:57:35.968 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-24 18:57:44.632 [VERBOSE]   rank=1 REJECT — val_loss=0.246376 did not beat baseline_val=0.243207 by required=0.000000
+2026-08-24 18:57:44.633 [VERBOSE]   rank=2 REJECT — val_loss=0.246199 did not beat baseline_val=0.243207 by required=0.000000
+2026-08-24 18:57:44.634 [VERBOSE]   rank=3 REJECT — val_loss=0.245860 did not beat baseline_val=0.243207 by required=0.000000
+2026-08-24 18:57:44.635 [VERBOSE]   rank=4 REJECT — val_loss=0.250147 did not beat baseline_val=0.243207 by required=0.000000
+2026-08-24 18:57:44.640 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.244089 train_loss=0.232558 new train_loss=0.236991
+2026-08-24 18:57:44.642 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 18:57:44.643 [INFO] Plateau state reset 鈥?best_phase2=0.236991
+2026-08-24 18:57:44.644 [INFO] Plateau state reset — best_phase2=0.236991
+2026-08-24 18:57:44.978 [VERBOSE] SGD relative improvement: 0.001815 (loss 0.236991 -> 0.236561)
+2026-08-24 18:57:45.349 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.236991)
+2026-08-24 18:57:45.676 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.236991)
+2026-08-24 18:57:45.684 [VERBOSE] Compile at epoch 10
+2026-08-24 18:57:45.685 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:57:46.475 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.236991)
+2026-08-24 18:57:46.481 [INFO] Plateau triggered at epoch 11 (counter=3, loss=0.236471)
+2026-08-24 18:57:46.532 [VERBOSE] attr node=26 type=NEURON base=0.236471 pert=0.240833 blame=0.004362
+2026-08-24 18:57:46.532 [VERBOSE] attr node=28 type=NEURON base=0.236471 pert=0.235296 blame=-0.001175
+2026-08-24 18:57:46.533 [VERBOSE] attr node=27 type=NEURON base=0.236471 pert=0.235422 blame=-0.001049
+2026-08-24 18:57:46.534 [VERBOSE] attr node=23 type=NEURON base=0.236471 pert=0.237471 blame=0.001000
+2026-08-24 18:57:46.534 [VERBOSE] attr node=24 type=NEURON base=0.236471 pert=0.235524 blame=-0.000947
+2026-08-24 18:57:46.535 [VERBOSE] attr node=25 type=NEURON base=0.236471 pert=0.235713 blame=-0.000758
+2026-08-24 18:57:46.536 [VERBOSE] attr node=21 type=NEURON base=0.236471 pert=0.236843 blame=0.000372
+2026-08-24 18:57:46.536 [VERBOSE] attr node=19 type=NEURON base=0.236471 pert=0.236649 blame=0.000178
+2026-08-24 18:57:46.537 [VERBOSE] attr node=22 type=NEURON base=0.236471 pert=0.236318 blame=-0.000153
+2026-08-24 18:57:46.538 [VERBOSE] attr node=7 type=NEURON base=0.236471 pert=0.236432 blame=-0.000039
+2026-08-24 18:57:46.539 [VERBOSE] attr node=13 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.539 [VERBOSE] attr node=18 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.540 [VERBOSE] attr node=11 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.541 [VERBOSE] attr node=10 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.542 [VERBOSE] attr node=9 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.542 [VERBOSE] attr node=33 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.543 [VERBOSE] attr node=32 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.544 [VERBOSE] attr node=31 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.545 [VERBOSE] attr node=30 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.545 [VERBOSE] attr node=29 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.546 [VERBOSE] attr node=12 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.547 [VERBOSE] attr node=14 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.548 [VERBOSE] attr node=15 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.549 [VERBOSE] attr node=16 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.549 [VERBOSE] attr node=17 type=NEURON base=0.236471 pert=0.236471 blame=0.000000
+2026-08-24 18:57:46.568 [VERBOSE] diag results: 6 failures
+2026-08-24 18:57:46.569 [VERBOSE] diagnose() returned 6 failure(s)
+2026-08-24 18:57:46.569 [VERBOSE] Diagnosing node 28 blame=-0.001175
+2026-08-24 18:57:46.570 [VERBOSE] Top blackboard signal: node=1 corr=0.000000
+2026-08-24 18:57:46.570 [DECISION] Classify failure | node=28 type=NON_LINEAR_CURVE
+2026-08-24 18:57:46.571 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:57:46.572 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-24 18:57:46.573 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:57:46.574 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=33 b=node=32)
+2026-08-24 18:57:46.575 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:57:46.575 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=53.434630, 19 sign changes)
+2026-08-24 18:57:46.576 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:57:46.578 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:57:46.579 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:57:46.579 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:57:46.580 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:57:46.580 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:57:46.581 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:57:46.581 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:57:46.582 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 18:57:46.583 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:57:46.583 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:57:46.585 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:57:46.586 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 18:57:46.588 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 18:57:46.593 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:57:46.595 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 18:57:46.597 [DECISION] Try hypothesis | rank=6 type=DEEP_INSERTION
+2026-08-24 18:57:46.598 [DECISION] Try hypothesis | rank=7 type=BOOLEAN_COMPOSE
+2026-08-24 18:57:46.599 [DECISION] Try hypothesis | rank=8 type=MULTIPLY_INJECTION
+2026-08-24 18:57:46.600 [DECISION] Try hypothesis | rank=9 type=CONTEXT_WIRE
+2026-08-24 18:58:01.624 [VERBOSE]   rank=4 REJECT — val_loss=0.246239 did not beat baseline_val=0.242947 by required=0.000000
+2026-08-24 18:58:01.625 [VERBOSE]   rank=6 REJECT — val_loss=0.250147 did not beat baseline_val=0.242947 by required=0.000000
+2026-08-24 18:58:01.626 [VERBOSE]   rank=7 REJECT — val_loss=0.244262 did not beat baseline_val=0.242947 by required=0.000000
+2026-08-24 18:58:01.626 [VERBOSE]   rank=9 REJECT — val_loss=0.251575 did not beat baseline_val=0.242947 by required=0.000000
+2026-08-24 18:58:01.633 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.241128 train_loss=0.226687 new train_loss=0.234930
+2026-08-24 18:58:01.636 [VERBOSE] Diagnosing node 27 blame=-0.001049
+2026-08-24 18:58:01.637 [VERBOSE] Top blackboard signal: node=15 corr=0.000000
+2026-08-24 18:58:01.637 [DECISION] Classify failure | node=27 type=NON_LINEAR_CURVE
+2026-08-24 18:58:01.637 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:58:01.638 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-24 18:58:01.639 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:58:01.640 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=15 b=node=33)
+2026-08-24 18:58:01.641 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:58:01.642 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.938028, 19 sign changes)
+2026-08-24 18:58:01.642 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:58:01.643 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:58:01.644 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:58:01.645 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:58:01.646 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:58:01.647 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:58:01.647 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:58:01.648 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:58:01.649 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 18:58:01.650 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:58:01.650 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:58:01.651 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:58:01.653 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 18:58:01.654 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 18:58:01.659 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:58:17.515 [VERBOSE]   rank=1 REJECT — val_loss=0.248682 did not beat baseline_val=0.241128 by required=0.000000
+2026-08-24 18:58:17.515 [VERBOSE]   rank=3 REJECT — val_loss=0.241473 did not beat baseline_val=0.241128 by required=0.000000
+2026-08-24 18:58:17.516 [VERBOSE]   rank=4 REJECT — val_loss=0.245466 did not beat baseline_val=0.241128 by required=0.000000
+2026-08-24 18:58:17.524 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.243088 train_loss=0.231374 new train_loss=0.236392
+2026-08-24 18:58:17.525 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 18:58:17.526 [INFO] Plateau state reset 鈥?best_phase2=0.236392
+2026-08-24 18:58:17.527 [INFO] Plateau state reset — best_phase2=0.236392
+2026-08-24 18:58:18.370 [VERBOSE] SGD plateau counter=-49/3 (best_phase2=0.236392)
+2026-08-24 18:58:18.778 [VERBOSE] SGD relative improvement: 0.003140 (loss 0.236495 -> 0.235752)
+2026-08-24 18:58:19.178 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.236392)
+2026-08-24 18:58:19.620 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.236392)
+2026-08-24 18:58:20.051 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.236392)
+2026-08-24 18:58:20.057 [INFO] Plateau triggered at epoch 16 (counter=3, loss=0.235849)
+2026-08-24 18:58:20.137 [VERBOSE] attr node=26 type=NEURON base=0.235849 pert=0.240384 blame=0.004535
+2026-08-24 18:58:20.137 [VERBOSE] attr node=23 type=NEURON base=0.235849 pert=0.236912 blame=0.001064
+2026-08-24 18:58:20.138 [VERBOSE] attr node=35 type=NEURON base=0.235849 pert=0.236777 blame=0.000928
+2026-08-24 18:58:20.139 [VERBOSE] attr node=24 type=NEURON base=0.235849 pert=0.236623 blame=0.000774
+2026-08-24 18:58:20.140 [VERBOSE] attr node=37 type=NEURON base=0.235849 pert=0.236431 blame=0.000582
+2026-08-24 18:58:20.141 [VERBOSE] attr node=36 type=NEURON base=0.235849 pert=0.236311 blame=0.000462
+2026-08-24 18:58:20.141 [VERBOSE] attr node=38 type=NEURON base=0.235849 pert=0.235455 blame=-0.000394
+2026-08-24 18:58:20.142 [VERBOSE] attr node=25 type=NEURON base=0.235849 pert=0.236234 blame=0.000385
+2026-08-24 18:58:20.142 [VERBOSE] attr node=34 type=NEURON base=0.235849 pert=0.235645 blame=-0.000204
+2026-08-24 18:58:20.143 [VERBOSE] attr node=21 type=NEURON base=0.235849 pert=0.236021 blame=0.000172
+2026-08-24 18:58:20.144 [VERBOSE] attr node=19 type=NEURON base=0.235849 pert=0.235924 blame=0.000075
+2026-08-24 18:58:20.144 [VERBOSE] attr node=22 type=NEURON base=0.235849 pert=0.235792 blame=-0.000057
+2026-08-24 18:58:20.145 [VERBOSE] attr node=43 type=NEURON base=0.235849 pert=0.235868 blame=0.000020
+2026-08-24 18:58:20.146 [VERBOSE] attr node=18 type=NEURON base=0.235849 pert=0.235849 blame=0.000001
+2026-08-24 18:58:20.146 [VERBOSE] attr node=13 type=NEURON base=0.235849 pert=0.235848 blame=-0.000001
+2026-08-24 18:58:20.147 [VERBOSE] attr node=39 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.148 [VERBOSE] attr node=42 type=NEURON base=0.235849 pert=0.235848 blame=-0.000000
+2026-08-24 18:58:20.148 [VERBOSE] attr node=41 type=NEURON base=0.235849 pert=0.235848 blame=-0.000000
+2026-08-24 18:58:20.149 [VERBOSE] attr node=7 type=NEURON base=0.235849 pert=0.235849 blame=-0.000000
+2026-08-24 18:58:20.150 [VERBOSE] attr node=40 type=NEURON base=0.235849 pert=0.235849 blame=-0.000000
+2026-08-24 18:58:20.151 [VERBOSE] attr node=31 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.151 [VERBOSE] attr node=29 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.152 [VERBOSE] attr node=30 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.153 [VERBOSE] attr node=32 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.154 [VERBOSE] attr node=9 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.154 [VERBOSE] attr node=10 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.155 [VERBOSE] attr node=17 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.156 [VERBOSE] attr node=16 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.157 [VERBOSE] attr node=15 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.158 [VERBOSE] attr node=11 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.158 [VERBOSE] attr node=14 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.159 [VERBOSE] attr node=12 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.160 [VERBOSE] attr node=33 type=NEURON base=0.235849 pert=0.235849 blame=0.000000
+2026-08-24 18:58:20.188 [VERBOSE] diag results: 8 failures
+2026-08-24 18:58:20.189 [VERBOSE] diagnose() returned 8 failure(s)
+2026-08-24 18:58:20.190 [VERBOSE] Diagnosing node 38 blame=-0.000394
+2026-08-24 18:58:20.191 [VERBOSE] Top blackboard signal: node=16 corr=0.000000
+2026-08-24 18:58:20.191 [DECISION] Classify failure | node=38 type=NON_LINEAR_CURVE
+2026-08-24 18:58:20.192 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:58:20.192 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-24 18:58:20.193 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:58:20.194 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=16 b=node=15)
+2026-08-24 18:58:20.195 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:58:20.195 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=42.781823, 19 sign changes)
+2026-08-24 18:58:20.196 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:58:20.198 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:58:20.198 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:58:20.199 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:58:20.200 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:58:20.200 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:58:20.201 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:58:20.202 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:58:20.203 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 18:58:20.203 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:58:20.204 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:58:20.206 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:58:20.208 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 18:58:20.210 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 18:58:20.214 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:58:20.216 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 18:58:20.218 [DECISION] Try hypothesis | rank=6 type=DEEP_INSERTION
+2026-08-24 18:58:20.219 [DECISION] Try hypothesis | rank=7 type=BOOLEAN_COMPOSE
+2026-08-24 18:58:20.221 [DECISION] Try hypothesis | rank=8 type=MULTIPLY_INJECTION
+2026-08-24 18:58:20.222 [DECISION] Try hypothesis | rank=9 type=CONTEXT_WIRE
+2026-08-24 18:58:37.870 [VERBOSE]   rank=0 superseded by rank=1 (effective 0.230064 < 0.241138)
+2026-08-24 18:58:37.870 [VERBOSE]   rank=6 REJECT — val_loss=0.250147 did not beat baseline_val=0.242156 by required=0.000000
+2026-08-24 18:58:37.871 [VERBOSE]   rank=7 REJECT — val_loss=0.242327 did not beat baseline_val=0.242156 by required=0.000000
+2026-08-24 18:58:37.872 [VERBOSE]   rank=8 REJECT — val_loss=0.245721 did not beat baseline_val=0.242156 by required=0.000000
+2026-08-24 18:58:37.872 [VERBOSE]   rank=9 REJECT — val_loss=0.245909 did not beat baseline_val=0.242156 by required=0.000000
+2026-08-24 18:58:37.879 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.227706 train_loss=0.215478 new train_loss=0.223284
+2026-08-24 18:58:37.882 [VERBOSE] Diagnosing node 34 blame=-0.000204
+2026-08-24 18:58:37.882 [VERBOSE] Top blackboard signal: node=38 corr=0.000000
+2026-08-24 18:58:37.883 [DECISION] Classify failure | node=34 type=NON_LINEAR_CURVE
+2026-08-24 18:58:37.883 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:58:37.884 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:58:37.885 [INFO] Candidate emitted: MUX_INJECTION (cond=node=38 thr=-0.996087 a=node=9 b=node=10)
+2026-08-24 18:58:37.885 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:58:37.886 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:58:37.888 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:58:37.888 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:58:37.889 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:58:37.890 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:58:37.891 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:58:37.891 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:58:37.892 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:58:37.893 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:58:37.893 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:58:37.895 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:58:37.896 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 18:58:37.901 [DECISION] Try hypothesis | rank=3 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:58:37.902 [DECISION] Try hypothesis | rank=4 type=NEURON_TANH_INJECTION
+2026-08-24 18:58:57.053 [VERBOSE]   rank=3 REJECT — val_loss=0.233395 did not beat baseline_val=0.227706 by required=0.000000
+2026-08-24 18:58:57.054 [VERBOSE]   rank=4 REJECT — val_loss=0.228533 did not beat baseline_val=0.227706 by required=0.000000
+2026-08-24 18:58:57.058 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.226835 train_loss=0.210400 new train_loss=0.220405
+2026-08-24 18:58:57.059 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 18:58:57.059 [INFO] Plateau state reset 鈥?best_phase2=0.220405
+2026-08-24 18:58:57.060 [INFO] Plateau state reset — best_phase2=0.220405
+2026-08-24 18:58:57.064 [VERBOSE] New best val loss: 0.226835 (train 0.220405)
+2026-08-24 18:58:57.376 [VERBOSE] SGD plateau counter=-49/3 (best_phase2=0.220405)
+2026-08-24 18:58:57.748 [VERBOSE] SGD relative improvement: 0.004411 (loss 0.224576 -> 0.223586)
+2026-08-24 18:58:57.986 [VERBOSE] SGD relative improvement: 0.010581 (loss 0.223586 -> 0.221220)
+2026-08-24 18:58:58.261 [VERBOSE] SGD relative improvement: 0.001532 (loss 0.221220 -> 0.220881)
+2026-08-24 18:58:58.267 [VERBOSE] Compile at epoch 20
+2026-08-24 18:58:58.268 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:58:58.610 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.220405)
+2026-08-24 18:58:58.866 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.220405)
+2026-08-24 18:58:59.166 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.220405)
+2026-08-24 18:58:59.169 [INFO] Plateau triggered at epoch 23 (counter=3, loss=0.221061)
+2026-08-24 18:58:59.220 [VERBOSE] attr node=46 type=ADD base=0.221061 pert=0.233407 blame=0.012345
+2026-08-24 18:58:59.221 [VERBOSE] attr node=38 type=NEURON base=0.221061 pert=0.233407 blame=0.012345
+2026-08-24 18:58:59.222 [VERBOSE] attr node=45 type=SIN base=0.221061 pert=0.233407 blame=0.012345
+2026-08-24 18:58:59.222 [VERBOSE] attr node=24 type=NEURON base=0.221061 pert=0.228782 blame=0.007720
+2026-08-24 18:58:59.223 [VERBOSE] attr node=44 type=NEURON base=0.221061 pert=0.228213 blame=0.007151
+2026-08-24 18:58:59.224 [VERBOSE] attr node=7 type=NEURON base=0.221061 pert=0.227788 blame=0.006726
+2026-08-24 18:58:59.224 [VERBOSE] attr node=25 type=NEURON base=0.221061 pert=0.227753 blame=0.006691
+2026-08-24 18:58:59.225 [VERBOSE] attr node=26 type=NEURON base=0.221061 pert=0.222430 blame=0.001369
+2026-08-24 18:58:59.226 [VERBOSE] attr node=23 type=NEURON base=0.221061 pert=0.222284 blame=0.001223
+2026-08-24 18:58:59.226 [VERBOSE] attr node=22 type=NEURON base=0.221061 pert=0.221434 blame=0.000373
+2026-08-24 18:58:59.227 [VERBOSE] attr node=21 type=NEURON base=0.221061 pert=0.221295 blame=0.000233
+2026-08-24 18:58:59.228 [VERBOSE] attr node=35 type=NEURON base=0.221061 pert=0.220973 blame=-0.000089
+2026-08-24 18:58:59.228 [VERBOSE] attr node=43 type=NEURON base=0.221061 pert=0.221138 blame=0.000077
+2026-08-24 18:58:59.229 [VERBOSE] attr node=19 type=NEURON base=0.221061 pert=0.221046 blame=-0.000015
+2026-08-24 18:58:59.230 [VERBOSE] attr node=36 type=NEURON base=0.221061 pert=0.221056 blame=-0.000005
+2026-08-24 18:58:59.230 [VERBOSE] attr node=37 type=NEURON base=0.221061 pert=0.221061 blame=-0.000000
+2026-08-24 18:58:59.231 [VERBOSE] attr node=13 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.231 [VERBOSE] attr node=18 type=NEURON base=0.221061 pert=0.221061 blame=-0.000000
+2026-08-24 18:58:59.232 [VERBOSE] attr node=40 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.233 [VERBOSE] attr node=51 type=NEURON base=0.221061 pert=0.221061 blame=-0.000000
+2026-08-24 18:58:59.233 [VERBOSE] attr node=47 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.234 [VERBOSE] attr node=33 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.234 [VERBOSE] attr node=32 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.234 [VERBOSE] attr node=9 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.235 [VERBOSE] attr node=39 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.235 [VERBOSE] attr node=10 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.236 [VERBOSE] attr node=11 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.237 [VERBOSE] attr node=31 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.237 [VERBOSE] attr node=49 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.238 [VERBOSE] attr node=50 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.238 [VERBOSE] attr node=30 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.239 [VERBOSE] attr node=17 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.240 [VERBOSE] attr node=29 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.240 [VERBOSE] attr node=16 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.241 [VERBOSE] attr node=41 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.241 [VERBOSE] attr node=48 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.242 [VERBOSE] attr node=12 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.242 [VERBOSE] attr node=15 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.243 [VERBOSE] attr node=42 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.243 [VERBOSE] attr node=14 type=NEURON base=0.221061 pert=0.221061 blame=0.000000
+2026-08-24 18:58:59.255 [VERBOSE] diag results: 6 failures
+2026-08-24 18:58:59.256 [VERBOSE] diagnose() returned 6 failure(s)
+2026-08-24 18:58:59.256 [VERBOSE] Diagnosing node 35 blame=-0.000089
+2026-08-24 18:58:59.257 [VERBOSE] Top blackboard signal: node=42 corr=0.000000
+2026-08-24 18:58:59.259 [DECISION] Classify failure | node=35 type=NON_LINEAR_CURVE
+2026-08-24 18:58:59.260 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:58:59.261 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:58:59.261 [INFO] Candidate emitted: MUX_INJECTION (cond=node=42 thr=0.000000 a=node=11 b=node=12)
+2026-08-24 18:58:59.262 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:58:59.262 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:58:59.263 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:58:59.263 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:58:59.264 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:58:59.264 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:58:59.265 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:58:59.265 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:58:59.266 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:58:59.266 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:58:59.266 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:58:59.268 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:58:59.268 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 18:58:59.271 [DECISION] Try hypothesis | rank=3 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:58:59.272 [DECISION] Try hypothesis | rank=4 type=NEURON_TANH_INJECTION
+2026-08-24 18:58:59.273 [DECISION] Try hypothesis | rank=5 type=DEEP_INSERTION
+2026-08-24 18:58:59.274 [DECISION] Try hypothesis | rank=6 type=BOOLEAN_COMPOSE
+2026-08-24 18:58:59.275 [DECISION] Try hypothesis | rank=7 type=MULTIPLY_INJECTION
+2026-08-24 18:58:59.276 [DECISION] Try hypothesis | rank=8 type=CONTEXT_WIRE
+2026-08-24 18:59:07.825 [VERBOSE]   rank=0 REJECT — val_loss=0.249946 did not beat baseline_val=0.226675 by required=0.000000
+2026-08-24 18:59:07.825 [VERBOSE]   rank=2 REJECT — val_loss=0.231772 did not beat baseline_val=0.226675 by required=0.000000
+2026-08-24 18:59:07.826 [VERBOSE]   rank=3 REJECT — training loss drifted up (shadow_train=0.251711 vs baseline_loss=0.221061, delta=0.030649, max_allowed=0.022106)
+2026-08-24 18:59:07.826 [VERBOSE]   rank=4 REJECT — val_loss=0.228587 did not beat baseline_val=0.226675 by required=0.000000
+2026-08-24 18:59:07.827 [VERBOSE]   rank=5 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.221061, delta=0.028076, max_allowed=0.022106)
+2026-08-24 18:59:07.827 [VERBOSE]   rank=6 REJECT — val_loss=0.231926 did not beat baseline_val=0.226675 by required=0.000000
+2026-08-24 18:59:07.828 [VERBOSE]   rank=7 REJECT — val_loss=0.229292 did not beat baseline_val=0.226675 by required=0.000000
+2026-08-24 18:59:07.828 [VERBOSE]   rank=8 REJECT — val_loss=0.231490 did not beat baseline_val=0.226675 by required=0.000000
+2026-08-24 18:59:07.832 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.228526 train_loss=0.213642 new train_loss=0.225120
+2026-08-24 18:59:07.833 [VERBOSE] Diagnosing node 19 blame=-0.000015
+2026-08-24 18:59:07.834 [VERBOSE] Top blackboard signal: node=44 corr=0.000000
+2026-08-24 18:59:07.835 [DECISION] Classify failure | node=19 type=NON_LINEAR_CURVE
+2026-08-24 18:59:07.835 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:59:07.836 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:59:07.836 [INFO] Candidate emitted: MUX_INJECTION (cond=node=44 thr=1.000000 a=node=12 b=node=13)
+2026-08-24 18:59:07.837 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:59:07.837 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-24 18:59:07.838 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:59:07.839 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:59:07.839 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:59:07.840 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:59:07.841 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:59:07.841 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:59:07.842 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:59:07.842 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:59:07.843 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 18:59:07.843 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:59:07.843 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:59:07.845 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:59:07.846 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 18:59:07.847 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 18:59:07.850 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:59:07.851 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 18:59:31.535 [VERBOSE]   rank=3 REJECT — val_loss=0.231758 did not beat baseline_val=0.228526 by required=0.000000
+2026-08-24 18:59:31.536 [VERBOSE]   rank=4 REJECT — val_loss=0.236476 did not beat baseline_val=0.228526 by required=0.000000
+2026-08-24 18:59:31.537 [VERBOSE]   rank=5 REJECT — val_loss=0.230482 did not beat baseline_val=0.228526 by required=0.000000
+2026-08-24 18:59:31.553 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.227875 train_loss=0.212726 new train_loss=0.221114
+2026-08-24 18:59:31.555 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 18:59:31.555 [INFO] Plateau state reset 鈥?best_phase2=0.221114
+2026-08-24 18:59:31.556 [INFO] Plateau state reset — best_phase2=0.221114
+2026-08-24 18:59:32.556 [VERBOSE] SGD plateau counter=-49/3 (best_phase2=0.221114)
+2026-08-24 18:59:33.487 [VERBOSE] SGD relative improvement: 0.009956 (loss 0.223592 -> 0.221366)
+2026-08-24 18:59:33.503 [VERBOSE] New best val loss: 0.226566 (train 0.221366)
+2026-08-24 18:59:33.505 [VERBOSE] Checkpoint saved to checkpoints/bench_stripes20/graph.json at epoch 25
+2026-08-24 18:59:34.655 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221114)
+2026-08-24 18:59:35.818 [VERBOSE] SGD relative improvement: 0.001535 (loss 0.221410 -> 0.221070)
+2026-08-24 18:59:35.830 [VERBOSE] New best val loss: 0.226487 (train 0.221070)
+2026-08-24 18:59:36.769 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221114)
+2026-08-24 18:59:37.641 [VERBOSE] SGD relative improvement: 0.011388 (loss 0.223881 -> 0.221332)
+2026-08-24 18:59:38.964 [VERBOSE] SGD relative improvement: 0.001398 (loss 0.221332 -> 0.221023)
+2026-08-24 18:59:38.970 [VERBOSE] Compile at epoch 30
+2026-08-24 18:59:38.971 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:59:38.977 [VERBOSE] New best val loss: 0.226427 (train 0.221023)
+2026-08-24 18:59:39.621 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221114)
+2026-08-24 18:59:40.987 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221114)
+2026-08-24 18:59:41.661 [VERBOSE] SGD relative improvement: 0.006895 (loss 0.222537 -> 0.221003)
+2026-08-24 18:59:42.305 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221114)
+2026-08-24 18:59:43.006 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221114)
+2026-08-24 18:59:44.270 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.221114)
+2026-08-24 18:59:44.276 [INFO] Plateau triggered at epoch 36 (counter=3, loss=0.221417)
+2026-08-24 18:59:44.441 [VERBOSE] attr node=45 type=SIN base=0.221417 pert=0.232749 blame=0.011332
+2026-08-24 18:59:44.442 [VERBOSE] attr node=46 type=ADD base=0.221417 pert=0.232749 blame=0.011332
+2026-08-24 18:59:44.443 [VERBOSE] attr node=38 type=NEURON base=0.221417 pert=0.232749 blame=0.011332
+2026-08-24 18:59:44.444 [VERBOSE] attr node=7 type=NEURON base=0.221417 pert=0.230577 blame=0.009161
+2026-08-24 18:59:44.445 [VERBOSE] attr node=44 type=NEURON base=0.221417 pert=0.229286 blame=0.007869
+2026-08-24 18:59:44.445 [VERBOSE] attr node=26 type=NEURON base=0.221417 pert=0.223878 blame=0.002461
+2026-08-24 18:59:44.445 [VERBOSE] attr node=35 type=NEURON base=0.221417 pert=0.222557 blame=0.001140
+2026-08-24 18:59:44.446 [VERBOSE] attr node=54 type=ADD base=0.221417 pert=0.222557 blame=0.001140
+2026-08-24 18:59:44.446 [VERBOSE] attr node=53 type=SIN base=0.221417 pert=0.222557 blame=0.001140
+2026-08-24 18:59:44.447 [VERBOSE] attr node=23 type=NEURON base=0.221417 pert=0.222534 blame=0.001117
+2026-08-24 18:59:44.448 [VERBOSE] attr node=52 type=NEURON base=0.221417 pert=0.222488 blame=0.001071
+2026-08-24 18:59:44.449 [VERBOSE] attr node=21 type=NEURON base=0.221417 pert=0.222404 blame=0.000987
+2026-08-24 18:59:44.449 [VERBOSE] attr node=25 type=NEURON base=0.221417 pert=0.220534 blame=-0.000883
+2026-08-24 18:59:44.450 [VERBOSE] attr node=24 type=NEURON base=0.221417 pert=0.220846 blame=-0.000571
+2026-08-24 18:59:44.451 [VERBOSE] attr node=22 type=NEURON base=0.221417 pert=0.221538 blame=0.000121
+2026-08-24 18:59:44.452 [VERBOSE] attr node=59 type=NEURON base=0.221417 pert=0.221426 blame=0.000009
+2026-08-24 18:59:44.452 [VERBOSE] attr node=18 type=NEURON base=0.221417 pert=0.221416 blame=-0.000001
+2026-08-24 18:59:44.453 [VERBOSE] attr node=13 type=NEURON base=0.221417 pert=0.221416 blame=-0.000000
+2026-08-24 18:59:44.454 [VERBOSE] attr node=37 type=NEURON base=0.221417 pert=0.221417 blame=-0.000000
+2026-08-24 18:59:44.454 [VERBOSE] attr node=36 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.455 [VERBOSE] attr node=43 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.456 [VERBOSE] attr node=58 type=NEURON base=0.221417 pert=0.221417 blame=-0.000000
+2026-08-24 18:59:44.456 [VERBOSE] attr node=57 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.457 [VERBOSE] attr node=55 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.458 [VERBOSE] attr node=56 type=NEURON base=0.221417 pert=0.221417 blame=-0.000000
+2026-08-24 18:59:44.459 [VERBOSE] attr node=16 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.460 [VERBOSE] attr node=40 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.460 [VERBOSE] attr node=11 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.461 [VERBOSE] attr node=41 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.462 [VERBOSE] attr node=12 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.463 [VERBOSE] attr node=9 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.463 [VERBOSE] attr node=42 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.464 [VERBOSE] attr node=14 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.465 [VERBOSE] attr node=39 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.466 [VERBOSE] attr node=15 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.467 [VERBOSE] attr node=33 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.468 [VERBOSE] attr node=51 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.469 [VERBOSE] attr node=32 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.470 [VERBOSE] attr node=17 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.470 [VERBOSE] attr node=31 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.471 [VERBOSE] attr node=10 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.472 [VERBOSE] attr node=47 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.473 [VERBOSE] attr node=48 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.473 [VERBOSE] attr node=49 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.474 [VERBOSE] attr node=50 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.475 [VERBOSE] attr node=30 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.476 [VERBOSE] attr node=29 type=NEURON base=0.221417 pert=0.221417 blame=0.000000
+2026-08-24 18:59:44.521 [VERBOSE] diag results: 7 failures
+2026-08-24 18:59:44.521 [VERBOSE] diagnose() returned 7 failure(s)
+2026-08-24 18:59:44.522 [VERBOSE] Diagnosing node 25 blame=-0.000883
+2026-08-24 18:59:44.523 [VERBOSE] Top blackboard signal: node=48 corr=0.000000
+2026-08-24 18:59:44.523 [DECISION] Classify failure | node=25 type=NON_LINEAR_CURVE
+2026-08-24 18:59:44.524 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 18:59:44.525 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 18:59:44.526 [INFO] Candidate emitted: MUX_INJECTION (cond=node=48 thr=-0.000000 a=node=16 b=node=17)
+2026-08-24 18:59:44.527 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:59:44.527 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.938028, 19 sign changes)
+2026-08-24 18:59:44.528 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 18:59:44.529 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 18:59:44.530 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 18:59:44.530 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 18:59:44.531 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 18:59:44.532 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 18:59:44.533 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 18:59:44.534 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 18:59:44.534 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 18:59:44.535 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 18:59:44.535 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 18:59:44.537 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 18:59:44.539 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 18:59:44.541 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 18:59:44.548 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:59:44.550 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 18:59:44.552 [DECISION] Try hypothesis | rank=6 type=DEEP_INSERTION
+2026-08-24 18:59:44.554 [DECISION] Try hypothesis | rank=7 type=BOOLEAN_COMPOSE
+2026-08-24 18:59:44.556 [DECISION] Try hypothesis | rank=8 type=MULTIPLY_INJECTION
+2026-08-24 18:59:44.557 [DECISION] Try hypothesis | rank=9 type=CONTEXT_WIRE
+2026-08-24 19:00:11.796 [VERBOSE]   rank=5 REJECT — val_loss=0.229296 did not beat baseline_val=0.227764 by required=0.000000
+2026-08-24 19:00:11.797 [VERBOSE]   rank=6 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.221417, delta=0.027720, max_allowed=0.022142)
+2026-08-24 19:00:11.798 [VERBOSE]   rank=9 REJECT — training loss drifted up (shadow_train=0.249485 vs baseline_loss=0.221417, delta=0.028068, max_allowed=0.022142)
+2026-08-24 19:00:11.807 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.226859 train_loss=0.210398 new train_loss=0.220318
+2026-08-24 19:00:11.809 [VERBOSE] Diagnosing node 24 blame=-0.000571
+2026-08-24 19:00:11.810 [VERBOSE] Top blackboard signal: node=50 corr=0.000000
+2026-08-24 19:00:11.810 [DECISION] Classify failure | node=24 type=NON_LINEAR_CURVE
+2026-08-24 19:00:11.812 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:00:11.812 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:00:11.813 [INFO] Candidate emitted: MUX_INJECTION (cond=node=50 thr=-0.000000 a=node=16 b=node=17)
+2026-08-24 19:00:11.814 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:00:11.815 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.938028, 19 sign changes)
+2026-08-24 19:00:11.815 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:00:11.817 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:00:11.818 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 19:00:11.818 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:00:11.819 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:00:11.820 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:00:11.821 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:00:11.822 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:00:11.823 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 19:00:11.823 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:00:11.823 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 19:00:11.826 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:00:11.828 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 19:00:11.830 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 19:00:11.841 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 19:00:27.773 [VERBOSE]   rank=1 REJECT — val_loss=0.244153 did not beat baseline_val=0.226859 by required=0.000000
+2026-08-24 19:00:27.774 [VERBOSE]   rank=3 REJECT — val_loss=0.228860 did not beat baseline_val=0.226859 by required=0.000000
+2026-08-24 19:00:27.782 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.227878 train_loss=0.212847 new train_loss=0.221150
+2026-08-24 19:00:27.783 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 19:00:27.784 [INFO] Plateau state reset 鈥?best_phase2=0.221150
+2026-08-24 19:00:27.785 [INFO] Plateau state reset — best_phase2=0.221150
+2026-08-24 19:00:29.757 [VERBOSE] SGD plateau counter=-49/3 (best_phase2=0.221150)
+2026-08-24 19:00:31.301 [VERBOSE] SGD relative improvement: 0.003193 (loss 0.221901 -> 0.221192)
+2026-08-24 19:00:32.680 [VERBOSE] SGD relative improvement: 0.001320 (loss 0.221192 -> 0.220900)
+2026-08-24 19:00:34.306 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221150)
+2026-08-24 19:00:34.314 [VERBOSE] Compile at epoch 40
+2026-08-24 19:00:34.315 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 19:00:36.027 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221150)
+2026-08-24 19:00:37.113 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.221150)
+2026-08-24 19:00:37.123 [INFO] Plateau triggered at epoch 42 (counter=3, loss=0.222722)
+2026-08-24 19:00:37.383 [VERBOSE] attr node=46 type=ADD base=0.222722 pert=0.235057 blame=0.012335
+2026-08-24 19:00:37.384 [VERBOSE] attr node=38 type=NEURON base=0.222722 pert=0.235057 blame=0.012335
+2026-08-24 19:00:37.385 [VERBOSE] attr node=45 type=SIN base=0.222722 pert=0.235057 blame=0.012335
+2026-08-24 19:00:37.386 [VERBOSE] attr node=7 type=NEURON base=0.222722 pert=0.233131 blame=0.010409
+2026-08-24 19:00:37.387 [VERBOSE] attr node=44 type=NEURON base=0.222722 pert=0.231223 blame=0.008501
+2026-08-24 19:00:37.388 [VERBOSE] attr node=26 type=NEURON base=0.222722 pert=0.230876 blame=0.008154
+2026-08-24 19:00:37.388 [VERBOSE] attr node=35 type=NEURON base=0.222722 pert=0.224378 blame=0.001656
+2026-08-24 19:00:37.390 [VERBOSE] attr node=53 type=SIN base=0.222722 pert=0.224378 blame=0.001656
+2026-08-24 19:00:37.391 [VERBOSE] attr node=54 type=ADD base=0.222722 pert=0.224378 blame=0.001656
+2026-08-24 19:00:37.391 [VERBOSE] attr node=52 type=NEURON base=0.222722 pert=0.224073 blame=0.001351
+2026-08-24 19:00:37.392 [VERBOSE] attr node=23 type=NEURON base=0.222722 pert=0.223947 blame=0.001225
+2026-08-24 19:00:37.392 [VERBOSE] attr node=21 type=NEURON base=0.222722 pert=0.223840 blame=0.001119
+2026-08-24 19:00:37.393 [VERBOSE] attr node=22 type=NEURON base=0.222722 pert=0.222660 blame=-0.000062
+2026-08-24 19:00:37.394 [VERBOSE] attr node=36 type=NEURON base=0.222722 pert=0.222698 blame=-0.000024
+2026-08-24 19:00:37.395 [VERBOSE] attr node=37 type=NEURON base=0.222722 pert=0.222709 blame=-0.000013
+2026-08-24 19:00:37.395 [VERBOSE] attr node=43 type=NEURON base=0.222722 pert=0.222733 blame=0.000011
+2026-08-24 19:00:37.396 [VERBOSE] attr node=69 type=NEURON base=0.222722 pert=0.222727 blame=0.000005
+2026-08-24 19:00:37.396 [VERBOSE] attr node=64 type=NEURON base=0.222722 pert=0.222725 blame=0.000003
+2026-08-24 19:00:37.397 [VERBOSE] attr node=13 type=NEURON base=0.222722 pert=0.222722 blame=0.000001
+2026-08-24 19:00:37.398 [VERBOSE] attr node=18 type=NEURON base=0.222722 pert=0.222721 blame=-0.000000
+2026-08-24 19:00:37.399 [VERBOSE] attr node=67 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.399 [VERBOSE] attr node=68 type=NEURON base=0.222722 pert=0.222722 blame=-0.000000
+2026-08-24 19:00:37.400 [VERBOSE] attr node=65 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.401 [VERBOSE] attr node=63 type=NEURON base=0.222722 pert=0.222722 blame=-0.000000
+2026-08-24 19:00:37.402 [VERBOSE] attr node=61 type=NEURON base=0.222722 pert=0.222722 blame=-0.000000
+2026-08-24 19:00:37.403 [VERBOSE] attr node=62 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.403 [VERBOSE] attr node=66 type=NEURON base=0.222722 pert=0.222722 blame=-0.000000
+2026-08-24 19:00:37.404 [VERBOSE] attr node=51 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.405 [VERBOSE] attr node=15 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.406 [VERBOSE] attr node=16 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.406 [VERBOSE] attr node=17 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.407 [VERBOSE] attr node=50 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.408 [VERBOSE] attr node=49 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.409 [VERBOSE] attr node=48 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.410 [VERBOSE] attr node=47 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.410 [VERBOSE] attr node=14 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.411 [VERBOSE] attr node=11 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.412 [VERBOSE] attr node=33 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.412 [VERBOSE] attr node=32 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.413 [VERBOSE] attr node=31 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.414 [VERBOSE] attr node=30 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.415 [VERBOSE] attr node=29 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.415 [VERBOSE] attr node=9 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.416 [VERBOSE] attr node=39 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.417 [VERBOSE] attr node=10 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.417 [VERBOSE] attr node=40 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.418 [VERBOSE] attr node=60 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.419 [VERBOSE] attr node=41 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.419 [VERBOSE] attr node=12 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.420 [VERBOSE] attr node=42 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.421 [VERBOSE] attr node=55 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.421 [VERBOSE] attr node=56 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.422 [VERBOSE] attr node=57 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.422 [VERBOSE] attr node=58 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.423 [VERBOSE] attr node=59 type=NEURON base=0.222722 pert=0.222722 blame=0.000000
+2026-08-24 19:00:37.489 [VERBOSE] diag results: 8 failures
+2026-08-24 19:00:37.490 [VERBOSE] diagnose() returned 8 failure(s)
+2026-08-24 19:00:37.492 [VERBOSE] Diagnosing node 22 blame=-0.000062
+2026-08-24 19:00:37.493 [VERBOSE] Top blackboard signal: node=51 corr=0.000000
+2026-08-24 19:00:37.497 [DECISION] Classify failure | node=22 type=NON_LINEAR_CURVE
+2026-08-24 19:00:37.498 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:00:37.499 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:00:37.499 [INFO] Candidate emitted: MUX_INJECTION (cond=node=51 thr=0.000000 a=node=13 b=node=16)
+2026-08-24 19:00:37.500 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:00:37.500 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-24 19:00:37.501 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:00:37.502 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:00:37.503 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 19:00:37.503 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:00:37.504 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:00:37.504 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:00:37.505 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:00:37.505 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:00:37.506 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 19:00:37.507 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:00:37.507 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 19:00:37.509 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:00:37.511 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 19:00:37.512 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 19:00:37.521 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 19:00:37.522 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 19:00:37.524 [DECISION] Try hypothesis | rank=6 type=DEEP_INSERTION
+2026-08-24 19:00:37.526 [DECISION] Try hypothesis | rank=7 type=BOOLEAN_COMPOSE
+2026-08-24 19:00:37.527 [DECISION] Try hypothesis | rank=8 type=MULTIPLY_INJECTION
+2026-08-24 19:00:37.528 [DECISION] Try hypothesis | rank=9 type=CONTEXT_WIRE
+2026-08-24 19:01:11.783 [VERBOSE]   rank=3 REJECT — val_loss=0.230009 did not beat baseline_val=0.228902 by required=0.000000
+2026-08-24 19:01:11.784 [VERBOSE]   rank=6 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.222722, delta=0.026415, max_allowed=0.022272)
+2026-08-24 19:01:11.784 [VERBOSE]   rank=7 REJECT — val_loss=0.232159 did not beat baseline_val=0.228902 by required=0.000000
+2026-08-24 19:01:11.784 [VERBOSE]   rank=8 REJECT — val_loss=0.231153 did not beat baseline_val=0.228902 by required=0.000000
+2026-08-24 19:01:11.789 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.227792 train_loss=0.213104 new train_loss=0.221339
+2026-08-24 19:01:11.791 [VERBOSE] Diagnosing node 36 blame=-0.000024 [constant]
+2026-08-24 19:01:11.791 [VERBOSE] Top blackboard signal: node=48 corr=0.000000
+2026-08-24 19:01:11.791 [DECISION] Classify failure | node=36 type=NON_LINEAR_CURVE
+2026-08-24 19:01:11.792 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:01:11.792 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:01:11.793 [INFO] Candidate emitted: MUX_INJECTION (cond=node=48 thr=0.000000 a=node=41 b=node=12)
+2026-08-24 19:01:11.793 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:01:11.794 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:01:11.795 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:01:11.795 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:01:11.795 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:01:11.796 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:01:11.796 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:01:11.796 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:01:11.797 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:01:11.797 [DECISION] Try hypothesis | rank=0 type=MULTI_LAYER_STACK
+2026-08-24 19:01:11.799 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:01:11.800 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 19:01:11.803 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 19:01:11.804 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-24 19:01:58.580 [VERBOSE]   rank=2 REJECT — val_loss=0.229004 did not beat baseline_val=0.227792 by required=0.000000
+2026-08-24 19:01:58.585 [VERBOSE]   rank=3 REJECT — val_loss=0.236473 did not beat baseline_val=0.227792 by required=0.000000
+2026-08-24 19:01:58.586 [VERBOSE]   rank=4 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.221339, delta=0.027798, max_allowed=0.022134)
+2026-08-24 19:01:58.601 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.227881 train_loss=0.213475 new train_loss=0.221522
+2026-08-24 19:01:58.602 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 19:01:58.602 [INFO] Plateau state reset 鈥?best_phase2=0.221522
+2026-08-24 19:01:58.603 [INFO] Plateau state reset — best_phase2=0.221522
+2026-08-24 19:01:58.604 [INFO] Suppressing hypothesis type 14 (3 consecutive commits without meaningful improvement)
+2026-08-24 19:02:01.012 [VERBOSE] SGD plateau counter=-49/3 (best_phase2=0.221522)
+2026-08-24 19:02:03.379 [VERBOSE] SGD plateau counter=-48/3 (best_phase2=0.221522)
+2026-08-24 19:02:07.197 [VERBOSE] SGD relative improvement: 0.015519 (loss 0.224026 -> 0.220550)
+2026-08-24 19:02:07.214 [VERBOSE] New best val loss: 0.226357 (train 0.220550)
+2026-08-24 19:02:10.530 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221522)
+2026-08-24 19:02:13.757 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221522)
+2026-08-24 19:02:15.582 [VERBOSE] SGD relative improvement: 0.013781 (loss 0.223796 -> 0.220712)
+2026-08-24 19:02:17.392 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221522)
+2026-08-24 19:02:19.289 [VERBOSE] SGD relative improvement: 0.003717 (loss 0.225028 -> 0.224192)
+2026-08-24 19:02:19.295 [VERBOSE] Compile at epoch 50
+2026-08-24 19:02:19.295 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 19:02:19.314 [VERBOSE] Checkpoint saved to checkpoints/bench_stripes20/graph.json at epoch 50
+2026-08-24 19:02:21.270 [VERBOSE] SGD relative improvement: 0.011825 (loss 0.224192 -> 0.221541)
+2026-08-24 19:02:23.868 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221522)
+2026-08-24 19:02:25.491 [VERBOSE] SGD improved: loss 0.222729 -> 0.220398 (delta=0.002331)
+2026-08-24 19:02:25.491 [INFO] New best overall loss: 0.220398
+2026-08-24 19:02:25.507 [VERBOSE] New best val loss: 0.226346 (train 0.220398)
+2026-08-24 19:02:28.259 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.220398)
+2026-08-24 19:02:30.812 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.220398)
+2026-08-24 19:02:32.901 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.220398)
+2026-08-24 19:02:32.906 [INFO] Plateau triggered at epoch 56 (counter=3, loss=0.224052)
+2026-08-24 19:02:33.356 [VERBOSE] attr node=45 type=SIN base=0.224052 pert=0.236910 blame=0.012859
+2026-08-24 19:02:33.357 [VERBOSE] attr node=46 type=ADD base=0.224052 pert=0.236910 blame=0.012859
+2026-08-24 19:02:33.358 [VERBOSE] attr node=38 type=NEURON base=0.224052 pert=0.236910 blame=0.012859
+2026-08-24 19:02:33.359 [VERBOSE] attr node=7 type=NEURON base=0.224052 pert=0.235209 blame=0.011157
+2026-08-24 19:02:33.360 [VERBOSE] attr node=44 type=NEURON base=0.224052 pert=0.233545 blame=0.009493
+2026-08-24 19:02:33.361 [VERBOSE] attr node=26 type=NEURON base=0.224052 pert=0.232047 blame=0.007995
+2026-08-24 19:02:33.361 [VERBOSE] attr node=35 type=NEURON base=0.224052 pert=0.227323 blame=0.003271
+2026-08-24 19:02:33.362 [VERBOSE] attr node=54 type=ADD base=0.224052 pert=0.227323 blame=0.003271
+2026-08-24 19:02:33.363 [VERBOSE] attr node=53 type=SIN base=0.224052 pert=0.227323 blame=0.003271
+2026-08-24 19:02:33.363 [VERBOSE] attr node=52 type=NEURON base=0.224052 pert=0.226519 blame=0.002467
+2026-08-24 19:02:33.364 [VERBOSE] attr node=21 type=NEURON base=0.224052 pert=0.225346 blame=0.001294
+2026-08-24 19:02:33.364 [VERBOSE] attr node=23 type=NEURON base=0.224052 pert=0.224943 blame=0.000891
+2026-08-24 19:02:33.365 [VERBOSE] attr node=64 type=NEURON base=0.224052 pert=0.224264 blame=0.000212
+2026-08-24 19:02:33.366 [VERBOSE] attr node=69 type=NEURON base=0.224052 pert=0.224082 blame=0.000030
+2026-08-24 19:02:33.366 [VERBOSE] attr node=62 type=NEURON base=0.224052 pert=0.224057 blame=0.000005
+2026-08-24 19:02:33.367 [VERBOSE] attr node=79 type=NEURON base=0.224052 pert=0.224048 blame=-0.000003
+2026-08-24 19:02:33.368 [VERBOSE] attr node=37 type=NEURON base=0.224052 pert=0.224054 blame=0.000002
+2026-08-24 19:02:33.368 [VERBOSE] attr node=66 type=NEURON base=0.224052 pert=0.224051 blame=-0.000000
+2026-08-24 19:02:33.369 [VERBOSE] attr node=43 type=NEURON base=0.224052 pert=0.224051 blame=-0.000000
+2026-08-24 19:02:33.369 [VERBOSE] attr node=67 type=NEURON base=0.224052 pert=0.224052 blame=-0.000000
+2026-08-24 19:02:33.370 [VERBOSE] attr node=61 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.371 [VERBOSE] attr node=16 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.371 [VERBOSE] attr node=73 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.372 [VERBOSE] attr node=33 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.373 [VERBOSE] attr node=15 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.373 [VERBOSE] attr node=74 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.374 [VERBOSE] attr node=60 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.374 [VERBOSE] attr node=59 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.375 [VERBOSE] attr node=51 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.376 [VERBOSE] attr node=75 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.376 [VERBOSE] attr node=58 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.377 [VERBOSE] attr node=57 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.378 [VERBOSE] attr node=56 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.378 [VERBOSE] attr node=47 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.379 [VERBOSE] attr node=55 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.379 [VERBOSE] attr node=48 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.380 [VERBOSE] attr node=49 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.381 [VERBOSE] attr node=50 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.382 [VERBOSE] attr node=39 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.382 [VERBOSE] attr node=65 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.383 [VERBOSE] attr node=63 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.383 [VERBOSE] attr node=13 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.384 [VERBOSE] attr node=72 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.385 [VERBOSE] attr node=42 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.385 [VERBOSE] attr node=71 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.386 [VERBOSE] attr node=12 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.386 [VERBOSE] attr node=41 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.387 [VERBOSE] attr node=70 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.388 [VERBOSE] attr node=11 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.388 [VERBOSE] attr node=40 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.389 [VERBOSE] attr node=10 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.390 [VERBOSE] attr node=14 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.391 [VERBOSE] attr node=68 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.391 [VERBOSE] attr node=9 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.392 [VERBOSE] attr node=78 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.393 [VERBOSE] attr node=77 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.394 [VERBOSE] attr node=18 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.394 [VERBOSE] attr node=76 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.395 [VERBOSE] attr node=17 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.396 [VERBOSE] attr node=32 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.396 [VERBOSE] attr node=31 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.397 [VERBOSE] attr node=30 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.398 [VERBOSE] attr node=29 type=NEURON base=0.224052 pert=0.224052 blame=0.000000
+2026-08-24 19:02:33.465 [VERBOSE] diag results: 4 failures
+2026-08-24 19:02:33.466 [VERBOSE] diagnose() returned 4 failure(s)
+2026-08-24 19:02:33.467 [VERBOSE] Diagnosing node 79 blame=-0.000003 [constant]
+2026-08-24 19:02:33.467 [VERBOSE] Top blackboard signal: node=60 corr=0.000000
+2026-08-24 19:02:33.478 [DECISION] Classify failure | node=79 type=NON_LINEAR_CURVE
+2026-08-24 19:02:33.480 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:02:33.482 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:02:33.483 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=60 b=node=40)
+2026-08-24 19:02:33.484 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:02:33.484 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:02:33.486 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:02:33.487 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:02:33.488 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:02:33.489 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:02:33.490 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:02:33.490 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:02:33.491 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:02:33.492 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:02:33.492 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:02:33.493 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 19:02:33.512 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 19:02:33.514 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-24 19:02:33.515 [DECISION] Try hypothesis | rank=5 type=BOOLEAN_COMPOSE
+2026-08-24 19:02:33.517 [DECISION] Try hypothesis | rank=6 type=MULTIPLY_INJECTION
+2026-08-24 19:02:33.518 [DECISION] Try hypothesis | rank=7 type=CONTEXT_WIRE
+2026-08-24 19:02:43.178 [VERBOSE]   rank=1 superseded by rank=3 (effective 0.232724 < 0.235128)
+2026-08-24 19:02:43.178 [VERBOSE]   rank=4 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.224052, delta=0.025085, max_allowed=0.022405)
+2026-08-24 19:02:43.179 [VERBOSE]   rank=6 REJECT — val_loss=0.236420 did not beat baseline_val=0.232686 by required=0.000000
+2026-08-24 19:02:43.180 [VERBOSE]   rank=7 REJECT — val_loss=0.234262 did not beat baseline_val=0.232686 by required=0.000000
+2026-08-24 19:02:43.192 [INFO]   COMMIT rank=3 type=NEURON_TANH_INJECTION val_loss=0.226002 train_loss=0.214269 new train_loss=0.223837
+2026-08-24 19:02:43.194 [VERBOSE] Diagnosing node 66 blame=-0.000000 [constant]
+2026-08-24 19:02:43.194 [VERBOSE] Top blackboard signal: node=15 corr=0.000000
+2026-08-24 19:02:43.194 [DECISION] Classify failure | node=66 type=NON_LINEAR_CURVE
+2026-08-24 19:02:43.195 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:02:43.195 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:02:43.196 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=15 b=node=30)
+2026-08-24 19:02:43.197 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:02:43.197 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.938028, 19 sign changes)
+2026-08-24 19:02:43.199 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:02:43.200 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:02:43.201 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:02:43.202 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:02:43.202 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:02:43.203 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:02:43.203 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:02:43.204 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 19:02:43.205 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:02:43.206 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:02:43.206 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:02:43.208 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 19:02:43.210 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 19:02:43.222 [DECISION] Try hypothesis | rank=4 type=NEURON_TANH_INJECTION
+2026-08-24 19:02:43.224 [DECISION] Try hypothesis | rank=5 type=DEEP_INSERTION
+2026-08-24 19:02:43.225 [DECISION] Try hypothesis | rank=6 type=BOOLEAN_COMPOSE
+2026-08-24 19:02:43.228 [DECISION] Try hypothesis | rank=7 type=MULTIPLY_INJECTION
+2026-08-24 19:02:43.229 [DECISION] Try hypothesis | rank=8 type=CONTEXT_WIRE
+2026-08-24 19:02:48.180 [VERBOSE]   rank=1 REJECT — val_loss=0.236413 did not beat baseline_val=0.226002 by required=0.000000
+2026-08-24 19:02:48.181 [VERBOSE]   rank=3 REJECT — val_loss=0.236402 did not beat baseline_val=0.226002 by required=0.000000
+2026-08-24 19:02:48.181 [VERBOSE]   rank=4 REJECT — val_loss=0.228182 did not beat baseline_val=0.226002 by required=0.000000
+2026-08-24 19:02:48.182 [VERBOSE]   rank=5 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.223837, delta=0.025300, max_allowed=0.022384)
+2026-08-24 19:02:48.182 [VERBOSE]   rank=6 REJECT — val_loss=0.226693 did not beat baseline_val=0.226002 by required=0.000000
+2026-08-24 19:02:48.182 [VERBOSE]   rank=7 REJECT — val_loss=0.231442 did not beat baseline_val=0.226002 by required=0.000000
+2026-08-24 19:02:48.182 [VERBOSE]   rank=8 REJECT — training loss drifted up (shadow_train=0.249485 vs baseline_loss=0.223837, delta=0.025648, max_allowed=0.022384)
+2026-08-24 19:02:48.188 [INFO]   COMMIT rank=2 type=SIN_INJECTION val_loss=0.226860 train_loss=0.214211 new train_loss=0.221990
+2026-08-24 19:02:48.189 [INFO] Plateau state reset 鈥?best_phase2=0.221990
+2026-08-24 19:02:48.189 [INFO] Plateau state reset — best_phase2=0.221990
+2026-08-24 19:02:48.279 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221990)
+2026-08-24 19:02:48.402 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221990)
+2026-08-24 19:02:48.552 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.221990)
+2026-08-24 19:02:48.554 [INFO] Plateau triggered at epoch 59 (counter=3, loss=0.227519)
+2026-08-24 19:02:48.689 [VERBOSE] attr node=45 type=SIN base=0.227519 pert=0.240717 blame=0.013198
+2026-08-24 19:02:48.689 [VERBOSE] attr node=38 type=NEURON base=0.227519 pert=0.240717 blame=0.013198
+2026-08-24 19:02:48.689 [VERBOSE] attr node=46 type=ADD base=0.227519 pert=0.240717 blame=0.013198
+2026-08-24 19:02:48.690 [VERBOSE] attr node=44 type=NEURON base=0.227519 pert=0.237289 blame=0.009770
+2026-08-24 19:02:48.690 [VERBOSE] attr node=7 type=NEURON base=0.227519 pert=0.234177 blame=0.006658
+2026-08-24 19:02:48.691 [VERBOSE] attr node=26 type=NEURON base=0.227519 pert=0.233374 blame=0.005854
+2026-08-24 19:02:48.691 [VERBOSE] attr node=35 type=NEURON base=0.227519 pert=0.228859 blame=0.001340
+2026-08-24 19:02:48.692 [VERBOSE] attr node=54 type=ADD base=0.227519 pert=0.228859 blame=0.001340
+2026-08-24 19:02:48.693 [VERBOSE] attr node=53 type=SIN base=0.227519 pert=0.228859 blame=0.001340
+2026-08-24 19:02:48.693 [VERBOSE] attr node=23 type=NEURON base=0.227519 pert=0.228694 blame=0.001175
+2026-08-24 19:02:48.694 [VERBOSE] attr node=52 type=NEURON base=0.227519 pert=0.228534 blame=0.001014
+2026-08-24 19:02:48.694 [VERBOSE] attr node=21 type=NEURON base=0.227519 pert=0.227561 blame=0.000042
+2026-08-24 19:02:48.694 [VERBOSE] attr node=79 type=NEURON base=0.227519 pert=0.227531 blame=0.000012
+2026-08-24 19:02:48.695 [VERBOSE] attr node=81 type=ADD base=0.227519 pert=0.227531 blame=0.000012
+2026-08-24 19:02:48.695 [VERBOSE] attr node=80 type=NEURON base=0.227519 pert=0.227531 blame=0.000012
+2026-08-24 19:02:48.695 [VERBOSE] attr node=43 type=NEURON base=0.227519 pert=0.227526 blame=0.000007
+2026-08-24 19:02:48.696 [VERBOSE] attr node=76 type=NEURON base=0.227519 pert=0.227517 blame=-0.000003
+2026-08-24 19:02:48.697 [VERBOSE] attr node=75 type=NEURON base=0.227519 pert=0.227517 blame=-0.000002
+2026-08-24 19:02:48.697 [VERBOSE] attr node=64 type=NEURON base=0.227519 pert=0.227518 blame=-0.000002
+2026-08-24 19:02:48.698 [VERBOSE] attr node=78 type=NEURON base=0.227519 pert=0.227521 blame=0.000001
+2026-08-24 19:02:48.698 [VERBOSE] attr node=69 type=NEURON base=0.227519 pert=0.227520 blame=0.000001
+2026-08-24 19:02:48.699 [VERBOSE] attr node=37 type=NEURON base=0.227519 pert=0.227520 blame=0.000000
+2026-08-24 19:02:48.699 [VERBOSE] attr node=61 type=NEURON base=0.227519 pert=0.227519 blame=-0.000000
+2026-08-24 19:02:48.699 [VERBOSE] attr node=62 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.700 [VERBOSE] attr node=66 type=NEURON base=0.227519 pert=0.227519 blame=-0.000000
+2026-08-24 19:02:48.700 [VERBOSE] attr node=84 type=ADD base=0.227519 pert=0.227519 blame=-0.000000
+2026-08-24 19:02:48.701 [VERBOSE] attr node=83 type=SIN base=0.227519 pert=0.227519 blame=-0.000000
+2026-08-24 19:02:48.701 [VERBOSE] attr node=82 type=NEURON base=0.227519 pert=0.227519 blame=-0.000000
+2026-08-24 19:02:48.702 [VERBOSE] attr node=77 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.702 [VERBOSE] attr node=67 type=NEURON base=0.227519 pert=0.227519 blame=-0.000000
+2026-08-24 19:02:48.703 [VERBOSE] attr node=74 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.703 [VERBOSE] attr node=16 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.704 [VERBOSE] attr node=47 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.704 [VERBOSE] attr node=48 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.705 [VERBOSE] attr node=49 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.705 [VERBOSE] attr node=15 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.706 [VERBOSE] attr node=50 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.706 [VERBOSE] attr node=51 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.706 [VERBOSE] attr node=55 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.707 [VERBOSE] attr node=56 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.707 [VERBOSE] attr node=73 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.707 [VERBOSE] attr node=14 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.708 [VERBOSE] attr node=57 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.708 [VERBOSE] attr node=72 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.708 [VERBOSE] attr node=13 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.709 [VERBOSE] attr node=9 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.709 [VERBOSE] attr node=65 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.710 [VERBOSE] attr node=63 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.710 [VERBOSE] attr node=60 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.710 [VERBOSE] attr node=59 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.711 [VERBOSE] attr node=58 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.711 [VERBOSE] attr node=70 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.711 [VERBOSE] attr node=11 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.712 [VERBOSE] attr node=40 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.712 [VERBOSE] attr node=10 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.713 [VERBOSE] attr node=39 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.713 [VERBOSE] attr node=68 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.713 [VERBOSE] attr node=42 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.714 [VERBOSE] attr node=29 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.714 [VERBOSE] attr node=30 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.715 [VERBOSE] attr node=31 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.715 [VERBOSE] attr node=32 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.715 [VERBOSE] attr node=18 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.716 [VERBOSE] attr node=17 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.716 [VERBOSE] attr node=33 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.717 [VERBOSE] attr node=41 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.718 [VERBOSE] attr node=12 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.718 [VERBOSE] attr node=71 type=NEURON base=0.227519 pert=0.227519 blame=0.000000
+2026-08-24 19:02:48.741 [VERBOSE] diag results: 9 failures
+2026-08-24 19:02:48.741 [VERBOSE] diagnose() returned 9 failure(s)
+2026-08-24 19:02:48.741 [VERBOSE] Diagnosing node 76 blame=-0.000003 [constant]
+2026-08-24 19:02:48.741 [VERBOSE] Top blackboard signal: node=61 corr=0.000000
+2026-08-24 19:02:48.742 [DECISION] Classify failure | node=76 type=NON_LINEAR_CURVE
+2026-08-24 19:02:48.743 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:02:48.743 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:02:48.744 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=61 b=node=21)
+2026-08-24 19:02:48.744 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:02:48.744 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:02:48.745 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:02:48.745 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:02:48.745 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:02:48.745 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:02:48.746 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:02:48.747 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:02:48.747 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:02:48.748 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:02:48.748 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:02:48.749 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 19:02:48.753 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 19:02:48.754 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-24 19:02:48.756 [DECISION] Try hypothesis | rank=5 type=BOOLEAN_COMPOSE
+2026-08-24 19:02:48.757 [DECISION] Try hypothesis | rank=6 type=MULTIPLY_INJECTION
+2026-08-24 19:02:48.757 [DECISION] Try hypothesis | rank=7 type=CONTEXT_WIRE
+2026-08-24 19:02:51.119 [VERBOSE]   rank=1 superseded by rank=2 (effective 0.233768 < 0.238719)
+2026-08-24 19:02:51.120 [VERBOSE]   rank=2 superseded by rank=3 (effective 0.232804 < 0.233768)
+2026-08-24 19:02:51.120 [VERBOSE]   rank=4 REJECT — val_loss=0.250147 did not beat baseline_val=0.231889 by required=0.000000
+2026-08-24 19:02:51.120 [VERBOSE]   rank=5 REJECT — val_loss=0.236446 did not beat baseline_val=0.231889 by required=0.000000
+2026-08-24 19:02:51.125 [INFO]   COMMIT rank=3 type=NEURON_TANH_INJECTION val_loss=0.225978 train_loss=0.212976 new train_loss=0.223726
+2026-08-24 19:02:51.126 [VERBOSE] Diagnosing node 75 blame=-0.000002 [constant]
+2026-08-24 19:02:51.127 [VERBOSE] Top blackboard signal: node=73 corr=0.000000
+2026-08-24 19:02:51.127 [DECISION] Classify failure | node=75 type=NON_LINEAR_CURVE
+2026-08-24 19:02:51.128 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:02:51.128 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:02:51.128 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=73 b=node=26)
+2026-08-24 19:02:51.129 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:02:51.130 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:02:51.131 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:02:51.131 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:02:51.131 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:02:51.131 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:02:51.132 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:02:51.132 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:02:51.132 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:02:51.132 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:02:51.133 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:02:51.134 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 19:02:51.140 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 19:02:51.142 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-24 19:02:51.144 [DECISION] Try hypothesis | rank=5 type=BOOLEAN_COMPOSE
+2026-08-24 19:02:51.147 [DECISION] Try hypothesis | rank=6 type=MULTIPLY_INJECTION
+2026-08-24 19:02:51.148 [DECISION] Try hypothesis | rank=7 type=CONTEXT_WIRE
+2026-08-24 19:02:53.650 [VERBOSE]   rank=1 REJECT — val_loss=0.236450 did not beat baseline_val=0.225978 by required=0.000000
+2026-08-24 19:02:53.651 [VERBOSE]   rank=2 REJECT — val_loss=0.227172 did not beat baseline_val=0.225978 by required=0.000000
+2026-08-24 19:02:53.651 [VERBOSE]   rank=3 REJECT — val_loss=0.229082 did not beat baseline_val=0.225978 by required=0.000000
+2026-08-24 19:02:53.651 [VERBOSE]   rank=4 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.223726, delta=0.025411, max_allowed=0.022373)
+2026-08-24 19:02:53.652 [VERBOSE]   rank=5 REJECT — val_loss=0.232134 did not beat baseline_val=0.225978 by required=0.000000
+2026-08-24 19:02:53.652 [VERBOSE]   rank=6 REJECT — val_loss=0.228122 did not beat baseline_val=0.225978 by required=0.000000
+2026-08-24 19:02:53.652 [VERBOSE]   rank=7 REJECT — val_loss=0.236464 did not beat baseline_val=0.225978 by required=0.000000
+2026-08-24 19:02:53.653 [VERBOSE]   all 7 candidates rejected
+2026-08-24 19:02:53.653 [VERBOSE] Diagnosing node 64 blame=-0.000002 [constant]
+2026-08-24 19:02:53.654 [VERBOSE] Top blackboard signal: node=14 corr=0.000000
+2026-08-24 19:02:53.654 [DECISION] Classify failure | node=64 type=NON_LINEAR_CURVE
+2026-08-24 19:02:53.655 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:02:53.655 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:02:53.655 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=14 b=node=29)
+2026-08-24 19:02:53.655 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:02:53.656 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:02:53.656 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:02:53.657 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:02:53.657 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:02:53.657 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:02:53.657 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:02:53.658 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:02:53.658 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:02:53.658 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:02:53.658 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:02:55.627 [VERBOSE]   rank=1 REJECT — val_loss=0.236472 did not beat baseline_val=0.225978 by required=0.000000
+2026-08-24 19:02:55.627 [VERBOSE]   all 1 candidates rejected
+2026-08-24 19:02:55.627 [INFO] Plateau state reset 鈥?best_phase2=0.223726
+2026-08-24 19:02:55.628 [INFO] Plateau state reset — best_phase2=0.223726
+2026-08-24 19:02:55.632 [VERBOSE] New best val loss: 0.225978 (train 0.223726)
+2026-08-24 19:02:55.723 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.223726)
+2026-08-24 19:02:55.727 [VERBOSE] Compile at epoch 60
+2026-08-24 19:02:55.728 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 19:02:55.863 [VERBOSE] SGD relative improvement: 0.005939 (loss 0.228513 -> 0.227156)
+2026-08-24 19:02:56.000 [VERBOSE] SGD relative improvement: 0.015180 (loss 0.227156 -> 0.223708)
+2026-08-24 19:02:56.192 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.223726)
+2026-08-24 19:02:56.350 [VERBOSE] SGD relative improvement: 0.001178 (loss 0.231183 -> 0.230911)
+2026-08-24 19:02:56.561 [VERBOSE] SGD improved: loss 0.230911 -> 0.221380 (delta=0.009531)
+2026-08-24 19:02:56.667 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221380)
+2026-08-24 19:02:56.831 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221380)
+2026-08-24 19:02:56.943 [VERBOSE] SGD relative improvement: 0.050213 (loss 0.235474 -> 0.223651)
+2026-08-24 19:02:57.099 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221380)
+2026-08-24 19:02:57.313 [VERBOSE] SGD relative improvement: 0.020213 (loss 0.227737 -> 0.223134)
+2026-08-24 19:02:57.315 [VERBOSE] Compile at epoch 70
+2026-08-24 19:02:57.315 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 19:02:57.442 [VERBOSE] SGD relative improvement: 0.007072 (loss 0.223134 -> 0.221556)
+2026-08-24 19:02:57.585 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221380)
+2026-08-24 19:02:57.778 [VERBOSE] SGD relative improvement: 0.006844 (loss 0.227283 -> 0.225727)
+2026-08-24 19:02:57.898 [VERBOSE] SGD relative improvement: 0.021106 (loss 0.225727 -> 0.220963)
+2026-08-24 19:02:58.158 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221380)
+2026-08-24 19:02:58.163 [VERBOSE] Checkpoint saved to checkpoints/bench_stripes20/graph.json at epoch 75
+2026-08-24 19:02:58.552 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221380)
+2026-08-24 19:02:58.796 [VERBOSE] SGD relative improvement: 0.006456 (loss 0.223447 -> 0.222004)
+2026-08-24 19:02:59.603 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221380)
+2026-08-24 19:02:59.928 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221380)
+2026-08-24 19:02:59.935 [INFO] Forced structural trigger at epoch 79 (epochs since last structural: 20)
+2026-08-24 19:02:59.936 [INFO] Plateau triggered at epoch 79 (counter=2, loss=0.233433)
+2026-08-24 19:03:00.467 [VERBOSE] attr node=45 type=SIN base=0.233433 pert=0.246839 blame=0.013406
+2026-08-24 19:03:00.467 [VERBOSE] attr node=38 type=NEURON base=0.233433 pert=0.246839 blame=0.013406
+2026-08-24 19:03:00.468 [VERBOSE] attr node=46 type=ADD base=0.233433 pert=0.246839 blame=0.013406
+2026-08-24 19:03:00.469 [VERBOSE] attr node=44 type=NEURON base=0.233433 pert=0.243180 blame=0.009747
+2026-08-24 19:03:00.470 [VERBOSE] attr node=7 type=NEURON base=0.233433 pert=0.239809 blame=0.006376
+2026-08-24 19:03:00.470 [VERBOSE] attr node=26 type=NEURON base=0.233433 pert=0.237893 blame=0.004460
+2026-08-24 19:03:00.471 [VERBOSE] attr node=23 type=NEURON base=0.233433 pert=0.235116 blame=0.001683
+2026-08-24 19:03:00.472 [VERBOSE] attr node=35 type=NEURON base=0.233433 pert=0.235068 blame=0.001635
+2026-08-24 19:03:00.472 [VERBOSE] attr node=53 type=SIN base=0.233433 pert=0.235068 blame=0.001635
+2026-08-24 19:03:00.473 [VERBOSE] attr node=54 type=ADD base=0.233433 pert=0.235068 blame=0.001635
+2026-08-24 19:03:00.473 [VERBOSE] attr node=52 type=NEURON base=0.233433 pert=0.234712 blame=0.001279
+2026-08-24 19:03:00.474 [VERBOSE] attr node=21 type=NEURON base=0.233433 pert=0.233347 blame=-0.000086
+2026-08-24 19:03:00.475 [VERBOSE] attr node=43 type=NEURON base=0.233433 pert=0.233516 blame=0.000083
+2026-08-24 19:03:00.475 [VERBOSE] attr node=64 type=NEURON base=0.233433 pert=0.233480 blame=0.000046
+2026-08-24 19:03:00.476 [VERBOSE] attr node=79 type=NEURON base=0.233433 pert=0.233455 blame=0.000022
+2026-08-24 19:03:00.477 [VERBOSE] attr node=80 type=NEURON base=0.233433 pert=0.233455 blame=0.000022
+2026-08-24 19:03:00.477 [VERBOSE] attr node=81 type=ADD base=0.233433 pert=0.233455 blame=0.000022
+2026-08-24 19:03:00.478 [VERBOSE] attr node=69 type=NEURON base=0.233433 pert=0.233420 blame=-0.000014
+2026-08-24 19:03:00.478 [VERBOSE] attr node=37 type=NEURON base=0.233433 pert=0.233429 blame=-0.000005
+2026-08-24 19:03:00.479 [VERBOSE] attr node=76 type=NEURON base=0.233433 pert=0.233435 blame=0.000001
+2026-08-24 19:03:00.480 [VERBOSE] attr node=85 type=NEURON base=0.233433 pert=0.233435 blame=0.000001
+2026-08-24 19:03:00.480 [VERBOSE] attr node=86 type=ADD base=0.233433 pert=0.233435 blame=0.000001
+2026-08-24 19:03:00.481 [VERBOSE] attr node=78 type=NEURON base=0.233433 pert=0.233434 blame=0.000001
+2026-08-24 19:03:00.481 [VERBOSE] attr node=75 type=NEURON base=0.233433 pert=0.233434 blame=0.000001
+2026-08-24 19:03:00.482 [VERBOSE] attr node=77 type=NEURON base=0.233433 pert=0.233434 blame=0.000001
+2026-08-24 19:03:00.483 [VERBOSE] attr node=66 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.483 [VERBOSE] attr node=84 type=ADD base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.484 [VERBOSE] attr node=83 type=SIN base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.484 [VERBOSE] attr node=82 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.485 [VERBOSE] attr node=67 type=NEURON base=0.233433 pert=0.233433 blame=-0.000000
+2026-08-24 19:03:00.486 [VERBOSE] attr node=62 type=NEURON base=0.233433 pert=0.233433 blame=-0.000000
+2026-08-24 19:03:00.486 [VERBOSE] attr node=61 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.487 [VERBOSE] attr node=14 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.487 [VERBOSE] attr node=71 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.488 [VERBOSE] attr node=42 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.489 [VERBOSE] attr node=13 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.490 [VERBOSE] attr node=72 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.490 [VERBOSE] attr node=55 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.491 [VERBOSE] attr node=51 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.491 [VERBOSE] attr node=73 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.492 [VERBOSE] attr node=50 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.493 [VERBOSE] attr node=49 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.493 [VERBOSE] attr node=48 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.494 [VERBOSE] attr node=47 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.494 [VERBOSE] attr node=16 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.495 [VERBOSE] attr node=74 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.495 [VERBOSE] attr node=15 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.496 [VERBOSE] attr node=9 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.496 [VERBOSE] attr node=65 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.497 [VERBOSE] attr node=63 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.497 [VERBOSE] attr node=60 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.498 [VERBOSE] attr node=59 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.498 [VERBOSE] attr node=58 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.498 [VERBOSE] attr node=57 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.499 [VERBOSE] attr node=56 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.499 [VERBOSE] attr node=40 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.500 [VERBOSE] attr node=10 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.501 [VERBOSE] attr node=39 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.501 [VERBOSE] attr node=68 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.502 [VERBOSE] attr node=12 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.502 [VERBOSE] attr node=29 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.503 [VERBOSE] attr node=30 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.503 [VERBOSE] attr node=31 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.504 [VERBOSE] attr node=32 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.504 [VERBOSE] attr node=33 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.505 [VERBOSE] attr node=18 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.505 [VERBOSE] attr node=17 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.506 [VERBOSE] attr node=11 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.506 [VERBOSE] attr node=70 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.507 [VERBOSE] attr node=41 type=NEURON base=0.233433 pert=0.233433 blame=0.000000
+2026-08-24 19:03:00.553 [VERBOSE] diag results: 5 failures
+2026-08-24 19:03:00.553 [VERBOSE] diagnose() returned 5 failure(s)
+2026-08-24 19:03:00.554 [VERBOSE] Diagnosing node 21 blame=-0.000086
+2026-08-24 19:03:00.555 [VERBOSE] Top blackboard signal: node=73 corr=0.000000
+2026-08-24 19:03:00.555 [DECISION] Classify failure | node=21 type=NON_LINEAR_CURVE
+2026-08-24 19:03:00.556 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:03:00.556 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-24 19:03:00.557 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:03:00.557 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=73 b=node=29)
+2026-08-24 19:03:00.558 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:03:00.558 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-24 19:03:00.559 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:03:00.560 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:03:00.560 [VERBOSE] Failure-prior: type=1 score 0.900000 -> 0.500000
+2026-08-24 19:03:00.561 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:03:00.561 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:03:00.562 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:03:00.562 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:03:00.563 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:03:00.563 [VERBOSE] Failure-prior: type=11 score 0.950000 -> 0.550000
+2026-08-24 19:03:00.564 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:03:00.564 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:03:00.564 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:03:00.565 [DECISION] Try hypothesis | rank=2 type=SIN_INJECTION
+2026-08-24 19:03:00.566 [DECISION] Try hypothesis | rank=3 type=MUX_INJECTION
+2026-08-24 19:03:00.576 [DECISION] Try hypothesis | rank=4 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 19:03:00.577 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 19:03:00.579 [DECISION] Try hypothesis | rank=6 type=DEEP_INSERTION
+2026-08-24 19:03:00.580 [DECISION] Try hypothesis | rank=7 type=BOOLEAN_COMPOSE
+2026-08-24 19:03:00.581 [DECISION] Try hypothesis | rank=8 type=MULTIPLY_INJECTION
+2026-08-24 19:03:00.582 [DECISION] Try hypothesis | rank=9 type=CONTEXT_WIRE
+2026-08-24 19:03:09.980 [VERBOSE]   rank=6 REJECT — val_loss=0.250147 did not beat baseline_val=0.235617 by required=0.000000
+2026-08-24 19:03:09.981 [VERBOSE]   rank=8 REJECT — val_loss=0.236472 did not beat baseline_val=0.235617 by required=0.000000
+2026-08-24 19:03:09.981 [VERBOSE]   rank=9 REJECT — val_loss=0.246923 did not beat baseline_val=0.235617 by required=0.000000
+2026-08-24 19:03:09.998 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.232639 train_loss=0.228145 new train_loss=0.229892
+2026-08-24 19:03:10.000 [VERBOSE] Diagnosing node 69 blame=-0.000014 [constant]
+2026-08-24 19:03:10.001 [VERBOSE] Top blackboard signal: node=43 corr=0.000000
+2026-08-24 19:03:10.004 [DECISION] Classify failure | node=69 type=NON_LINEAR_CURVE
+2026-08-24 19:03:10.005 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:03:10.006 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:03:10.006 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=43 b=node=33)
+2026-08-24 19:03:10.007 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:03:10.008 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:03:10.010 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:03:10.011 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:03:10.012 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:03:10.013 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:03:10.013 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:03:10.014 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:03:10.015 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:03:10.016 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:03:10.016 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:03:10.019 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 19:03:10.040 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 19:03:10.048 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-24 19:03:10.054 [DECISION] Try hypothesis | rank=5 type=BOOLEAN_COMPOSE
+2026-08-24 19:03:10.057 [DECISION] Try hypothesis | rank=6 type=MULTIPLY_INJECTION
+2026-08-24 19:03:20.244 [VERBOSE]   rank=1 superseded by rank=2 (effective 0.235693 < 0.238971)
+2026-08-24 19:03:20.245 [VERBOSE]   rank=2 superseded by rank=3 (effective 0.233605 < 0.235693)
+2026-08-24 19:03:20.246 [VERBOSE]   rank=4 REJECT — val_loss=0.250147 did not beat baseline_val=0.232639 by required=0.000000
+2026-08-24 19:03:20.258 [INFO]   COMMIT rank=3 type=NEURON_TANH_INJECTION val_loss=0.226709 train_loss=0.212669 new train_loss=0.221094
+2026-08-24 19:03:20.259 [INFO] Plateau state reset 鈥?best_phase2=0.221094
+2026-08-24 19:03:20.260 [INFO] Plateau state reset — best_phase2=0.221094
+2026-08-24 19:03:20.829 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221094)
+2026-08-24 19:03:20.834 [VERBOSE] Compile at epoch 80
+2026-08-24 19:03:20.835 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 19:03:21.449 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221094)
+2026-08-24 19:03:22.059 [VERBOSE] SGD relative improvement: 0.007364 (loss 0.224635 -> 0.222981)
+2026-08-24 19:03:22.584 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221094)
+2026-08-24 19:03:23.048 [VERBOSE] SGD relative improvement: 0.003816 (loss 0.224481 -> 0.223624)
+2026-08-24 19:03:23.602 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221094)
+2026-08-24 19:03:24.565 [VERBOSE] SGD relative improvement: 0.008584 (loss 0.224246 -> 0.222321)
+2026-08-24 19:03:25.648 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221094)
+2026-08-24 19:03:26.394 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221094)
+2026-08-24 19:03:26.934 [VERBOSE] SGD relative improvement: 0.013264 (loss 0.224075 -> 0.221103)
+2026-08-24 19:03:27.727 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221094)
+2026-08-24 19:03:27.734 [VERBOSE] Compile at epoch 90
+2026-08-24 19:03:27.735 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 19:03:28.288 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221094)
+2026-08-24 19:03:28.952 [VERBOSE] SGD relative improvement: 0.001418 (loss 0.224626 -> 0.224308)
+2026-08-24 19:03:29.490 [VERBOSE] SGD relative improvement: 0.003191 (loss 0.224308 -> 0.223592)
+2026-08-24 19:03:30.407 [VERBOSE] SGD relative improvement: 0.012206 (loss 0.223592 -> 0.220863)
+2026-08-24 19:03:31.028 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.221094)
+2026-08-24 19:03:31.677 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.221094)
+2026-08-24 19:03:32.167 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.221094)
+2026-08-24 19:03:32.172 [INFO] Plateau triggered at epoch 97 (counter=3, loss=0.224122)
+2026-08-24 19:03:32.691 [VERBOSE] attr node=46 type=ADD base=0.224122 pert=0.236945 blame=0.012823
+2026-08-24 19:03:32.692 [VERBOSE] attr node=45 type=SIN base=0.224122 pert=0.236945 blame=0.012823
+2026-08-24 19:03:32.692 [VERBOSE] attr node=38 type=NEURON base=0.224122 pert=0.236945 blame=0.012823
+2026-08-24 19:03:32.693 [VERBOSE] attr node=44 type=NEURON base=0.224122 pert=0.234560 blame=0.010438
+2026-08-24 19:03:32.694 [VERBOSE] attr node=26 type=NEURON base=0.224122 pert=0.232285 blame=0.008163
+2026-08-24 19:03:32.695 [VERBOSE] attr node=7 type=NEURON base=0.224122 pert=0.229771 blame=0.005649
+2026-08-24 19:03:32.696 [VERBOSE] attr node=21 type=NEURON base=0.224122 pert=0.226298 blame=0.002176
+2026-08-24 19:03:32.697 [VERBOSE] attr node=88 type=SIN base=0.224122 pert=0.226298 blame=0.002176
+2026-08-24 19:03:32.697 [VERBOSE] attr node=89 type=ADD base=0.224122 pert=0.226298 blame=0.002176
+2026-08-24 19:03:32.698 [VERBOSE] attr node=35 type=NEURON base=0.224122 pert=0.226257 blame=0.002135
+2026-08-24 19:03:32.699 [VERBOSE] attr node=53 type=SIN base=0.224122 pert=0.226257 blame=0.002135
+2026-08-24 19:03:32.699 [VERBOSE] attr node=54 type=ADD base=0.224122 pert=0.226257 blame=0.002135
+2026-08-24 19:03:32.700 [VERBOSE] attr node=23 type=NEURON base=0.224122 pert=0.225871 blame=0.001750
+2026-08-24 19:03:32.701 [VERBOSE] attr node=52 type=NEURON base=0.224122 pert=0.225633 blame=0.001511
+2026-08-24 19:03:32.701 [VERBOSE] attr node=87 type=NEURON base=0.224122 pert=0.224595 blame=0.000473
+2026-08-24 19:03:32.702 [VERBOSE] attr node=90 type=NEURON base=0.224122 pert=0.224058 blame=-0.000064
+2026-08-24 19:03:32.702 [VERBOSE] attr node=91 type=ADD base=0.224122 pert=0.224058 blame=-0.000064
+2026-08-24 19:03:32.703 [VERBOSE] attr node=69 type=NEURON base=0.224122 pert=0.224058 blame=-0.000064
+2026-08-24 19:03:32.704 [VERBOSE] attr node=37 type=NEURON base=0.224122 pert=0.224101 blame=-0.000021
+2026-08-24 19:03:32.704 [VERBOSE] attr node=67 type=NEURON base=0.224122 pert=0.224113 blame=-0.000009
+2026-08-24 19:03:32.705 [VERBOSE] attr node=65 type=NEURON base=0.224122 pert=0.224115 blame=-0.000006
+2026-08-24 19:03:32.705 [VERBOSE] attr node=66 type=NEURON base=0.224122 pert=0.224116 blame=-0.000006
+2026-08-24 19:03:32.706 [VERBOSE] attr node=83 type=SIN base=0.224122 pert=0.224116 blame=-0.000006
+2026-08-24 19:03:32.707 [VERBOSE] attr node=84 type=ADD base=0.224122 pert=0.224116 blame=-0.000006
+2026-08-24 19:03:32.707 [VERBOSE] attr node=82 type=NEURON base=0.224122 pert=0.224116 blame=-0.000006
+2026-08-24 19:03:32.708 [VERBOSE] attr node=68 type=NEURON base=0.224122 pert=0.224126 blame=0.000004
+2026-08-24 19:03:32.709 [VERBOSE] attr node=43 type=NEURON base=0.224122 pert=0.224120 blame=-0.000001
+2026-08-24 19:03:32.710 [VERBOSE] attr node=64 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.710 [VERBOSE] attr node=79 type=NEURON base=0.224122 pert=0.224122 blame=-0.000000
+2026-08-24 19:03:32.711 [VERBOSE] attr node=80 type=NEURON base=0.224122 pert=0.224122 blame=-0.000000
+2026-08-24 19:03:32.712 [VERBOSE] attr node=81 type=ADD base=0.224122 pert=0.224122 blame=-0.000000
+2026-08-24 19:03:32.712 [VERBOSE] attr node=62 type=NEURON base=0.224122 pert=0.224122 blame=-0.000000
+2026-08-24 19:03:32.713 [VERBOSE] attr node=61 type=NEURON base=0.224122 pert=0.224122 blame=-0.000000
+2026-08-24 19:03:32.714 [VERBOSE] attr node=86 type=ADD base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.715 [VERBOSE] attr node=85 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.715 [VERBOSE] attr node=76 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.716 [VERBOSE] attr node=75 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.717 [VERBOSE] attr node=78 type=NEURON base=0.224122 pert=0.224122 blame=-0.000000
+2026-08-24 19:03:32.717 [VERBOSE] attr node=77 type=NEURON base=0.224122 pert=0.224122 blame=-0.000000
+2026-08-24 19:03:32.718 [VERBOSE] attr node=48 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.719 [VERBOSE] attr node=41 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.719 [VERBOSE] attr node=12 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.720 [VERBOSE] attr node=71 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.720 [VERBOSE] attr node=42 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.721 [VERBOSE] attr node=13 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.722 [VERBOSE] attr node=49 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.723 [VERBOSE] attr node=72 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.724 [VERBOSE] attr node=15 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.724 [VERBOSE] attr node=47 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.725 [VERBOSE] attr node=16 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.726 [VERBOSE] attr node=14 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.727 [VERBOSE] attr node=63 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.727 [VERBOSE] attr node=50 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.728 [VERBOSE] attr node=73 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.729 [VERBOSE] attr node=74 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.730 [VERBOSE] attr node=56 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.730 [VERBOSE] attr node=9 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.731 [VERBOSE] attr node=17 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.732 [VERBOSE] attr node=18 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.732 [VERBOSE] attr node=33 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.733 [VERBOSE] attr node=32 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.734 [VERBOSE] attr node=51 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.734 [VERBOSE] attr node=31 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.735 [VERBOSE] attr node=55 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.736 [VERBOSE] attr node=30 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.736 [VERBOSE] attr node=70 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.737 [VERBOSE] attr node=29 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.738 [VERBOSE] attr node=57 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.738 [VERBOSE] attr node=58 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.739 [VERBOSE] attr node=59 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.740 [VERBOSE] attr node=60 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.740 [VERBOSE] attr node=39 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.741 [VERBOSE] attr node=10 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.742 [VERBOSE] attr node=40 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.743 [VERBOSE] attr node=11 type=NEURON base=0.224122 pert=0.224122 blame=0.000000
+2026-08-24 19:03:32.931 [VERBOSE] diag results: 15 failures
+2026-08-24 19:03:32.931 [VERBOSE] diagnose() returned 15 failure(s)
+2026-08-24 19:03:32.932 [VERBOSE] Diagnosing node 90 blame=-0.000064 [constant]
+2026-08-24 19:03:32.933 [VERBOSE] Top blackboard signal: node=43 corr=0.000000
+2026-08-24 19:03:32.933 [DECISION] Classify failure | node=90 type=NON_LINEAR_CURVE
+2026-08-24 19:03:32.934 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:03:32.935 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:03:32.935 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=43 b=node=33)
+2026-08-24 19:03:32.936 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:03:32.936 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:03:32.938 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:03:32.939 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:03:32.939 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:03:32.940 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:03:32.940 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:03:32.941 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:03:32.943 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:03:32.945 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:03:32.945 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:03:32.947 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 19:03:32.960 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 19:03:32.962 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-24 19:03:32.965 [DECISION] Try hypothesis | rank=5 type=BOOLEAN_COMPOSE
+2026-08-24 19:03:32.967 [DECISION] Try hypothesis | rank=6 type=MULTIPLY_INJECTION
+2026-08-24 19:03:32.969 [DECISION] Try hypothesis | rank=7 type=CONTEXT_WIRE
+2026-08-24 19:03:43.342 [VERBOSE]   rank=4 REJECT — training loss drifted up (shadow_train=0.249137 vs baseline_loss=0.224122, delta=0.025015, max_allowed=0.022412)
+2026-08-24 19:03:43.353 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.227049 train_loss=0.213063 new train_loss=0.220965
+2026-08-24 19:03:43.355 [VERBOSE] Diagnosing node 91 blame=-0.000064 [constant]
+2026-08-24 19:03:43.356 [VERBOSE] Top blackboard signal: node=30 corr=0.000000
+2026-08-24 19:03:43.356 [DECISION] Classify failure | node=91 type=NON_LINEAR_CURVE
+2026-08-24 19:03:43.357 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:03:43.358 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:03:43.358 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:03:43.360 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:03:43.360 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:03:43.361 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:03:43.361 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:03:43.362 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:03:43.362 [DECISION] Try hypothesis | rank=0 type=SIN_INJECTION
+2026-08-24 19:03:43.365 [DECISION] Try hypothesis | rank=1 type=NEURON_TANH_INJECTION
+2026-08-24 19:03:43.369 [DECISION] Try hypothesis | rank=2 type=BOOLEAN_COMPOSE
+2026-08-24 19:03:43.374 [DECISION] Try hypothesis | rank=3 type=MULTIPLY_INJECTION
+2026-08-24 19:03:43.377 [DECISION] Try hypothesis | rank=4 type=CONTEXT_WIRE
+2026-08-24 19:03:55.060 [VERBOSE]   rank=1 REJECT — val_loss=0.227266 did not beat baseline_val=0.227049 by required=0.000000
+2026-08-24 19:03:55.061 [VERBOSE]   rank=2 REJECT — val_loss=0.231101 did not beat baseline_val=0.227049 by required=0.000000
+2026-08-24 19:03:55.086 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.228884 train_loss=0.218763 new train_loss=0.223117
+2026-08-24 19:03:55.088 [VERBOSE] Diagnosing node 69 blame=-0.000064 [constant]
+2026-08-24 19:03:55.089 [VERBOSE] Top blackboard signal: node=23 corr=0.000000
+2026-08-24 19:03:55.089 [DECISION] Classify failure | node=69 type=NON_LINEAR_CURVE
+2026-08-24 19:03:55.090 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-24 19:03:55.091 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-24 19:03:55.092 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.898102 a=node=23 b=node=77)
+2026-08-24 19:03:55.093 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 19:03:55.093 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-24 19:03:55.094 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-24 19:03:55.095 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-24 19:03:55.096 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-24 19:03:55.097 [VERBOSE] Failure-prior: type=21 score 0.900000 -> 0.500000
+2026-08-24 19:03:55.098 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-24 19:03:55.098 [VERBOSE] Failure-prior: type=5 score 0.650000 -> 0.250000
+2026-08-24 19:03:55.099 [VERBOSE] Failure-prior: type=11 score 0.940000 -> 0.540000
+2026-08-24 19:03:55.099 [VERBOSE]   rank=0 type=MULTI_LAYER_STACK SKIPPED (suppressed)
+2026-08-24 19:03:55.099 [DECISION] Try hypothesis | rank=1 type=SIN_INJECTION
+2026-08-24 19:03:55.101 [DECISION] Try hypothesis | rank=2 type=MUX_INJECTION
+2026-08-24 19:03:55.116 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-24 19:04:04.791 [VERBOSE]   rank=2 REJECT — val_loss=0.231524 did not beat baseline_val=0.228884 by required=0.000000
+2026-08-24 19:04:04.792 [VERBOSE]   rank=3 REJECT — val_loss=0.230000 did not beat baseline_val=0.228884 by required=0.000000
+2026-08-24 19:04:04.816 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.231516 train_loss=0.216785 new train_loss=0.226275
+2026-08-24 19:04:04.817 [INFO] Plateau state reset 鈥?best_phase2=0.226275
+2026-08-24 19:04:04.818 [INFO] Plateau state reset — best_phase2=0.226275
+2026-08-24 19:04:05.589 [VERBOSE] SGD improved: loss 0.226275 -> 0.224281 (delta=0.001994)
+2026-08-24 19:04:06.532 [VERBOSE] SGD improved: loss 0.224281 -> 0.223251 (delta=0.001029)
+2026-08-24 19:04:07.200 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.223251)
+2026-08-24 19:04:07.212 [VERBOSE] Compile at epoch 100
+2026-08-24 19:04:07.214 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 19:04:07.218 [VERBOSE] Checkpoint saved to checkpoints/bench_stripes20/graph.json at epoch 100
+2026-08-24 19:04:07.218 [INFO] Restored best-val graph snapshot (val=0.225978, train=0.223726)
+2026-08-24 19:04:07.232 [INFO] Final graph saved to checkpoints/bench_stripes20/graph.json
+
+============================================================
+  Session ended 鈥?2026-08-24 19:04:07.352
+============================================================

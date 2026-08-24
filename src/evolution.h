@@ -550,6 +550,12 @@ private:
     std::string current_task_name_;   // for library self-echo guard
     std::string recall_graph_path_;   // M1.2: prior solved graph to recall at first plateau
     bool recall_attempted_ = false;   // one recall attempt per run
+    // v2 margin exclusion: thresholds within this distance of an ALREADY
+    // COMMITTED split are skipped, so sequential IFELSE/MUX commits find
+    // the NEXT boundary instead of rediscovering the biggest one forever
+    // (stripes20 lesson). The engine records committed thresholds; the
+    // exclusion zone scales with the condition source's value range.
+    std::vector<Value> committed_split_thresholds_;
 
 
 public:

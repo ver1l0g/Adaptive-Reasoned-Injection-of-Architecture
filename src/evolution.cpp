@@ -1114,7 +1114,9 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
 // Returns the chosen threshold via out-param; returns the achieved weighted
 // SSE reduction (>= 0) so callers can rank candidate condition sources.
 static double error_weighted_split(const std::vector<std::pair<Value, Value>>& vx,
-                                   Value& out_threshold) {
+                                   Value& out_threshold,
+                                   const std::vector<Value>& exclude_near = {},
+                                   Value exclude_margin = 0.0) {
     if (vx.size() < 8) return 0.0;   // too few to split reliably
     std::vector<std::pair<Value, Value>> s(vx);
     std::sort(s.begin(), s.end(),
@@ -1138,6 +1140,19 @@ static double error_weighted_split(const std::vector<std::pair<Value, Value>>& v
     // cleanly.
     for (size_t i = 4; i + 4 < n; ++i) {
         if (s[i].first == s[i + 1].first) continue;   // no actual boundary
+        // v2 margin exclusion: skip splits near ALREADY-COMMITTED thresholds
+        // (the graph's existing ifelse_threshold/mux_threshold constants);
+        // sequential commits then find the NEXT boundary, not the same one.
+        if (exclude_margin > 0.0) {
+            bool near_committed = false;
+            for (Value ev : exclude_near) {
+                if (std::abs((s[i].first + s[i + 1].first) * 0.5 - ev) <= exclude_margin) {
+                    near_committed = true;
+                    break;
+                }
+            }
+            if (near_committed) continue;
+        }
         double nl = static_cast<double>(i + 1);
         double nr = static_cast<double>(n - i - 1);
         double sl = pre_sum[i + 1],  sql = pre_sq[i + 1];
@@ -2142,8 +2157,30 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                     vx.emplace_back(it->second, diag.targets[i]);
                 }
             }
+            // v2: exclude neighborhoods of committed thresholds (the graph's
+            // ifelse_threshold/mux_threshold constants) so sequential
+            // commits find the NEXT boundary.
+            std::vector<Value> committed_thr;
+            Value cond_min = 0.0, cond_max = 0.0; bool cond_ranged = false;
+            if (!vx.empty()) {
+                cond_min = vx.front().first; cond_max = vx.front().first;
+                for (auto& pr : vx) {
+                    cond_min = std::min(cond_min, pr.first);
+                    cond_max = std::max(cond_max, pr.first);
+                }
+                cond_ranged = true;
+            }
+            for (const auto& n : graph_->get_nodes()) {
+                const std::string& nm = n->get_name();
+                if ((nm == "ifelse_threshold" || nm == "mux_threshold")
+                    && n->get_type() == NodeType::CONSTANT) {
+                    committed_thr.push_back(static_cast<const ConstantNode*>(n.get())->get_value());
+                }
+            }
+            Value excl_margin = cond_ranged ? (cond_max - cond_min) * 0.05 : 0.0;
             Value guided_thr = 0.0;
-            double reduction = error_weighted_split(vx, guided_thr);
+            double reduction = error_weighted_split(vx, guided_thr,
+                                                    committed_thr, excl_margin);
             if (reduction > 0.0) {
                 ibs.split_threshold = guided_thr;
                 threshold_found = true;

@@ -15,3 +15,8 @@ C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:156:202
 C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:320:  Eval SoftmaxCE:   3.143351   (4.534897 bits/unit)
 C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:321:  Eval Accuracy:    16.651665%
 
+[19:00] w1-SCE
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:156:2026-08-24 19:00:24.220 [INFO] Restored best-val graph snapshot (val=3.169860, train=3.136723)
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:320:  Eval SoftmaxCE:   3.143351   (4.534897 bits/unit)
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:321:  Eval Accuracy:    16.651665%
+
