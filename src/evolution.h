@@ -345,6 +345,7 @@ private:
             RECURRENT_MULTI_TAP,     // K self-recurrent inputs at delays 1..K (long memory: NARMA-30)
             MUX_INJECTION,           // MUX(cond, a, b) -> zero-gain NEURON -> ADD (piecewise/regime targets)
             DELAY_LINE,              // k delayed copies of INPUT (u[t-1..t-k]) via delay_taps edges (narma30)
+            IFELSE_PRESERVE,          // both-branches boundary split (stripes): failing output routed via BOTH IFELSE outputs, sides separated not masked
             // NOTE: enum order MUST match hyp_names[] in evolution.cpp exactly
             // (values are cast to int for gates+logs). A mid-list insert once
             // silently desynced them, breaking every SIN_PRODUCT/DIVIDE gate.

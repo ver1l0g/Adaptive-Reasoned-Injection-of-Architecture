@@ -666,7 +666,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // shadow and commit it. This collapses the wall-clock cost
                 // of failed candidates 鈥?previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
-                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION", "DELAY_LINE"};
+                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION", "DELAY_LINE", "IFELSE_PRESERVE"};
 
                 struct ShadowSpec {
                     int         rank;
@@ -2252,6 +2252,17 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         if (ftype == FailureType::BOOLEAN_BOUNDARY)      score = std::max(score, config::SCORE_IFELSE_BOOLEAN_BOOST);
         // M5.4: piecewise regime — the boundary family owns this residual
         if (piecewise_signature)                            score = std::max(score, 0.94);
+
+        // Emit the PRESERVE variant (both-branches) as a sibling candidate
+        // in the piecewise regime: for striped residuals both sides carry
+        // structure, so separating them beats masking one away.
+        if (piecewise_signature && threshold_found) {
+            Hypothesis ibp = ibs;   // copy: same condition source + threshold
+            ibp.type = Hypothesis::IFELSE_PRESERVE;
+            candidates.push_back({std::move(ibp), 0.95});   // top of boundary family
+            Logger::info("Candidate emitted: IFELSE_PRESERVE (both-branches split, thr="
+                        + std::to_string(ibs.split_threshold) + ")");
+        }
         else if (ftype == FailureType::LINEAR_OFFSET)     score = std::max(score, config::SCORE_IFELSE_LINEAR_BOOST);
 
         // Family-switch fatigue (stripes20 lesson): when MANY IFELSE commits
@@ -4373,6 +4384,60 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         break;
     }
 
+    case Hypothesis::IFELSE_PRESERVE: {
+        // Both-branches boundary split (stripes20-class):
+        //
+        //   failing_node ──→ IFELSE(cond) out[0] (true side:  x > thr) ──→ downstream
+        //        └────────→ IFELSE(cond) out[1] (false side: x <= thr) ──→ downstream
+        //
+        // Unlike IFELSE_BOUNDARY_SPLIT (which masks the FALSE side to 0 —
+        // designed for cliffs where one region should be suppressed),
+        // PRESERVE routes the failing node's output through BOTH branches:
+        // each side keeps its trained value, only SEPARATED. Downstream
+        // nodes can then learn side-specific corrections. For striped
+        // residuals (both sides equally structured) the masked variant
+        // regresses training by discarding half the fit.
+
+        uint64_t condition_src = hyp.condition_source_node;
+        if (condition_src == 0 || !shadow->get_node(condition_src)) {
+            condition_src = failing_id;
+        }
+        uint64_t threshold_id = shadow->add_node(NodeType::CONSTANT, "ifelse_threshold");
+        Node* cnode = shadow->get_node(threshold_id);
+        if (cnode && cnode->get_type() == NodeType::CONSTANT) {
+            static_cast<ConstantNode*>(cnode)->set_value(hyp.split_threshold);
+        }
+        uint64_t ifelse_id = shadow->add_node(NodeType::IFELSE, "preserve_ifelse");
+        shadow->add_connection(condition_src, 0, ifelse_id, 0);
+        shadow->add_connection(failing_id,  0, ifelse_id, 1);
+
+        // Route BOTH output ports downstream (replacing the direct edge).
+        std::vector<Connection> outgoing;
+        for (const auto& c : shadow->get_connections()) {
+            if (c.src_node == failing_id) outgoing.push_back(c);
+        }
+        for (const auto& c : outgoing) {
+            shadow->remove_connection(c.src_node, c.src_port, c.dst_node, c.dst_port);
+        }
+        for (const auto& c : outgoing) {
+            // true-side downstream keeps the original destination port,
+            // false-side goes to the NEXT free input port of the same node.
+            shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
+            Node* dn = shadow->get_node(c.dst_node);
+            if (dn && (dn->get_type() == NodeType::NEURON
+                       || dn->get_type() == NodeType::LINEAR)) {
+                auto* dnn = static_cast<NeuronNode*>(dn);
+                size_t next_port = dnn->get_num_weights();
+                dnn->set_input_count(next_port + 1);
+                dnn->set_weight(next_port, dnn->get_weight(c.dst_port));  // same init weight
+                shadow->add_connection(ifelse_id, 1, c.dst_node, next_port);
+            } else {
+                // Non-trainable downstream: only true side routed (best effort)
+            }
+        }
+        break;
+    }
+
     case Hypothesis::MUX_INJECTION: {
         // GREATER(cond_src, thr) → MUX(g, a, b) → zero-gain NEURON → ADD
         //
@@ -5715,7 +5780,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                 || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
                 || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
-                || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT))
+                || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)
+                || hyp_type == static_cast<int>(Hypothesis::IFELSE_PRESERVE))
                && baseline_val > 1e-9
                && result.val_loss <= baseline_val * (1.0 + config::SHADOW_COMPOUND_VAL_TOLERANCE)) {
         // Compound tolerance: the MULTIPLY鈫扤EURON鈫扵ANH architecture adds 4
