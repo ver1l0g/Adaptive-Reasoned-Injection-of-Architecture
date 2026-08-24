@@ -1101,6 +1101,59 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
 // ============================================================================
 // diagnose 鈥?blame analysis + target propagation
 // ============================================================================
+// ============================================================================
+// error_weighted_split — CART-style threshold selection for guard regions
+// ============================================================================
+// Given (condition value, residual) pairs, find the threshold t that best
+// partitions samples into two sets {x <= t} and {x > t} such that residual
+// variance WITHIN each set is minimized (weighted SSE criterion — exactly
+// the regression-tree split from CART). This replaces the median heuristic
+// for non-differentiable nodes (IFELSE/MUX): the guard region {x | a < x
+// <= b} is derived from where the ERROR actually changes character.
+//
+// Returns the chosen threshold via out-param; returns the achieved weighted
+// SSE reduction (>= 0) so callers can rank candidate condition sources.
+static double error_weighted_split(const std::vector<std::pair<Value, Value>>& vx,
+                                   Value& out_threshold) {
+    if (vx.size() < 8) return 0.0;   // too few to split reliably
+    std::vector<std::pair<Value, Value>> s(vx);
+    std::sort(s.begin(), s.end(),
+              [](const auto& a, const auto& b) { return a.first < b.first; });
+
+    size_t n = s.size();
+    // Prefix sums for O(n) split scan
+    std::vector<double> pre_sum(n + 1, 0.0), pre_sq(n + 1, 0.0);
+    for (size_t i = 0; i < n; ++i) {
+        pre_sum[i + 1] = pre_sum[i] + s[i].second;
+        pre_sq[i + 1]  = pre_sq[i]  + s[i].second * s[i].second;
+    }
+    double total_sum = pre_sum[n];
+    double total_sq  = pre_sq[n];
+    double total_sse = total_sq - total_sum * total_sum / static_cast<double>(n);
+
+    double best_reduction = 0.0;
+    Value best_thr = s[n / 2].first;
+    // Candidate split AFTER index i (left = [0..i], right = [i+1..n-1]);
+    // require >= 4 samples per side; split at value MIDPOINT so ties break
+    // cleanly.
+    for (size_t i = 4; i + 4 < n; ++i) {
+        if (s[i].first == s[i + 1].first) continue;   // no actual boundary
+        double nl = static_cast<double>(i + 1);
+        double nr = static_cast<double>(n - i - 1);
+        double sl = pre_sum[i + 1],  sql = pre_sq[i + 1];
+        double sr = total_sum - sl,  sqr = total_sq - sql;
+        double sse_l = sql - sl * sl / nl;
+        double sse_r = sqr - sr * sr / nr;
+        double reduction = total_sse - (sse_l + sse_r);
+        if (reduction > best_reduction) {
+            best_reduction = reduction;
+            best_thr = (s[i].first + s[i + 1].first) * 0.5;
+        }
+    }
+    out_threshold = best_thr;
+    return best_reduction;
+}
+
 std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
     std::vector<FailureDiagnosis> results;
 
@@ -2076,12 +2129,35 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // (e.g., median of y 鈭?[-10,3] 鈮?-3.5 instead of x boundary at 0).
         bool threshold_found = false;
         if (ibs.condition_source_node != 0) {
-            auto reg_it = blackboard_registry_.find(ibs.condition_source_node);
-            if (reg_it != blackboard_registry_.end() && reg_it->second.size() >= 2) {
-                std::vector<Value> src_sorted = reg_it->second;
-                std::sort(src_sorted.begin(), src_sorted.end());
-                ibs.split_threshold = src_sorted[src_sorted.size() / 2];
+            // SET-GUIDED SPLIT: derive the guard region {x | x <= t} from
+            // where the residual changes character, not from the value
+            // median. Pairs (condition value, residual) are index-aligned
+            // in diag (same strided sample set). Falls back to median when
+            // pairing is unavailable or the split finds no reduction.
+            std::vector<std::pair<Value, Value>> vx;
+            vx.reserve(diag.targets.size());
+            for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {
+                auto it = diag.local_inputs[i].find(ibs.condition_source_node);
+                if (it != diag.local_inputs[i].end()) {
+                    vx.emplace_back(it->second, diag.targets[i]);
+                }
+            }
+            Value guided_thr = 0.0;
+            double reduction = error_weighted_split(vx, guided_thr);
+            if (reduction > 0.0) {
+                ibs.split_threshold = guided_thr;
                 threshold_found = true;
+                Logger::info("IFELSE set-guided split: thr=" + std::to_string(guided_thr)
+                            + " (SSE reduction " + std::to_string(reduction)
+                            + " over " + std::to_string(vx.size()) + " paired samples)");
+            } else {
+                auto reg_it = blackboard_registry_.find(ibs.condition_source_node);
+                if (reg_it != blackboard_registry_.end() && reg_it->second.size() >= 2) {
+                    std::vector<Value> src_sorted = reg_it->second;
+                    std::sort(src_sorted.begin(), src_sorted.end());
+                    ibs.split_threshold = src_sorted[src_sorted.size() / 2];
+                    threshold_found = true;
+                }
             }
         }
         if (!threshold_found) {
@@ -2235,13 +2311,28 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 if (srcs.size() >= 2) break;
             }
             if (srcs.size() >= 2) {
-                // threshold = median of condition source values
+                // SET-GUIDED threshold: same CART-style split as IFELSE —
+                // the MUX selection boundary comes from where the residual
+                // variance partitions, not the value median.
                 Value thr = 0.0;
-                auto rit = blackboard_registry_.find(cond);
-                if (rit != blackboard_registry_.end() && rit->second.size() >= 2) {
-                    std::vector<Value> sorted_v = rit->second;
-                    std::sort(sorted_v.begin(), sorted_v.end());
-                    thr = sorted_v[sorted_v.size() / 2];
+                {
+                    std::vector<std::pair<Value, Value>> vx;
+                    vx.reserve(diag.targets.size());
+                    for (size_t i2 = 0; i2 < diag.targets.size() && i2 < diag.local_inputs.size(); ++i2) {
+                        auto it = diag.local_inputs[i2].find(cond);
+                        if (it != diag.local_inputs[i2].end()) {
+                            vx.emplace_back(it->second, diag.targets[i2]);
+                        }
+                    }
+                    double reduction = error_weighted_split(vx, thr);
+                    if (reduction <= 0.0) {
+                        auto rit = blackboard_registry_.find(cond);
+                        if (rit != blackboard_registry_.end() && rit->second.size() >= 2) {
+                            std::vector<Value> sorted_v = rit->second;
+                            std::sort(sorted_v.begin(), sorted_v.end());
+                            thr = sorted_v[sorted_v.size() / 2];
+                        }
+                    }
                 }
                 Hypothesis mx;
                 mx.type = Hypothesis::MUX_INJECTION;

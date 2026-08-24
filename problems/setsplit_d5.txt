@@ -1,0 +1,363 @@
+
+============================================================
+  GP-NN Log 鈥?2026-08-24 18:22:08.756
+  Verbose mode enabled
+============================================================
+
+2026-08-24 18:22:08.822 [VERBOSE] SGD improved: loss 0.190503 -> 0.083826 (delta=0.106677)
+2026-08-24 18:22:08.822 [INFO] New best overall loss: 0.083826
+2026-08-24 18:22:08.827 [VERBOSE] SGD improved: loss 0.083826 -> 0.081637 (delta=0.002189)
+2026-08-24 18:22:08.827 [INFO] New best overall loss: 0.081637
+2026-08-24 18:22:08.831 [VERBOSE] SGD relative improvement: 0.002536 (loss 0.081637 -> 0.081430)
+2026-08-24 18:22:08.834 [INFO] New best overall loss: 0.081430
+2026-08-24 18:22:08.838 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.081637)
+2026-08-24 18:22:08.838 [INFO] New best overall loss: 0.081366
+2026-08-24 18:22:08.842 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.081637)
+2026-08-24 18:22:08.842 [INFO] New best overall loss: 0.081330
+2026-08-24 18:22:08.846 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.081637)
+2026-08-24 18:22:08.846 [INFO] Plateau triggered at epoch 6 (counter=3, loss=0.081343)
+2026-08-24 18:22:08.847 [VERBOSE] attr node=3 type=NEURON base=0.081343 pert=0.091988 blame=0.010645
+2026-08-24 18:22:08.847 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.010645)
+2026-08-24 18:22:08.848 [VERBOSE] diag results: 1 failures
+2026-08-24 18:22:08.848 [VERBOSE] diagnose() returned 1 failure(s)
+2026-08-24 18:22:08.848 [VERBOSE] Diagnosing node 3 blame=0.010645 [constant]
+2026-08-24 18:22:08.848 [VERBOSE] Top blackboard signal: node=1 corr=0.071119
+2026-08-24 18:22:08.848 [DECISION] Classify failure | node=3 type=LINEAR_OFFSET
+2026-08-24 18:22:08.848 [INFO] [PROFILE] F=1 N=160 var_r=0.0817 bound_ratio=3.4964 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.0000 | flags: BOUNDED
+2026-08-24 18:22:08.848 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:22:08.848 [INFO] Library INJECT (dist=0.201 src=bench_chirp.csv) -> MUL_NEURON [gate-bypass]
+2026-08-24 18:22:08.848 [VERBOSE] Failure-prior: type=2 score 0.100000 -> 0.010000
+2026-08-24 18:22:08.848 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.290000
+2026-08-24 18:22:08.848 [DECISION] Try hypothesis | rank=0 type=CONTEXT_WIRE
+2026-08-24 18:22:08.848 [DECISION] Try hypothesis | rank=1 type=DEEP_INSERTION
+2026-08-24 18:22:08.848 [DECISION] Try hypothesis | rank=2 type=MULTIPLY_INJECTION
+2026-08-24 18:22:08.848 [DECISION] Try hypothesis | rank=3 type=COMPOUND_MULTIPLY_NEURON
+2026-08-24 18:22:08.848 [DECISION] Try hypothesis | rank=4 type=NEURON_TANH_INJECTION
+2026-08-24 18:22:08.875 [VERBOSE]   rank=0 REJECT — val_loss=0.099003 did not beat baseline_val=0.098645 by required=0.000000
+2026-08-24 18:22:08.875 [VERBOSE]   rank=1 REJECT — val_loss=0.101208 did not beat baseline_val=0.098645 by required=0.000000
+2026-08-24 18:22:08.877 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.005074 train_loss=0.004063 new train_loss=0.004063
+2026-08-24 18:22:08.877 [INFO] Plateau state reset 鈥?best_phase2=0.004063
+2026-08-24 18:22:08.877 [INFO] Plateau state reset — best_phase2=0.004063
+2026-08-24 18:22:08.878 [VERBOSE] New best val loss: 0.005074 (train 0.004063)
+2026-08-24 18:22:08.883 [VERBOSE] SGD improved: loss 0.004063 -> 0.000232 (delta=0.003830)
+2026-08-24 18:22:08.883 [INFO] New best overall loss: 0.000232
+2026-08-24 18:22:08.887 [VERBOSE] SGD relative improvement: 0.389900 (loss 0.000232 -> 0.000142)
+2026-08-24 18:22:08.887 [INFO] New best overall loss: 0.000142
+2026-08-24 18:22:08.892 [VERBOSE] SGD relative improvement: 0.723703 (loss 0.000142 -> 0.000039)
+2026-08-24 18:22:08.892 [INFO] New best overall loss: 0.000039
+2026-08-24 18:22:08.897 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.897 [VERBOSE] Compile at epoch 10
+2026-08-24 18:22:08.897 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:22:08.901 [VERBOSE] SGD relative improvement: 0.526273 (loss 0.000103 -> 0.000049)
+2026-08-24 18:22:08.906 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.910 [VERBOSE] SGD relative improvement: 0.315937 (loss 0.000080 -> 0.000055)
+2026-08-24 18:22:08.917 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.923 [VERBOSE] SGD relative improvement: 0.192330 (loss 0.000072 -> 0.000058)
+2026-08-24 18:22:08.927 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.930 [VERBOSE] SGD relative improvement: 0.115251 (loss 0.000069 -> 0.000061)
+2026-08-24 18:22:08.934 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.938 [VERBOSE] SGD relative improvement: 0.070083 (loss 0.000067 -> 0.000063)
+2026-08-24 18:22:08.944 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.945 [VERBOSE] Compile at epoch 20
+2026-08-24 18:22:08.945 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:22:08.949 [VERBOSE] SGD relative improvement: 0.046007 (loss 0.000067 -> 0.000064)
+2026-08-24 18:22:08.952 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.955 [VERBOSE] SGD relative improvement: 0.034865 (loss 0.000066 -> 0.000064)
+2026-08-24 18:22:08.959 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.963 [VERBOSE] SGD relative improvement: 0.030992 (loss 0.000066 -> 0.000064)
+2026-08-24 18:22:08.968 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:22:08.968 [INFO] Forced structural trigger at epoch 26 (epochs since last structural: 20)
+2026-08-24 18:22:08.968 [INFO] Plateau triggered at epoch 26 (counter=1, loss=0.000067)
+2026-08-24 18:22:08.970 [VERBOSE] attr node=3 type=NEURON base=0.000067 pert=0.027219 blame=0.027152
+2026-08-24 18:22:08.970 [VERBOSE] attr node=4 type=MULTIPLY base=0.000067 pert=0.011235 blame=0.011168
+2026-08-24 18:22:08.970 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.027152)
+2026-08-24 18:22:08.971 [VERBOSE] diag results: 1 failures
+2026-08-24 18:22:08.971 [VERBOSE] diagnose() returned 1 failure(s)
+2026-08-24 18:22:08.971 [VERBOSE] Diagnosing node 3 blame=0.027152
+2026-08-24 18:22:08.971 [VERBOSE] Top blackboard signal: node=4 corr=1.000000
+2026-08-24 18:22:08.971 [DECISION] Classify failure | node=3 type=LINEAR_OFFSET
+2026-08-24 18:22:08.971 [INFO] [PROFILE] F=1 N=160 var_r=0.0817 bound_ratio=3.4964 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.0000 | flags: BOUNDED
+2026-08-24 18:22:08.971 [INFO] IFELSE set-guided split: thr=-0.714550 (SSE reduction 4.883671 over 160 paired samples)
+2026-08-24 18:22:08.971 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:22:08.971 [INFO] Library INJECT (dist=0.201 src=bench_chirp.csv) -> MUL_NEURON [gate-bypass]
+2026-08-24 18:22:08.971 [VERBOSE] Failure-prior: type=1 score 0.550000 -> 0.390000
+2026-08-24 18:22:08.971 [VERBOSE] Failure-prior: type=2 score 0.100000 -> 0.010000
+2026-08-24 18:22:08.971 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.290000
+2026-08-24 18:22:08.971 [DECISION] Try hypothesis | rank=0 type=CONTEXT_WIRE
+2026-08-24 18:22:08.971 [DECISION] Try hypothesis | rank=1 type=DEEP_INSERTION
+2026-08-24 18:22:08.971 [DECISION] Try hypothesis | rank=2 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:22:08.971 [DECISION] Try hypothesis | rank=3 type=MULTIPLY_INJECTION
+2026-08-24 18:22:08.971 [DECISION] Try hypothesis | rank=4 type=COMPOUND_MULTIPLY_NEURON
+2026-08-24 18:22:08.971 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 18:22:09.004 [VERBOSE]   rank=1 REJECT — training loss regressed catastrophically (shadow_train=0.081704 vs baseline_loss=0.000067)
+2026-08-24 18:22:09.004 [VERBOSE]   rank=2 REJECT — training loss regressed catastrophically (shadow_train=0.081718 vs baseline_loss=0.000067)
+2026-08-24 18:22:09.005 [VERBOSE]   rank=0 superseded by rank=3 (effective 0.000042 < 0.000042)
+2026-08-24 18:22:09.005 [VERBOSE]   rank=3 superseded by rank=4 (effective 0.000024 < 0.000042)
+2026-08-24 18:22:09.010 [INFO]   COMMIT rank=4 type=COMPOUND_MULTIPLY_NEURON val_loss=0.000021 train_loss=0.000016 new train_loss=0.000016
+2026-08-24 18:22:09.010 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 18:22:09.010 [INFO] Plateau state reset 鈥?best_phase2=0.000016
+2026-08-24 18:22:09.010 [INFO] Plateau state reset — best_phase2=0.000016
+2026-08-24 18:22:09.010 [VERBOSE] New best val loss: 0.000021 (train 0.000016)
+2026-08-24 18:22:09.017 [VERBOSE] SGD plateau counter=-49/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.024 [VERBOSE] SGD relative improvement: 0.061546 (loss 0.000018 -> 0.000017)
+2026-08-24 18:22:09.024 [VERBOSE] New best val loss: 0.000021 (train 0.000017)
+2026-08-24 18:22:09.031 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.039 [VERBOSE] SGD relative improvement: 0.128012 (loss 0.000017 -> 0.000015)
+2026-08-24 18:22:09.039 [INFO] New best overall loss: 0.000015
+2026-08-24 18:22:09.039 [VERBOSE] Compile at epoch 30
+2026-08-24 18:22:09.039 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:22:09.039 [VERBOSE] New best val loss: 0.000019 (train 0.000015)
+2026-08-24 18:22:09.045 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.050 [VERBOSE] SGD relative improvement: 0.251540 (loss 0.000018 -> 0.000014)
+2026-08-24 18:22:09.050 [INFO] New best overall loss: 0.000014
+2026-08-24 18:22:09.050 [VERBOSE] New best val loss: 0.000018 (train 0.000014)
+2026-08-24 18:22:09.057 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.063 [VERBOSE] SGD relative improvement: 0.380929 (loss 0.000020 -> 0.000013)
+2026-08-24 18:22:09.063 [INFO] New best overall loss: 0.000013
+2026-08-24 18:22:09.063 [VERBOSE] New best val loss: 0.000016 (train 0.000013)
+2026-08-24 18:22:09.070 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.077 [VERBOSE] SGD relative improvement: 0.021123 (loss 0.000013 -> 0.000013)
+2026-08-24 18:22:09.083 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.090 [VERBOSE] SGD relative improvement: 0.410049 (loss 0.000019 -> 0.000011)
+2026-08-24 18:22:09.090 [INFO] New best overall loss: 0.000011
+2026-08-24 18:22:09.090 [VERBOSE] New best val loss: 0.000014 (train 0.000011)
+2026-08-24 18:22:09.097 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.097 [VERBOSE] New best val loss: 0.000014 (train 0.000011)
+2026-08-24 18:22:09.103 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.104 [VERBOSE] Compile at epoch 40
+2026-08-24 18:22:09.104 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:22:09.109 [VERBOSE] SGD relative improvement: 0.440241 (loss 0.000018 -> 0.000010)
+2026-08-24 18:22:09.109 [INFO] New best overall loss: 0.000010
+2026-08-24 18:22:09.110 [VERBOSE] New best val loss: 0.000013 (train 0.000010)
+2026-08-24 18:22:09.116 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.116 [VERBOSE] New best val loss: 0.000013 (train 0.000011)
+2026-08-24 18:22:09.121 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.128 [VERBOSE] SGD relative improvement: 0.428383 (loss 0.000017 -> 0.000010)
+2026-08-24 18:22:09.128 [INFO] New best overall loss: 0.000010
+2026-08-24 18:22:09.128 [VERBOSE] New best val loss: 0.000012 (train 0.000010)
+2026-08-24 18:22:09.134 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.140 [VERBOSE] SGD relative improvement: 0.491211 (loss 0.000019 -> 0.000009)
+2026-08-24 18:22:09.140 [INFO] New best overall loss: 0.000009
+2026-08-24 18:22:09.140 [VERBOSE] New best val loss: 0.000012 (train 0.000009)
+2026-08-24 18:22:09.146 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.154 [VERBOSE] SGD relative improvement: 0.495518 (loss 0.000018 -> 0.000009)
+2026-08-24 18:22:09.154 [INFO] New best overall loss: 0.000009
+2026-08-24 18:22:09.154 [VERBOSE] New best val loss: 0.000012 (train 0.000009)
+2026-08-24 18:22:09.161 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.167 [VERBOSE] SGD relative improvement: 0.501836 (loss 0.000018 -> 0.000009)
+2026-08-24 18:22:09.167 [INFO] New best overall loss: 0.000009
+2026-08-24 18:22:09.167 [VERBOSE] Compile at epoch 50
+2026-08-24 18:22:09.167 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:22:09.167 [VERBOSE] New best val loss: 0.000011 (train 0.000009)
+2026-08-24 18:22:09.174 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.181 [VERBOSE] SGD relative improvement: 0.508251 (loss 0.000018 -> 0.000009)
+2026-08-24 18:22:09.181 [INFO] New best overall loss: 0.000009
+2026-08-24 18:22:09.181 [VERBOSE] New best val loss: 0.000011 (train 0.000009)
+2026-08-24 18:22:09.187 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.194 [VERBOSE] SGD relative improvement: 0.513463 (loss 0.000017 -> 0.000008)
+2026-08-24 18:22:09.194 [INFO] New best overall loss: 0.000008
+2026-08-24 18:22:09.194 [VERBOSE] New best val loss: 0.000011 (train 0.000008)
+2026-08-24 18:22:09.200 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.206 [VERBOSE] SGD relative improvement: 0.519671 (loss 0.000017 -> 0.000008)
+2026-08-24 18:22:09.206 [INFO] New best overall loss: 0.000008
+2026-08-24 18:22:09.206 [VERBOSE] New best val loss: 0.000011 (train 0.000008)
+2026-08-24 18:22:09.214 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.220 [VERBOSE] SGD relative improvement: 0.524448 (loss 0.000017 -> 0.000008)
+2026-08-24 18:22:09.220 [INFO] New best overall loss: 0.000008
+2026-08-24 18:22:09.220 [VERBOSE] New best val loss: 0.000010 (train 0.000008)
+2026-08-24 18:22:09.226 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:22:09.233 [VERBOSE] SGD relative improvement: 0.530317 (loss 0.000017 -> 0.000008)
+2026-08-24 18:22:09.233 [INFO] New best overall loss: 0.000008
+2026-08-24 18:22:09.233 [VERBOSE] Compile at epoch 60
+2026-08-24 18:22:09.233 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:22:09.233 [VERBOSE] New best val loss: 0.000010 (train 0.000008)
+2026-08-24 18:22:09.233 [INFO] Restored best-val graph snapshot (val=0.000010, train=0.000008)
+
+============================================================
+  Session ended 鈥?2026-08-24 18:22:09.242
+============================================================
+
+============================================================
+  GP-NN Log 鈥?2026-08-24 18:39:07.821
+  Verbose mode enabled
+============================================================
+
+2026-08-24 18:39:07.907 [VERBOSE] SGD improved: loss 0.190503 -> 0.083826 (delta=0.106677)
+2026-08-24 18:39:07.908 [INFO] New best overall loss: 0.083826
+2026-08-24 18:39:07.912 [VERBOSE] SGD improved: loss 0.083826 -> 0.081637 (delta=0.002189)
+2026-08-24 18:39:07.912 [INFO] New best overall loss: 0.081637
+2026-08-24 18:39:07.917 [VERBOSE] SGD relative improvement: 0.002536 (loss 0.081637 -> 0.081430)
+2026-08-24 18:39:07.917 [INFO] New best overall loss: 0.081430
+2026-08-24 18:39:07.923 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.081637)
+2026-08-24 18:39:07.923 [INFO] New best overall loss: 0.081366
+2026-08-24 18:39:07.928 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.081637)
+2026-08-24 18:39:07.928 [INFO] New best overall loss: 0.081330
+2026-08-24 18:39:07.933 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.081637)
+2026-08-24 18:39:07.933 [INFO] Plateau triggered at epoch 6 (counter=3, loss=0.081343)
+2026-08-24 18:39:07.935 [VERBOSE] attr node=3 type=NEURON base=0.081343 pert=0.091988 blame=0.010645
+2026-08-24 18:39:07.936 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.010645)
+2026-08-24 18:39:07.936 [VERBOSE] diag results: 1 failures
+2026-08-24 18:39:07.936 [VERBOSE] diagnose() returned 1 failure(s)
+2026-08-24 18:39:07.936 [VERBOSE] Diagnosing node 3 blame=0.010645 [constant]
+2026-08-24 18:39:07.936 [VERBOSE] Top blackboard signal: node=1 corr=0.071119
+2026-08-24 18:39:07.936 [DECISION] Classify failure | node=3 type=LINEAR_OFFSET
+2026-08-24 18:39:07.936 [INFO] [PROFILE] F=1 N=160 var_r=0.0817 bound_ratio=3.4964 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.0000 | flags: BOUNDED
+2026-08-24 18:39:07.936 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:39:07.936 [INFO] Library INJECT (dist=0.201 src=bench_chirp.csv) -> MUL_NEURON [gate-bypass]
+2026-08-24 18:39:07.936 [VERBOSE] Failure-prior: type=3 score 0.850000 -> 0.770000
+2026-08-24 18:39:07.937 [VERBOSE] Failure-prior: type=2 score 0.100000 -> 0.010000
+2026-08-24 18:39:07.937 [VERBOSE] Failure-prior: type=12 score 0.500000 -> 0.340000
+2026-08-24 18:39:07.937 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.290000
+2026-08-24 18:39:07.937 [DECISION] Try hypothesis | rank=0 type=CONTEXT_WIRE
+2026-08-24 18:39:07.937 [DECISION] Try hypothesis | rank=1 type=DEEP_INSERTION
+2026-08-24 18:39:07.937 [DECISION] Try hypothesis | rank=2 type=MULTIPLY_INJECTION
+2026-08-24 18:39:07.937 [DECISION] Try hypothesis | rank=3 type=COMPOUND_MULTIPLY_NEURON
+2026-08-24 18:39:07.937 [DECISION] Try hypothesis | rank=4 type=NEURON_TANH_INJECTION
+2026-08-24 18:39:07.965 [VERBOSE]   rank=0 REJECT — val_loss=0.099003 did not beat baseline_val=0.098645 by required=0.000000
+2026-08-24 18:39:07.965 [VERBOSE]   rank=1 REJECT — val_loss=0.101208 did not beat baseline_val=0.098645 by required=0.000000
+2026-08-24 18:39:07.967 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.005074 train_loss=0.004063 new train_loss=0.004063
+2026-08-24 18:39:07.967 [INFO] Plateau state reset 鈥?best_phase2=0.004063
+2026-08-24 18:39:07.967 [INFO] Plateau state reset — best_phase2=0.004063
+2026-08-24 18:39:07.967 [VERBOSE] New best val loss: 0.005074 (train 0.004063)
+2026-08-24 18:39:07.974 [VERBOSE] SGD improved: loss 0.004063 -> 0.000232 (delta=0.003830)
+2026-08-24 18:39:07.974 [INFO] New best overall loss: 0.000232
+2026-08-24 18:39:07.980 [VERBOSE] SGD relative improvement: 0.389900 (loss 0.000232 -> 0.000142)
+2026-08-24 18:39:07.980 [INFO] New best overall loss: 0.000142
+2026-08-24 18:39:07.985 [VERBOSE] SGD relative improvement: 0.723703 (loss 0.000142 -> 0.000039)
+2026-08-24 18:39:07.985 [INFO] New best overall loss: 0.000039
+2026-08-24 18:39:07.990 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:07.990 [VERBOSE] Compile at epoch 10
+2026-08-24 18:39:07.990 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:39:07.995 [VERBOSE] SGD relative improvement: 0.526273 (loss 0.000103 -> 0.000049)
+2026-08-24 18:39:08.000 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.005 [VERBOSE] SGD relative improvement: 0.315937 (loss 0.000080 -> 0.000055)
+2026-08-24 18:39:08.010 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.015 [VERBOSE] SGD relative improvement: 0.192330 (loss 0.000072 -> 0.000058)
+2026-08-24 18:39:08.020 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.025 [VERBOSE] SGD relative improvement: 0.115251 (loss 0.000069 -> 0.000061)
+2026-08-24 18:39:08.030 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.035 [VERBOSE] SGD relative improvement: 0.070083 (loss 0.000067 -> 0.000063)
+2026-08-24 18:39:08.040 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.040 [VERBOSE] Compile at epoch 20
+2026-08-24 18:39:08.041 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:39:08.045 [VERBOSE] SGD relative improvement: 0.046007 (loss 0.000067 -> 0.000064)
+2026-08-24 18:39:08.050 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.055 [VERBOSE] SGD relative improvement: 0.034865 (loss 0.000066 -> 0.000064)
+2026-08-24 18:39:08.060 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.065 [VERBOSE] SGD relative improvement: 0.030992 (loss 0.000066 -> 0.000064)
+2026-08-24 18:39:08.066 [VERBOSE] Checkpoint saved to checkpoints/bench_d5_extrap_cliff/graph.json at epoch 25
+2026-08-24 18:39:08.072 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000232)
+2026-08-24 18:39:08.072 [INFO] Forced structural trigger at epoch 26 (epochs since last structural: 20)
+2026-08-24 18:39:08.072 [INFO] Plateau triggered at epoch 26 (counter=1, loss=0.000067)
+2026-08-24 18:39:08.074 [VERBOSE] attr node=3 type=NEURON base=0.000067 pert=0.027219 blame=0.027152
+2026-08-24 18:39:08.074 [VERBOSE] attr node=4 type=MULTIPLY base=0.000067 pert=0.011235 blame=0.011168
+2026-08-24 18:39:08.074 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.027152)
+2026-08-24 18:39:08.074 [VERBOSE] diag results: 1 failures
+2026-08-24 18:39:08.074 [VERBOSE] diagnose() returned 1 failure(s)
+2026-08-24 18:39:08.075 [VERBOSE] Diagnosing node 3 blame=0.027152
+2026-08-24 18:39:08.075 [VERBOSE] Top blackboard signal: node=4 corr=1.000000
+2026-08-24 18:39:08.075 [DECISION] Classify failure | node=3 type=LINEAR_OFFSET
+2026-08-24 18:39:08.075 [INFO] [PROFILE] F=1 N=160 var_r=0.0817 bound_ratio=3.4964 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.0000 | flags: BOUNDED
+2026-08-24 18:39:08.075 [INFO] IFELSE set-guided split: thr=-0.714550 (SSE reduction 4.883671 over 160 paired samples)
+2026-08-24 18:39:08.075 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-24 18:39:08.075 [INFO] Library INJECT (dist=0.201 src=bench_chirp.csv) -> MUL_NEURON [gate-bypass]
+2026-08-24 18:39:08.075 [VERBOSE] Failure-prior: type=3 score 1.000000 -> 0.920000
+2026-08-24 18:39:08.075 [VERBOSE] Failure-prior: type=1 score 0.550000 -> 0.310000
+2026-08-24 18:39:08.075 [VERBOSE] Failure-prior: type=2 score 0.100000 -> 0.010000
+2026-08-24 18:39:08.075 [VERBOSE] Failure-prior: type=12 score 0.500000 -> 0.340000
+2026-08-24 18:39:08.075 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.290000
+2026-08-24 18:39:08.075 [DECISION] Try hypothesis | rank=0 type=CONTEXT_WIRE
+2026-08-24 18:39:08.075 [DECISION] Try hypothesis | rank=1 type=DEEP_INSERTION
+2026-08-24 18:39:08.075 [DECISION] Try hypothesis | rank=2 type=IFELSE_BOUNDARY_SPLIT
+2026-08-24 18:39:08.075 [DECISION] Try hypothesis | rank=3 type=MULTIPLY_INJECTION
+2026-08-24 18:39:08.076 [DECISION] Try hypothesis | rank=4 type=COMPOUND_MULTIPLY_NEURON
+2026-08-24 18:39:08.076 [DECISION] Try hypothesis | rank=5 type=NEURON_TANH_INJECTION
+2026-08-24 18:39:08.118 [VERBOSE]   rank=1 REJECT — training loss regressed catastrophically (shadow_train=0.081704 vs baseline_loss=0.000067)
+2026-08-24 18:39:08.118 [VERBOSE]   rank=2 REJECT — training loss regressed catastrophically (shadow_train=0.081718 vs baseline_loss=0.000067)
+2026-08-24 18:39:08.118 [VERBOSE]   rank=0 superseded by rank=3 (effective 0.000042 < 0.000042)
+2026-08-24 18:39:08.118 [VERBOSE]   rank=3 superseded by rank=4 (effective 0.000024 < 0.000042)
+2026-08-24 18:39:08.121 [INFO]   COMMIT rank=4 type=COMPOUND_MULTIPLY_NEURON val_loss=0.000021 train_loss=0.000016 new train_loss=0.000016
+2026-08-24 18:39:08.121 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-24 18:39:08.121 [INFO] Plateau state reset 鈥?best_phase2=0.000016
+2026-08-24 18:39:08.121 [INFO] Plateau state reset — best_phase2=0.000016
+2026-08-24 18:39:08.121 [VERBOSE] New best val loss: 0.000021 (train 0.000016)
+2026-08-24 18:39:08.131 [VERBOSE] SGD plateau counter=-49/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.139 [VERBOSE] SGD relative improvement: 0.061546 (loss 0.000018 -> 0.000017)
+2026-08-24 18:39:08.140 [VERBOSE] New best val loss: 0.000021 (train 0.000017)
+2026-08-24 18:39:08.148 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.156 [VERBOSE] SGD relative improvement: 0.128012 (loss 0.000017 -> 0.000015)
+2026-08-24 18:39:08.156 [INFO] New best overall loss: 0.000015
+2026-08-24 18:39:08.156 [VERBOSE] Compile at epoch 30
+2026-08-24 18:39:08.156 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:39:08.156 [VERBOSE] New best val loss: 0.000019 (train 0.000015)
+2026-08-24 18:39:08.165 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.174 [VERBOSE] SGD relative improvement: 0.251540 (loss 0.000018 -> 0.000014)
+2026-08-24 18:39:08.174 [INFO] New best overall loss: 0.000014
+2026-08-24 18:39:08.174 [VERBOSE] New best val loss: 0.000018 (train 0.000014)
+2026-08-24 18:39:08.181 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.189 [VERBOSE] SGD relative improvement: 0.380929 (loss 0.000020 -> 0.000013)
+2026-08-24 18:39:08.189 [INFO] New best overall loss: 0.000013
+2026-08-24 18:39:08.189 [VERBOSE] New best val loss: 0.000016 (train 0.000013)
+2026-08-24 18:39:08.197 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.205 [VERBOSE] SGD relative improvement: 0.021123 (loss 0.000013 -> 0.000013)
+2026-08-24 18:39:08.213 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.222 [VERBOSE] SGD relative improvement: 0.410049 (loss 0.000019 -> 0.000011)
+2026-08-24 18:39:08.222 [INFO] New best overall loss: 0.000011
+2026-08-24 18:39:08.222 [VERBOSE] New best val loss: 0.000014 (train 0.000011)
+2026-08-24 18:39:08.229 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.230 [VERBOSE] New best val loss: 0.000014 (train 0.000011)
+2026-08-24 18:39:08.237 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.237 [VERBOSE] Compile at epoch 40
+2026-08-24 18:39:08.237 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:39:08.246 [VERBOSE] SGD relative improvement: 0.440241 (loss 0.000018 -> 0.000010)
+2026-08-24 18:39:08.246 [INFO] New best overall loss: 0.000010
+2026-08-24 18:39:08.246 [VERBOSE] New best val loss: 0.000013 (train 0.000010)
+2026-08-24 18:39:08.255 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.255 [VERBOSE] New best val loss: 0.000013 (train 0.000011)
+2026-08-24 18:39:08.263 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.271 [VERBOSE] SGD relative improvement: 0.428383 (loss 0.000017 -> 0.000010)
+2026-08-24 18:39:08.271 [INFO] New best overall loss: 0.000010
+2026-08-24 18:39:08.272 [VERBOSE] New best val loss: 0.000012 (train 0.000010)
+2026-08-24 18:39:08.279 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.287 [VERBOSE] SGD relative improvement: 0.491211 (loss 0.000019 -> 0.000009)
+2026-08-24 18:39:08.287 [INFO] New best overall loss: 0.000009
+2026-08-24 18:39:08.287 [VERBOSE] New best val loss: 0.000012 (train 0.000009)
+2026-08-24 18:39:08.296 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.304 [VERBOSE] SGD relative improvement: 0.495518 (loss 0.000018 -> 0.000009)
+2026-08-24 18:39:08.304 [INFO] New best overall loss: 0.000009
+2026-08-24 18:39:08.304 [VERBOSE] New best val loss: 0.000012 (train 0.000009)
+2026-08-24 18:39:08.312 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.321 [VERBOSE] SGD relative improvement: 0.501836 (loss 0.000018 -> 0.000009)
+2026-08-24 18:39:08.321 [INFO] New best overall loss: 0.000009
+2026-08-24 18:39:08.322 [VERBOSE] Compile at epoch 50
+2026-08-24 18:39:08.322 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:39:08.322 [VERBOSE] New best val loss: 0.000011 (train 0.000009)
+2026-08-24 18:39:08.323 [VERBOSE] Checkpoint saved to checkpoints/bench_d5_extrap_cliff/graph.json at epoch 50
+2026-08-24 18:39:08.331 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.338 [VERBOSE] SGD relative improvement: 0.508251 (loss 0.000018 -> 0.000009)
+2026-08-24 18:39:08.338 [INFO] New best overall loss: 0.000009
+2026-08-24 18:39:08.338 [VERBOSE] New best val loss: 0.000011 (train 0.000009)
+2026-08-24 18:39:08.346 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.354 [VERBOSE] SGD relative improvement: 0.513463 (loss 0.000017 -> 0.000008)
+2026-08-24 18:39:08.354 [INFO] New best overall loss: 0.000008
+2026-08-24 18:39:08.355 [VERBOSE] New best val loss: 0.000011 (train 0.000008)
+2026-08-24 18:39:08.364 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.373 [VERBOSE] SGD relative improvement: 0.519671 (loss 0.000017 -> 0.000008)
+2026-08-24 18:39:08.373 [INFO] New best overall loss: 0.000008
+2026-08-24 18:39:08.373 [VERBOSE] New best val loss: 0.000011 (train 0.000008)
+2026-08-24 18:39:08.381 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.389 [VERBOSE] SGD relative improvement: 0.524448 (loss 0.000017 -> 0.000008)
+2026-08-24 18:39:08.390 [INFO] New best overall loss: 0.000008
+2026-08-24 18:39:08.390 [VERBOSE] New best val loss: 0.000010 (train 0.000008)
+2026-08-24 18:39:08.398 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.000016)
+2026-08-24 18:39:08.407 [VERBOSE] SGD relative improvement: 0.530317 (loss 0.000017 -> 0.000008)
+2026-08-24 18:39:08.407 [INFO] New best overall loss: 0.000008
+2026-08-24 18:39:08.407 [VERBOSE] Compile at epoch 60
+2026-08-24 18:39:08.407 [VERBOSE] compile: dead=0, folded=0, compressed=0
+2026-08-24 18:39:08.407 [VERBOSE] New best val loss: 0.000010 (train 0.000008)
+2026-08-24 18:39:08.407 [INFO] Restored best-val graph snapshot (val=0.000010, train=0.000008)
+2026-08-24 18:39:08.408 [INFO] Final graph saved to checkpoints/bench_d5_extrap_cliff/graph.json
+
+============================================================
+  Session ended 鈥?2026-08-24 18:39:08.417
+============================================================
