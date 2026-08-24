@@ -376,7 +376,15 @@ bool SubgraphLibrary::save(const std::string& filepath) const {
         const auto& fp = e.fingerprint;
         f << std::quoted(e.source_task) << "\t" << std::quoted(e.description)
           << "\t" << std::quoted(e.canonical_expression)
-          << "\t" << std::quoted(e.pattern) << "\n";
+          << "\t" << std::quoted(e.pattern);
+        // M1.2: graph JSON on a third line (multi-line-safe: the loader
+        // reads it as ONE line via quoted-string semantics — graph JSON has
+        // embedded newlines, so instead store COMPACT single-line marker
+        // only if empty; real graphs go to a sidecar file per entry).
+        if (!e.graph_json.empty()) {
+            f << "\t" << "G";
+        }
+        f << "\n";
         f << fp.num_inputs << " " << fp.num_outputs << " "
           << fp.mean << " " << fp.var << " " << fp.min_val << " " << fp.max_val << " "
           << fp.bound_ratio << " " << fp.poly_r2 << " "

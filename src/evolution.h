@@ -67,6 +67,14 @@ public:
         std::string task;
     };
     void set_failure_library(const std::vector<FailureRecord>* fl) { failure_library_ = fl; }
+
+    // M1.2 architecture recall: path to a PRIOR solved graph for this task
+    // (checkpoints/<task>/graph.json). At the FIRST plateau, the prior graph
+    // is loaded and injected as a shadow candidate alongside the usual
+    // hypotheses — "adapt by recall": if the prior solution still wins
+    // validation, it commits instantly and the run skips re-discovery.
+    // Validated like any candidate; a stale/wrong prior just loses.
+    void set_recall_graph(const std::string& path) { recall_graph_path_ = path; }
 public:
     struct Config {
         int   max_epochs              = config::DEFAULT_EVOLUTION_MAX_EPOCHS;     // outer evolution epochs
@@ -540,6 +548,8 @@ private:
     // Subgraph library (behavioral prior for candidate scoring). Non-owning.
     const SubgraphLibrary* library_ = nullptr;
     std::string current_task_name_;   // for library self-echo guard
+    std::string recall_graph_path_;   // M1.2: prior solved graph to recall at first plateau
+    bool recall_attempted_ = false;   // one recall attempt per run
 
 
 public:

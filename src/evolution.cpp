@@ -675,6 +675,48 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 };
                 std::vector<ShadowSpec> specs;
 
+                // M1.2 architecture recall (once per run): inject the PRIOR
+                // solved graph for this task as a rank-(−1) shadow candidate.
+                // It competes in the same validation race — if the prior
+                // solution still wins, it commits and the run skips
+                // re-discovery; a stale prior simply loses. Requires the
+                // prior graph to have compatible arity (the load throws
+                // otherwise and we skip gracefully).
+                if (!recall_attempted_ && !recall_graph_path_.empty()) {
+                    recall_attempted_ = true;
+                    try {
+                        auto prior = std::make_unique<Graph>();
+                        load_graph_from_file(*prior, recall_graph_path_);
+                        // Arity check: the prior must accept exactly this
+                        // task's input/output count.
+                        size_t pin = 0, pout = 0;
+                        for (const auto& n : prior->get_nodes()) {
+                            if (n->get_type() == NodeType::INPUT) ++pin;
+                            else if (n->get_type() == NodeType::OUTPUT) ++pout;
+                        }
+                        size_t cin = 0, cout = 0;
+                        for (const auto& n : graph_->get_nodes()) {
+                            if (n->get_type() == NodeType::INPUT) ++cin;
+                            else if (n->get_type() == NodeType::OUTPUT) ++cout;
+                        }
+                        if (pin == cin && pout == cout && cin > 0) {
+                            specs.push_back({-1, -1, std::move(prior)});
+                            Logger::info("  [RECALL] prior graph injected as candidate ("
+                                        + std::to_string(pin) + " inputs / "
+                                        + std::to_string(pout) + " outputs, from "
+                                        + recall_graph_path_ + ")");
+                        } else {
+                            Logger::info("  [RECALL] skipped: arity mismatch (prior "
+                                        + std::to_string(pin) + "/" + std::to_string(pout)
+                                        + " vs current " + std::to_string(cin) + "/"
+                                        + std::to_string(cout) + ")");
+                        }
+                    } catch (...) {
+                        Logger::info("  [RECALL] skipped: load failed ("
+                                    + recall_graph_path_ + ")");
+                    }
+                }
+
                 int hyp_idx = 0;
                 for (auto& hyp : candidates) {
                     if (hyp.type == Hypothesis::NONE) continue;
@@ -727,12 +769,35 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
 
                     for (size_t i = 0; i < specs.size(); ++i) {
                         threads.emplace_back([&, i]() {
-                            results[i] = validate_shadow_only(
-                                specs[i].shadow,
-                                current_loss,
-                                baseline_val,
-                                specs[i].rank,
-                                specs[i].type);
+                            // CRASH GUARD: an uncaught exception in a thread
+                            // calls std::terminate — instant silent process
+                            // death (observed: w8-SCE died at MUX_INJECTION
+                            // emission, no stderr). Catch everything; a
+                            // throwing shadow becomes a rejected candidate
+                            // instead of a killed run.
+                            try {
+                                results[i] = validate_shadow_only(
+                                    specs[i].shadow,
+                                    current_loss,
+                                    baseline_val,
+                                    specs[i].rank,
+                                    specs[i].type);
+                            } catch (const std::exception& e) {
+                                results[i].acceptable = false;
+                                results[i].hyp_rank = specs[i].rank;
+                                results[i].hyp_type = specs[i].type;
+                                results[i].reject_reason =
+                                    std::string("shadow validation THREW: ") + e.what();
+                                Logger::info("  rank=" + std::to_string(specs[i].rank)
+                                            + " shadow exception: " + e.what());
+                            } catch (...) {
+                                results[i].acceptable = false;
+                                results[i].hyp_rank = specs[i].rank;
+                                results[i].hyp_type = specs[i].type;
+                                results[i].reject_reason = "shadow validation THREW (unknown)";
+                                Logger::info("  rank=" + std::to_string(specs[i].rank)
+                                            + " shadow exception (unknown type)");
+                            }
                         });
                     }
                     for (auto& t : threads) t.join();

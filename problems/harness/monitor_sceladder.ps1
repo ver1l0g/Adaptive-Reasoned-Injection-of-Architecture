@@ -32,7 +32,7 @@ function RunStage($name, $tag, $exe, $arglist, $maxMin) {
     Log "DONE ${name}:`n$($sm -join "`n")"
     ("[$(Get-Date -Format 'HH:mm')] ${name}`n$($sm -join "`n")`n") | Out-File "SCELADDER_RESULTS.txt" -Append -Encoding utf8
 }
-Set-Location (Split-Path $MyInvocation.MyCommand.Path -Parent)
+Set-Location (Split-Path (Split-Path $MyInvocation.MyCommand.Path -Parent) -Parent)
 Log "=== SCE ladder armed (aria8) ==="
 
 # w1 (10k subset exists)

@@ -96,11 +96,13 @@ struct SubgraphLibraryEntry {
     BehavioralFingerprint fingerprint;
     std::string source_task;          // task name that produced this
     std::string description;          // human-readable summary
-    std::string canonical_expression; // abstracted formula (variables鈫抳, numbers鈫抍)
+    std::string canonical_expression; // abstracted formula (variables→v, numbers→c)
     std::string pattern;              // recognized structural pattern (e.g. "abs_product", "sin_chain")
-    // The subgraph structure itself (for future instantiation).
-    // Stored as node types + connectivity (lightweight serialization).
-    // For now, we store the fingerprint + metadata; instantiation comes later.
+    // M1.2 architecture recall: the FULL serialized graph (JSON) of the
+    // solved task. On a strong exact-arity fingerprint match, a new task
+    // can warm-start from this graph instead of evolving from scratch.
+    // Empty for legacy entries (graceful degradation to boost/inject only).
+    std::string graph_json;
 };
 
 // ============================================================================

@@ -304,6 +304,19 @@ int main(int argc, char* argv[]) {
         auto sl = tn.find_last_of("/\\");
         if (sl != std::string::npos) tn = tn.substr(sl + 1);
         engine.set_task_name(tn);
+
+        // M1.2: auto-detect a prior checkpoint for this task (checkpoints/
+        // <stem>/graph.json — written by the default checkpointing). Recall
+        // injects it as a candidate at the first plateau. Disable with
+        // --save-graph none (which also disables checkpoints).
+        auto dot = tn.find_last_of('.');
+        if (dot != std::string::npos) tn = tn.substr(0, dot);
+        std::string recall_path = "checkpoints/" + tn + "/graph.json";
+        std::ifstream rf(recall_path);
+        if (rf.good() && save_graph_path != "none") {
+            engine.set_recall_graph(recall_path);
+            std::cout << "  [RECALL] prior checkpoint detected: " << recall_path << "\n";
+        }
     }
 
     // ---------- M1.1: load failure library (negative experience prior) ----------
