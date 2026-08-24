@@ -1,4 +1,4 @@
-# ARIA Roadmap
+﻿# ARIA Roadmap
 
 *Adaptive Reasoned Injection of Architecture* — development roadmap from
 session evidence (2026-08). Every item traces to a measured failure or a
@@ -31,7 +31,7 @@ Performance baseline: I.47.23 1249s → 14.5s cumulative this session (86x).
 *Theme: ARIA adapts BETWEEN tasks, not just within them. Both builds run
 on infrastructure that already works (library, fingerprints, checkpoints).*
 
-### 1.1 Failure library [S]
+### 1.1 Failure library [DONE 2026-08-21]
 Persist rejected candidates: (fingerprint, hypothesis family, Δval, task)
 triples alongside the success library. The matcher then *down-weights*
 proven-wrong families for similar residuals — ARIA stops repeating
@@ -41,7 +41,7 @@ mistakes across tasks.
 - Test: a task family that historically rejects SIN should stop trying
   SIN first (measure: wasted shadow cycles before first commit).
 
-### 1.2 Architecture recall [S–M]
+### 1.2 Architecture recall [DONE v1 2026-08-21: checkpoint recall at first plateau, rank -1 shadow]
 On a strong library match, don't just boost a candidate — load the
 matched entry's *graph* as the initial architecture (checkpoint loading
 exists; library entries need graph-JSON fields).
