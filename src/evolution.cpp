@@ -2059,6 +2059,38 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
     // M1.1: failure-library penalties (populated in the library-prior block)
     std::unordered_map<int, double> family_penalty;
 
+    // M5.4 piecewise signature (function scope — multiple emission blocks
+    // read it): residual alternates sharply and repeatedly along one axis
+    // => multi-boundary problem => boundary family (guided IFELSE/MUX)
+    // outranks capacity families (stacks, sin). Stripes20 lesson.
+    bool piecewise_signature = false;
+    {
+        if (diag.targets.size() >= 32 && !diag.local_inputs.empty()) {
+            std::vector<std::pair<Value, Value>> vr;
+            vr.reserve(diag.targets.size());
+            for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {
+                if (!diag.local_inputs[i].empty()) {
+                    vr.emplace_back(diag.local_inputs[i].begin()->second, diag.targets[i]);
+                }
+            }
+            if (vr.size() >= 32) {
+                std::sort(vr.begin(), vr.end(),
+                          [](const auto& a, const auto& b) { return a.first < b.first; });
+                int sc = 0;
+                for (size_t i = 1; i < vr.size(); ++i) {
+                    if ((vr[i].second > 0.0) != (vr[i-1].second > 0.0)) ++sc;
+                }
+                piecewise_signature = (sc >= 10)
+                    && profile.bounded
+                    && profile.lipschitz_max > config::PROFILE_SHARP_BOUNDARY_LIPSCHITZ;
+            }
+        }
+        if (piecewise_signature) {
+            Logger::info("Piecewise signature detected (" + std::to_string(static_cast<int>(profile.num_inputs))
+                        + "-input) — boundary family prioritized");
+        }
+    }
+
     // Detect binary classification targets ONCE 鈥?used by both MULTIPLY
     // (to suppress the plateau-fallback for binary problems, where
     // BOOLEAN_COMPOSE is the right tool) and BOOLEAN_COMPOSE (which only
@@ -2218,6 +2250,8 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // Base score from gap ratio; boost for BOOLEAN_BOUNDARY
         double score = config::SCORE_IFELSE_BASE + config::SCORE_IFELSE_GAP_WEIGHT * gap_ratio;
         if (ftype == FailureType::BOOLEAN_BOUNDARY)      score = std::max(score, config::SCORE_IFELSE_BOOLEAN_BOOST);
+        // M5.4: piecewise regime — the boundary family owns this residual
+        if (piecewise_signature)                            score = std::max(score, 0.94);
         else if (ftype == FailureType::LINEAR_OFFSET)     score = std::max(score, config::SCORE_IFELSE_LINEAR_BOOST);
 
         // Family-switch fatigue (stripes20 lesson): when MANY IFELSE commits
@@ -2302,7 +2336,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                  mls.compound_K = config::MULTI_LAYER_STACK_K;
                  double score = config::SCORE_MULTI_LAYER_STACK;
                  if (profile.lipschitz_max > config::MULTI_LAYER_STACK_BOOST_LIPSCHITZ
-                     && !product_signature && !memory_signature) {
+                     && !product_signature && !memory_signature && !piecewise_signature) {
                      score = 0.95;  // extreme complexity → rank above everything
                      mls.compound_K = config::MULTI_LAYER_STACK_K_MAX;
                  }
@@ -2313,6 +2347,11 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 // stayed at mean prediction).
                 if (memory_signature) {
                     score = std::min(score, config::SCORE_DELAY_LINE - 0.06);
+                }
+                // Piecewise regime: stacks cannot represent many sharp
+                // boundaries — demote below the boundary family.
+                if (piecewise_signature) {
+                    score = std::min(score, 0.45);
                 }
                 candidates.push_back({std::move(mls), score});
                 Logger::info("Candidate emitted: MULTI_LAYER_STACK (lipschitz="
@@ -2378,7 +2417,9 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 mx.bool_source_a    = cond;       // condition source
                 mx.split_threshold  = thr;
                 double mx_score = config::SCORE_MUX_INJECTION;
-                if (ftype == FailureType::BOOLEAN_BOUNDARY
+                if (piecewise_signature) {
+                    mx_score = config::SCORE_MUX_INJECTION_BOOST + 0.02;
+                } else if (ftype == FailureType::BOOLEAN_BOUNDARY
                     || profile.lipschitz_max > config::PROFILE_SHARP_BOUNDARY_LIPSCHITZ) {
                     mx_score = config::SCORE_MUX_INJECTION_BOOST;
                 }
@@ -3009,7 +3050,7 @@ if (profile.bounded
                 sinj_f.type = Hypothesis::SIN_INJECTION;
                 sinj_f.multiply_source_a = src_id;
                 sinj_f.sin_freq_init = freq_est;
-                candidates.push_back({std::move(sinj_f), config::SCORE_COMPOUND_TANH_SERIES + 0.01});
+                candidates.push_back({std::move(sinj_f), piecewise_signature ? 0.45 : (config::SCORE_COMPOUND_TANH_SERIES + 0.01)});
                 Logger::info("Candidate emitted: SIN_INJECTION freq-init (w="
                             + std::to_string(freq_est) + ", " + std::to_string(sign_changes)
                             + " sign changes)");
@@ -3018,7 +3059,7 @@ if (profile.bounded
             Hypothesis sinj;
             sinj.type = Hypothesis::SIN_INJECTION;
             sinj.multiply_source_a = src_id;
-            candidates.push_back({std::move(sinj), config::SCORE_COMPOUND_TANH_SERIES});
+            candidates.push_back({std::move(sinj), piecewise_signature ? 0.45 : config::SCORE_COMPOUND_TANH_SERIES});
             Logger::info("Candidate emitted: SIN_INJECTION (bounded oscillating residual)");
 
             // --- COMPOUND_SIN_PRODUCT: MULTIPLY(a,b) 鈫?NEURON(freq) 鈫?SIN ---
