@@ -4556,11 +4556,29 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                             }
                             Node* dn = shadow->get_node(c.dst_node);
                             if (dn && dn->get_type() == NodeType::OUTPUT) {
-                                // OUTPUT reads only port 0 — same ADD fix as
-                                // the single-split path (see below).
+                                // OUTPUT reads only port 0 — same GATED fix
+                                // as the single-split path: per-port pass-
+                                // through NEURON gates + ADD (bare ADD is a
+                                // functional no-op for IFELSE semantics).
+                                uint64_t g0 = shadow->add_node(NodeType::NEURON, "preserve_gate0");
+                                uint64_t g1 = shadow->add_node(NodeType::NEURON, "preserve_gate1");
+                                Node* gn0 = shadow->get_node(g0);
+                                Node* gn1 = shadow->get_node(g1);
+                                if (gn0 && gn0->get_type() == NodeType::NEURON) {
+                                    static_cast<NeuronNode*>(gn0)->set_input_count(1);
+                                    static_cast<NeuronNode*>(gn0)->set_weight(0, 1.0);
+                                    static_cast<NeuronNode*>(gn0)->set_bias(0.0);
+                                }
+                                if (gn1 && gn1->get_type() == NodeType::NEURON) {
+                                    static_cast<NeuronNode*>(gn1)->set_input_count(1);
+                                    static_cast<NeuronNode*>(gn1)->set_weight(0, 1.0);
+                                    static_cast<NeuronNode*>(gn1)->set_bias(0.0);
+                                }
+                                shadow->add_connection(ifelse_id, 0, g0, 0);
+                                shadow->add_connection(ifelse_id, 1, g1, 0);
                                 uint64_t add0 = shadow->add_node(NodeType::ADD, "preserve_out_add");
-                                shadow->add_connection(ifelse_id, 0, add0, 0);
-                                shadow->add_connection(ifelse_id, 1, add0, 1);
+                                shadow->add_connection(g0, 0, add0, 0);
+                                shadow->add_connection(g1, 0, add0, 1);
                                 shadow->add_connection(add0, 0, c.dst_node, c.dst_port);
                             } else if (dn && (dn->get_type() == NodeType::NEURON
                                        || dn->get_type() == NodeType::LINEAR)) {
@@ -4688,13 +4706,36 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                 // OUTPUT reads ONLY input port 0 (get_value = scale*in[0]+bias).
                 // A second port would be silently ignored — the split would be
                 // structurally present but functionally dead (the exact bug
-                // that made committed chains invisible). Interpose an ADD:
-                //   ifelse.out[0] + ifelse.out[1] → ADD → OUTPUT port 0.
-                // ADD of the two branches = original signal when both sides
-                // carry the failing value (out[0] OR out[1] = x, other = 0).
+                // that made committed chains invisible). Route each IFELSE
+                // port through its own PASS-THROUGH NEURON GATE, then ADD:
+                //   ifelse.out[0] → NEURON_g0(w=1) ──┐
+                //                                    ├→ ADD → OUTPUT port 0
+                //   ifelse.out[1] → NEURON_g1(w=1) ──┘
+                // A bare ADD would be a functional NO-OP (out[0]+out[1] =
+                // the value itself, since IFELSE zeroes the inactive port).
+                // The gates let SGD learn SIDE-SPECIFIC corrections — the
+                // actual point of the split. w=1 pass-through start: the
+                // active side contributes tanh(x) initially (bounded), then
+                // each side specializes independently.
+                uint64_t g0 = shadow->add_node(NodeType::NEURON, "preserve_gate0");
+                uint64_t g1 = shadow->add_node(NodeType::NEURON, "preserve_gate1");
+                Node* gn0 = shadow->get_node(g0);
+                Node* gn1 = shadow->get_node(g1);
+                if (gn0 && gn0->get_type() == NodeType::NEURON) {
+                    static_cast<NeuronNode*>(gn0)->set_input_count(1);
+                    static_cast<NeuronNode*>(gn0)->set_weight(0, 1.0);
+                    static_cast<NeuronNode*>(gn0)->set_bias(0.0);
+                }
+                if (gn1 && gn1->get_type() == NodeType::NEURON) {
+                    static_cast<NeuronNode*>(gn1)->set_input_count(1);
+                    static_cast<NeuronNode*>(gn1)->set_weight(0, 1.0);
+                    static_cast<NeuronNode*>(gn1)->set_bias(0.0);
+                }
+                shadow->add_connection(ifelse_id, 0, g0, 0);
+                shadow->add_connection(ifelse_id, 1, g1, 0);
                 uint64_t add_id = shadow->add_node(NodeType::ADD, "preserve_out_add");
-                shadow->add_connection(ifelse_id, 0, add_id, 0);
-                shadow->add_connection(ifelse_id, 1, add_id, 1);
+                shadow->add_connection(g0, 0, add_id, 0);
+                shadow->add_connection(g1, 0, add_id, 1);
                 shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
             } else if (dn && (dn->get_type() == NodeType::NEURON
                         || dn->get_type() == NodeType::LINEAR)) {
