@@ -214,6 +214,31 @@ true closed loop: ARIA predicting its own fixes' effectiveness.
 - Test: rerun a battery with promised-vs-delivered tracking; wasted
   commits (delivering <50% promised) should decrease in later runs.
 
+### 7.5 Library full-potential audit fixes [S] (from 2026-08-25 audit)
+The library stores rich data the engine never reads:
+- (a) Skip empty-fingerprint entries in the matcher — the 568
+  sub-expression entries (tanh_stack/neuron_unit) pass arity checks
+  with meaningless zero-fingerprints and pollute match selection
+- (b) Wire the `pattern` field into boost decisions — a "sin_chain"
+  match should boost SIN-family candidates specifically, not +0.2
+  generic; distance alone is blind to semantic tags
+- (c) Parameter seeding from stored canonical expressions — stored
+  sin(c*v+c) blocks carry frequencies new tasks need (the freq-init
+  mechanism exists; the library is its missing data source)
+- (d) Source-diversity weighting in matching — cross-task-family
+  matches are the real transfer signal
+
+### 7.6 Set-semantics full-potential [M] (from 2026-08-25 audit)
+The set-guided splits compute region memberships then discard them:
+- (a) Region membership → MUX branch routing per region (branches
+  currently top-2 global signals, blind to the split)
+- (b) Per-region residual sign → PRESERVE gate bias init (directly
+  attacks the gate-training-slowness from the stripes arc)
+- (c) quadrant_means (computed, displayed, never read) → interaction-
+  region emission gate: "means differ strongly across quadrants" is
+  the natural 2-input interaction signal
+- (d) Interval-valued expression rendering for the paper
+
 ---
 
 ## Sequencing recommendation
