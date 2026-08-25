@@ -1442,13 +1442,84 @@ std::vector<Graph::ErrorAttributionResult> Graph::compute_error_attribution(
     std::unordered_map<uint64_t, Value> sum_pert;
     int sample_count = 0;
 
-    int ns = static_cast<int>(samples.size());
+    // M7.1 PRECISION PASS (predictive-coding import): compute per-sample
+    // precision weights before attribution. A sample's contribution to
+    // blame should be weighted by inverse local error magnitude — samples
+    // the model already predicts well (tiny error) carry the sharpest
+    // signal about WHERE structure is missing; high-error outliers are
+    // ambiguous (could be noise). weight_i = 1 / (base_error_i + eps*mean).
+    // Two-pass: (1) collect per-sample base errors, (2) weighted attribution.
+    const int ns = static_cast<int>(samples.size());
+    std::vector<Value> precision_wt(static_cast<size_t>(ns), 1.0);
+    {
+        std::vector<Value> base_errs(static_cast<size_t>(ns), 0.0);
+        Value err_sum = 0.0;
+        for (int si = 0; si < ns; ++si) {
+            const auto& sample = samples[si];
+            reset_recurrent_state();
+            for (auto& n : nodes_) n->set_perturbation(0.0);
+            if (!input_data_to_graph.empty()) {
+                for (const auto& kv : sample.inputs) {
+                    auto it = input_data_to_graph.find(kv.first);
+                    if (it != input_data_to_graph.end()) {
+                        set_input_value(it->second, kv.second);
+                    }
+                }
+            } else {
+                for (auto& n : nodes_) {
+                    if (n->get_type() == NodeType::INPUT) {
+                        auto it = sample.inputs.find(n->get_id());
+                        if (it != sample.inputs.end())
+                            set_input_value(n->get_id(), it->second);
+                    }
+                }
+            }
+            execute();
+            Value be = 0.0;
+            if (!output_data_to_graph.empty()) {
+                for (const auto& [data_key, target] : sample.targets) {
+                    auto it = output_data_to_graph.find(data_key);
+                    if (it == output_data_to_graph.end()) continue;
+                    Value diff = get_output_value(it->second) - target;
+                    be += diff * diff;
+                }
+            } else {
+                for (const auto& [id, target] : sample.targets) {
+                    const Node* out_node = get_node(id);
+                    if (!out_node || out_node->get_type() != NodeType::OUTPUT) continue;
+                    Value diff = get_output_value(id) - target;
+                    be += diff * diff;
+                }
+            }
+            base_errs[si] = be;
+            err_sum += be;
+        }
+        Value mean_err = err_sum / std::max(1, ns);
+        // eps*mean keeps correctly-predicted samples from exploding the
+        // weight (1/(0+eps*mean) is large but finite and meaningful).
+        Value floor = mean_err * 0.1 + 1e-12;
+        for (int si = 0; si < ns; ++si) {
+            precision_wt[si] = 1.0 / (base_errs[si] + floor);
+        }
+        // Normalize so total weight == ns (keeps blame magnitudes
+        // comparable with the unweighted version).
+        Value wsum = 0.0;
+        for (auto w : precision_wt) wsum += w;
+        if (wsum > 1e-12) {
+            Value scale = static_cast<Value>(ns) / wsum;
+            for (auto& w : precision_wt) w *= scale;
+        }
+    }
+
+    int ns_attr = ns;
     int num_threads = config::EVOLUTION_PARALLEL
         ? std::min(config::EVOLUTION_NUM_THREADS, ns)
         : 1;
 
     if (num_threads <= 1) {
-        for (const auto& sample : samples) {
+        for (int si_attr = 0; si_attr < ns_attr; ++si_attr) {
+            const auto& sample = samples[si_attr];
+            const Value w = precision_wt[si_attr];   // M7.1 precision weight
             sample_count++;
 
             // Reset recurrent state for independent sample evaluation
@@ -1539,8 +1610,8 @@ std::vector<Graph::ErrorAttributionResult> Graph::compute_error_attribution(
                 }
                 pert_error /= static_cast<Value>(sample.targets.size());
 
-                sum_base[cand->get_id()] += base_error;
-                sum_pert[cand->get_id()] += pert_error;
+                sum_base[cand->get_id()] += w * base_error;
+                sum_pert[cand->get_id()] += w * pert_error;
             }
         }
     } else {
@@ -1565,6 +1636,7 @@ std::vector<Graph::ErrorAttributionResult> Graph::compute_error_attribution(
 
                     for (int si = start; si < end; ++si) {
                         const auto& sample = samples[si];
+                        const Value w = precision_wt[si];   // M7.1 precision weight
                         sc++;
 
                         tg->reset_recurrent_state();
@@ -1655,8 +1727,8 @@ std::vector<Graph::ErrorAttributionResult> Graph::compute_error_attribution(
                             }
                             pert_error /= static_cast<Value>(sample.targets.size());
 
-                            local_base[cid] += base_error;
-                            local_pert[cid] += pert_error;
+                            local_base[cid] += w * base_error;
+                            local_pert[cid] += w * pert_error;
                         }
                     }
                     t_sample_counts[t] = sc;
