@@ -5869,8 +5869,12 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
-            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)) {
-            train_cfg.epochs *= config::SHADOW_COMPOUND_SGD_MULTIPLIER;
+            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)
+            || hyp_type == static_cast<int>(Hypothesis::IFELSE_PRESERVE)) {
+            // PRESERVE gets 2x the compound budget: each chain branch only
+            // receives gradient from its side of the split (1/K of samples),
+            // so retraining the separated copies needs K-times the epochs.
+            train_cfg.epochs *= config::SHADOW_COMPOUND_SGD_MULTIPLIER * 2;
         }
         train_cfg.learning_rate = cfg_.sgd_learning_rate;
         // Compound shadow: reduce LR so zero-init chains grow without
