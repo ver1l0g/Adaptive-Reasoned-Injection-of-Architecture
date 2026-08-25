@@ -1,0 +1,59 @@
+
+============================================================
+  GP-NN Log 鈥?2026-08-25 13:13:26.057
+  Verbose mode enabled
+============================================================
+
+2026-08-25 13:13:26.127 [VERBOSE] SGD improved: loss 0.525748 -> 0.247029 (delta=0.278719)
+2026-08-25 13:13:26.127 [INFO] New best overall loss: 0.247029
+2026-08-25 13:13:26.132 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.247029)
+2026-08-25 13:13:26.136 [VERBOSE] SGD plateau counter=2/3 (best_phase2=0.247029)
+2026-08-25 13:13:26.141 [VERBOSE] SGD plateau counter=3/3 (best_phase2=0.247029)
+2026-08-25 13:13:26.141 [INFO] Plateau triggered at epoch 4 (counter=3, loss=0.247228)
+2026-08-25 13:13:26.142 [VERBOSE] attr node=3 type=NEURON base=0.247228 pert=0.257307 blame=0.010079
+2026-08-25 13:13:26.145 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.010079)
+2026-08-25 13:13:26.145 [VERBOSE] diag results: 1 failures
+2026-08-25 13:13:26.145 [VERBOSE] diagnose() returned 1 failure(s)
+2026-08-25 13:13:26.145 [VERBOSE] Diagnosing node 3 blame=0.010079
+2026-08-25 13:13:26.145 [VERBOSE] Top blackboard signal: node=1 corr=0.000000
+2026-08-25 13:13:26.145 [DECISION] Classify failure | node=3 type=NON_LINEAR_CURVE
+2026-08-25 13:13:26.145 [INFO] [PROFILE] F=1 N=240 var_r=0.2483 bound_ratio=2.0070 poly_r2=0.0320 max_coef[i=2]=0.2260 L_max=411.3534 | flags: BOUNDED SHARP
+2026-08-25 13:13:26.145 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-25 13:13:26.145 [INFO] IFELSE set-guided split: thr=0.898102 (SSE reduction 6.053922 over 240 paired samples)
+2026-08-25 13:13:26.145 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.898102)
+2026-08-25 13:13:26.145 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=411.353353 var_r=0.248264)
+2026-08-25 13:13:26.145 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-25 13:13:26.146 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.938028, 19 sign changes)
+2026-08-25 13:13:26.146 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=3 score 0.000000 -> 0.010000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=23 score 0.950000 -> 0.790000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=1 score 0.940000 -> 0.540000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=2 score 0.700000 -> 0.300000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=12 score 0.700000 -> 0.300000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=14 score 0.450000 -> 0.370000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=4 score 0.450000 -> 0.050000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=11 score 0.450000 -> 0.050000
+2026-08-25 13:13:26.146 [VERBOSE] Failure-prior: type=11 score 0.450000 -> 0.050000
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=0 type=IFELSE_PRESERVE
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=1 type=IFELSE_BOUNDARY_SPLIT
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=2 type=MULTI_LAYER_STACK
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=3 type=NEURON_TANH_INJECTION
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=4 type=DEEP_INSERTION
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=5 type=MULTIPLY_INJECTION
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=6 type=SIN_INJECTION
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=7 type=SIN_INJECTION
+2026-08-25 13:13:26.146 [DECISION] Try hypothesis | rank=8 type=CONTEXT_WIRE
+2026-08-25 13:13:26.875 [VERBOSE]   rank=1 REJECT — training loss drifted up (shadow_train=0.304091 vs baseline_loss=0.247228, delta=0.056864, max_allowed=0.024723)
+2026-08-25 13:13:26.875 [VERBOSE]   rank=3 REJECT — val_loss=0.248889 did not beat baseline_val=0.248826 by required=0.000000
+2026-08-25 13:13:26.875 [VERBOSE]   rank=5 REJECT — val_loss=0.249728 did not beat baseline_val=0.248826 by required=0.000000
+2026-08-25 13:13:26.875 [VERBOSE]   rank=8 REJECT — val_loss=0.248871 did not beat baseline_val=0.248826 by required=0.000000
+2026-08-25 13:13:26.876 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.250045 train_loss=0.249488 new train_loss=0.249871
+2026-08-25 13:13:26.876 [INFO] Plateau state reset 鈥?best_phase2=0.249871
+2026-08-25 13:13:26.876 [INFO] Plateau state reset — best_phase2=0.249871
+2026-08-25 13:13:26.876 [VERBOSE] New best val loss: 0.250045 (train 0.249871)
+2026-08-25 13:13:26.879 [VERBOSE] SGD plateau counter=1/3 (best_phase2=0.249871)
+2026-08-25 13:13:26.879 [INFO] Restored best-val graph snapshot (val=0.250045, train=0.249871)
+
+============================================================
+  Session ended 鈥?2026-08-25 13:13:26.885
+============================================================

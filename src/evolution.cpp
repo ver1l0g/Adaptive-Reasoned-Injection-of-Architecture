@@ -2302,6 +2302,8 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 }
             }
             std::vector<Value> ks = error_weighted_multi_split(vx_m, 4);
+            Logger::verbose("[MULTI-DBG] vx_m.size()=" + std::to_string(vx_m.size())
+                          + " -> K found=" + std::to_string(ks.size()));
             if (ks.size() >= 2) {
                 Hypothesis ibm = ibs;
                 ibm.type = Hypothesis::IFELSE_PRESERVE;
@@ -4494,6 +4496,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                 uint64_t prev_false_src = failing_id;
                 uint64_t first_downstream = 0;
                 size_t first_downstream_port = 0;
+                uint64_t preserve_add = 0;
                 for (size_t k = 0; k < ks.size(); ++k) {
                     uint64_t threshold_id = shadow->add_node(NodeType::CONSTANT, "ifelse_threshold");
                     Node* cnode = shadow->get_node(threshold_id);
@@ -4542,12 +4545,75 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                             dnn->set_input_count(np2 + 1);
                             dnn->set_weight(np2, dnn->get_weight(first_downstream_port));
                             shadow->add_connection(ifelse_id, 0, first_downstream, np2);
+                        } else if (dn0 && dn0->get_type() == NodeType::OUTPUT) {
+                            // OUTPUT takes one input: interpose an ADD once,
+                            // then every subsequent side joins it.
+                            Node* addchk = shadow->get_node(preserve_add);
+                            if (!addchk) {
+                                preserve_add = shadow->add_node(NodeType::ADD, "preserve_add");
+                                std::vector<Connection> ex0;
+                                for (const auto& c0 : shadow->get_connections()) {
+                                    if (c0.dst_node == first_downstream) ex0.push_back(c0);
+                                }
+                                for (const auto& c0 : ex0) {
+                                    shadow->remove_connection(c0.src_node, c0.src_port,
+                                                             c0.dst_node, c0.dst_port);
+                                    shadow->add_connection(c0.src_node, c0.src_port, preserve_add, 0);
+                                }
+                                shadow->add_connection(preserve_add, 0, first_downstream, 0);
+                            }
+                            // join this ifelse's true side to the ADD (port grows)
+                            Node* an = shadow->get_node(preserve_add);
+                            if (an) {
+                                // ADD supports 2 inputs; use a NEURON-like
+                                // accumulate via chained ADDs if >2 sides —
+                                // simplest: connect to port min(existing,1)
+                                size_t used = 0;
+                                for (const auto& c0 : shadow->get_connections()) {
+                                    if (c0.dst_node == preserve_add) ++used;
+                                }
+                                shadow->add_connection(ifelse_id, 0, preserve_add,
+                                                       used >= 1 ? 1 : 0);
+                            }
                         }
                     }
                     prev_false_src = ifelse_id;   // chain continues on false side
                 }
-                // Final false side also routes downstream (deepest region).
-                // (Chain leaves via the per-k true/false ports above.)
+                // Final false side routes downstream: the deepest region
+                // (x <= last threshold) must reach a consumer or the whole
+                // chain is dead code (observed: chains committed then
+                // eliminated by compile because the chain end went nowhere).
+                if (first_downstream != 0) {
+                    Node* dnf = shadow->get_node(first_downstream);
+                    if (dnf && (dnf->get_type() == NodeType::NEURON
+                                || dnf->get_type() == NodeType::LINEAR)) {
+                        auto* dnfnn = static_cast<NeuronNode*>(dnf);
+                        size_t npf = dnfnn->get_num_weights();
+                        dnfnn->set_input_count(npf + 1);
+                        dnfnn->set_weight(npf, dnfnn->get_weight(first_downstream_port));
+                        shadow->add_connection(prev_false_src, 0, first_downstream, npf);
+                    } else if (dnf && dnf->get_type() == NodeType::OUTPUT) {
+                        // OUTPUT downstream takes single input; route the
+                        // chain end through an ADD combiner instead.
+                        uint64_t add_end = shadow->add_node(NodeType::ADD, "preserve_end_add");
+                        // re-route first_downstream's current input? Simpler:
+                        // the first IFELSE's true side already feeds it; ADD
+                        // the chain end alongside via a second OUTPUT is not
+                        // possible — so combine at an ADD then rewire.
+                        // Minimal: disconnect existing input, feed via ADD.
+                        std::vector<Connection> ex;
+                        for (const auto& c : shadow->get_connections()) {
+                            if (c.dst_node == first_downstream) ex.push_back(c);
+                        }
+                        for (const auto& c : ex) {
+                            shadow->remove_connection(c.src_node, c.src_port,
+                                                     c.dst_node, c.dst_port);
+                            shadow->add_connection(c.src_node, c.src_port, add_end, 0);
+                        }
+                        shadow->add_connection(prev_false_src, 0, add_end, 1);
+                        shadow->add_connection(add_end, 0, first_downstream, 0);
+                    }
+                }
                 Logger::info("  [PRESERVE-MULTI] built K=" + std::to_string(ks.size())
                             + " split chain");
                 break;
