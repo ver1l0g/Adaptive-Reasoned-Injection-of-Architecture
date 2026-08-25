@@ -137,6 +137,8 @@ I.32.8's remaining gap (0.97 → 0.99) is exactly this.
 hetero3's out2 (sin output) keeps missing: per-output blame surfaces
 the wrong node sometimes. Weight attribution by output-specific error
 decomposition (infrastructure exists — d7 solved this way).
+[PC import M7.1 folds in here: precision-weighting the residual before
+attribution is the same fix with better justification.]
 
 ### 5.4 Stripes20 / IFELSE family-switching [S]
 The fatigue gate fired but PATCH_POOLING spam replaced it. Finish the
@@ -164,7 +166,53 @@ etc.). Structure it as a table; this is the paper's evidence section.
 ### 6.4 Writing [M]
 Method (7-phase loop, 22 hypotheses), results, honest limits (language
 ceiling measured, CIFAR ceiling, named open problems), related work
-(~15 papers: NAS surveys, NEAT, DARTS, PySR/SRBench, AI Feynman).
+(~15 papers: NAS surveys, NEAT, DARTS, PySR/SRBench, AI Feynman, and
+predictive-coding lineage — see M7 framing).
+
+---
+
+## Milestone 7 — Predictive-Coding Imports (inference-time mechanics)
+*Theme: ARIA already IS predictive coding at the architecture-search
+timescale (residual-driven diagnosis = error propagation; subgraph
+library = generative priors; gain-init = precision weighting). The
+stealable remainder is its INFERENCE-TIME mechanics — small, concrete,
+and they slot into existing roadmap items rather than a new one. Do NOT
+import: free-energy formalism (zero practical yield at this scale).*
+
+### 7.1 Precision-weighted attribution [S] — folds into M5.3
+Weight each sample's residual by 1/local-variance (precision) before
+blame analysis. High-variance regions dilute bottleneck identification —
+this is plausibly why hetero3's sin-output keeps getting misdiagnosed.
+~20 lines in compute_error_attribution.
+- Test: hetero3 out2 (sin) 0.81 → ≥0.95; no regression on d7/multiout.
+
+### 7.2 Settling inference [M] — folds into stripes20 v4
+Execute the graph K times per sample, feeding the residual back through
+correction paths (predict → error → correct → re-predict). Lets committed
+structures pay rent AT INFERENCE TIME instead of waiting for SGD. This
+directly attacks the stripes20 finding: each PRESERVE split's benefit
+needs training to materialize; settling lets raw structure contribute
+immediately.
+- Design: a "settle" node type or a train-only loop in execute() —
+  recurrent-with-self already has delay-buffer plumbing to reuse.
+- Test: stripes20 with multi-split (v3) + settling ≥ 0.5 R² without
+  additional SGD budget.
+
+### 7.3 Error-gated correction [S] — folds into M2.1 EMBED
+Nodes that compute `predicted − actual` and gate learning downstream
+(explicit error units). The killer app: injected corrections proportional
+to residual magnitude. DEEP_INSERTION's zero-init identity start is
+already `x + correction(·)` — this generalizes it with per-sample gating.
+- Test: EMBED trunk with error-gating vs without (same budget), on the
+  w32 charLM ladder point (4.231 bits/char baseline).
+
+### 7.4 Promised-vs-delivered credit [S] — strengthens M1.1
+After each commit, measure whether it delivered its shadow-promised Δval.
+The gap is itself a prediction error (about the FIX) — rank that family
+down proportionally. Turns the failure library from per-reject into a
+true closed loop: ARIA predicting its own fixes' effectiveness.
+- Test: rerun a battery with promised-vs-delivered tracking; wasted
+  commits (delivering <50% promised) should decrease in later runs.
 
 ---
 
@@ -173,10 +221,14 @@ ceiling measured, CIFAR ceiling, named open problems), related work
 ```
 Now ──► M1.1 Failure library      (small, closes the loop, the thesis)
     ──► M1.2 Architecture recall  (makes the library visibly pay off)
-    ──► M2.1 EMBED                (the biggest single scientific lever)
+    ──► M2.1 EMBED + 7.3 error-gating (the biggest scientific lever,
+                                       now with the PC ingredient built in)
+    ──► M7.1 Precision attribution (cheap, folds into M5.3, fixes hetero3)
+    ──► M7.2 Settling + stripes20 v3/v4 (the multi-split test is compiled)
     ──► M4.1 Delay-line           (cheap, unlocks narma30)
     ──► M6.1 Baselines in parallel (paper track starts here)
     ──► M3/M5 interleaved by interest
+    ──► M7.4 Promised-vs-delivered (once M1.1 is battle-tested)
     ──► M1.4 Self-tuning          (once the loop is closed, testable)
 ```
 
@@ -184,3 +236,7 @@ Principles (unchanged all project):
 1. Every mechanism is bought by a measured failure — no speculative builds.
 2. Every fix is regression-gated (the suite battery is the contract).
 3. Honest ceilings are recorded, not hidden — they're the roadmap.
+4. (M7 addition) Prefer importing mechanisms that slot into existing
+   roadmap items over ones that need a new track — predictive coding's
+   gift is inference-time structure, and ARIA's evolution loop already
+   has its training-time counterpart.
