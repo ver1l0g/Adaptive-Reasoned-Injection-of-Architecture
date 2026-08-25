@@ -3688,6 +3688,39 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         ftype = fn->get_type();
     }
 
+    // === Committed-chain protection invariant ===
+    // Hypotheses that RE-ROUTE the failing node's output (the IFELSE and
+    // PRESERVE families detach the node's outgoing connections) must not
+    // run on a node whose output already feeds a committed boundary chain:
+    // the re-route orphans the chain (observed: PRESERVE multi-splits
+    // committed, then a later rank-2 IFELSE_BOUNDARY_SPLIT re-routed the
+    // same node and the chain vanished from the final graph).
+    // Detection: any connection src==failing_id whose dst is an IFELSE
+    // node (preserve chains consume the node's output at input port 1).
+    // Non-re-routing hypotheses (MULTIPLY, CONTEXT_WIRE attach new inputs;
+    // DEEP_INSERTION adds alongside) are unaffected.
+    auto reroutes_output = [&](const Hypothesis& h) -> bool {
+        switch (h.type) {
+            case Hypothesis::IFELSE_BOUNDARY_SPLIT:
+            case Hypothesis::IFELSE_PRESERVE:
+            case Hypothesis::MUX_INJECTION:
+                return true;
+            default:
+                return false;
+        }
+    };
+    if (reroutes_output(hyp)) {
+        for (const auto& c : shadow->get_connections()) {
+            if (c.src_node != failing_id) continue;
+            const Node* dst = shadow->get_node(c.dst_node);
+            if (dst && dst->get_type() == NodeType::IFELSE) {
+                Logger::verbose("  routing refused: node " + std::to_string(failing_id)
+                              + " feeds a committed boundary chain — re-route would orphan it");
+                return nullptr;
+            }
+        }
+    }
+
     switch (hyp.type) {
 
     case Hypothesis::CONTEXT_WIRE: {
@@ -4517,19 +4550,28 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                             shadow->remove_connection(c.src_node, c.src_port, c.dst_node, c.dst_port);
                         }
                         for (const auto& c : outgoing) {
-                            shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
                             if (first_downstream == 0) {
                                 first_downstream = c.dst_node;
                                 first_downstream_port = c.dst_port;
                             }
                             Node* dn = shadow->get_node(c.dst_node);
-                            if (dn && (dn->get_type() == NodeType::NEURON
+                            if (dn && dn->get_type() == NodeType::OUTPUT) {
+                                // OUTPUT reads only port 0 — same ADD fix as
+                                // the single-split path (see below).
+                                uint64_t add0 = shadow->add_node(NodeType::ADD, "preserve_out_add");
+                                shadow->add_connection(ifelse_id, 0, add0, 0);
+                                shadow->add_connection(ifelse_id, 1, add0, 1);
+                                shadow->add_connection(add0, 0, c.dst_node, c.dst_port);
+                            } else if (dn && (dn->get_type() == NodeType::NEURON
                                        || dn->get_type() == NodeType::LINEAR)) {
+                                shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
                                 auto* dnn = static_cast<NeuronNode*>(dn);
                                 size_t next_port = dnn->get_num_weights();
                                 dnn->set_input_count(next_port + 1);
                                 dnn->set_weight(next_port, dnn->get_weight(c.dst_port));
                                 shadow->add_connection(ifelse_id, 1, c.dst_node, next_port);
+                            } else {
+                                shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
                             }
                         }
                     } else {
@@ -4641,17 +4683,30 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         for (const auto& c : outgoing) {
             // true-side downstream keeps the original destination port,
             // false-side goes to the NEXT free input port of the same node.
-            shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
             Node* dn = shadow->get_node(c.dst_node);
-            if (dn && (dn->get_type() == NodeType::NEURON
-                       || dn->get_type() == NodeType::LINEAR)) {
+            if (dn && dn->get_type() == NodeType::OUTPUT) {
+                // OUTPUT reads ONLY input port 0 (get_value = scale*in[0]+bias).
+                // A second port would be silently ignored — the split would be
+                // structurally present but functionally dead (the exact bug
+                // that made committed chains invisible). Interpose an ADD:
+                //   ifelse.out[0] + ifelse.out[1] → ADD → OUTPUT port 0.
+                // ADD of the two branches = original signal when both sides
+                // carry the failing value (out[0] OR out[1] = x, other = 0).
+                uint64_t add_id = shadow->add_node(NodeType::ADD, "preserve_out_add");
+                shadow->add_connection(ifelse_id, 0, add_id, 0);
+                shadow->add_connection(ifelse_id, 1, add_id, 1);
+                shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
+            } else if (dn && (dn->get_type() == NodeType::NEURON
+                        || dn->get_type() == NodeType::LINEAR)) {
+                shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
                 auto* dnn = static_cast<NeuronNode*>(dn);
                 size_t next_port = dnn->get_num_weights();
                 dnn->set_input_count(next_port + 1);
                 dnn->set_weight(next_port, dnn->get_weight(c.dst_port));  // same init weight
                 shadow->add_connection(ifelse_id, 1, c.dst_node, next_port);
             } else {
-                // Non-trainable downstream: only true side routed (best effort)
+                // Other non-trainable downstream: only true side routed (best effort)
+                shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
             }
         }
         break;
