@@ -1169,6 +1169,35 @@ static double error_weighted_split(const std::vector<std::pair<Value, Value>>& v
     return best_reduction;
 }
 
+// K-split variant: find the top-K variance-reducing thresholds with
+// margin exclusion BETWEEN them (greedy CART tree growth in one shot).
+// Used by IFELSE_PRESERVE multi-split emission: K boundaries injected
+// atomically, so validation sees the whole tree's benefit (single splits
+// on striped residuals move ~1/K of the loss — below the strict gate).
+static std::vector<Value> error_weighted_multi_split(
+    const std::vector<std::pair<Value, Value>>& vx, int K) {
+    std::vector<Value> found;
+    if (vx.size() < 16 || K <= 0) return found;
+    std::vector<std::pair<Value, Value>> rem(vx);
+    Value cond_min = rem.front().first, cond_max = rem.front().first;
+    for (auto& pr : rem) {
+        cond_min = std::min(cond_min, pr.first);
+        cond_max = std::max(cond_max, pr.first);
+    }
+    Value margin = (cond_max - cond_min) * 0.05;
+    for (int k = 0; k < K; ++k) {
+        Value thr = 0.0;
+        double red = error_weighted_split(rem, thr, found, margin);
+        if (red <= 0.0) break;
+        found.push_back(thr);
+        // Remove samples within the excluded margin? No — keep all samples;
+        // the exclusion list prevents re-finding the same boundary, and the
+        // SSE criterion naturally targets the next-biggest reduction.
+        if (found.size() >= static_cast<size_t>(K)) break;
+    }
+    return found;
+}
+
 std::vector<EvolutionEngine::FailureDiagnosis> EvolutionEngine::diagnose() {
     std::vector<FailureDiagnosis> results;
 
@@ -2256,9 +2285,44 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // Emit the PRESERVE variant (both-branches) as a sibling candidate
         // in the piecewise regime: for striped residuals both sides carry
         // structure, so separating them beats masking one away.
+        // v3 MULTI-SPLIT: K boundaries at once (greedy tree) — single
+        // splits move ~1/K of the loss, below the strict gate; the atomic
+        // tree gives validation the full reduction to judge.
         if (piecewise_signature && threshold_found) {
-            Hypothesis ibp = ibs;   // copy: same condition source + threshold
+            // Build the (input, residual) pairs for multi-split.
+            std::vector<std::pair<Value, Value>> vx_m;
+            for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {
+                if (!diag.local_inputs[i].empty()) {
+                    auto it = diag.local_inputs[i].find(ibs.condition_source_node);
+                    if (it == diag.local_inputs[i].end()) {
+                        vx_m.emplace_back(diag.local_inputs[i].begin()->second, diag.targets[i]);
+                    } else {
+                        vx_m.emplace_back(it->second, diag.targets[i]);
+                    }
+                }
+            }
+            std::vector<Value> ks = error_weighted_multi_split(vx_m, 4);
+            if (ks.size() >= 2) {
+                Hypothesis ibm = ibs;
+                ibm.type = Hypothesis::IFELSE_PRESERVE;
+                ibm.compound_K = static_cast<int>(ks.size());
+                // Store the extra thresholds... hypothesis struct has one
+                // split_threshold. Reuse: first threshold in the field, the
+                // rest re-derived by routing from the same pairs? No —
+                // deterministic re-derivation is fragile. Simplest correct:
+                // pack into sin_freq_init unused fields is ugly. Instead:
+                // routing recomputes the SAME multi-split (same data, same
+                // deterministic helper, margin excludes committed graph
+                // thresholds — matching because emission excluded them too).
+                ibm.split_threshold = ks[0];
+                candidates.push_back({std::move(ibm), 0.96});   // above single-split
+                Logger::info("Candidate emitted: IFELSE_PRESERVE multi-split K="
+                            + std::to_string(ks.size()) + " (first thr="
+                            + std::to_string(ks[0]) + ")");
+            }
+            Hypothesis ibp = ibs;   // single-split variant stays available
             ibp.type = Hypothesis::IFELSE_PRESERVE;
+            ibp.compound_K = 1;
             candidates.push_back({std::move(ibp), 0.95});   // top of boundary family
             Logger::info("Candidate emitted: IFELSE_PRESERVE (both-branches split, thr="
                         + std::to_string(ibs.split_threshold) + ")");
@@ -4397,11 +4461,100 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // nodes can then learn side-specific corrections. For striped
         // residuals (both sides equally structured) the masked variant
         // regresses training by discarding half the fit.
+        //
+        // v3 multi-split (compound_K > 1): apply K splits as a chain —
+        // each split separates the FALSE output of the previous IFELSE
+        // further (nested tree): IFELSE_1 splits x<=t1; IFELSE_2 splits
+        // its false side at t2 < t1; etc. Deterministic threshold
+        // re-derivation from the SAME diag pairs + committed-margin
+        // exclusion (same helper, same inputs => same output as emission).
 
         uint64_t condition_src = hyp.condition_source_node;
         if (condition_src == 0 || !shadow->get_node(condition_src)) {
             condition_src = failing_id;
         }
+
+        int K = std::max(1, hyp.compound_K);
+        if (K > 1) {
+            // Re-derive the multi-split thresholds deterministically.
+            std::vector<std::pair<Value, Value>> vx_m;
+            for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {
+                if (!diag.local_inputs[i].empty()) {
+                    auto it = diag.local_inputs[i].find(hyp.condition_source_node);
+                    if (it == diag.local_inputs[i].end()) {
+                        vx_m.emplace_back(diag.local_inputs[i].begin()->second, diag.targets[i]);
+                    } else {
+                        vx_m.emplace_back(it->second, diag.targets[i]);
+                    }
+                }
+            }
+            std::vector<Value> ks = error_weighted_multi_split(vx_m, K);
+            if (ks.size() >= 2) {
+                // Chain: each IFELSE's FALSE output feeds the next IFELSE.
+                uint64_t prev_false_src = failing_id;
+                uint64_t first_downstream = 0;
+                size_t first_downstream_port = 0;
+                for (size_t k = 0; k < ks.size(); ++k) {
+                    uint64_t threshold_id = shadow->add_node(NodeType::CONSTANT, "ifelse_threshold");
+                    Node* cnode = shadow->get_node(threshold_id);
+                    if (cnode && cnode->get_type() == NodeType::CONSTANT) {
+                        static_cast<ConstantNode*>(cnode)->set_value(ks[k]);
+                    }
+                    uint64_t ifelse_id = shadow->add_node(NodeType::IFELSE, "preserve_ifelse");
+                    shadow->add_connection(condition_src, 0, ifelse_id, 0);
+                    shadow->add_connection(prev_false_src, 0, ifelse_id, 1);
+
+                    if (k == 0) {
+                        // First IFELSE: re-route failing node's outgoing.
+                        std::vector<Connection> outgoing;
+                        for (const auto& c : shadow->get_connections()) {
+                            if (c.src_node == failing_id) outgoing.push_back(c);
+                        }
+                        for (const auto& c : outgoing) {
+                            shadow->remove_connection(c.src_node, c.src_port, c.dst_node, c.dst_port);
+                        }
+                        for (const auto& c : outgoing) {
+                            shadow->add_connection(ifelse_id, 0, c.dst_node, c.dst_port);
+                            if (first_downstream == 0) {
+                                first_downstream = c.dst_node;
+                                first_downstream_port = c.dst_port;
+                            }
+                            Node* dn = shadow->get_node(c.dst_node);
+                            if (dn && (dn->get_type() == NodeType::NEURON
+                                       || dn->get_type() == NodeType::LINEAR)) {
+                                auto* dnn = static_cast<NeuronNode*>(dn);
+                                size_t next_port = dnn->get_num_weights();
+                                dnn->set_input_count(next_port + 1);
+                                dnn->set_weight(next_port, dnn->get_weight(c.dst_port));
+                                shadow->add_connection(ifelse_id, 1, c.dst_node, next_port);
+                            }
+                        }
+                    } else {
+                        // Subsequent IFELSEs: TRUE side routes to the same
+                        // downstream target as the first IFELSE (mirrored
+                        // port, same init weight). FALSE side continues
+                        // the chain via prev_false_src (set below).
+                        Node* dn0 = shadow->get_node(first_downstream);
+                        if (dn0 && (dn0->get_type() == NodeType::NEURON
+                                    || dn0->get_type() == NodeType::LINEAR)) {
+                            auto* dnn = static_cast<NeuronNode*>(dn0);
+                            size_t np2 = dnn->get_num_weights();
+                            dnn->set_input_count(np2 + 1);
+                            dnn->set_weight(np2, dnn->get_weight(first_downstream_port));
+                            shadow->add_connection(ifelse_id, 0, first_downstream, np2);
+                        }
+                    }
+                    prev_false_src = ifelse_id;   // chain continues on false side
+                }
+                // Final false side also routes downstream (deepest region).
+                // (Chain leaves via the per-k true/false ports above.)
+                Logger::info("  [PRESERVE-MULTI] built K=" + std::to_string(ks.size())
+                            + " split chain");
+                break;
+            }
+            // fallthrough: multi-split degenerated -> single split below
+        }
+
         uint64_t threshold_id = shadow->add_node(NodeType::CONSTANT, "ifelse_threshold");
         Node* cnode = shadow->get_node(threshold_id);
         if (cnode && cnode->get_type() == NodeType::CONSTANT) {

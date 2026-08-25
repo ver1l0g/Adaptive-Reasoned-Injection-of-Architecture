@@ -20,3 +20,16 @@ C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:156:202
 C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:320:  Eval SoftmaxCE:   3.143351   (4.534897 bits/unit)
 C:\Users\banny\Documents\algorithm project\problems\bg_sce_w1_stdout.txt:321:  Eval Accuracy:    16.651665%
 
+[21:01] w8-SCE
+
+
+[22:33] w16-SCE
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w16_stdout.txt:158:2026-08-24 22:33:04.355 [INFO] Restored best-val graph snapshot (val=3.060570, train=2.928486)
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w16_stdout.txt:322:  Eval SoftmaxCE:   2.954906   (4.263028 bits/unit)
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w16_stdout.txt:323:  Eval Accuracy:    18.661866%
+
+[00:10] w32-SCE
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w32_stdout.txt:144:2026-08-25 00:09:54.828 [INFO] Restored best-val graph snapshot (val=3.178937, train=2.871538)
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w32_stdout.txt:308:  Eval SoftmaxCE:   2.933024   (4.231459 bits/unit)
+C:\Users\banny\Documents\algorithm project\problems\bg_sce_w32_stdout.txt:309:  Eval Accuracy:    19.251925%
+
