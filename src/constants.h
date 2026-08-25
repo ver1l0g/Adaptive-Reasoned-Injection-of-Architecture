@@ -621,6 +621,13 @@ constexpr double SCORE_RECURRENT_MULTI_TAP         = 0.93;
 constexpr double SCORE_MUX_INJECTION               = 0.40;
 constexpr double SCORE_MUX_INJECTION_BOOST         = 0.90;
 
+// EMBED_TRUNK (M2.1): shared dense trunk for many-output tasks. Emitted
+// when >= 8 outputs exist at plateau (LM signature — the complexity
+// profile was built for regression residuals and reads flat here).
+// Ranks just below the boundary/memory boosted families.
+constexpr double SCORE_EMBED_TRUNK                 = 0.55;
+constexpr int    EMBED_TRUNK_K                     = 8;     // trunk hidden units
+
 // DELAY_LINE: k delayed copies of the input signal (u[t-1..t-k]) wired as
 // features of the failing node via delay_taps forward edges. For long-memory
 // sequence targets (narma30: 30-step history; narma10_lag solved at 0.005

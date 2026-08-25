@@ -666,7 +666,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // shadow and commit it. This collapses the wall-clock cost
                 // of failed candidates 鈥?previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
-                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION", "DELAY_LINE", "IFELSE_PRESERVE"};
+                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION", "DELAY_LINE", "IFELSE_PRESERVE", "EMBED_TRUNK"};
 
                 struct ShadowSpec {
                     int         rank;
@@ -938,7 +938,9 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                      || committed_hyp_type
                         == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
                      || committed_hyp_type
-                        == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)) {
+                        == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)
+                     || committed_hyp_type
+                        == static_cast<int>(Hypothesis::EMBED_TRUNK)) {
                     plateau_counter_ = -config::COMPOUND_COMMIT_GRACE_EPOCHS;
                     epochs_since_structural_ = -config::COMPOUND_COMMIT_GRACE_EPOCHS;
                     Logger::info("Compound grace period 鈥?" + std::to_string(config::COMPOUND_COMMIT_GRACE_EPOCHS)
@@ -2508,6 +2510,29 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             }
         }
         // For image-like input layouts (input count a perfect square 鈮?        // PATCH_POOL_MIN_SIDE虏, or 3脳square for pixel-interleaved RGB),
+        // --- M2.1: EMBED_TRUNK — shared dense trunk for many-output tasks ---
+        // Language-model signature: MANY outputs (>= 8) at plateau. The
+        // complexity profile was built for regression residuals and reads
+        // flat on LM loss curves, so gate on the output count instead.
+        // One trunk per graph (dedup on trunk node name).
+        {
+            size_t out_count = 0;
+            bool has_trunk = false;
+            for (const auto& n : graph_->get_nodes()) {
+                if (n->get_type() == NodeType::OUTPUT) ++out_count;
+                else if (n->get_name() == "embed_trunk_combine") has_trunk = true;
+            }
+            if (out_count >= 8 && !has_trunk) {
+                Hypothesis et;
+                et.type = Hypothesis::EMBED_TRUNK;
+                et.compound_K = config::EMBED_TRUNK_K;
+                candidates.push_back({std::move(et), config::SCORE_EMBED_TRUNK});
+                Logger::info("Candidate emitted: EMBED_TRUNK (K="
+                            + std::to_string(config::EMBED_TRUNK_K)
+                            + ", " + std::to_string(out_count) + " outputs)");
+            }
+        }
+
         // inject one average-pool LINEAR node per patch_size虏 block.
         // Uniform 1/k weights = exact block mean; SGD refines them into
         // learned filters. Pooled features wire into the failing node at
@@ -4483,6 +4508,85 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         break;
     }
 
+    case Hypothesis::EMBED_TRUNK: {
+        // M2.1 shared dense trunk for many-output tasks (charLM):
+        //
+        //   INPUT_0 .. INPUT_F ──→ K hidden NEURONs (Xavier) ──→ combine(zero) ──┐
+        //                                                                              ├ per-OUTPUT ADD
+        //   OUTPUT_c's current input ─────────────────────────────────────────────────┘
+        //
+        // Every OUTPUT keeps its trained LINEAR path and ADDS the trunk
+        // feature (identity start via zero-init combine). SGD then learns
+        // which outputs use the shared representation. This is the standard
+        // embedding-trunk architecture assembled from existing parts.
+
+        // Collect all INPUT node ids in creation order
+        std::vector<uint64_t> in_ids;
+        for (const auto& n : shadow->get_nodes()) {
+            if (n->get_type() == NodeType::INPUT) in_ids.push_back(n->get_id());
+        }
+        if (in_ids.empty()) break;
+
+        int K = (hyp.compound_K > 0) ? hyp.compound_K : config::EMBED_TRUNK_K;
+
+        // K hidden neurons over ALL inputs
+        std::vector<uint64_t> hidden;
+        for (int k = 0; k < K; ++k) {
+            uint64_t nid = shadow->add_node(NodeType::NEURON,
+                                            "embed_trunk_h" + std::to_string(k));
+            Node* nn = shadow->get_node(nid);
+            if (nn && nn->get_type() == NodeType::NEURON) {
+                static_cast<NeuronNode*>(nn)->set_input_count(in_ids.size());
+            }
+            for (size_t j = 0; j < in_ids.size(); ++j) {
+                shadow->add_connection(in_ids[j], 0, nid, j);
+            }
+            hidden.push_back(nid);
+        }
+
+        // Zero-init combining neuron (identity start)
+        uint64_t combine_id = shadow->add_node(NodeType::NEURON, "embed_trunk_combine");
+        Node* cn = shadow->get_node(combine_id);
+        if (cn && cn->get_type() == NodeType::NEURON) {
+            auto* cnp = static_cast<NeuronNode*>(cn);
+            cnp->set_input_count(hidden.size());
+            for (size_t k = 0; k < hidden.size(); ++k) {
+                cnp->set_weight(k, 0.0);
+            }
+            cnp->set_bias(0.0);
+        }
+        for (size_t k = 0; k < hidden.size(); ++k) {
+            shadow->add_connection(hidden[k], 0, combine_id, k);
+        }
+
+        // Rewire every OUTPUT: current input + trunk feature via per-OUTPUT ADD
+        for (auto& n : shadow->get_nodes()) {
+            if (n->get_type() != NodeType::OUTPUT) continue;
+            // Save the OUTPUT's existing incoming connections
+            std::vector<Connection> outs_in;
+            for (const auto& c : shadow->get_connections()) {
+                if (c.dst_node == n->get_id()) outs_in.push_back(c);
+            }
+            for (const auto& c : outs_in) {
+                shadow->remove_connection(c.src_node, c.src_port,
+                                         c.dst_node, c.dst_port);
+            }
+            uint64_t add_id = shadow->add_node(NodeType::ADD,
+                                               "embed_trunk_add" + std::to_string(n->get_id()));
+            // original input -> ADD port 0
+            for (const auto& c : outs_in) {
+                shadow->add_connection(c.src_node, c.src_port, add_id, 0);
+            }
+            // trunk -> ADD port 1
+            shadow->add_connection(combine_id, 0, add_id, 1);
+            // ADD -> OUTPUT port 0
+            shadow->add_connection(add_id, 0, n->get_id(), 0);
+        }
+        Logger::info("  [EMBED_TRUNK] built K=" + std::to_string(K)
+                    + " trunk over " + std::to_string(in_ids.size()) + " inputs");
+        break;
+    }
+
     case Hypothesis::IFELSE_PRESERVE: {
         // Both-branches boundary split (stripes20-class):
         //
@@ -5911,7 +6015,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)
-            || hyp_type == static_cast<int>(Hypothesis::IFELSE_PRESERVE)) {
+            || hyp_type == static_cast<int>(Hypothesis::IFELSE_PRESERVE)
+            || hyp_type == static_cast<int>(Hypothesis::EMBED_TRUNK)) {
             // PRESERVE gets 2x the compound budget: each chain branch only
             // receives gradient from its side of the split (1/K of samples),
             // so retraining the separated copies needs K-times the epochs.
@@ -5935,7 +6040,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::DEEP_INSERTION)
             || hyp_type == static_cast<int>(Hypothesis::MULTI_LAYER_STACK)
             || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
-            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)) {
+            || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
+            || hyp_type == static_cast<int>(Hypothesis::EMBED_TRUNK)) {
             train_cfg.learning_rate *= config::SHADOW_COMPOUND_LR_MULTIPLIER;
         }
         train_cfg.gradient_clip = cfg_.sgd_gradient_clip;
@@ -6100,7 +6206,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                 || hyp_type == static_cast<int>(Hypothesis::PATCH_POOLING)
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_DIVIDE_PRODUCT)
-                || hyp_type == static_cast<int>(Hypothesis::IFELSE_PRESERVE))
+                || hyp_type == static_cast<int>(Hypothesis::IFELSE_PRESERVE)
+                || hyp_type == static_cast<int>(Hypothesis::EMBED_TRUNK))
                && baseline_val > 1e-9
                && result.val_loss <= baseline_val * (1.0 + config::SHADOW_COMPOUND_VAL_TOLERANCE)) {
         // Compound tolerance: the MULTIPLY鈫扤EURON鈫扵ANH architecture adds 4

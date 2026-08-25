@@ -346,6 +346,7 @@ private:
             MUX_INJECTION,           // MUX(cond, a, b) -> zero-gain NEURON -> ADD (piecewise/regime targets)
             DELAY_LINE,              // k delayed copies of INPUT (u[t-1..t-k]) via delay_taps edges (narma30)
             IFELSE_PRESERVE,          // both-branches boundary split (stripes): failing output routed via BOTH IFELSE outputs, sides separated not masked
+            EMBED_TRUNK,              // shared dense trunk for many-output tasks (charLM): K-slot stack feeding ALL outputs — the M2.1 language lever
             // NOTE: enum order MUST match hyp_names[] in evolution.cpp exactly
             // (values are cast to int for gates+logs). A mid-list insert once
             // silently desynced them, breaking every SIN_PRODUCT/DIVIDE gate.
