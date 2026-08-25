@@ -342,6 +342,8 @@ std::vector<SubgraphLibrary::Match> SubgraphLibrary::find_matches(
     const BehavioralFingerprint& needed, size_t top_k) const {
     std::vector<Match> matches;
     for (size_t i = 0; i < entries_.size(); ++i) {
+        // M7.5(a): skip empty-fingerprint (sub-expression) entries
+        if (entries_[i].fingerprint.num_inputs == 0) continue;
         if (!entries_[i].fingerprint.arity_compatible(needed.num_inputs)) continue;
         matches.push_back({i, fingerprint_distance(needed, entries_[i].fingerprint)});
     }
@@ -360,6 +362,11 @@ std::vector<SubgraphLibrary::Match> SubgraphLibrary::find_matches_excluding_self
     std::vector<Match> matches;
     for (size_t i = 0; i < entries_.size(); ++i) {
         if (entries_[i].source_task == current_task) continue;
+        // M7.5(a): skip empty-fingerprint entries — sub-expression blocks
+        // (tanh_stack, neuron_unit, ...) are written WITHOUT fingerprints;
+        // they pass arity checks vacuously (num_inputs=0) and compute
+        // meaningless zero-distances that pollute match selection.
+        if (entries_[i].fingerprint.num_inputs == 0) continue;
         if (!entries_[i].fingerprint.arity_compatible(needed.num_inputs)) continue;
         matches.push_back({i, fingerprint_distance(needed, entries_[i].fingerprint)});
     }

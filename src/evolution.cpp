@@ -1177,7 +1177,8 @@ static double error_weighted_split(const std::vector<std::pair<Value, Value>>& v
 // atomically, so validation sees the whole tree's benefit (single splits
 // on striped residuals move ~1/K of the loss — below the strict gate).
 static std::vector<Value> error_weighted_multi_split(
-    const std::vector<std::pair<Value, Value>>& vx, int K) {
+    const std::vector<std::pair<Value, Value>>& vx, int K,
+    std::vector<Value>* region_means = nullptr) {
     std::vector<Value> found;
     if (vx.size() < 16 || K <= 0) return found;
     std::vector<std::pair<Value, Value>> rem(vx);
@@ -1196,6 +1197,25 @@ static std::vector<Value> error_weighted_multi_split(
         // the exclusion list prevents re-finding the same boundary, and the
         // SSE criterion naturally targets the next-biggest reduction.
         if (found.size() >= static_cast<size_t>(K)) break;
+    }
+    // M7.6(b): compute per-region residual MEANS (sorted thresholds define
+    // the regions). The sign/magnitude of each region's mean residual is
+    // the correction that region needs — used to bias-init the PRESERVE
+    // gates so the tree starts pointing the right way instead of training
+    // from zero.
+    if (region_means != nullptr && !found.empty()) {
+        std::sort(found.begin(), found.end());
+        region_means->assign(found.size() + 1, 0.0);
+        std::vector<size_t> rcounts(found.size() + 1, 0);
+        for (const auto& pr : vx) {
+            size_t r = 0;
+            while (r < found.size() && pr.first > found[r]) ++r;
+            (*region_means)[r] += pr.second;
+            rcounts[r]++;
+        }
+        for (size_t r = 0; r < region_means->size(); ++r) {
+            if (rcounts[r] > 0) (*region_means)[r] /= static_cast<Value>(rcounts[r]);
+        }
     }
     return found;
 }
@@ -3549,13 +3569,44 @@ if (profile.bounded
                 bool already_present = false;
                 for (auto& sh : candidates) {
                     if (sh.hyp.type == suggested) {
-                        sh.score += config::LIBRARY_BOOST;
+                        // M7.5(b): pattern-aware boost strength. The matched
+                        // entry's semantic tag says WHICH family solved this
+                        // behavior before — a "sin_chain"/"sin_component"
+                        // match strongly endorses SIN-family candidates;
+                        // "product"/"abs_product" endorses MULTIPLY family.
+                        // Generic +0.2 for untagged/unknown patterns.
+                        double boost = config::LIBRARY_BOOST;
+                        {
+                            const std::string& pat =
+                                library_->entry(matches[0].index).pattern;
+                            if (pat == "sin_chain" || pat == "sin_component") {
+                                if (suggested == Hypothesis::SIN_INJECTION
+                                    || suggested == Hypothesis::COMPOUND_SIN_PRODUCT
+                                    || suggested == Hypothesis::COMPOUND_TANH_SERIES) {
+                                    boost = config::LIBRARY_BOOST * 2.0;
+                                }
+                            } else if (pat == "product" || pat == "abs_product") {
+                                if (suggested == Hypothesis::MULTIPLY_INJECTION
+                                    || suggested == Hypothesis::COMPOUND_MULTIPLY_NEURON
+                                    || suggested == Hypothesis::COMPOUND_MULTIPLY_ABS) {
+                                    boost = config::LIBRARY_BOOST * 2.0;
+                                }
+                            } else if (pat == "boundary") {
+                                if (suggested == Hypothesis::IFELSE_BOUNDARY_SPLIT
+                                    || suggested == Hypothesis::IFELSE_PRESERVE
+                                    || suggested == Hypothesis::MUX_INJECTION) {
+                                    boost = config::LIBRARY_BOOST * 2.0;
+                                }
+                            }
+                        }
+                        sh.score += boost;
                         already_present = true;
                         Logger::info("Library prior (dist="
                                      + std::to_string(matches[0].distance).substr(0,5)
                                      + " src=" + library_->entry(matches[0].index).source_task
+                                     + " pattern=" + library_->entry(matches[0].index).pattern
                                      + ") boosts " + hnames[static_cast<int>(suggested)]
-                                     + " by " + std::to_string(config::LIBRARY_BOOST));
+                                     + " by " + std::to_string(boost));
                         break;
                     }
                 }
