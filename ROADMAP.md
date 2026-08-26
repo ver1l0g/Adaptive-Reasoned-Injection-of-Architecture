@@ -140,7 +140,7 @@ decomposition (infrastructure exists — d7 solved this way).
 [PC import M7.1 folds in here: precision-weighting the residual before
 attribution is the same fix with better justification.]
 
-### 5.4 Stripes20 / IFELSE family-switching [S]
+### 5.4 Stripes20 / IFELSE family-switching [SUBSTANTIALLY DONE 2026-08-25/26: set-guided splits, piecewise signature, PRESERVE+gates, chain protection, port-0 fix — remaining: per-branch training (M7.2 settling or per-branch SGD)]
 The fatigue gate fired but PATCH_POOLING spam replaced it. Finish the
 family-switch logic: after N failed IFELSE-family commits, force-rotate
 to the next family rather than re-scoring the same pool.
@@ -179,7 +179,7 @@ stealable remainder is its INFERENCE-TIME mechanics — small, concrete,
 and they slot into existing roadmap items rather than a new one. Do NOT
 import: free-energy formalism (zero practical yield at this scale).*
 
-### 7.1 Precision-weighted attribution [S] — folds into M5.3
+### 7.1 Precision-weighted attribution [DONE 2026-08-25: hetero3 out2 0.813->0.973]
 Weight each sample's residual by 1/local-variance (precision) before
 blame analysis. High-variance regions dilute bottleneck identification —
 this is plausibly why hetero3's sin-output keeps getting misdiagnosed.
