@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Feynman subset harness: run gpnn on all 25 equations, report test R虏.
 
 Sequential (one equation at a time) 鈥?designed to coexist with other
@@ -10,7 +10,7 @@ import csv, os, re, subprocess, sys, time
 
 EXE = sys.argv[1] if len(sys.argv) > 1 else "../gpnn4.exe"
 EPOCHS = int(sys.argv[2]) if len(sys.argv) > 2 else 100
-SEED = 1
+SEED = int(sys.argv[3]) if len(sys.argv) > 3 else 1
 
 EQS = [
     ("I.6.2",2),("I.6.2b",2),("I.7.9",2),("I.8.4",2),("I.9.5",3),
@@ -27,7 +27,8 @@ EXPR_RE = re.compile(r"\[Expression\]\s*(.*)")
 def main():
     results = []
     start = time.time()
-    with open("results/feynman_results.csv", "w", newline="") as f:
+    out_path = f"results/feynman_results_seed{SEED}.csv" if SEED != 1 else "results/feynman_results.csv"
+    with open(out_path, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["eq", "vars", "test_r2", "train_loss", "wall_s", "expression"])
         for i, (eid, nvars) in enumerate(EQS):
