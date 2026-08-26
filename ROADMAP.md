@@ -241,6 +241,35 @@ The set-guided splits compute region memberships then discard them:
 
 ---
 
+
+### 6.5 Final freeze battery [S, before writing]
+All results in the paper must come from ONE tagged binary on ONE final
+battery (suites: standard, limits, feynman, korns, temporal + the
+language ladder). Current numbers span evolving builds. Freeze = git tag
++ full run + the numbers become the paper's tables.
+
+### 6.6 README benchmark card refresh [S]
+The repo front page undersells current state (22 hypotheses stated,
+~25 actual; pre-EMBED language numbers). Update after 6.5 freeze.
+
+### 5.5 Post-arc regression battery [S]
+The stripes arc changed IFELSE/MUX semantics (gates, port-0 ADDs, chain
+protection). A full standard+limits battery on the final binary has not
+run as one unit since. Fold into 6.5 freeze.
+
+### 1.5 Failure-library hypothesis versioning [S]
+Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures
+from v1/v2 runs penalize the v3 multi-split candidates before
+validation (-0.16). Fix: version the family ids in failure records, or
+bump penalty decay by record age.
+
+### 2.4 Attention decision criteria [S, gates 2.3]
+Concrete trigger for the M2.3 go/no-go: run the induction/copy probe
+(with EMBED trunk at w32). If bits/char at w32+EMBED stalls above ~3.8
+AND the probe fails, attention is justified; if EMBED keeps scaling,
+defer again. Defines the measurement, not just "decision point."
+---
+
 ## Sequencing recommendation
 
 ```
