@@ -149,7 +149,7 @@ to the next family rather than re-scoring the same pool.
 
 ## Milestone 6 — Scientific Rigor (paper track, starts anytime)
 
-### 6.1 Baselines [M]
+### 6.1 Baselines [MLP DONE 2026-08-26: ARIA 30/34 wins, 3 ties, 1 loss; PySR pending Julia runtime]
 Run PySR + a sklearn MLP on suite-feynman/suite-korns with identical
 splits. Head-to-head table = the paper's core comparison. SRBench
 numbers exist for Feynman — the bar is known.
