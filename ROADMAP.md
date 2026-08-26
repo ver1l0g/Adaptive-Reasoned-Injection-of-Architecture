@@ -68,7 +68,7 @@ shapes (e.g. patience scales with recent improvement distribution).
 *Theme: dense context mixing. SCE gave correct gradients; the
 architecture can't use them. Blocking: ALL sequence understanding.*
 
-### 2.1 EMBED node + trunk hypothesis [M]
+### 2.1 EMBED node + trunk hypothesis [DONE 2026-08-26: w8 4.070 bpc (beats w32-linear 4.231); benefit concentrates at small windows]
 New node: K one-hot char slots → dense shared vector (~8 dims/char).
 Emission: LM-signature tasks (many one-hot inputs + many outputs) inject
 EMBED(per slot) → NEURON trunk → outputs. Standard bigram-model shape.
