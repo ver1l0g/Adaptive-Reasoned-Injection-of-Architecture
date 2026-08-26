@@ -1,0 +1,57 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: problems\suite-language\bench_shakespeare_w32_10k.csv
+  Loaded 9999 samples
+  Train: 7999  Validation: 2000
+
+  Loaded subgraph library: 114 entries
+  Loaded failure library: 388 records
+Starting evolution...
+2026-08-26 11:45:06.174 [INFO] New best overall loss: 2.871586
+  [   1]   eval  loss=4.776270  |====================|  [   1]    sgd  loss=2.871586  |====================|2026-08-26 11:46:04.396 [INFO] New best overall loss: 2.870069
+  [   2]   eval  loss=2.871586  |====================|  [   2]    sgd  loss=2.870069  |====================|  [   3]   eval  loss=2.870069  |====================|  [   3]    sgd  loss=2.871516  |====================|2026-08-26 11:46:37.182 [INFO] New best overall loss: 2.869297
+  [   4]   eval  loss=2.871516  |====================|  [   4]    sgd  loss=2.869297  |====================|  [   5]   eval  loss=2.869297  |====================|  [   5]    sgd  loss=2.871129  |====================|  [   6]   eval  loss=2.871129  |====================|  [   6]    sgd  loss=2.869458  |====================|  [   7]   eval  loss=2.869458  |====================|  [   7]    sgd  loss=2.869695  |====================|2026-08-26 11:47:19.448 [INFO] Plateau triggered at epoch 7 (counter=5, loss=2.869695)
+2026-08-26 11:47:30.961 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
+2026-08-26 11:47:30.962 [INFO] IFELSE set-guided split: thr=0.832560 (SSE reduction 0.013664 over 206 paired samples)
+2026-08-26 11:47:30.962 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.573649 var_r=0.004831)
+2026-08-26 11:47:30.962 [INFO] Candidate emitted: MUX_INJECTION (cond=node=31 thr=0.832560 a=node=137 b=node=136)
+2026-08-26 11:47:30.962 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-26 11:47:30.963 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
+2026-08-26 11:47:30.963 [INFO] Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input=6*input=17, poly_r2=0.000000)
+2026-08-26 11:47:30.968 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
+2026-08-26 11:47:31.158 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-26 12:02:31.666 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-26 12:02:31.736 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-26 12:02:32.235 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-26 12:02:32.455 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-26 12:02:32.737 [INFO]   COMMIT rank=1 type=COMPOUND_SIN_PRODUCT val_loss=3.205190 train_loss=2.906977 new train_loss=2.846902
+2026-08-26 12:02:32.740 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(10,19)=0.9302 quad=[0.000,0.032,0.000,0.000] L_max=21.492 | flags: PAIRWISE SHARP
+2026-08-26 12:02:32.741 [INFO] IFELSE set-guided split: thr=-1.196278 (SSE reduction 0.019536 over 206 paired samples)
+2026-08-26 12:02:32.741 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.491807 var_r=0.004831)
+2026-08-26 12:02:32.742 [INFO] Candidate emitted: MUX_INJECTION (cond=node=32 thr=-1.196278 a=node=130 b=node=142)
+2026-08-26 12:02:32.742 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-26 12:02:32.742 [INFO] MULTIPLY sources from Sobol pair: input=11*input=20 (sobol_pairwise=0.930203)
+2026-08-26 12:02:32.750 [INFO] Library prior (dist=0.956 src=bench_stripes20.csv) boosts IFELSE by 0.200000
+2026-08-26 12:17:33.145 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-26 12:17:33.391 [INFO]   COMMIT rank=0 type=IFELSE_BOUNDARY_SPLIT val_loss=3.177611 train_loss=2.956748 new train_loss=2.872409
+2026-08-26 12:17:33.396 [INFO] Plateau state reset 鈥?best_phase2=2.872409
+2026-08-26 12:17:33.396 [INFO] Plateau state reset — best_phase2=2.872409
+  [   8]   eval  loss=2.872409  |====================|  [   8]    sgd  loss=2.874242  |====================|  [   9]   eval  loss=2.874242  |====================|  [   9]    sgd  loss=2.872003  |====================|  [  10]   eval  loss=2.872003  |====================|  [  10]    sgd  loss=2.872001  |====================|  [  11]   eval  loss=2.872001  |====================|  [  11]    sgd  loss=2.872140  |====================|  [  12]   eval  loss=2.872140  |====================|  [  12]    sgd  loss=2.872133  |====================|2026-08-26 12:18:10.902 [INFO] Plateau triggered at epoch 12 (counter=5, loss=2.872133)
+2026-08-26 12:18:16.771 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
+2026-08-26 12:18:16.774 [INFO] IFELSE set-guided split: thr=1.012751 (SSE reduction 0.072069 over 206 paired samples)
+2026-08-26 12:18:16.774 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-26 12:18:16.774 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
+2026-08-26 12:18:16.774 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-08-26 12:18:16.779 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
+2026-08-26 12:18:16.854 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-26 12:23:38.443 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
+2026-08-26 12:23:38.444 [INFO] IFELSE set-guided split: thr=1.012751 (SSE reduction 0.072069 over 206 paired samples)
+2026-08-26 12:23:38.444 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.573649 var_r=0.004831)
+2026-08-26 12:23:38.444 [INFO] Candidate emitted: MUX_INJECTION (cond=node=32 thr=1.012751 a=node=131 b=node=144)
+2026-08-26 12:23:38.445 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-26 12:23:38.445 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
+2026-08-26 12:23:38.445 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-08-26 12:23:38.450 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
+2026-08-26 12:23:38.625 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
