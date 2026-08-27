@@ -3,6 +3,7 @@
 #include "constants.h"
 #include "subgraph_library.h"
 #include "serialize.h"
+#define NOMINMAX
 #include <windows.h>
 #include <iostream>
 #include <chrono>

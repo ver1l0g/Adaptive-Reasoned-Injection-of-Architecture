@@ -3,6 +3,7 @@
 #include "node.h"
 #include "constants.h"
 #include <vector>
+#include <array>
 #include <unordered_map>
 #include <set>
 #include <memory>

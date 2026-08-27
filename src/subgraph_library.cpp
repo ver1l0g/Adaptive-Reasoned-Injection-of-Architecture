@@ -177,7 +177,7 @@ BehavioralFingerprint compute_fingerprint(const std::vector<std::vector<double>>
                 }
                 double ra = mx_a-mn_a, rb = mx_b-mn_b;
                 if (ra < 1e-12 || rb < 1e-12) continue;
-                auto bin = [](double v, double mn, double rg) { int i = (int)((v-mn)/rg*KB); return std::max(0, std::min(KB-1, i)); };
+                auto bin = [KB](double v, double mn, double rg) { int i = (int)((v-mn)/rg*KB); return std::max(0, std::min(KB-1, i)); };
                 std::vector<std::vector<double>> sab(KB, std::vector<double>(KB, 0.0));
                 std::vector<std::vector<int>> cab(KB, std::vector<int>(KB, 0));
                 std::vector<double> sa(KB, 0.0); std::vector<int> ca(KB, 0);
