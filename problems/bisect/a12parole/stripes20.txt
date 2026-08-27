@@ -1,0 +1,432 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-limits\bench_stripes20.csv
+  Loaded 1199 samples
+  Train: 959  Validation: 240
+
+  Loaded subgraph library: 6 entries
+  Loaded failure library: 186 records
+Starting evolution...
+2026-08-27 14:06:12.603 [INFO] New best overall loss: 0.247846
+  [   1]   eval  loss=0.534069  |=====|  [   1]    sgd  loss=0.247846  |==|  [   2]   eval  loss=0.247846  |==|  [   2]    sgd  loss=0.247896  |==|  [   3]   eval  loss=0.247896  |==|  [   3]    sgd  loss=0.247888  |==|  [   4]   eval  loss=0.247888  |==|  [   4]    sgd  loss=0.247881  |==|2026-08-27 14:06:12.636 [INFO] Plateau triggered at epoch 4 (counter=3, loss=0.247881)
+2026-08-27 14:06:12.640 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.007528)
+2026-08-27 14:06:12.640 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:12.640 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:12.641 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:06:12.641 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:06:12.641 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:06:12.641 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-08-27 14:06:12.641 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:06:12.641 [INFO]   [PRESERVE-MULTI] built K=4 split chain
+2026-08-27 14:06:15.412 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.249901 train_loss=0.250074 new train_loss=0.249998
+2026-08-27 14:06:15.412 [INFO] Plateau state reset 鈥?best_phase2=0.249998
+2026-08-27 14:06:15.412 [INFO] Plateau state reset — best_phase2=0.249998
+  [   5]   eval  loss=0.249998  |==|  [   5]    sgd  loss=0.249998  |==|  [   6]   eval  loss=0.249998  |==|  [   6]    sgd  loss=0.249998  |==|  [   7]   eval  loss=0.249998  |==|  [   7]    sgd  loss=0.249998  |==|2026-08-27 14:06:15.469 [INFO] Plateau triggered at epoch 7 (counter=3, loss=0.249998)
+2026-08-27 14:06:15.478 [INFO] Structural inability detected 鈥?surfacing bottleneck node 5 (blame=0.000000)
+2026-08-27 14:06:15.478 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:15.478 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+  [   8]   eval  loss=0.249998  |==|  [   8]    sgd  loss=0.249998  |==|2026-08-27 14:06:15.757 [INFO] Plateau triggered at epoch 8 (counter=4, loss=0.249998)
+2026-08-27 14:06:15.782 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:15.782 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:16.063 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=0.249901 train_loss=0.250074 new train_loss=0.249998
+2026-08-27 14:06:16.063 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:16.063 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:16.478 [INFO]   COMMIT rank=1 type=BOOLEAN_COMPOSE val_loss=0.249810 train_loss=0.248429 new train_loss=0.249197
+2026-08-27 14:06:16.478 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:16.478 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:17.042 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=0.248375 train_loss=0.246209 new train_loss=0.248433
+2026-08-27 14:06:17.043 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:17.043 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:17.604 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=0.247171 train_loss=0.244943 new train_loss=0.247976
+2026-08-27 14:06:17.604 [INFO] Plateau state reset 鈥?best_phase2=0.247976
+2026-08-27 14:06:17.604 [INFO] Plateau state reset — best_phase2=0.247976
+2026-08-27 14:06:17.685 [INFO] New best overall loss: 0.247663
+  [   9]   eval  loss=0.247976  |==|  [   9]    sgd  loss=0.247663  |==|  [  10]   eval  loss=0.247663  |==|  [  10]    sgd  loss=0.247667  |==|  [  11]   eval  loss=0.247667  |==|  [  11]    sgd  loss=0.247668  |==|  [  12]   eval  loss=0.247668  |==|  [  12]    sgd  loss=0.247668  |==|2026-08-27 14:06:17.894 [INFO] Plateau triggered at epoch 12 (counter=3, loss=0.247668)
+2026-08-27 14:06:17.947 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:17.947 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:17.947 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-08-27 14:06:17.947 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.901021 a=node=5 b=node=7)
+2026-08-27 14:06:17.947 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:06:34.779 [INFO]   COMMIT rank=0 type=MUX_INJECTION val_loss=0.243908 train_loss=0.247964 new train_loss=0.248288
+2026-08-27 14:06:34.780 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:34.780 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:34.780 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-08-27 14:06:34.780 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.901021 a=node=5 b=node=6)
+2026-08-27 14:06:55.549 [INFO] Plateau state reset 鈥?best_phase2=0.248288
+2026-08-27 14:06:55.549 [INFO] Plateau state reset — best_phase2=0.248288
+  [  13]   eval  loss=0.248288  |==|  [  13]    sgd  loss=0.248474  |==|  [  14]   eval  loss=0.248474  |==|  [  14]    sgd  loss=0.249008  |==|  [  15]   eval  loss=0.249008  |==|  [  15]    sgd  loss=0.249105  |==|2026-08-27 14:06:55.756 [INFO] Plateau triggered at epoch 15 (counter=3, loss=0.249105)
+2026-08-27 14:06:55.815 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:55.815 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:55.815 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:06:59.177 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=0.245481 train_loss=0.246288 new train_loss=0.247135
+2026-08-27 14:06:59.178 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:06:59.178 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:06:59.178 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:06:59.178 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:06:59.178 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:06:59.178 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=33.091390, 3 sign changes)
+2026-08-27 14:06:59.178 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:06:59.179 [INFO]   [PRESERVE-MULTI] built K=4 split chain
+2026-08-27 14:07:04.031 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.246910 train_loss=0.244514 new train_loss=0.247765
+2026-08-27 14:07:04.032 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:07:04.032 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:07:04.660 [INFO] Plateau state reset 鈥?best_phase2=0.247765
+2026-08-27 14:07:04.660 [INFO] Plateau state reset — best_phase2=0.247765
+  [  16]   eval  loss=0.247765  |==|  [  16]    sgd  loss=0.247664  |==|  [  17]   eval  loss=0.247664  |==|  [  17]    sgd  loss=0.247751  |==|  [  18]   eval  loss=0.247751  |==|  [  18]    sgd  loss=0.247858  |==|2026-08-27 14:07:04.933 [INFO] Plateau triggered at epoch 18 (counter=3, loss=0.247858)
+2026-08-27 14:07:04.999 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:07:04.999 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:07:04.999 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:07:08.901 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=0.246484 train_loss=0.244613 new train_loss=0.247755
+2026-08-27 14:07:08.901 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:07:08.901 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:07:08.902 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-08-27 14:07:08.902 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.901021 a=node=5 b=node=6)
+2026-08-27 14:07:08.902 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=33.332632, 21 sign changes)
+2026-08-27 14:07:08.902 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:07:38.963 [INFO]   COMMIT rank=1 type=NEURON_TANH_INJECTION val_loss=0.246481 train_loss=0.244612 new train_loss=0.247654
+2026-08-27 14:07:38.964 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:07:38.964 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:07:39.626 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=0.246474 train_loss=0.244607 new train_loss=0.247654
+2026-08-27 14:07:39.626 [INFO] Plateau state reset 鈥?best_phase2=0.247654
+2026-08-27 14:07:39.626 [INFO] Plateau state reset — best_phase2=0.247654
+  [  19]   eval  loss=0.247654  |==|  [  19]    sgd  loss=0.247654  |==|2026-08-27 14:07:39.826 [INFO] New best overall loss: 0.247652
+  [  20]   eval  loss=0.247654  |==|  [  20]    sgd  loss=0.247652  |==|2026-08-27 14:07:39.927 [INFO] New best overall loss: 0.247649
+  [  21]   eval  loss=0.247652  |==|  [  21]    sgd  loss=0.247649  |==|2026-08-27 14:07:39.927 [INFO] Plateau triggered at epoch 21 (counter=3, loss=0.247649)
+2026-08-27 14:07:40.010 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:07:40.010 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:07:40.011 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:07:45.295 [INFO]   COMMIT rank=3 type=SIN_INJECTION val_loss=0.246409 train_loss=0.246333 new train_loss=0.247478
+2026-08-27 14:07:45.295 [INFO] Plateau state reset 鈥?best_phase2=0.247478
+2026-08-27 14:07:45.295 [INFO] Plateau state reset — best_phase2=0.247478
+2026-08-27 14:07:45.414 [INFO] New best overall loss: 0.247453
+  [  22]   eval  loss=0.247478  |==|  [  22]    sgd  loss=0.247453  |==|  [  23]   eval  loss=0.247453  |==|  [  23]    sgd  loss=0.247542  |==|  [  24]   eval  loss=0.247542  |==|  [  24]    sgd  loss=0.247537  |==|2026-08-27 14:07:45.655 [INFO] Plateau triggered at epoch 24 (counter=3, loss=0.247537)
+2026-08-27 14:07:45.752 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:07:45.752 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:07:45.752 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:07:50.808 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=0.246133 train_loss=0.246357 new train_loss=0.247558
+2026-08-27 14:07:50.808 [INFO] M1.3 family fatigue: suppressing NEURON_TANH_INJECTION for 25 epochs (8 commits each < 1.000000% val gain)
+2026-08-27 14:07:50.809 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:07:50.809 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:07:50.809 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-08-27 14:07:50.809 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.901021 a=node=5 b=node=6)
+2026-08-27 14:07:50.809 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=30.158096, 19 sign changes)
+2026-08-27 14:07:50.809 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:08:28.108 [INFO]   COMMIT rank=2 type=DEEP_INSERTION val_loss=0.249865 train_loss=0.250102 new train_loss=0.249998
+2026-08-27 14:08:28.109 [INFO] Plateau state reset 鈥?best_phase2=0.249998
+2026-08-27 14:08:28.109 [INFO] Plateau state reset — best_phase2=0.249998
+  [  25]   eval  loss=0.249998  |==|  [  25]    sgd  loss=0.249998  |==|  [  26]   eval  loss=0.249998  |==|  [  26]    sgd  loss=0.249998  |==|  [  27]   eval  loss=0.249998  |==|  [  27]    sgd  loss=0.249998  |==|2026-08-27 14:08:28.502 [INFO] Plateau triggered at epoch 27 (counter=3, loss=0.249998)
+2026-08-27 14:08:28.637 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 5
+2026-08-27 14:08:28.637 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:08:28.638 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:08:28.638 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:08:28.638 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:08:28.638 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:08:28.638 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:08:28.639 [INFO]   [PRESERVE-MULTI] built K=4 split chain
+2026-08-27 14:08:34.220 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.249901 train_loss=0.250074 new train_loss=0.249998
+2026-08-27 14:08:34.220 [INFO] Plateau state reset 鈥?best_phase2=0.249998
+2026-08-27 14:08:34.220 [INFO] Plateau state reset — best_phase2=0.249998
+  [  28]   eval  loss=0.249998  |==|  [  28]    sgd  loss=0.249998  |==|  [  29]   eval  loss=0.249998  |==|  [  29]    sgd  loss=0.249998  |==|  [  30]   eval  loss=0.249998  |==|  [  30]    sgd  loss=0.249998  |==|2026-08-27 14:08:34.618 [INFO] Plateau triggered at epoch 30 (counter=3, loss=0.249998)
+2026-08-27 14:08:34.754 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 6
+2026-08-27 14:08:34.755 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:08:34.755 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:08:34.755 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:08:34.755 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:08:34.755 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:08:34.755 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-08-27 14:08:34.756 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.901021 a=node=66 b=node=7)
+2026-08-27 14:08:34.756 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:08:34.758 [INFO]   [PRESERVE-MULTI] built K=4 split chain
+2026-08-27 14:09:11.566 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.249901 train_loss=0.250074 new train_loss=0.249998
+2026-08-27 14:09:11.566 [INFO] Plateau state reset 鈥?best_phase2=0.249998
+2026-08-27 14:09:11.566 [INFO] Plateau state reset — best_phase2=0.249998
+  [  31]   eval  loss=0.249998  |==|  [  31]    sgd  loss=0.249998  |==|  [  32]   eval  loss=0.249998  |==|  [  32]    sgd  loss=0.249998  |==|  [  33]   eval  loss=0.249998  |==|  [  33]    sgd  loss=0.249998  |==|2026-08-27 14:09:11.988 [INFO] Plateau triggered at epoch 33 (counter=3, loss=0.249998)
+2026-08-27 14:09:12.125 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 7
+2026-08-27 14:09:12.126 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:12.126 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:12.126 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:12.126 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:12.126 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:09:12.126 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-08-27 14:09:12.126 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.901021 a=node=66 b=node=8)
+2026-08-27 14:09:12.126 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:09:12.128 [INFO]   [PRESERVE-MULTI] built K=4 split chain
+2026-08-27 14:09:47.872 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.249901 train_loss=0.250074 new train_loss=0.249998
+2026-08-27 14:09:47.873 [INFO] Plateau state reset 鈥?best_phase2=0.249998
+2026-08-27 14:09:47.873 [INFO] Plateau state reset — best_phase2=0.249998
+2026-08-27 14:09:47.873 [INFO] Suppressing hypothesis type 23 (3 consecutive commits without meaningful improvement)
+  [  34]   eval  loss=0.249998  |==|  [  34]    sgd  loss=0.249998  |==|  [  35]   eval  loss=0.249998  |==|  [  35]    sgd  loss=0.249998  |==|  [  36]   eval  loss=0.249998  |==|  [  36]    sgd  loss=0.249998  |==|2026-08-27 14:09:48.298 [INFO] Plateau triggered at epoch 36 (counter=3, loss=0.249998)
+2026-08-27 14:09:48.445 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:09:48.445 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:48.445 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:48.445 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:48.445 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:48.446 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  37]   eval  loss=0.249998  |==|  [  37]    sgd  loss=0.249998  |==|2026-08-27 14:09:49.913 [INFO] Plateau triggered at epoch 37 (counter=4, loss=0.249998)
+2026-08-27 14:09:50.051 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:09:50.052 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:50.052 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:50.052 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:50.052 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:50.052 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  38]   eval  loss=0.249998  |==|  [  38]    sgd  loss=0.249998  |==|2026-08-27 14:09:51.625 [INFO] Plateau triggered at epoch 38 (counter=5, loss=0.249998)
+2026-08-27 14:09:51.776 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:09:51.777 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:51.777 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:51.777 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:51.777 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:51.777 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  39]   eval  loss=0.249998  |==|  [  39]    sgd  loss=0.249998  |==|2026-08-27 14:09:53.299 [INFO] Plateau triggered at epoch 39 (counter=6, loss=0.249998)
+2026-08-27 14:09:53.428 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:09:53.428 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:53.429 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:53.429 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:53.429 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:53.429 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  40]   eval  loss=0.249998  |==|  [  40]    sgd  loss=0.249998  |==|2026-08-27 14:09:55.033 [INFO] Plateau triggered at epoch 40 (counter=7, loss=0.249998)
+2026-08-27 14:09:55.167 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:09:55.168 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:55.168 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:55.168 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:55.168 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:55.168 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:09:56.444 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  41]   eval  loss=0.249998  |==|  [  41]    sgd  loss=0.249998  |==|2026-08-27 14:09:56.568 [INFO] Structural search in cooldown (9 epochs left) at epoch 41 鈥?letting SGD settle
+  [  42]   eval  loss=0.249998  |==|  [  42]    sgd  loss=0.249998  |==|2026-08-27 14:09:56.703 [INFO] Structural search in cooldown (8 epochs left) at epoch 42 鈥?letting SGD settle
+  [  43]   eval  loss=0.249998  |==|  [  43]    sgd  loss=0.249998  |==|2026-08-27 14:09:56.858 [INFO] Structural search in cooldown (7 epochs left) at epoch 43 鈥?letting SGD settle
+  [  44]   eval  loss=0.249998  |==|  [  44]    sgd  loss=0.249998  |==|2026-08-27 14:09:57.008 [INFO] Structural search in cooldown (6 epochs left) at epoch 44 鈥?letting SGD settle
+  [  45]   eval  loss=0.249998  |==|  [  45]    sgd  loss=0.249998  |==|2026-08-27 14:09:57.165 [INFO] Structural search in cooldown (5 epochs left) at epoch 45 鈥?letting SGD settle
+  [  46]   eval  loss=0.249998  |==|  [  46]    sgd  loss=0.249998  |==|2026-08-27 14:09:57.305 [INFO] Structural search in cooldown (4 epochs left) at epoch 46 鈥?letting SGD settle
+  [  47]   eval  loss=0.249998  |==|  [  47]    sgd  loss=0.249998  |==|2026-08-27 14:09:57.446 [INFO] Structural search in cooldown (3 epochs left) at epoch 47 鈥?letting SGD settle
+  [  48]   eval  loss=0.249998  |==|  [  48]    sgd  loss=0.249998  |==|2026-08-27 14:09:57.583 [INFO] Structural search in cooldown (2 epochs left) at epoch 48 鈥?letting SGD settle
+  [  49]   eval  loss=0.249998  |==|  [  49]    sgd  loss=0.249998  |==|2026-08-27 14:09:57.716 [INFO] Structural search in cooldown (1 epochs left) at epoch 49 鈥?letting SGD settle
+  [  50]   eval  loss=0.249998  |==|  [  50]    sgd  loss=0.249998  |==|2026-08-27 14:09:57.854 [INFO] Plateau triggered at epoch 50 (counter=17, loss=0.249998)
+2026-08-27 14:09:57.988 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:09:57.988 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:57.988 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:57.988 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:57.988 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:57.988 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:09:57.989 [INFO] M1.3 parole: releasing hypothesis type 2 (suppression expired)
+  [  51]   eval  loss=0.249998  |==|  [  51]    sgd  loss=0.249998  |==|2026-08-27 14:09:59.485 [INFO] Plateau triggered at epoch 51 (counter=18, loss=0.249998)
+2026-08-27 14:09:59.615 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:09:59.616 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:09:59.616 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:09:59.616 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:09:59.616 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:09:59.616 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  52]   eval  loss=0.249998  |==|  [  52]    sgd  loss=0.249998  |==|2026-08-27 14:10:01.103 [INFO] Plateau triggered at epoch 52 (counter=19, loss=0.249998)
+2026-08-27 14:10:01.245 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:01.245 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:01.245 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:01.245 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:01.245 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:01.245 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  53]   eval  loss=0.249998  |==|  [  53]    sgd  loss=0.249998  |==|2026-08-27 14:10:02.812 [INFO] Forced structural trigger at epoch 53 (epochs since last structural: 20)
+2026-08-27 14:10:02.812 [INFO] Plateau triggered at epoch 53 (counter=20, loss=0.249998)
+2026-08-27 14:10:02.962 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:02.962 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:02.962 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:02.963 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:02.963 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:02.963 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  54]   eval  loss=0.249998  |==|  [  54]    sgd  loss=0.249998  |==|2026-08-27 14:10:04.456 [INFO] Forced structural trigger at epoch 54 (epochs since last structural: 21)
+2026-08-27 14:10:04.456 [INFO] Plateau triggered at epoch 54 (counter=21, loss=0.249998)
+2026-08-27 14:10:04.591 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:04.591 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:04.591 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:04.591 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:04.592 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:04.592 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:10:06.025 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  55]   eval  loss=0.249998  |==|  [  55]    sgd  loss=0.249998  |==|2026-08-27 14:10:06.168 [INFO] Structural search in cooldown (9 epochs left) at epoch 55 鈥?letting SGD settle
+  [  56]   eval  loss=0.249998  |==|  [  56]    sgd  loss=0.249998  |==|2026-08-27 14:10:06.328 [INFO] Structural search in cooldown (8 epochs left) at epoch 56 鈥?letting SGD settle
+  [  57]   eval  loss=0.249998  |==|  [  57]    sgd  loss=0.249998  |==|2026-08-27 14:10:06.473 [INFO] Structural search in cooldown (7 epochs left) at epoch 57 鈥?letting SGD settle
+  [  58]   eval  loss=0.249998  |==|  [  58]    sgd  loss=0.249998  |==|2026-08-27 14:10:06.598 [INFO] Structural search in cooldown (6 epochs left) at epoch 58 鈥?letting SGD settle
+  [  59]   eval  loss=0.249998  |==|  [  59]    sgd  loss=0.249998  |==|2026-08-27 14:10:06.750 [INFO] Structural search in cooldown (5 epochs left) at epoch 59 鈥?letting SGD settle
+  [  60]   eval  loss=0.249998  |==|  [  60]    sgd  loss=0.249998  |==|2026-08-27 14:10:06.886 [INFO] Structural search in cooldown (4 epochs left) at epoch 60 鈥?letting SGD settle
+  [  61]   eval  loss=0.249998  |==|  [  61]    sgd  loss=0.249998  |==|2026-08-27 14:10:07.026 [INFO] Structural search in cooldown (3 epochs left) at epoch 61 鈥?letting SGD settle
+  [  62]   eval  loss=0.249998  |==|  [  62]    sgd  loss=0.249998  |==|2026-08-27 14:10:07.165 [INFO] Structural search in cooldown (2 epochs left) at epoch 62 鈥?letting SGD settle
+  [  63]   eval  loss=0.249998  |==|  [  63]    sgd  loss=0.249998  |==|2026-08-27 14:10:07.286 [INFO] Structural search in cooldown (1 epochs left) at epoch 63 鈥?letting SGD settle
+  [  64]   eval  loss=0.249998  |==|  [  64]    sgd  loss=0.249998  |==|2026-08-27 14:10:07.409 [INFO] Forced structural trigger at epoch 64 (epochs since last structural: 31)
+2026-08-27 14:10:07.409 [INFO] Plateau triggered at epoch 64 (counter=31, loss=0.249998)
+2026-08-27 14:10:07.534 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:07.535 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:07.535 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:07.535 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:07.535 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:07.535 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  65]   eval  loss=0.249998  |==|  [  65]    sgd  loss=0.249998  |==|2026-08-27 14:10:08.930 [INFO] Forced structural trigger at epoch 65 (epochs since last structural: 32)
+2026-08-27 14:10:08.930 [INFO] Plateau triggered at epoch 65 (counter=32, loss=0.249998)
+2026-08-27 14:10:09.062 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:09.062 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:09.062 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:09.062 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:09.063 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:09.063 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  66]   eval  loss=0.249998  |==|  [  66]    sgd  loss=0.249998  |==|2026-08-27 14:10:10.461 [INFO] Forced structural trigger at epoch 66 (epochs since last structural: 33)
+2026-08-27 14:10:10.461 [INFO] Plateau triggered at epoch 66 (counter=33, loss=0.249998)
+2026-08-27 14:10:10.586 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:10.587 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:10.587 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:10.587 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:10.587 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:10.587 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  67]   eval  loss=0.249998  |==|  [  67]    sgd  loss=0.249998  |==|2026-08-27 14:10:11.970 [INFO] Forced structural trigger at epoch 67 (epochs since last structural: 34)
+2026-08-27 14:10:11.970 [INFO] Plateau triggered at epoch 67 (counter=34, loss=0.249998)
+2026-08-27 14:10:12.097 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:12.098 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:12.098 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:12.098 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:12.098 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:12.098 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  68]   eval  loss=0.249998  |==|  [  68]    sgd  loss=0.249998  |==|2026-08-27 14:10:13.518 [INFO] Forced structural trigger at epoch 68 (epochs since last structural: 35)
+2026-08-27 14:10:13.518 [INFO] Plateau triggered at epoch 68 (counter=35, loss=0.249998)
+2026-08-27 14:10:13.652 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:13.653 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:13.653 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:13.653 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:13.653 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:13.653 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:10:15.641 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  69]   eval  loss=0.249998  |==|  [  69]    sgd  loss=0.249998  |==|2026-08-27 14:10:15.802 [INFO] Structural search in cooldown (9 epochs left) at epoch 69 鈥?letting SGD settle
+  [  70]   eval  loss=0.249998  |==|  [  70]    sgd  loss=0.249998  |==|2026-08-27 14:10:15.982 [INFO] Structural search in cooldown (8 epochs left) at epoch 70 鈥?letting SGD settle
+  [  71]   eval  loss=0.249998  |==|  [  71]    sgd  loss=0.249998  |==|2026-08-27 14:10:16.152 [INFO] Structural search in cooldown (7 epochs left) at epoch 71 鈥?letting SGD settle
+  [  72]   eval  loss=0.249998  |==|  [  72]    sgd  loss=0.249998  |==|2026-08-27 14:10:16.317 [INFO] Structural search in cooldown (6 epochs left) at epoch 72 鈥?letting SGD settle
+  [  73]   eval  loss=0.249998  |==|  [  73]    sgd  loss=0.249998  |==|2026-08-27 14:10:16.488 [INFO] Structural search in cooldown (5 epochs left) at epoch 73 鈥?letting SGD settle
+  [  74]   eval  loss=0.249998  |==|  [  74]    sgd  loss=0.249998  |==|2026-08-27 14:10:16.662 [INFO] Structural search in cooldown (4 epochs left) at epoch 74 鈥?letting SGD settle
+  [  75]   eval  loss=0.249998  |==|  [  75]    sgd  loss=0.249998  |==|2026-08-27 14:10:16.863 [INFO] Structural search in cooldown (3 epochs left) at epoch 75 鈥?letting SGD settle
+  [  76]   eval  loss=0.249998  |==|  [  76]    sgd  loss=0.249998  |==|2026-08-27 14:10:17.091 [INFO] Structural search in cooldown (2 epochs left) at epoch 76 鈥?letting SGD settle
+  [  77]   eval  loss=0.249998  |==|  [  77]    sgd  loss=0.249998  |==|2026-08-27 14:10:17.283 [INFO] Structural search in cooldown (1 epochs left) at epoch 77 鈥?letting SGD settle
+  [  78]   eval  loss=0.249998  |==|  [  78]    sgd  loss=0.249998  |==|2026-08-27 14:10:17.473 [INFO] Forced structural trigger at epoch 78 (epochs since last structural: 45)
+2026-08-27 14:10:17.473 [INFO] Plateau triggered at epoch 78 (counter=45, loss=0.249998)
+2026-08-27 14:10:17.632 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:17.632 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:17.632 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:17.633 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:17.633 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:17.633 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  79]   eval  loss=0.249998  |==|  [  79]    sgd  loss=0.249998  |==|2026-08-27 14:10:19.427 [INFO] Forced structural trigger at epoch 79 (epochs since last structural: 46)
+2026-08-27 14:10:19.427 [INFO] Plateau triggered at epoch 79 (counter=46, loss=0.249998)
+2026-08-27 14:10:19.577 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:19.577 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:19.577 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:19.577 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:19.577 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:19.577 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  80]   eval  loss=0.249998  |==|  [  80]    sgd  loss=0.249998  |==|2026-08-27 14:10:21.353 [INFO] Forced structural trigger at epoch 80 (epochs since last structural: 47)
+2026-08-27 14:10:21.353 [INFO] Plateau triggered at epoch 80 (counter=47, loss=0.249998)
+2026-08-27 14:10:21.504 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:21.505 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:21.505 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:21.505 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:21.505 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:21.505 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  81]   eval  loss=0.249998  |==|  [  81]    sgd  loss=0.249998  |==|2026-08-27 14:10:23.093 [INFO] Forced structural trigger at epoch 81 (epochs since last structural: 48)
+2026-08-27 14:10:23.093 [INFO] Plateau triggered at epoch 81 (counter=48, loss=0.249998)
+2026-08-27 14:10:23.232 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:23.233 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:23.233 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:23.233 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:23.233 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:23.233 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  82]   eval  loss=0.249998  |==|  [  82]    sgd  loss=0.249998  |==|2026-08-27 14:10:24.956 [INFO] Forced structural trigger at epoch 82 (epochs since last structural: 49)
+2026-08-27 14:10:24.956 [INFO] Plateau triggered at epoch 82 (counter=49, loss=0.249998)
+2026-08-27 14:10:25.131 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:25.131 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:25.131 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:25.131 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:25.132 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:25.132 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:10:26.566 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  83]   eval  loss=0.249998  |==|  [  83]    sgd  loss=0.249998  |==|2026-08-27 14:10:26.717 [INFO] Structural search in cooldown (9 epochs left) at epoch 83 鈥?letting SGD settle
+  [  84]   eval  loss=0.249998  |==|  [  84]    sgd  loss=0.249998  |==|2026-08-27 14:10:26.882 [INFO] Structural search in cooldown (8 epochs left) at epoch 84 鈥?letting SGD settle
+  [  85]   eval  loss=0.249998  |==|  [  85]    sgd  loss=0.249998  |==|2026-08-27 14:10:27.043 [INFO] Structural search in cooldown (7 epochs left) at epoch 85 鈥?letting SGD settle
+  [  86]   eval  loss=0.249998  |==|  [  86]    sgd  loss=0.249998  |==|2026-08-27 14:10:27.209 [INFO] Structural search in cooldown (6 epochs left) at epoch 86 鈥?letting SGD settle
+  [  87]   eval  loss=0.249998  |==|  [  87]    sgd  loss=0.249998  |==|2026-08-27 14:10:27.377 [INFO] Structural search in cooldown (5 epochs left) at epoch 87 鈥?letting SGD settle
+  [  88]   eval  loss=0.249998  |==|  [  88]    sgd  loss=0.249998  |==|2026-08-27 14:10:27.542 [INFO] Structural search in cooldown (4 epochs left) at epoch 88 鈥?letting SGD settle
+  [  89]   eval  loss=0.249998  |==|  [  89]    sgd  loss=0.249998  |==|2026-08-27 14:10:27.700 [INFO] Structural search in cooldown (3 epochs left) at epoch 89 鈥?letting SGD settle
+  [  90]   eval  loss=0.249998  |==|  [  90]    sgd  loss=0.249998  |==|2026-08-27 14:10:27.866 [INFO] Structural search in cooldown (2 epochs left) at epoch 90 鈥?letting SGD settle
+  [  91]   eval  loss=0.249998  |==|  [  91]    sgd  loss=0.249998  |==|2026-08-27 14:10:28.023 [INFO] Structural search in cooldown (1 epochs left) at epoch 91 鈥?letting SGD settle
+  [  92]   eval  loss=0.249998  |==|  [  92]    sgd  loss=0.249998  |==|2026-08-27 14:10:28.186 [INFO] Forced structural trigger at epoch 92 (epochs since last structural: 59)
+2026-08-27 14:10:28.186 [INFO] Plateau triggered at epoch 92 (counter=59, loss=0.249998)
+2026-08-27 14:10:28.338 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:28.338 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:28.338 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:28.338 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:28.338 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:28.338 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  93]   eval  loss=0.249998  |==|  [  93]    sgd  loss=0.249998  |==|2026-08-27 14:10:29.967 [INFO] Forced structural trigger at epoch 93 (epochs since last structural: 60)
+2026-08-27 14:10:29.967 [INFO] Plateau triggered at epoch 93 (counter=60, loss=0.249998)
+2026-08-27 14:10:30.125 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:30.125 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:30.125 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:30.125 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:30.125 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:30.125 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  94]   eval  loss=0.249998  |==|  [  94]    sgd  loss=0.249998  |==|2026-08-27 14:10:31.743 [INFO] Forced structural trigger at epoch 94 (epochs since last structural: 61)
+2026-08-27 14:10:31.743 [INFO] Plateau triggered at epoch 94 (counter=61, loss=0.249998)
+2026-08-27 14:10:31.890 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:31.890 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:31.890 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:31.890 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:31.891 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:31.891 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  95]   eval  loss=0.249998  |==|  [  95]    sgd  loss=0.249998  |==|2026-08-27 14:10:33.530 [INFO] Forced structural trigger at epoch 95 (epochs since last structural: 62)
+2026-08-27 14:10:33.530 [INFO] Plateau triggered at epoch 95 (counter=62, loss=0.249998)
+2026-08-27 14:10:33.690 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:33.691 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:33.691 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:33.691 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:33.691 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:33.691 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+  [  96]   eval  loss=0.249998  |==|  [  96]    sgd  loss=0.249998  |==|2026-08-27 14:10:35.293 [INFO] Forced structural trigger at epoch 96 (epochs since last structural: 63)
+2026-08-27 14:10:35.293 [INFO] Plateau triggered at epoch 96 (counter=63, loss=0.249998)
+2026-08-27 14:10:35.439 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 8
+2026-08-27 14:10:35.440 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-08-27 14:10:35.440 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 14:10:35.440 [INFO] IFELSE set-guided split: thr=0.901021 (SSE reduction 3.237758 over 240 paired samples)
+2026-08-27 14:10:35.440 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=0.901021)
+2026-08-27 14:10:35.440 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=0.901021)
+2026-08-27 14:10:36.931 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  97]   eval  loss=0.249998  |==|  [  97]    sgd  loss=0.249998  |==|2026-08-27 14:10:37.081 [INFO] Structural search in cooldown (9 epochs left) at epoch 97 鈥?letting SGD settle
+  [  98]   eval  loss=0.249998  |==|  [  98]    sgd  loss=0.249998  |==|2026-08-27 14:10:37.220 [INFO] Structural search in cooldown (8 epochs left) at epoch 98 鈥?letting SGD settle
+  [  99]   eval  loss=0.249998  |==|  [  99]    sgd  loss=0.249998  |==|2026-08-27 14:10:37.355 [INFO] Structural search in cooldown (7 epochs left) at epoch 99 鈥?letting SGD settle
+  [ 100]   eval  loss=0.249998  |==|  [ 100]    sgd  loss=0.249998  |==|2026-08-27 14:10:37.497 [INFO] Structural search in cooldown (6 epochs left) at epoch 100 鈥?letting SGD settle
+2026-08-27 14:10:37.497 [INFO] Restored best-val graph snapshot (val=0.243908, train=0.248288)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   17
+  Failed commits:       175
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         0.534069
+  Final loss:           0.248288
+  Best loss:            0.247453
+  Wall time:            264910 ms
+
+  [Expression] 0.093*((((tanh(0.009*tanh(tanh(-0.064*(x0?0:0)-0.000))-0.014)+tanh(6.484*((x0>0.4750?1:0)?(x0?0:0):tanh(-0.010*tanh(tanh(-0.064*(x0?0:0)-0.000))-0.228))-0.030))+tanh(-0.010*tanh(tanh(-0.064*(x0?0:0...
+
+  [Library] Behavioral fingerprint: k=1 bounded=1 interact=0 sign_sym=1 sharp=0 lipsch=2.6
+  [Library] Closest existing entries:
+    bench_hetero3.csv (dist=1.097)
+    bench_d7_multiout.csv (dist=1.123)
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 7 entries)
+  [FailureLib] Appended 175 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (1199 samples)
+================================================
+  Eval R2[out0]:   0.009923
+  Eval MSE[out0]:  0.247412   MAE: 0.495534

@@ -1,0 +1,545 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-limits\bench_hetero3.csv
+  Loaded 1199 samples
+  Train: 959  Validation: 240
+
+  Loaded subgraph library: 2 entries
+Starting evolution...
+2026-08-27 13:59:27.000 [INFO] New best overall loss: 0.649205
+  [   1]   eval  loss=17.392938  |====================|  [   1]    sgd  loss=0.649205  |======|2026-08-27 13:59:27.065 [INFO] New best overall loss: 0.514947
+  [   2]   eval  loss=0.649205  |======|  [   2]    sgd  loss=0.514947  |=====|2026-08-27 13:59:27.124 [INFO] New best overall loss: 0.505035
+  [   3]   eval  loss=0.514947  |=====|  [   3]    sgd  loss=0.505035  |=====|2026-08-27 13:59:27.145 [INFO] New best overall loss: 0.504210
+  [   4]   eval  loss=0.505035  |=====|  [   4]    sgd  loss=0.504210  |=====|2026-08-27 13:59:27.163 [INFO] New best overall loss: 0.504010
+  [   5]   eval  loss=0.504210  |=====|  [   5]    sgd  loss=0.504010  |=====|2026-08-27 13:59:27.183 [INFO] New best overall loss: 0.503855
+  [   6]   eval  loss=0.504010  |=====|  [   6]    sgd  loss=0.503855  |=====|2026-08-27 13:59:27.204 [INFO] New best overall loss: 0.503755
+  [   7]   eval  loss=0.503855  |=====|  [   7]    sgd  loss=0.503755  |=====|2026-08-27 13:59:27.216 [INFO] New best overall loss: 0.503074
+  [   8]   eval  loss=0.503755  |=====|  [   8]    sgd  loss=0.503074  |=====|  [   9]   eval  loss=0.503074  |=====|  [   9]    sgd  loss=0.503474  |=====|2026-08-27 13:59:27.248 [INFO] New best overall loss: 0.502998
+  [  10]   eval  loss=0.503474  |=====|  [  10]    sgd  loss=0.502998  |=====|  [  11]   eval  loss=0.502998  |=====|  [  11]    sgd  loss=0.503119  |=====|2026-08-27 13:59:27.280 [INFO] New best overall loss: 0.502463
+  [  12]   eval  loss=0.503119  |=====|  [  12]    sgd  loss=0.502463  |=====|2026-08-27 13:59:27.299 [INFO] New best overall loss: 0.502392
+  [  13]   eval  loss=0.502463  |=====|  [  13]    sgd  loss=0.502392  |=====|2026-08-27 13:59:27.312 [INFO] New best overall loss: 0.501755
+  [  14]   eval  loss=0.502392  |=====|  [  14]    sgd  loss=0.501755  |=====|2026-08-27 13:59:27.347 [INFO] New best overall loss: 0.499475
+  [  15]   eval  loss=0.501755  |=====|  [  15]    sgd  loss=0.499475  |====|  [  16]   eval  loss=0.499475  |====|  [  16]    sgd  loss=0.501400  |=====|2026-08-27 13:59:27.393 [INFO] New best overall loss: 0.499152
+  [  17]   eval  loss=0.501400  |=====|  [  17]    sgd  loss=0.499152  |====|  [  18]   eval  loss=0.499152  |====|  [  18]    sgd  loss=0.500662  |=====|2026-08-27 13:59:27.433 [INFO] New best overall loss: 0.498969
+  [  19]   eval  loss=0.500662  |=====|  [  19]    sgd  loss=0.498969  |====|2026-08-27 13:59:27.458 [INFO] New best overall loss: 0.498877
+  [  20]   eval  loss=0.498969  |====|  [  20]    sgd  loss=0.498877  |====|2026-08-27 13:59:27.458 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-08-27 13:59:27.458 [INFO] Plateau triggered at epoch 20 (counter=1, loss=0.498877)
+2026-08-27 13:59:27.463 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.691179)
+2026-08-27 13:59:27.463 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.004185)
+2026-08-27 13:59:27.464 [INFO] Structural inability 鈥?output-specific bottleneck node 7 (blame=0.001004)
+2026-08-27 13:59:27.464 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:27.464 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:27.464 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 13:59:27.464 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:28.570 [INFO]   COMMIT rank=5 type=COMPOUND_TANH_SERIES val_loss=0.510025 train_loss=0.506196 new train_loss=0.495586
+2026-08-27 13:59:28.571 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 13:59:28.571 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 13:59:28.571 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=2.999448 var_r=0.509235)
+2026-08-27 13:59:28.571 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=2.186235 a=node=5 b=node=7)
+2026-08-27 13:59:28.571 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=30.662742, 5 sign changes)
+2026-08-27 13:59:28.571 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 13:59:28.571 [INFO] Library INJECT (dist=0.297 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:40.735 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.450121 train_loss=0.389685 new train_loss=0.447295
+2026-08-27 13:59:40.735 [INFO] Plateau state reset 鈥?best_phase2=0.447295
+2026-08-27 13:59:40.735 [INFO] Plateau state reset — best_phase2=0.447295
+2026-08-27 13:59:40.803 [INFO] New best overall loss: 0.447225
+  [  21]   eval  loss=0.447295  |====|  [  21]    sgd  loss=0.447225  |====|  [  22]   eval  loss=0.447225  |====|  [  22]    sgd  loss=0.447264  |====|  [  23]   eval  loss=0.447264  |====|  [  23]    sgd  loss=0.447249  |====|2026-08-27 13:59:40.949 [INFO] Plateau triggered at epoch 23 (counter=3, loss=0.447249)
+2026-08-27 13:59:40.981 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.414400)
+2026-08-27 13:59:40.983 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.414400)
+2026-08-27 13:59:40.985 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.414400)
+2026-08-27 13:59:40.987 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.414400)
+2026-08-27 13:59:40.990 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.414400)
+2026-08-27 13:59:40.995 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.414400)
+2026-08-27 13:59:40.997 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.414400)
+2026-08-27 13:59:40.999 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.408818)
+2026-08-27 13:59:41.001 [INFO] Structural inability 鈥?output-specific bottleneck node 10 (blame=0.408818)
+2026-08-27 13:59:41.004 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.408817)
+2026-08-27 13:59:41.006 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.005059)
+2026-08-27 13:59:41.008 [INFO] Structural inability 鈥?output-specific bottleneck node 18 (blame=0.005059)
+2026-08-27 13:59:41.011 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.005059)
+2026-08-27 13:59:41.013 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.001978)
+2026-08-27 13:59:41.015 [INFO] Structural inability 鈥?output-specific bottleneck node 7 (blame=0.001077)
+2026-08-27 13:59:41.016 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:41.016 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:41.016 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 13:59:41.016 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:43.782 [INFO]   COMMIT rank=3 type=MULTIPLY_INJECTION val_loss=0.450012 train_loss=0.389591 new train_loss=0.447187
+2026-08-27 13:59:43.782 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:43.782 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:43.782 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=3.703626, 7 sign changes)
+2026-08-27 13:59:43.783 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 13:59:43.783 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:46.726 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.450811 train_loss=0.390200 new train_loss=0.447980
+2026-08-27 13:59:46.726 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:46.726 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:46.726 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:47.095 [INFO] Plateau state reset 鈥?best_phase2=0.447980
+2026-08-27 13:59:47.095 [INFO] Plateau state reset — best_phase2=0.447980
+2026-08-27 13:59:47.189 [INFO] New best overall loss: 0.447059
+  [  24]   eval  loss=0.447980  |====|  [  24]    sgd  loss=0.447059  |====|  [  25]   eval  loss=0.447059  |====|  [  25]    sgd  loss=0.447133  |====|2026-08-27 13:59:47.354 [INFO] New best overall loss: 0.447057
+  [  26]   eval  loss=0.447133  |====|  [  26]    sgd  loss=0.447057  |====|  [  27]   eval  loss=0.447057  |====|  [  27]    sgd  loss=0.447114  |====|2026-08-27 13:59:47.441 [INFO] Plateau triggered at epoch 27 (counter=3, loss=0.447114)
+2026-08-27 13:59:47.473 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:47.473 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:47.473 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 13:59:47.473 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:50.509 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.450423 train_loss=0.389940 new train_loss=0.447594
+2026-08-27 13:59:50.509 [INFO] Plateau state reset 鈥?best_phase2=0.447594
+2026-08-27 13:59:50.509 [INFO] Plateau state reset — best_phase2=0.447594
+2026-08-27 13:59:50.593 [INFO] New best overall loss: 0.447032
+  [  28]   eval  loss=0.447594  |====|  [  28]    sgd  loss=0.447032  |====|  [  29]   eval  loss=0.447032  |====|  [  29]    sgd  loss=0.447071  |====|  [  30]   eval  loss=0.447071  |====|  [  30]    sgd  loss=0.447051  |====|  [  31]   eval  loss=0.447051  |====|  [  31]    sgd  loss=0.447064  |====|2026-08-27 13:59:50.871 [INFO] Plateau triggered at epoch 31 (counter=3, loss=0.447064)
+2026-08-27 13:59:50.908 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.187276)
+2026-08-27 13:59:50.911 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.187276)
+2026-08-27 13:59:50.913 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.187276)
+2026-08-27 13:59:50.917 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.187276)
+2026-08-27 13:59:50.921 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.187276)
+2026-08-27 13:59:50.926 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.187276)
+2026-08-27 13:59:50.929 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.187276)
+2026-08-27 13:59:50.932 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.187276)
+2026-08-27 13:59:50.934 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.187276)
+2026-08-27 13:59:50.938 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.178470)
+2026-08-27 13:59:50.941 [INFO] Structural inability 鈥?output-specific bottleneck node 10 (blame=0.178466)
+2026-08-27 13:59:50.943 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.178462)
+2026-08-27 13:59:50.945 [INFO] Structural inability 鈥?output-specific bottleneck node 21 (blame=0.093807)
+2026-08-27 13:59:50.948 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.005058)
+2026-08-27 13:59:50.951 [INFO] Structural inability 鈥?output-specific bottleneck node 18 (blame=0.005058)
+2026-08-27 13:59:50.951 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:50.952 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:50.952 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=3.703626, 7 sign changes)
+2026-08-27 13:59:50.952 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 13:59:50.952 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:54.439 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.449922 train_loss=0.389530 new train_loss=0.447089
+2026-08-27 13:59:54.440 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:54.440 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:54.440 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:58.621 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449910 train_loss=0.389497 new train_loss=0.447068
+2026-08-27 13:59:58.622 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:58.622 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:58.623 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 13:59:59.350 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449877 train_loss=0.389459 new train_loss=0.447031
+2026-08-27 13:59:59.350 [INFO] Plateau state reset 鈥?best_phase2=0.447031
+2026-08-27 13:59:59.350 [INFO] Plateau state reset — best_phase2=0.447031
+2026-08-27 13:59:59.479 [INFO] New best overall loss: 0.446989
+  [  32]   eval  loss=0.447031  |====|  [  32]    sgd  loss=0.446989  |====|  [  33]   eval  loss=0.446989  |====|  [  33]    sgd  loss=0.447021  |====|  [  34]   eval  loss=0.447021  |====|  [  34]    sgd  loss=0.447009  |====|2026-08-27 13:59:59.742 [INFO] Plateau triggered at epoch 34 (counter=3, loss=0.447009)
+2026-08-27 13:59:59.824 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 13:59:59.824 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 13:59:59.824 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 13:59:59.824 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:04.772 [INFO]   COMMIT rank=5 type=COMPOUND_TANH_SERIES val_loss=0.449979 train_loss=0.387662 new train_loss=0.446682
+2026-08-27 14:00:04.773 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:04.773 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:04.773 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:00:04.773 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:10.601 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.450040 train_loss=0.389607 new train_loss=0.447203
+2026-08-27 14:00:10.602 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:10.602 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:10.602 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=3.703626, 7 sign changes)
+2026-08-27 14:00:10.602 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:00:10.602 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:15.529 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.450092 train_loss=0.389671 new train_loss=0.447258
+2026-08-27 14:00:15.529 [INFO] Plateau state reset 鈥?best_phase2=0.447258
+2026-08-27 14:00:15.529 [INFO] Plateau state reset — best_phase2=0.447258
+  [  35]   eval  loss=0.447258  |====|  [  35]    sgd  loss=0.447008  |====|  [  36]   eval  loss=0.447008  |====|  [  36]    sgd  loss=0.447032  |====|  [  37]   eval  loss=0.447032  |====|  [  37]    sgd  loss=0.447036  |====|2026-08-27 14:00:15.960 [INFO] Plateau triggered at epoch 37 (counter=3, loss=0.447036)
+2026-08-27 14:00:16.145 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:16.145 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:16.145 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:22.502 [INFO]   COMMIT rank=3 type=COMPOUND_TANH_SERIES val_loss=0.449984 train_loss=0.387671 new train_loss=0.446688
+2026-08-27 14:00:22.503 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:22.503 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:22.503 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 14:00:22.503 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:30.032 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.449956 train_loss=0.389538 new train_loss=0.447117
+2026-08-27 14:00:30.033 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:30.033 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:30.033 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:00:30.033 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:36.406 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.449889 train_loss=0.389481 new train_loss=0.447048
+2026-08-27 14:00:36.406 [INFO] Plateau state reset 鈥?best_phase2=0.447048
+2026-08-27 14:00:36.406 [INFO] Plateau state reset — best_phase2=0.447048
+  [  38]   eval  loss=0.447048  |====|  [  38]    sgd  loss=0.446994  |====|  [  39]   eval  loss=0.446994  |====|  [  39]    sgd  loss=0.447039  |====|  [  40]   eval  loss=0.447039  |====|  [  40]    sgd  loss=0.447014  |====|2026-08-27 14:00:36.953 [INFO] Plateau triggered at epoch 40 (counter=3, loss=0.447014)
+2026-08-27 14:00:37.131 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.025692)
+2026-08-27 14:00:37.140 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.025692)
+2026-08-27 14:00:37.150 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.025692)
+2026-08-27 14:00:37.158 [INFO] Structural inability 鈥?output-specific bottleneck node 31 (blame=0.025692)
+2026-08-27 14:00:37.167 [INFO] Structural inability 鈥?output-specific bottleneck node 32 (blame=0.025692)
+2026-08-27 14:00:37.175 [INFO] Structural inability 鈥?output-specific bottleneck node 35 (blame=0.025692)
+2026-08-27 14:00:37.181 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.025692)
+2026-08-27 14:00:37.185 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.025692)
+2026-08-27 14:00:37.191 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.025692)
+2026-08-27 14:00:37.201 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.025692)
+2026-08-27 14:00:37.207 [INFO] Structural inability 鈥?output-specific bottleneck node 34 (blame=0.025692)
+2026-08-27 14:00:37.213 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.025692)
+2026-08-27 14:00:37.219 [INFO] Structural inability 鈥?output-specific bottleneck node 29 (blame=0.025692)
+2026-08-27 14:00:37.223 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.025692)
+2026-08-27 14:00:37.231 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.025557)
+2026-08-27 14:00:37.232 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:37.232 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:37.232 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:44.639 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.449873 train_loss=0.389462 new train_loss=0.447031
+2026-08-27 14:00:44.640 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:44.640 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:44.640 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:00:44.640 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:51.903 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.449871 train_loss=0.389458 new train_loss=0.447026
+2026-08-27 14:00:51.905 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:51.905 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:00:51.905 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:00:58.822 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.449865 train_loss=0.389449 new train_loss=0.447019
+2026-08-27 14:00:58.822 [INFO] Plateau state reset 鈥?best_phase2=0.447019
+2026-08-27 14:00:58.822 [INFO] Plateau state reset — best_phase2=0.447019
+2026-08-27 14:00:58.937 [INFO] New best overall loss: 0.446986
+  [  41]   eval  loss=0.447019  |====|  [  41]    sgd  loss=0.446986  |====|  [  42]   eval  loss=0.446986  |====|  [  42]    sgd  loss=0.447017  |====|  [  43]   eval  loss=0.447017  |====|  [  43]    sgd  loss=0.447002  |====|2026-08-27 14:00:59.150 [INFO] Plateau triggered at epoch 43 (counter=3, loss=0.447002)
+2026-08-27 14:00:59.222 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.013709)
+2026-08-27 14:00:59.228 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.013709)
+2026-08-27 14:00:59.234 [INFO] Structural inability 鈥?output-specific bottleneck node 34 (blame=0.013709)
+2026-08-27 14:00:59.240 [INFO] Structural inability 鈥?output-specific bottleneck node 35 (blame=0.013709)
+2026-08-27 14:00:59.244 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.010589)
+2026-08-27 14:00:59.247 [INFO] Structural inability 鈥?output-specific bottleneck node 18 (blame=0.005056)
+2026-08-27 14:00:59.249 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.005056)
+2026-08-27 14:00:59.252 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.001976)
+2026-08-27 14:00:59.256 [INFO] Structural inability 鈥?output-specific bottleneck node 7 (blame=0.001076)
+2026-08-27 14:00:59.260 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.000002)
+2026-08-27 14:00:59.266 [INFO] Structural inability 鈥?output-specific bottleneck node 33 (blame=0.000001)
+2026-08-27 14:00:59.268 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.000000)
+2026-08-27 14:00:59.273 [INFO] Structural inability 鈥?output-specific bottleneck node 50 (blame=0.000000)
+2026-08-27 14:00:59.276 [INFO] Structural inability 鈥?output-specific bottleneck node 25 (blame=0.000000)
+2026-08-27 14:00:59.282 [INFO] Structural inability 鈥?output-specific bottleneck node 26 (blame=0.000000)
+2026-08-27 14:00:59.282 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:00:59.282 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:03.585 [INFO]   COMMIT rank=2 type=COMPOUND_TANH_SERIES val_loss=0.449970 train_loss=0.387653 new train_loss=0.446672
+2026-08-27 14:01:03.585 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:03.585 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:01:03.585 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:08.427 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.449863 train_loss=0.389445 new train_loss=0.447016
+2026-08-27 14:01:08.427 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:08.427 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=66 b=node=67)
+2026-08-27 14:01:08.427 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:01:08.428 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:13.257 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.449910 train_loss=0.389494 new train_loss=0.447065
+2026-08-27 14:01:13.257 [INFO] M1.3 family fatigue: suppressing SIN_INJECTION for 25 epochs (8 commits each < 1.000000% val gain)
+2026-08-27 14:01:13.258 [INFO] Plateau state reset 鈥?best_phase2=0.447065
+2026-08-27 14:01:13.258 [INFO] Plateau state reset — best_phase2=0.447065
+2026-08-27 14:01:13.369 [INFO] New best overall loss: 0.446982
+  [  44]   eval  loss=0.447065  |====|  [  44]    sgd  loss=0.446982  |====|  [  45]   eval  loss=0.446982  |====|  [  45]    sgd  loss=0.447021  |====|  [  46]   eval  loss=0.447021  |====|  [  46]    sgd  loss=0.447001  |====|2026-08-27 14:01:13.599 [INFO] Plateau triggered at epoch 46 (counter=3, loss=0.447001)
+2026-08-27 14:01:13.720 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.008797)
+2026-08-27 14:01:13.727 [INFO] Structural inability 鈥?output-specific bottleneck node 77 (blame=0.008797)
+2026-08-27 14:01:13.730 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.008797)
+2026-08-27 14:01:13.736 [INFO] Structural inability 鈥?output-specific bottleneck node 34 (blame=0.008797)
+2026-08-27 14:01:13.740 [INFO] Structural inability 鈥?output-specific bottleneck node 69 (blame=0.008797)
+2026-08-27 14:01:13.744 [INFO] Structural inability 鈥?output-specific bottleneck node 71 (blame=0.008797)
+2026-08-27 14:01:13.747 [INFO] Structural inability 鈥?output-specific bottleneck node 76 (blame=0.008797)
+2026-08-27 14:01:13.750 [INFO] Structural inability 鈥?output-specific bottleneck node 67 (blame=0.008797)
+2026-08-27 14:01:13.755 [INFO] Structural inability 鈥?output-specific bottleneck node 73 (blame=0.008797)
+2026-08-27 14:01:13.764 [INFO] Structural inability 鈥?output-specific bottleneck node 35 (blame=0.008797)
+2026-08-27 14:01:13.769 [INFO] Structural inability 鈥?output-specific bottleneck node 72 (blame=0.008797)
+2026-08-27 14:01:13.774 [INFO] Structural inability 鈥?output-specific bottleneck node 74 (blame=0.008797)
+2026-08-27 14:01:13.779 [INFO] Structural inability 鈥?output-specific bottleneck node 75 (blame=0.008693)
+2026-08-27 14:01:13.783 [INFO] Structural inability 鈥?output-specific bottleneck node 66 (blame=0.008492)
+2026-08-27 14:01:13.787 [INFO] Structural inability 鈥?output-specific bottleneck node 68 (blame=0.008492)
+2026-08-27 14:01:13.788 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:13.788 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:01:13.788 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:19.492 [INFO]   COMMIT rank=3 type=COMPOUND_TANH_SERIES val_loss=0.449972 train_loss=0.387655 new train_loss=0.446674
+2026-08-27 14:01:19.492 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:19.493 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:01:19.493 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:01:19.493 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:25.886 [INFO]   COMMIT rank=3 type=MULTIPLY_INJECTION val_loss=0.449967 train_loss=0.389541 new train_loss=0.447122
+2026-08-27 14:01:25.887 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:25.887 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:01:25.887 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:32.663 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449913 train_loss=0.389491 new train_loss=0.447068
+2026-08-27 14:01:32.663 [INFO] Plateau state reset 鈥?best_phase2=0.447068
+2026-08-27 14:01:32.663 [INFO] Plateau state reset — best_phase2=0.447068
+  [  47]   eval  loss=0.447068  |====|  [  47]    sgd  loss=0.446985  |====|  [  48]   eval  loss=0.446985  |====|  [  48]    sgd  loss=0.447018  |====|  [  49]   eval  loss=0.447018  |====|  [  49]    sgd  loss=0.447003  |====|2026-08-27 14:01:33.241 [INFO] Plateau triggered at epoch 49 (counter=3, loss=0.447003)
+2026-08-27 14:01:33.443 [INFO] Structural inability 鈥?output-specific bottleneck node 66 (blame=0.007598)
+2026-08-27 14:01:33.448 [INFO] Structural inability 鈥?output-specific bottleneck node 76 (blame=0.007385)
+2026-08-27 14:01:33.458 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.007385)
+2026-08-27 14:01:33.468 [INFO] Structural inability 鈥?output-specific bottleneck node 84 (blame=0.007385)
+2026-08-27 14:01:33.472 [INFO] Structural inability 鈥?output-specific bottleneck node 88 (blame=0.007385)
+2026-08-27 14:01:33.478 [INFO] Structural inability 鈥?output-specific bottleneck node 72 (blame=0.007385)
+2026-08-27 14:01:33.486 [INFO] Structural inability 鈥?output-specific bottleneck node 35 (blame=0.007385)
+2026-08-27 14:01:33.491 [INFO] Structural inability 鈥?output-specific bottleneck node 69 (blame=0.007385)
+2026-08-27 14:01:33.500 [INFO] Structural inability 鈥?output-specific bottleneck node 85 (blame=0.007385)
+2026-08-27 14:01:33.507 [INFO] Structural inability 鈥?output-specific bottleneck node 77 (blame=0.007385)
+2026-08-27 14:01:33.511 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.007385)
+2026-08-27 14:01:33.516 [INFO] Structural inability 鈥?output-specific bottleneck node 71 (blame=0.007385)
+2026-08-27 14:01:33.522 [INFO] Structural inability 鈥?output-specific bottleneck node 79 (blame=0.007385)
+2026-08-27 14:01:33.526 [INFO] Structural inability 鈥?output-specific bottleneck node 81 (blame=0.007385)
+2026-08-27 14:01:33.530 [INFO] Structural inability 鈥?output-specific bottleneck node 83 (blame=0.007385)
+2026-08-27 14:01:33.530 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:33.531 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=67 b=node=76)
+2026-08-27 14:01:33.531 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:41.031 [INFO]   COMMIT rank=4 type=COMPOUND_TANH_SERIES val_loss=0.449977 train_loss=0.387660 new train_loss=0.446679
+2026-08-27 14:01:41.032 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:41.032 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:01:41.032 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:49.170 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449889 train_loss=0.389469 new train_loss=0.447044
+2026-08-27 14:01:49.171 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:49.171 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:01:49.172 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:01:57.811 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449882 train_loss=0.389465 new train_loss=0.447038
+2026-08-27 14:01:57.811 [INFO] Plateau state reset 鈥?best_phase2=0.447038
+2026-08-27 14:01:57.811 [INFO] Plateau state reset — best_phase2=0.447038
+  [  50]   eval  loss=0.447038  |====|  [  50]    sgd  loss=0.446986  |====|  [  51]   eval  loss=0.446986  |====|  [  51]    sgd  loss=0.447023  |====|  [  52]   eval  loss=0.447023  |====|  [  52]    sgd  loss=0.447004  |====|2026-08-27 14:01:58.519 [INFO] Plateau triggered at epoch 52 (counter=3, loss=0.447004)
+2026-08-27 14:01:58.846 [INFO] Structural inability 鈥?output-specific bottleneck node 66 (blame=0.007815)
+2026-08-27 14:01:58.853 [INFO] Structural inability 鈥?output-specific bottleneck node 98 (blame=0.007052)
+2026-08-27 14:01:58.861 [INFO] Structural inability 鈥?output-specific bottleneck node 101 (blame=0.007052)
+2026-08-27 14:01:58.868 [INFO] Structural inability 鈥?output-specific bottleneck node 100 (blame=0.007052)
+2026-08-27 14:01:58.875 [INFO] Structural inability 鈥?output-specific bottleneck node 99 (blame=0.007052)
+2026-08-27 14:01:58.881 [INFO] Structural inability 鈥?output-specific bottleneck node 96 (blame=0.007052)
+2026-08-27 14:01:58.887 [INFO] Structural inability 鈥?output-specific bottleneck node 94 (blame=0.007052)
+2026-08-27 14:01:58.893 [INFO] Structural inability 鈥?output-specific bottleneck node 93 (blame=0.006995)
+2026-08-27 14:01:58.899 [INFO] Structural inability 鈥?output-specific bottleneck node 95 (blame=0.006994)
+2026-08-27 14:01:58.906 [INFO] Structural inability 鈥?output-specific bottleneck node 97 (blame=0.006992)
+2026-08-27 14:01:58.913 [INFO] Structural inability 鈥?output-specific bottleneck node 69 (blame=0.006273)
+2026-08-27 14:01:58.922 [INFO] Structural inability 鈥?output-specific bottleneck node 91 (blame=0.006273)
+2026-08-27 14:01:58.928 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.006273)
+2026-08-27 14:01:58.945 [INFO] Structural inability 鈥?output-specific bottleneck node 85 (blame=0.006273)
+2026-08-27 14:01:58.951 [INFO] Structural inability 鈥?output-specific bottleneck node 79 (blame=0.006273)
+2026-08-27 14:01:58.951 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:01:58.952 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=67 b=node=76)
+2026-08-27 14:01:58.952 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:07.917 [INFO]   COMMIT rank=4 type=COMPOUND_TANH_SERIES val_loss=0.449983 train_loss=0.387664 new train_loss=0.446684
+2026-08-27 14:02:07.918 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:07.918 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:17.513 [INFO]   COMMIT rank=2 type=COMPOUND_TANH_SERIES val_loss=0.449985 train_loss=0.387668 new train_loss=0.446688
+2026-08-27 14:02:17.513 [INFO] M1.3 family fatigue: suppressing COMPOUND_TANH_SERIES for 25 epochs (8 commits each < 1.000000% val gain)
+2026-08-27 14:02:17.514 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:17.514 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:19.391 [INFO]   COMMIT rank=1 type=MULTIPLY_INJECTION val_loss=0.449873 train_loss=0.389456 new train_loss=0.447027
+2026-08-27 14:02:19.391 [INFO] M1.3 family fatigue: suppressing MULTIPLY_INJECTION for 25 epochs (8 commits each < 1.000000% val gain)
+2026-08-27 14:02:19.392 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:19.393 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:21.229 [INFO] Plateau state reset 鈥?best_phase2=0.447027
+2026-08-27 14:02:21.229 [INFO] Plateau state reset — best_phase2=0.447027
+2026-08-27 14:02:21.229 [INFO] Suppressing hypothesis type 4 (3 consecutive commits without meaningful improvement)
+  [  53]   eval  loss=0.447027  |====|  [  53]    sgd  loss=0.446995  |====|  [  54]   eval  loss=0.446995  |====|  [  54]    sgd  loss=0.447018  |====|  [  55]   eval  loss=0.447018  |====|  [  55]    sgd  loss=0.447007  |====|2026-08-27 14:02:22.138 [INFO] Plateau triggered at epoch 55 (counter=3, loss=0.447007)
+2026-08-27 14:02:22.614 [INFO] Structural inability 鈥?output-specific bottleneck node 66 (blame=0.005480)
+2026-08-27 14:02:22.623 [INFO] Structural inability 鈥?output-specific bottleneck node 18 (blame=0.005056)
+2026-08-27 14:02:22.631 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.005056)
+2026-08-27 14:02:22.642 [INFO] Structural inability 鈥?output-specific bottleneck node 34 (blame=0.005041)
+2026-08-27 14:02:22.653 [INFO] Structural inability 鈥?output-specific bottleneck node 88 (blame=0.005041)
+2026-08-27 14:02:22.662 [INFO] Structural inability 鈥?output-specific bottleneck node 104 (blame=0.005041)
+2026-08-27 14:02:22.682 [INFO] Structural inability 鈥?output-specific bottleneck node 35 (blame=0.005041)
+2026-08-27 14:02:22.690 [INFO] Structural inability 鈥?output-specific bottleneck node 69 (blame=0.005041)
+2026-08-27 14:02:22.704 [INFO] Structural inability 鈥?output-specific bottleneck node 77 (blame=0.005041)
+2026-08-27 14:02:22.714 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.005041)
+2026-08-27 14:02:22.724 [INFO] Structural inability 鈥?output-specific bottleneck node 71 (blame=0.005041)
+2026-08-27 14:02:22.737 [INFO] Structural inability 鈥?output-specific bottleneck node 67 (blame=0.005041)
+2026-08-27 14:02:22.748 [INFO] Structural inability 鈥?output-specific bottleneck node 103 (blame=0.005041)
+2026-08-27 14:02:22.758 [INFO] Structural inability 鈥?output-specific bottleneck node 76 (blame=0.005041)
+2026-08-27 14:02:22.780 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.005041)
+2026-08-27 14:02:22.780 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:22.780 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=67 b=node=76)
+2026-08-27 14:02:22.781 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:32.731 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 14:02:32.731 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 14:02:32.732 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.333633, 5 sign changes)
+2026-08-27 14:02:32.732 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:02:32.732 [INFO] Library INJECT (dist=0.297 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:34.576 [INFO]   COMMIT rank=6 type=CONTEXT_WIRE val_loss=0.255255 train_loss=0.244603 new train_loss=0.251117
+2026-08-27 14:02:34.577 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 14:02:34.577 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 14:02:34.577 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:02:34.577 [INFO] Library INJECT (dist=0.297 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:36.520 [INFO]   COMMIT rank=1 type=NEURON_TANH_INJECTION val_loss=0.246853 train_loss=0.239492 new train_loss=0.238294
+2026-08-27 14:02:36.521 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:36.521 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=66 b=node=67)
+2026-08-27 14:02:36.521 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:02:36.521 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:46.642 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.246716 train_loss=0.239688 new train_loss=0.237900
+2026-08-27 14:02:46.643 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:46.643 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:02:46.644 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=66 b=node=67)
+2026-08-27 14:02:46.644 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:47.833 [INFO] Plateau state reset 鈥?best_phase2=0.237900
+2026-08-27 14:02:47.833 [INFO] Plateau state reset — best_phase2=0.237900
+2026-08-27 14:02:48.042 [INFO] New best overall loss: 0.237848
+  [  56]   eval  loss=0.237900  |==|  [  56]    sgd  loss=0.237848  |==|  [  57]   eval  loss=0.237848  |==|  [  57]    sgd  loss=0.237890  |==|  [  58]   eval  loss=0.237890  |==|  [  58]    sgd  loss=0.237862  |==|2026-08-27 14:02:48.633 [INFO] Plateau triggered at epoch 58 (counter=3, loss=0.237862)
+2026-08-27 14:02:48.914 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:48.915 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:02:48.915 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+  [  59]   eval  loss=0.237862  |==|  [  59]    sgd  loss=0.237883  |==|2026-08-27 14:02:50.521 [INFO] Plateau triggered at epoch 59 (counter=4, loss=0.237883)
+2026-08-27 14:02:50.791 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:50.791 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 14:02:50.792 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:52.162 [INFO]   COMMIT rank=1 type=IFELSE_BOUNDARY_SPLIT val_loss=0.246716 train_loss=0.239688 new train_loss=0.237897
+2026-08-27 14:02:52.162 [INFO] Plateau state reset 鈥?best_phase2=0.237897
+2026-08-27 14:02:52.162 [INFO] Plateau state reset — best_phase2=0.237897
+  [  60]   eval  loss=0.237897  |==|  [  60]    sgd  loss=0.237863  |==|  [  61]   eval  loss=0.237863  |==|  [  61]    sgd  loss=0.237905  |==|  [  62]   eval  loss=0.237905  |==|  [  62]    sgd  loss=0.237891  |==|2026-08-27 14:02:52.814 [INFO] Plateau triggered at epoch 62 (counter=3, loss=0.237891)
+2026-08-27 14:02:53.110 [INFO] Structural inability 鈥?output-specific bottleneck node 133 (blame=0.008090)
+2026-08-27 14:02:53.117 [INFO] Structural inability 鈥?output-specific bottleneck node 130 (blame=0.005570)
+2026-08-27 14:02:53.123 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.005255)
+2026-08-27 14:02:53.129 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.005255)
+2026-08-27 14:02:53.135 [INFO] Structural inability 鈥?output-specific bottleneck node 18 (blame=0.005255)
+2026-08-27 14:02:53.140 [INFO] Structural inability 鈥?output-specific bottleneck node 79 (blame=0.004430)
+2026-08-27 14:02:53.146 [INFO] Structural inability 鈥?output-specific bottleneck node 71 (blame=0.004430)
+2026-08-27 14:02:53.152 [INFO] Structural inability 鈥?output-specific bottleneck node 103 (blame=0.004430)
+2026-08-27 14:02:53.158 [INFO] Structural inability 鈥?output-specific bottleneck node 76 (blame=0.004430)
+2026-08-27 14:02:53.166 [INFO] Structural inability 鈥?output-specific bottleneck node 91 (blame=0.004430)
+2026-08-27 14:02:53.173 [INFO] Structural inability 鈥?output-specific bottleneck node 77 (blame=0.004430)
+2026-08-27 14:02:53.179 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.004430)
+2026-08-27 14:02:53.190 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.004430)
+2026-08-27 14:02:53.197 [INFO] Structural inability 鈥?output-specific bottleneck node 88 (blame=0.004430)
+2026-08-27 14:02:53.203 [INFO] Structural inability 鈥?output-specific bottleneck node 34 (blame=0.004430)
+2026-08-27 14:02:53.203 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:02:53.203 [INFO] IFELSE set-guided split: thr=-0.284131 (SSE reduction 1898.447599 over 240 paired samples)
+2026-08-27 14:02:53.203 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:54.736 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.246710 train_loss=0.239684 new train_loss=0.237893
+2026-08-27 14:02:54.737 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 14:02:54.737 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 14:02:54.737 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:02:54.737 [INFO] Library INJECT (dist=0.297 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:02:56.149 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 14:02:56.150 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 14:02:56.150 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=2.999448 var_r=0.509235)
+2026-08-27 14:02:56.150 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=2.186235 a=node=66 b=node=67)
+2026-08-27 14:02:56.150 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=7.853982, 5 sign changes)
+2026-08-27 14:02:56.150 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:02:56.150 [INFO] Library INJECT (dist=0.297 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:03:49.595 [INFO]   COMMIT rank=2 type=NEURON_TANH_INJECTION val_loss=0.022149 train_loss=0.021848 new train_loss=0.023829
+2026-08-27 14:03:49.596 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 14:03:49.596 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 14:03:49.596 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=20.864597, 11 sign changes)
+2026-08-27 14:03:49.596 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:03:49.596 [INFO] Library INJECT (dist=0.297 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:03:51.247 [INFO]   COMMIT rank=3 type=IFELSE_BOUNDARY_SPLIT val_loss=0.020952 train_loss=0.020085 new train_loss=0.021715
+2026-08-27 14:03:51.248 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 14:03:51.248 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 14:03:51.248 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=4.712397, 3 sign changes)
+2026-08-27 14:03:51.248 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:03:51.248 [INFO] Library INJECT (dist=0.297 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:03:52.662 [INFO] Plateau state reset 鈥?best_phase2=0.021715
+2026-08-27 14:03:52.662 [INFO] Plateau state reset — best_phase2=0.021715
+  [  63]   eval  loss=0.021715  ||  [  63]    sgd  loss=0.022309  ||  [  64]   eval  loss=0.022309  ||  [  64]    sgd  loss=0.021996  ||  [  65]   eval  loss=0.021996  ||  [  65]    sgd  loss=0.021917  ||  [  66]   eval  loss=0.021917  ||  [  66]    sgd  loss=0.021886  ||  [  67]   eval  loss=0.021886  ||  [  67]    sgd  loss=0.022039  ||  [  68]   eval  loss=0.022039  ||  [  68]    sgd  loss=0.021723  ||  [  69]   eval  loss=0.021723  ||  [  69]    sgd  loss=0.022159  ||  [  70]   eval  loss=0.022159  ||  [  70]    sgd  loss=0.022445  ||  [  71]   eval  loss=0.022445  ||  [  71]    sgd  loss=0.022241  ||  [  72]   eval  loss=0.022241  ||  [  72]    sgd  loss=0.023514  ||  [  73]   eval  loss=0.023514  ||  [  73]    sgd  loss=0.024402  ||  [  74]   eval  loss=0.024402  ||  [  74]    sgd  loss=0.026918  ||2026-08-27 14:03:55.951 [INFO] Plateau triggered at epoch 74 (counter=3, loss=0.026918)
+2026-08-27 14:03:56.299 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:03:56.299 [INFO] IFELSE set-guided split: thr=0.303493 (SSE reduction 1905.121500 over 240 paired samples)
+2026-08-27 14:03:56.299 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=22.147348, 25 sign changes)
+2026-08-27 14:03:56.299 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:03:56.299 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:03:56.299 [INFO] M1.3 parole: releasing hypothesis type 11 (suppression expired)
+  [  75]   eval  loss=0.026918  ||  [  75]    sgd  loss=0.026047  ||  [  76]   eval  loss=0.026047  ||  [  76]    sgd  loss=0.028209  ||  [  77]   eval  loss=0.028209  ||  [  77]    sgd  loss=0.028639  ||  [  78]   eval  loss=0.028639  ||  [  78]    sgd  loss=0.030800  ||2026-08-27 14:04:06.656 [INFO] Plateau triggered at epoch 78 (counter=3, loss=0.030800)
+2026-08-27 14:04:07.009 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:04:07.010 [INFO] IFELSE set-guided split: thr=0.316199 (SSE reduction 1899.180203 over 240 paired samples)
+2026-08-27 14:04:07.010 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=14.783556, 17 sign changes)
+2026-08-27 14:04:07.010 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:04:07.010 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:04:07.010 [INFO] M1.3 parole: releasing hypothesis type 7 (suppression expired)
+2026-08-27 14:04:07.010 [INFO] M1.3 parole: releasing hypothesis type 4 (suppression expired)
+  [  79]   eval  loss=0.030800  ||  [  79]    sgd  loss=0.031703  ||2026-08-27 14:04:17.338 [INFO] Plateau triggered at epoch 79 (counter=4, loss=0.031703)
+2026-08-27 14:04:17.675 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:04:17.676 [INFO] IFELSE set-guided split: thr=0.316199 (SSE reduction 1899.180203 over 240 paired samples)
+2026-08-27 14:04:17.676 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=16.553196, 19 sign changes)
+2026-08-27 14:04:17.676 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:04:17.676 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+  [  80]   eval  loss=0.031703  ||  [  80]    sgd  loss=0.032249  ||2026-08-27 14:04:28.313 [INFO] Plateau triggered at epoch 80 (counter=5, loss=0.032249)
+2026-08-27 14:04:28.647 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:04:28.647 [INFO] IFELSE set-guided split: thr=0.308639 (SSE reduction 1902.098029 over 240 paired samples)
+2026-08-27 14:04:28.647 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=6.006119, 7 sign changes)
+2026-08-27 14:04:28.647 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:04:28.647 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+  [  81]   eval  loss=0.032249  ||  [  81]    sgd  loss=0.033521  ||2026-08-27 14:04:39.058 [INFO] Plateau triggered at epoch 81 (counter=6, loss=0.033521)
+2026-08-27 14:04:39.437 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:04:39.437 [INFO] IFELSE set-guided split: thr=-0.261514 (SSE reduction 1903.642635 over 240 paired samples)
+2026-08-27 14:04:39.437 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:04:46.669 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  82]   eval  loss=0.033521  ||  [  82]    sgd  loss=0.034999  ||2026-08-27 14:04:46.814 [INFO] Structural search in cooldown (9 epochs left) at epoch 82 鈥?letting SGD settle
+  [  83]   eval  loss=0.034999  ||  [  83]    sgd  loss=0.036094  ||2026-08-27 14:04:47.003 [INFO] Structural search in cooldown (8 epochs left) at epoch 83 鈥?letting SGD settle
+  [  84]   eval  loss=0.036094  ||  [  84]    sgd  loss=0.036645  ||2026-08-27 14:04:47.158 [INFO] Structural search in cooldown (7 epochs left) at epoch 84 鈥?letting SGD settle
+  [  85]   eval  loss=0.036645  ||  [  85]    sgd  loss=0.037977  ||2026-08-27 14:04:47.387 [INFO] Structural search in cooldown (6 epochs left) at epoch 85 鈥?letting SGD settle
+  [  86]   eval  loss=0.037977  ||  [  86]    sgd  loss=0.038194  ||2026-08-27 14:04:47.579 [INFO] Structural search in cooldown (5 epochs left) at epoch 86 鈥?letting SGD settle
+  [  87]   eval  loss=0.038194  ||  [  87]    sgd  loss=0.038478  ||2026-08-27 14:04:47.785 [INFO] Structural search in cooldown (4 epochs left) at epoch 87 鈥?letting SGD settle
+  [  88]   eval  loss=0.038478  ||  [  88]    sgd  loss=0.039844  ||2026-08-27 14:04:47.991 [INFO] Structural search in cooldown (3 epochs left) at epoch 88 鈥?letting SGD settle
+  [  89]   eval  loss=0.039844  ||  [  89]    sgd  loss=0.040840  ||2026-08-27 14:04:48.142 [INFO] Structural search in cooldown (2 epochs left) at epoch 89 鈥?letting SGD settle
+  [  90]   eval  loss=0.040840  ||  [  90]    sgd  loss=0.040312  ||2026-08-27 14:04:48.305 [INFO] Structural search in cooldown (1 epochs left) at epoch 90 鈥?letting SGD settle
+  [  91]   eval  loss=0.040312  ||  [  91]    sgd  loss=0.040898  ||2026-08-27 14:04:48.468 [INFO] Forced structural trigger at epoch 91 (epochs since last structural: 29)
+2026-08-27 14:04:48.468 [INFO] Plateau triggered at epoch 91 (counter=1, loss=0.040898)
+2026-08-27 14:04:48.686 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:04:48.686 [INFO] IFELSE set-guided split: thr=-0.284131 (SSE reduction 1898.447599 over 240 paired samples)
+2026-08-27 14:04:48.686 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=18.298057, 21 sign changes)
+2026-08-27 14:04:48.686 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:04:48.686 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+  [  92]   eval  loss=0.040898  ||  [  92]    sgd  loss=0.041477  ||2026-08-27 14:04:59.635 [INFO] Forced structural trigger at epoch 92 (epochs since last structural: 30)
+2026-08-27 14:04:59.635 [INFO] Plateau triggered at epoch 92 (counter=2, loss=0.041477)
+2026-08-27 14:05:00.007 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:05:00.007 [INFO] IFELSE set-guided split: thr=0.303493 (SSE reduction 1905.121500 over 240 paired samples)
+2026-08-27 14:05:00.007 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:05:09.502 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:05:09.503 [INFO] IFELSE set-guided split: thr=0.303493 (SSE reduction 1905.121500 over 240 paired samples)
+2026-08-27 14:05:09.503 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:05:18.940 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:05:18.940 [INFO] IFELSE set-guided split: thr=0.303493 (SSE reduction 1905.121500 over 240 paired samples)
+2026-08-27 14:05:18.941 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=19.985897, 23 sign changes)
+2026-08-27 14:05:18.941 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:05:18.941 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+  [  93]   eval  loss=0.041477  ||  [  93]    sgd  loss=0.043109  ||2026-08-27 14:05:29.285 [INFO] Forced structural trigger at epoch 93 (epochs since last structural: 31)
+2026-08-27 14:05:29.286 [INFO] Plateau triggered at epoch 93 (counter=3, loss=0.043109)
+2026-08-27 14:05:29.637 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:05:29.637 [INFO] IFELSE set-guided split: thr=-0.284131 (SSE reduction 1898.447599 over 240 paired samples)
+2026-08-27 14:05:29.638 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=21.849114, 25 sign changes)
+2026-08-27 14:05:29.638 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:05:29.638 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+  [  94]   eval  loss=0.043109  ||  [  94]    sgd  loss=0.042170  ||2026-08-27 14:05:39.847 [INFO] Forced structural trigger at epoch 94 (epochs since last structural: 32)
+2026-08-27 14:05:39.847 [INFO] Plateau triggered at epoch 94 (counter=0, loss=0.042170)
+2026-08-27 14:05:40.223 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:05:40.223 [INFO] IFELSE set-guided split: thr=-0.284131 (SSE reduction 1898.447599 over 240 paired samples)
+2026-08-27 14:05:40.224 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:05:49.515 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:05:49.515 [INFO] IFELSE set-guided split: thr=-0.284131 (SSE reduction 1898.447599 over 240 paired samples)
+2026-08-27 14:05:49.515 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=21.676705, 25 sign changes)
+2026-08-27 14:05:49.515 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:05:49.515 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+  [  95]   eval  loss=0.042170  ||  [  95]    sgd  loss=0.044287  ||2026-08-27 14:06:00.174 [INFO] Forced structural trigger at epoch 95 (epochs since last structural: 33)
+2026-08-27 14:06:00.174 [INFO] Plateau triggered at epoch 95 (counter=1, loss=0.044287)
+2026-08-27 14:06:00.539 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 14:06:00.539 [INFO] IFELSE set-guided split: thr=-0.261514 (SSE reduction 1903.642635 over 240 paired samples)
+2026-08-27 14:06:00.540 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=21.720794, 25 sign changes)
+2026-08-27 14:06:00.540 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 14:06:00.540 [INFO] Library INJECT (dist=0.033 src=bench_d7_multiout.csv) -> TANH_SERIES [gate-bypass]
+2026-08-27 14:06:10.923 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  96]   eval  loss=0.044287  ||  [  96]    sgd  loss=0.044900  ||2026-08-27 14:06:11.151 [INFO] Structural search in cooldown (9 epochs left) at epoch 96 鈥?letting SGD settle
+  [  97]   eval  loss=0.044900  ||  [  97]    sgd  loss=0.044295  ||2026-08-27 14:06:11.468 [INFO] Structural search in cooldown (8 epochs left) at epoch 97 鈥?letting SGD settle
+  [  98]   eval  loss=0.044295  ||  [  98]    sgd  loss=0.047673  ||2026-08-27 14:06:11.814 [INFO] Structural search in cooldown (7 epochs left) at epoch 98 鈥?letting SGD settle
+  [  99]   eval  loss=0.047673  ||  [  99]    sgd  loss=0.045724  ||2026-08-27 14:06:12.065 [INFO] Structural search in cooldown (6 epochs left) at epoch 99 鈥?letting SGD settle
+  [ 100]   eval  loss=0.045724  ||  [ 100]    sgd  loss=0.047160  ||2026-08-27 14:06:12.476 [INFO] Structural search in cooldown (5 epochs left) at epoch 100 鈥?letting SGD settle
+2026-08-27 14:06:12.476 [INFO] Restored best-val graph snapshot (val=0.020952, train=0.021715)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   36
+  Failed commits:       186
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         17.3929
+  Final loss:           0.0217151
+  Best loss:            0.0217151
+  Wall time:            405549 ms
+
+  [Expression] 1.134*(((((x0+(((((tanh(tanh(0.125*x0-0.634))+tanh(0.010*(x0*(((((((tanh(-0.454*x0+1.051)+tanh(tanh(0.088*x0-0.028)))+tanh(tanh(0.089*x0-0.027)))+tanh(tanh(0.089*x0-0.026)))+tanh(tanh(0.045*x0+0.17...
+
+  [Library] Behavioral fingerprint: k=1 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=2.0
+  [Library] Closest existing entries:
+    bench_d7_multiout.csv (dist=0.034)
+  [Library] Pattern: sin_chain
+  [Library] Saved (library now has 3 entries)
+  [Library] Extracted 3 sub-expression block(s) (library now has 6 entries)
+  [FailureLib] Appended 186 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (1199 samples)
+================================================
+  Eval R2[out0]:   0.999995
+  Eval MSE[out0]:  0.000063   MAE: 0.006839
+  Eval R2[out1]:   0.963867
+  Eval MSE[out1]:  0.018921   MAE: 0.108435
+  Eval R2[out2]:   0.989681
+  Eval MSE[out2]:  0.002578   MAE: 0.020006

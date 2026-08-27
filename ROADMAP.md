@@ -50,11 +50,22 @@ exists; library entries need graph-JSON fields).
 - Test: rerun suite-feynman with warm-start; wall-time per equation
   should drop ≥ 50% on repeats.
 
-### 1.3 Adaptive shadow budget [S]
+### 1.3 Adaptive shadow budget [NEGATIVE RESULT 2026-08-27: reverted — see below]
 Track per-family commit rate within a run; allocate shadow-epoch budget
 proportional to recent success (10-line bandit / exponential weights).
 - Test: hetero3-class runs should stop burning budget on TANH_SERIES
   after it commits 15 times for < 1% gains (already observed pattern).
+
+MEASURED (family-fatigue variant, aria12 A/B vs aria11, 3 configurations:
+window 4/8 x permanent/25-epoch-parole): suppressing a family whose last
+N commits each delivered <1% val gain REGRESSES hetero3 o2 0.998->0.15/0.96
+in every config (its sin-harmonic arc is a legit sequence of micro-gain
+SIN commits) while stripes20 gains evaporate at window 8 (0.16 only at
+window 4, 0.01 otherwise). Val-gain statistics alone cannot distinguish
+investment arcs from waste. v2 candidate signal if revisited: per-output
+attribution (investment commits concentrate on ONE output; spray grinds
+scatter). Code reverted; A/B logs in problems/bisect/a12*/ and
+problems/ab_a12*_out.txt.
 
 ### 1.4 Self-tuning patience & thresholds [M]
 Plateau patience, commit margins, LR schedule adapt to observed plateau

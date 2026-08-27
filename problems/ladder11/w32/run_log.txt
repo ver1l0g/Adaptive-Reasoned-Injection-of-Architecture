@@ -1,0 +1,34 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\suite-language\bench_shakespeare_w32.csv
+  Loaded 59999 samples
+  Train: 47999  Validation: 12000
+
+  Loaded subgraph library: 1038 entries
+  Loaded failure library: 6024 records
+Starting evolution...
+2026-08-27 13:20:13.219 [INFO] New best overall loss: 3.957231
+  [   1]   eval  loss=54.786440  |====================|  [   1]    sgd  loss=3.957231  |====================|  [   2]   eval  loss=3.957231  |====================|  [   2]    sgd  loss=3.957279  |====================|  [   3]   eval  loss=3.957279  |====================|  [   3]    sgd  loss=3.957289  |====================|  [   4]   eval  loss=3.957289  |====================|  [   4]    sgd  loss=3.957290  |====================|  [   5]   eval  loss=3.957290  |====================|  [   5]    sgd  loss=3.957290  |====================|  [   6]   eval  loss=3.957290  |====================|  [   6]    sgd  loss=3.957290  |====================|2026-08-27 13:27:47.109 [INFO] Plateau triggered at epoch 6 (counter=5, loss=3.957290)
+2026-08-27 13:30:46.243 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-27 13:30:46.254 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-27 13:30:46.254 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-27 13:30:46.501 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-27 13:45:53.801 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-27 13:45:53.884 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-27 13:45:59.119 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-27 13:45:59.135 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-27 13:45:59.135 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-27 13:45:59.332 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-27 14:01:03.535 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-27 14:01:05.675 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-27 14:01:10.655 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-27 14:01:10.670 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-27 14:01:10.670 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-27 14:01:10.913 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [   7]   eval  loss=3.957290  |====================|  [   7]    sgd  loss=3.957290  |====================|2026-08-27 14:14:55.449 [INFO] Plateau triggered at epoch 7 (counter=6, loss=3.957290)
+2026-08-27 14:18:05.885 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-27 14:18:05.891 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-27 14:18:05.892 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-27 14:18:06.126 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs

@@ -1,0 +1,5 @@
+d7_multiout     o1=0.9999 o2=0.9981 o3=1.0000  fatigue=[none]  (3s)
+hetero3         o1=1.0000 o2=0.9980 o3=0.9899  fatigue=[none]  (305s)
+stripes20       o1=0.0099  fatigue=[none]  (330s)
+t23_quadratic   o1=0.9969  fatigue=[none]  (5s)
+t31_threeway    o1=0.9949  fatigue=[none]  (4s)
