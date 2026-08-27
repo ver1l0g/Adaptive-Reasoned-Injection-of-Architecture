@@ -6,297 +6,456 @@ Loading dataset from: bench_firstpos8.csv
   Loaded 1499 samples
   Train: 1199  Validation: 300
 
-  Loaded subgraph library: 31 entries
-  Loaded failure library: 292 records
+  Loaded subgraph library: 42 entries
+  Loaded failure library: 1410 records
 Starting evolution...
-2026-08-27 11:35:11.251 [INFO] New best overall loss: 0.001993
-  [   1]   eval  loss=0.058330  ||  [   1]    sgd  loss=0.001993  ||2026-08-27 11:35:11.285 [INFO] New best overall loss: 0.001827
-  [   2]   eval  loss=0.001993  ||  [   2]    sgd  loss=0.001827  ||2026-08-27 11:35:11.310 [INFO] New best overall loss: 0.001806
-  [   3]   eval  loss=0.001827  ||  [   3]    sgd  loss=0.001806  ||2026-08-27 11:35:11.331 [INFO] New best overall loss: 0.001792
-  [   4]   eval  loss=0.001806  ||  [   4]    sgd  loss=0.001792  ||2026-08-27 11:35:11.351 [INFO] New best overall loss: 0.001780
-  [   5]   eval  loss=0.001792  ||  [   5]    sgd  loss=0.001780  ||2026-08-27 11:35:11.372 [INFO] New best overall loss: 0.001769
-  [   6]   eval  loss=0.001780  ||  [   6]    sgd  loss=0.001769  ||2026-08-27 11:35:11.392 [INFO] New best overall loss: 0.001760
-  [   7]   eval  loss=0.001769  ||  [   7]    sgd  loss=0.001760  ||2026-08-27 11:35:11.414 [INFO] New best overall loss: 0.001752
-  [   8]   eval  loss=0.001760  ||  [   8]    sgd  loss=0.001752  ||2026-08-27 11:35:11.436 [INFO] New best overall loss: 0.001744
-  [   9]   eval  loss=0.001752  ||  [   9]    sgd  loss=0.001744  ||2026-08-27 11:35:11.457 [INFO] New best overall loss: 0.001738
-  [  10]   eval  loss=0.001744  ||  [  10]    sgd  loss=0.001738  ||2026-08-27 11:35:11.478 [INFO] New best overall loss: 0.001732
-  [  11]   eval  loss=0.001738  ||  [  11]    sgd  loss=0.001732  ||2026-08-27 11:35:11.496 [INFO] New best overall loss: 0.001726
-  [  12]   eval  loss=0.001732  ||  [  12]    sgd  loss=0.001726  ||2026-08-27 11:35:11.512 [INFO] New best overall loss: 0.001721
-  [  13]   eval  loss=0.001726  ||  [  13]    sgd  loss=0.001721  ||2026-08-27 11:35:11.534 [INFO] New best overall loss: 0.001716
-  [  14]   eval  loss=0.001721  ||  [  14]    sgd  loss=0.001716  ||2026-08-27 11:35:11.555 [INFO] New best overall loss: 0.001712
-  [  15]   eval  loss=0.001716  ||  [  15]    sgd  loss=0.001712  ||2026-08-27 11:35:11.575 [INFO] New best overall loss: 0.001708
-  [  16]   eval  loss=0.001712  ||  [  16]    sgd  loss=0.001708  ||2026-08-27 11:35:11.595 [INFO] New best overall loss: 0.001704
-  [  17]   eval  loss=0.001708  ||  [  17]    sgd  loss=0.001704  ||2026-08-27 11:35:11.621 [INFO] New best overall loss: 0.001701
-  [  18]   eval  loss=0.001704  ||  [  18]    sgd  loss=0.001701  ||2026-08-27 11:35:11.640 [INFO] New best overall loss: 0.001697
-  [  19]   eval  loss=0.001701  ||  [  19]    sgd  loss=0.001697  ||2026-08-27 11:35:11.665 [INFO] New best overall loss: 0.001694
-  [  20]   eval  loss=0.001697  ||  [  20]    sgd  loss=0.001694  ||2026-08-27 11:35:11.665 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
-2026-08-27 11:35:11.665 [INFO] Plateau triggered at epoch 20 (counter=0, loss=0.001694)
-2026-08-27 11:35:11.673 [INFO] Structural inability detected 鈥?surfacing bottleneck node 10 (blame=0.012339)
-2026-08-27 11:35:11.674 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:11.674 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.626042 over 240 paired samples)
-2026-08-27 11:35:11.674 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
-2026-08-27 11:35:11.683 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:12.568 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.000835 train_loss=0.000688 new train_loss=0.000764
-2026-08-27 11:35:12.568 [INFO] Plateau state reset 鈥?best_phase2=0.000764
-2026-08-27 11:35:12.568 [INFO] Plateau state reset — best_phase2=0.000764
-  [  21]   eval  loss=0.000764  ||  [  21]    sgd  loss=0.000856  ||  [  22]   eval  loss=0.000856  ||  [  22]    sgd  loss=0.000851  ||  [  23]   eval  loss=0.000851  ||  [  23]    sgd  loss=0.000850  ||  [  24]   eval  loss=0.000850  ||  [  24]    sgd  loss=0.000849  ||  [  25]   eval  loss=0.000849  ||  [  25]    sgd  loss=0.000848  ||  [  26]   eval  loss=0.000848  ||  [  26]    sgd  loss=0.000847  ||  [  27]   eval  loss=0.000847  ||  [  27]    sgd  loss=0.000845  ||  [  28]   eval  loss=0.000845  ||  [  28]    sgd  loss=0.000844  ||  [  29]   eval  loss=0.000844  ||  [  29]    sgd  loss=0.000842  ||  [  30]   eval  loss=0.000842  ||  [  30]    sgd  loss=0.000838  ||  [  31]   eval  loss=0.000838  ||  [  31]    sgd  loss=0.000835  ||  [  32]   eval  loss=0.000835  ||  [  32]    sgd  loss=0.000833  ||  [  33]   eval  loss=0.000833  ||  [  33]    sgd  loss=0.000830  ||  [  34]   eval  loss=0.000830  ||  [  34]    sgd  loss=0.000828  ||  [  35]   eval  loss=0.000828  ||  [  35]    sgd  loss=0.000826  ||  [  36]   eval  loss=0.000826  ||  [  36]    sgd  loss=0.000823  ||  [  37]   eval  loss=0.000823  ||  [  37]    sgd  loss=0.000820  ||  [  38]   eval  loss=0.000820  ||  [  38]    sgd  loss=0.000818  ||  [  39]   eval  loss=0.000818  ||  [  39]    sgd  loss=0.000815  ||  [  40]   eval  loss=0.000815  ||  [  40]    sgd  loss=0.000812  ||2026-08-27 11:35:13.086 [INFO] Forced structural trigger at epoch 40 (epochs since last structural: 20)
-2026-08-27 11:35:13.086 [INFO] Plateau triggered at epoch 40 (counter=0, loss=0.000812)
-2026-08-27 11:35:13.093 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006952)
-2026-08-27 11:35:13.094 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:13.094 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.626042 over 240 paired samples)
-2026-08-27 11:35:13.103 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:13.400 [INFO]   COMMIT rank=3 type=NEURON_TANH_INJECTION val_loss=0.000321 train_loss=0.000237 new train_loss=0.000398
-2026-08-27 11:35:13.400 [INFO] Plateau state reset 鈥?best_phase2=0.000398
-2026-08-27 11:35:13.400 [INFO] Plateau state reset — best_phase2=0.000398
-2026-08-27 11:35:13.429 [INFO] New best overall loss: 0.000365
-  [  41]   eval  loss=0.000398  ||  [  41]    sgd  loss=0.000365  ||2026-08-27 11:35:13.459 [INFO] New best overall loss: 0.000356
-  [  42]   eval  loss=0.000365  ||  [  42]    sgd  loss=0.000356  ||2026-08-27 11:35:13.488 [INFO] New best overall loss: 0.000346
-  [  43]   eval  loss=0.000356  ||  [  43]    sgd  loss=0.000346  ||2026-08-27 11:35:13.513 [INFO] New best overall loss: 0.000339
-  [  44]   eval  loss=0.000346  ||  [  44]    sgd  loss=0.000339  ||2026-08-27 11:35:13.539 [INFO] New best overall loss: 0.000333
-  [  45]   eval  loss=0.000339  ||  [  45]    sgd  loss=0.000333  ||2026-08-27 11:35:13.565 [INFO] New best overall loss: 0.000328
-  [  46]   eval  loss=0.000333  ||  [  46]    sgd  loss=0.000328  ||2026-08-27 11:35:13.591 [INFO] New best overall loss: 0.000324
-  [  47]   eval  loss=0.000328  ||  [  47]    sgd  loss=0.000324  ||2026-08-27 11:35:13.618 [INFO] New best overall loss: 0.000320
-  [  48]   eval  loss=0.000324  ||  [  48]    sgd  loss=0.000320  ||2026-08-27 11:35:13.645 [INFO] New best overall loss: 0.000317
-  [  49]   eval  loss=0.000320  ||  [  49]    sgd  loss=0.000317  ||2026-08-27 11:35:13.671 [INFO] New best overall loss: 0.000315
-  [  50]   eval  loss=0.000317  ||  [  50]    sgd  loss=0.000315  ||2026-08-27 11:35:13.696 [INFO] New best overall loss: 0.000313
-  [  51]   eval  loss=0.000315  ||  [  51]    sgd  loss=0.000313  ||2026-08-27 11:35:13.721 [INFO] New best overall loss: 0.000311
-  [  52]   eval  loss=0.000313  ||  [  52]    sgd  loss=0.000311  ||2026-08-27 11:35:13.745 [INFO] New best overall loss: 0.000310
-  [  53]   eval  loss=0.000311  ||  [  53]    sgd  loss=0.000310  ||2026-08-27 11:35:13.772 [INFO] New best overall loss: 0.000308
-  [  54]   eval  loss=0.000310  ||  [  54]    sgd  loss=0.000308  ||2026-08-27 11:35:13.797 [INFO] New best overall loss: 0.000307
-  [  55]   eval  loss=0.000308  ||  [  55]    sgd  loss=0.000307  ||2026-08-27 11:35:13.824 [INFO] New best overall loss: 0.000306
-  [  56]   eval  loss=0.000307  ||  [  56]    sgd  loss=0.000306  ||2026-08-27 11:35:13.851 [INFO] New best overall loss: 0.000305
-  [  57]   eval  loss=0.000306  ||  [  57]    sgd  loss=0.000305  ||2026-08-27 11:35:13.877 [INFO] New best overall loss: 0.000305
-  [  58]   eval  loss=0.000305  ||  [  58]    sgd  loss=0.000305  ||2026-08-27 11:35:13.903 [INFO] New best overall loss: 0.000304
-  [  59]   eval  loss=0.000305  ||  [  59]    sgd  loss=0.000304  ||2026-08-27 11:35:13.928 [INFO] New best overall loss: 0.000303
-  [  60]   eval  loss=0.000304  ||  [  60]    sgd  loss=0.000303  ||2026-08-27 11:35:13.928 [INFO] Forced structural trigger at epoch 60 (epochs since last structural: 20)
-2026-08-27 11:35:13.928 [INFO] Plateau triggered at epoch 60 (counter=0, loss=0.000303)
-2026-08-27 11:35:13.936 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015535)
-2026-08-27 11:35:13.937 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:13.937 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:13.944 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:14.224 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.000226 train_loss=0.000201 new train_loss=0.000298
-2026-08-27 11:35:14.225 [INFO] Plateau state reset 鈥?best_phase2=0.000298
-2026-08-27 11:35:14.225 [INFO] Plateau state reset — best_phase2=0.000298
-2026-08-27 11:35:14.244 [INFO] New best overall loss: 0.000297
-  [  61]   eval  loss=0.000298  ||  [  61]    sgd  loss=0.000297  ||2026-08-27 11:35:14.262 [INFO] New best overall loss: 0.000297
-  [  62]   eval  loss=0.000297  ||  [  62]    sgd  loss=0.000297  ||  [  63]   eval  loss=0.000297  ||  [  63]    sgd  loss=0.000297  ||  [  64]   eval  loss=0.000297  ||  [  64]    sgd  loss=0.000297  ||2026-08-27 11:35:14.305 [INFO] Plateau triggered at epoch 64 (counter=3, loss=0.000297)
-2026-08-27 11:35:14.312 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015478)
-2026-08-27 11:35:14.313 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:14.313 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:14.321 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  65]   eval  loss=0.000297  ||  [  65]    sgd  loss=0.000297  ||2026-08-27 11:35:14.578 [INFO] Plateau triggered at epoch 65 (counter=4, loss=0.000297)
-2026-08-27 11:35:14.584 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015456)
-2026-08-27 11:35:14.585 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:14.585 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:14.592 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  66]   eval  loss=0.000297  ||  [  66]    sgd  loss=0.000297  ||2026-08-27 11:35:14.864 [INFO] Plateau triggered at epoch 66 (counter=5, loss=0.000297)
-2026-08-27 11:35:14.871 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015434)
-2026-08-27 11:35:14.872 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:14.872 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:14.878 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  67]   eval  loss=0.000297  ||  [  67]    sgd  loss=0.000297  ||2026-08-27 11:35:15.179 [INFO] Plateau triggered at epoch 67 (counter=6, loss=0.000297)
-2026-08-27 11:35:15.184 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015412)
-2026-08-27 11:35:15.185 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:15.185 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:15.191 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  68]   eval  loss=0.000297  ||  [  68]    sgd  loss=0.000297  ||2026-08-27 11:35:15.643 [INFO] Plateau triggered at epoch 68 (counter=7, loss=0.000297)
-2026-08-27 11:35:15.658 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015392)
-2026-08-27 11:35:15.660 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:15.660 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:15.670 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:16.110 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [  69]   eval  loss=0.000297  ||  [  69]    sgd  loss=0.000297  ||2026-08-27 11:35:16.164 [INFO] Structural search in cooldown (9 epochs left) at epoch 69 鈥?letting SGD settle
-  [  70]   eval  loss=0.000297  ||  [  70]    sgd  loss=0.000297  ||2026-08-27 11:35:16.234 [INFO] Structural search in cooldown (8 epochs left) at epoch 70 鈥?letting SGD settle
-  [  71]   eval  loss=0.000297  ||  [  71]    sgd  loss=0.000297  ||2026-08-27 11:35:16.292 [INFO] Structural search in cooldown (7 epochs left) at epoch 71 鈥?letting SGD settle
-  [  72]   eval  loss=0.000297  ||  [  72]    sgd  loss=0.000298  ||2026-08-27 11:35:16.339 [INFO] Structural search in cooldown (6 epochs left) at epoch 72 鈥?letting SGD settle
-  [  73]   eval  loss=0.000298  ||  [  73]    sgd  loss=0.000298  ||2026-08-27 11:35:16.387 [INFO] Structural search in cooldown (5 epochs left) at epoch 73 鈥?letting SGD settle
-  [  74]   eval  loss=0.000298  ||  [  74]    sgd  loss=0.000298  ||2026-08-27 11:35:16.434 [INFO] Structural search in cooldown (4 epochs left) at epoch 74 鈥?letting SGD settle
-  [  75]   eval  loss=0.000298  ||  [  75]    sgd  loss=0.000298  ||2026-08-27 11:35:16.479 [INFO] Structural search in cooldown (3 epochs left) at epoch 75 鈥?letting SGD settle
-  [  76]   eval  loss=0.000298  ||  [  76]    sgd  loss=0.000298  ||2026-08-27 11:35:16.524 [INFO] Structural search in cooldown (2 epochs left) at epoch 76 鈥?letting SGD settle
-  [  77]   eval  loss=0.000298  ||  [  77]    sgd  loss=0.000298  ||2026-08-27 11:35:16.570 [INFO] Structural search in cooldown (1 epochs left) at epoch 77 鈥?letting SGD settle
-  [  78]   eval  loss=0.000298  ||  [  78]    sgd  loss=0.000298  ||2026-08-27 11:35:16.612 [INFO] Plateau triggered at epoch 78 (counter=17, loss=0.000298)
-2026-08-27 11:35:16.626 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015215)
-2026-08-27 11:35:16.628 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:16.628 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:16.639 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:17.083 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.000222 train_loss=0.000194 new train_loss=0.000295
-2026-08-27 11:35:17.083 [INFO] Plateau state reset 鈥?best_phase2=0.000295
-2026-08-27 11:35:17.083 [INFO] Plateau state reset — best_phase2=0.000295
-2026-08-27 11:35:17.120 [INFO] New best overall loss: 0.000295
-  [  79]   eval  loss=0.000295  ||  [  79]    sgd  loss=0.000295  ||  [  80]   eval  loss=0.000295  ||  [  80]    sgd  loss=0.000295  ||  [  81]   eval  loss=0.000295  ||  [  81]    sgd  loss=0.000295  ||  [  82]   eval  loss=0.000295  ||  [  82]    sgd  loss=0.000296  ||2026-08-27 11:35:17.227 [INFO] Plateau triggered at epoch 82 (counter=3, loss=0.000296)
-2026-08-27 11:35:17.239 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015166)
-2026-08-27 11:35:17.240 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:17.240 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:17.251 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  83]   eval  loss=0.000296  ||  [  83]    sgd  loss=0.000296  ||2026-08-27 11:35:17.699 [INFO] Plateau triggered at epoch 83 (counter=4, loss=0.000296)
-2026-08-27 11:35:17.712 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015146)
-2026-08-27 11:35:17.713 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:17.713 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:17.723 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  84]   eval  loss=0.000296  ||  [  84]    sgd  loss=0.000296  ||2026-08-27 11:35:18.190 [INFO] Plateau triggered at epoch 84 (counter=5, loss=0.000296)
-2026-08-27 11:35:18.204 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015128)
-2026-08-27 11:35:18.205 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:18.205 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:18.215 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  85]   eval  loss=0.000296  ||  [  85]    sgd  loss=0.000296  ||2026-08-27 11:35:18.659 [INFO] Plateau triggered at epoch 85 (counter=6, loss=0.000296)
-2026-08-27 11:35:18.670 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015110)
-2026-08-27 11:35:18.671 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:18.671 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:18.680 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [  86]   eval  loss=0.000296  ||  [  86]    sgd  loss=0.000296  ||2026-08-27 11:35:19.072 [INFO] Plateau triggered at epoch 86 (counter=7, loss=0.000296)
-2026-08-27 11:35:19.080 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.015094)
-2026-08-27 11:35:19.081 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:19.081 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:19.090 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:19.402 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [  87]   eval  loss=0.000296  ||  [  87]    sgd  loss=0.000296  ||2026-08-27 11:35:19.427 [INFO] Structural search in cooldown (9 epochs left) at epoch 87 鈥?letting SGD settle
-  [  88]   eval  loss=0.000296  ||  [  88]    sgd  loss=0.000297  ||2026-08-27 11:35:19.449 [INFO] Structural search in cooldown (8 epochs left) at epoch 88 鈥?letting SGD settle
-  [  89]   eval  loss=0.000297  ||  [  89]    sgd  loss=0.000297  ||2026-08-27 11:35:19.470 [INFO] Structural search in cooldown (7 epochs left) at epoch 89 鈥?letting SGD settle
-  [  90]   eval  loss=0.000297  ||  [  90]    sgd  loss=0.000297  ||2026-08-27 11:35:19.488 [INFO] Structural search in cooldown (6 epochs left) at epoch 90 鈥?letting SGD settle
-  [  91]   eval  loss=0.000297  ||  [  91]    sgd  loss=0.000297  ||2026-08-27 11:35:19.510 [INFO] Structural search in cooldown (5 epochs left) at epoch 91 鈥?letting SGD settle
-  [  92]   eval  loss=0.000297  ||  [  92]    sgd  loss=0.000297  ||2026-08-27 11:35:19.534 [INFO] Structural search in cooldown (4 epochs left) at epoch 92 鈥?letting SGD settle
-  [  93]   eval  loss=0.000297  ||  [  93]    sgd  loss=0.000297  ||2026-08-27 11:35:19.566 [INFO] Structural search in cooldown (3 epochs left) at epoch 93 鈥?letting SGD settle
-  [  94]   eval  loss=0.000297  ||  [  94]    sgd  loss=0.000297  ||2026-08-27 11:35:19.600 [INFO] Structural search in cooldown (2 epochs left) at epoch 94 鈥?letting SGD settle
-  [  95]   eval  loss=0.000297  ||  [  95]    sgd  loss=0.000297  ||2026-08-27 11:35:19.631 [INFO] Structural search in cooldown (1 epochs left) at epoch 95 鈥?letting SGD settle
-  [  96]   eval  loss=0.000297  ||  [  96]    sgd  loss=0.000298  ||2026-08-27 11:35:19.654 [INFO] Plateau triggered at epoch 96 (counter=17, loss=0.000298)
-2026-08-27 11:35:19.661 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014976)
-2026-08-27 11:35:19.662 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:19.662 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:19.669 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:20.027 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.000221 train_loss=0.000190 new train_loss=0.000295
-2026-08-27 11:35:20.027 [INFO] Plateau state reset 鈥?best_phase2=0.000295
-2026-08-27 11:35:20.027 [INFO] Plateau state reset — best_phase2=0.000295
-2026-08-27 11:35:20.064 [INFO] New best overall loss: 0.000295
-  [  97]   eval  loss=0.000295  ||  [  97]    sgd  loss=0.000295  ||  [  98]   eval  loss=0.000295  ||  [  98]    sgd  loss=0.000295  ||  [  99]   eval  loss=0.000295  ||  [  99]    sgd  loss=0.000295  ||  [ 100]   eval  loss=0.000295  ||  [ 100]    sgd  loss=0.000295  ||2026-08-27 11:35:20.163 [INFO] Plateau triggered at epoch 100 (counter=3, loss=0.000295)
-2026-08-27 11:35:20.172 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014999)
-2026-08-27 11:35:20.173 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:20.173 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:20.180 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 101]   eval  loss=0.000295  ||  [ 101]    sgd  loss=0.000296  ||2026-08-27 11:35:20.516 [INFO] Plateau triggered at epoch 101 (counter=4, loss=0.000296)
-2026-08-27 11:35:20.525 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014986)
-2026-08-27 11:35:20.526 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:20.527 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:20.536 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 102]   eval  loss=0.000296  ||  [ 102]    sgd  loss=0.000296  ||2026-08-27 11:35:20.854 [INFO] Plateau triggered at epoch 102 (counter=5, loss=0.000296)
-2026-08-27 11:35:20.863 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014975)
-2026-08-27 11:35:20.864 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:20.864 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:20.871 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 103]   eval  loss=0.000296  ||  [ 103]    sgd  loss=0.000296  ||2026-08-27 11:35:21.216 [INFO] Plateau triggered at epoch 103 (counter=6, loss=0.000296)
-2026-08-27 11:35:21.224 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014964)
-2026-08-27 11:35:21.225 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:21.225 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:21.232 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 104]   eval  loss=0.000296  ||  [ 104]    sgd  loss=0.000296  ||2026-08-27 11:35:21.522 [INFO] Plateau triggered at epoch 104 (counter=7, loss=0.000296)
-2026-08-27 11:35:21.532 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014954)
-2026-08-27 11:35:21.533 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:21.533 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:21.541 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:21.866 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [ 105]   eval  loss=0.000296  ||  [ 105]    sgd  loss=0.000296  ||2026-08-27 11:35:21.891 [INFO] Structural search in cooldown (9 epochs left) at epoch 105 鈥?letting SGD settle
-  [ 106]   eval  loss=0.000296  ||  [ 106]    sgd  loss=0.000297  ||2026-08-27 11:35:21.917 [INFO] Structural search in cooldown (8 epochs left) at epoch 106 鈥?letting SGD settle
-  [ 107]   eval  loss=0.000297  ||  [ 107]    sgd  loss=0.000297  ||2026-08-27 11:35:21.943 [INFO] Structural search in cooldown (7 epochs left) at epoch 107 鈥?letting SGD settle
-  [ 108]   eval  loss=0.000297  ||  [ 108]    sgd  loss=0.000297  ||2026-08-27 11:35:21.967 [INFO] Structural search in cooldown (6 epochs left) at epoch 108 鈥?letting SGD settle
-  [ 109]   eval  loss=0.000297  ||  [ 109]    sgd  loss=0.000297  ||2026-08-27 11:35:21.992 [INFO] Structural search in cooldown (5 epochs left) at epoch 109 鈥?letting SGD settle
-  [ 110]   eval  loss=0.000297  ||  [ 110]    sgd  loss=0.000297  ||2026-08-27 11:35:22.017 [INFO] Structural search in cooldown (4 epochs left) at epoch 110 鈥?letting SGD settle
-  [ 111]   eval  loss=0.000297  ||  [ 111]    sgd  loss=0.000297  ||2026-08-27 11:35:22.041 [INFO] Structural search in cooldown (3 epochs left) at epoch 111 鈥?letting SGD settle
-  [ 112]   eval  loss=0.000297  ||  [ 112]    sgd  loss=0.000297  ||2026-08-27 11:35:22.066 [INFO] Structural search in cooldown (2 epochs left) at epoch 112 鈥?letting SGD settle
-  [ 113]   eval  loss=0.000297  ||  [ 113]    sgd  loss=0.000297  ||2026-08-27 11:35:22.092 [INFO] Structural search in cooldown (1 epochs left) at epoch 113 鈥?letting SGD settle
-  [ 114]   eval  loss=0.000297  ||  [ 114]    sgd  loss=0.000297  ||2026-08-27 11:35:22.122 [INFO] Plateau triggered at epoch 114 (counter=17, loss=0.000297)
-2026-08-27 11:35:22.131 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014894)
-2026-08-27 11:35:22.132 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:22.132 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:22.140 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:22.458 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.000220 train_loss=0.000187 new train_loss=0.000295
-2026-08-27 11:35:22.458 [INFO] Plateau state reset 鈥?best_phase2=0.000295
-2026-08-27 11:35:22.458 [INFO] Plateau state reset — best_phase2=0.000295
-2026-08-27 11:35:22.486 [INFO] New best overall loss: 0.000294
-  [ 115]   eval  loss=0.000295  ||  [ 115]    sgd  loss=0.000294  ||  [ 116]   eval  loss=0.000294  ||  [ 116]    sgd  loss=0.000295  ||  [ 117]   eval  loss=0.000295  ||  [ 117]    sgd  loss=0.000295  ||  [ 118]   eval  loss=0.000295  ||  [ 118]    sgd  loss=0.000295  ||2026-08-27 11:35:22.563 [INFO] Plateau triggered at epoch 118 (counter=3, loss=0.000295)
-2026-08-27 11:35:22.572 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014956)
-2026-08-27 11:35:22.573 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:22.573 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:22.581 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 119]   eval  loss=0.000295  ||  [ 119]    sgd  loss=0.000295  ||2026-08-27 11:35:22.922 [INFO] Plateau triggered at epoch 119 (counter=4, loss=0.000295)
-2026-08-27 11:35:22.932 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014946)
-2026-08-27 11:35:22.933 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:22.933 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:22.941 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 120]   eval  loss=0.000295  ||  [ 120]    sgd  loss=0.000296  ||2026-08-27 11:35:23.334 [INFO] Plateau triggered at epoch 120 (counter=5, loss=0.000296)
-2026-08-27 11:35:23.344 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014937)
-2026-08-27 11:35:23.345 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:23.346 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:23.354 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 121]   eval  loss=0.000296  ||  [ 121]    sgd  loss=0.000296  ||2026-08-27 11:35:23.753 [INFO] Plateau triggered at epoch 121 (counter=6, loss=0.000296)
-2026-08-27 11:35:23.762 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014929)
-2026-08-27 11:35:23.763 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:23.763 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:23.771 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 122]   eval  loss=0.000296  ||  [ 122]    sgd  loss=0.000296  ||2026-08-27 11:35:24.132 [INFO] Plateau triggered at epoch 122 (counter=7, loss=0.000296)
-2026-08-27 11:35:24.145 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014923)
-2026-08-27 11:35:24.146 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:24.146 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:24.154 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:24.490 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [ 123]   eval  loss=0.000296  ||  [ 123]    sgd  loss=0.000296  ||2026-08-27 11:35:24.523 [INFO] Structural search in cooldown (9 epochs left) at epoch 123 鈥?letting SGD settle
-  [ 124]   eval  loss=0.000296  ||  [ 124]    sgd  loss=0.000296  ||2026-08-27 11:35:24.549 [INFO] Structural search in cooldown (8 epochs left) at epoch 124 鈥?letting SGD settle
-  [ 125]   eval  loss=0.000296  ||  [ 125]    sgd  loss=0.000297  ||2026-08-27 11:35:24.588 [INFO] Structural search in cooldown (7 epochs left) at epoch 125 鈥?letting SGD settle
-  [ 126]   eval  loss=0.000297  ||  [ 126]    sgd  loss=0.000297  ||2026-08-27 11:35:24.620 [INFO] Structural search in cooldown (6 epochs left) at epoch 126 鈥?letting SGD settle
-  [ 127]   eval  loss=0.000297  ||  [ 127]    sgd  loss=0.000297  ||2026-08-27 11:35:24.649 [INFO] Structural search in cooldown (5 epochs left) at epoch 127 鈥?letting SGD settle
-  [ 128]   eval  loss=0.000297  ||  [ 128]    sgd  loss=0.000297  ||2026-08-27 11:35:24.674 [INFO] Structural search in cooldown (4 epochs left) at epoch 128 鈥?letting SGD settle
-  [ 129]   eval  loss=0.000297  ||  [ 129]    sgd  loss=0.000297  ||2026-08-27 11:35:24.711 [INFO] Structural search in cooldown (3 epochs left) at epoch 129 鈥?letting SGD settle
-  [ 130]   eval  loss=0.000297  ||  [ 130]    sgd  loss=0.000297  ||2026-08-27 11:35:24.741 [INFO] Structural search in cooldown (2 epochs left) at epoch 130 鈥?letting SGD settle
-  [ 131]   eval  loss=0.000297  ||  [ 131]    sgd  loss=0.000297  ||2026-08-27 11:35:24.767 [INFO] Structural search in cooldown (1 epochs left) at epoch 131 鈥?letting SGD settle
-  [ 132]   eval  loss=0.000297  ||  [ 132]    sgd  loss=0.000297  ||2026-08-27 11:35:24.793 [INFO] Plateau triggered at epoch 132 (counter=17, loss=0.000297)
-2026-08-27 11:35:24.803 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014890)
-2026-08-27 11:35:24.804 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:24.804 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:24.812 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:25.143 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.000220 train_loss=0.000186 new train_loss=0.000295
-2026-08-27 11:35:25.144 [INFO] Plateau state reset 鈥?best_phase2=0.000295
-2026-08-27 11:35:25.144 [INFO] Plateau state reset — best_phase2=0.000295
-2026-08-27 11:35:25.144 [INFO] Suppressing hypothesis type 3 (3 consecutive commits without meaningful improvement)
-2026-08-27 11:35:25.175 [INFO] New best overall loss: 0.000294
-  [ 133]   eval  loss=0.000295  ||  [ 133]    sgd  loss=0.000294  ||  [ 134]   eval  loss=0.000294  ||  [ 134]    sgd  loss=0.000294  ||  [ 135]   eval  loss=0.000294  ||  [ 135]    sgd  loss=0.000295  ||  [ 136]   eval  loss=0.000295  ||  [ 136]    sgd  loss=0.000295  ||2026-08-27 11:35:25.263 [INFO] Plateau triggered at epoch 136 (counter=3, loss=0.000295)
-2026-08-27 11:35:25.272 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014970)
-2026-08-27 11:35:25.273 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:25.273 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:25.280 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 137]   eval  loss=0.000295  ||  [ 137]    sgd  loss=0.000295  ||2026-08-27 11:35:25.639 [INFO] Plateau triggered at epoch 137 (counter=4, loss=0.000295)
-2026-08-27 11:35:25.649 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014962)
-2026-08-27 11:35:25.651 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:25.651 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:25.660 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 138]   eval  loss=0.000295  ||  [ 138]    sgd  loss=0.000296  ||2026-08-27 11:35:25.999 [INFO] Plateau triggered at epoch 138 (counter=5, loss=0.000296)
-2026-08-27 11:35:26.008 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014954)
-2026-08-27 11:35:26.009 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:26.009 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:26.017 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 139]   eval  loss=0.000296  ||  [ 139]    sgd  loss=0.000296  ||2026-08-27 11:35:26.361 [INFO] Plateau triggered at epoch 139 (counter=6, loss=0.000296)
-2026-08-27 11:35:26.370 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014948)
-2026-08-27 11:35:26.371 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:26.371 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:26.379 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-  [ 140]   eval  loss=0.000296  ||  [ 140]    sgd  loss=0.000296  ||2026-08-27 11:35:26.685 [INFO] Plateau triggered at epoch 140 (counter=7, loss=0.000296)
-2026-08-27 11:35:26.694 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014943)
-2026-08-27 11:35:26.694 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:26.695 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:26.703 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:27.017 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [ 141]   eval  loss=0.000296  ||  [ 141]    sgd  loss=0.000296  ||2026-08-27 11:35:27.044 [INFO] Structural search in cooldown (9 epochs left) at epoch 141 鈥?letting SGD settle
-  [ 142]   eval  loss=0.000296  ||  [ 142]    sgd  loss=0.000296  ||2026-08-27 11:35:27.070 [INFO] Structural search in cooldown (8 epochs left) at epoch 142 鈥?letting SGD settle
-  [ 143]   eval  loss=0.000296  ||  [ 143]    sgd  loss=0.000296  ||2026-08-27 11:35:27.100 [INFO] Structural search in cooldown (7 epochs left) at epoch 143 鈥?letting SGD settle
-  [ 144]   eval  loss=0.000296  ||  [ 144]    sgd  loss=0.000297  ||2026-08-27 11:35:27.127 [INFO] Structural search in cooldown (6 epochs left) at epoch 144 鈥?letting SGD settle
-  [ 145]   eval  loss=0.000297  ||  [ 145]    sgd  loss=0.000297  ||2026-08-27 11:35:27.154 [INFO] Structural search in cooldown (5 epochs left) at epoch 145 鈥?letting SGD settle
-  [ 146]   eval  loss=0.000297  ||  [ 146]    sgd  loss=0.000297  ||2026-08-27 11:35:27.179 [INFO] Structural search in cooldown (4 epochs left) at epoch 146 鈥?letting SGD settle
-  [ 147]   eval  loss=0.000297  ||  [ 147]    sgd  loss=0.000297  ||2026-08-27 11:35:27.203 [INFO] Structural search in cooldown (3 epochs left) at epoch 147 鈥?letting SGD settle
-  [ 148]   eval  loss=0.000297  ||  [ 148]    sgd  loss=0.000297  ||2026-08-27 11:35:27.227 [INFO] Structural search in cooldown (2 epochs left) at epoch 148 鈥?letting SGD settle
-  [ 149]   eval  loss=0.000297  ||  [ 149]    sgd  loss=0.000297  ||2026-08-27 11:35:27.252 [INFO] Structural search in cooldown (1 epochs left) at epoch 149 鈥?letting SGD settle
-  [ 150]   eval  loss=0.000297  ||  [ 150]    sgd  loss=0.000297  ||2026-08-27 11:35:27.278 [INFO] Plateau triggered at epoch 150 (counter=17, loss=0.000297)
-2026-08-27 11:35:27.286 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.014923)
-2026-08-27 11:35:27.287 [INFO] [PROFILE] F=8 N=240 var_r=0.0296 bound_ratio=5.0899 poly_r2=0.9222 a12=0.2480 max_coef[i=1]=-0.4859 sobol_pair(0,1)=0.1364 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
-2026-08-27 11:35:27.287 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.009714 over 240 paired samples)
-2026-08-27 11:35:27.294 [INFO] Library prior (dist=0.371 src=bench_narma30.csv) boosts NEURON_TANH by 0.200000
-2026-08-27 11:35:27.597 [INFO] Restored best-val graph snapshot (val=0.000220, train=0.000295)
+2026-08-27 17:52:38.442 [INFO] New best overall loss: 0.001895
+  [   1]   eval  loss=0.055924  ||  [   1]    sgd  loss=0.001895  ||2026-08-27 17:52:38.528 [INFO] New best overall loss: 0.001785
+  [   2]   eval  loss=0.001895  ||  [   2]    sgd  loss=0.001785  ||2026-08-27 17:52:38.588 [INFO] New best overall loss: 0.001771
+  [   3]   eval  loss=0.001785  ||  [   3]    sgd  loss=0.001771  ||2026-08-27 17:52:38.646 [INFO] New best overall loss: 0.001761
+  [   4]   eval  loss=0.001771  ||  [   4]    sgd  loss=0.001761  ||2026-08-27 17:52:38.706 [INFO] New best overall loss: 0.001752
+  [   5]   eval  loss=0.001761  ||  [   5]    sgd  loss=0.001752  ||2026-08-27 17:52:38.757 [INFO] New best overall loss: 0.001745
+  [   6]   eval  loss=0.001752  ||  [   6]    sgd  loss=0.001745  ||2026-08-27 17:52:38.815 [INFO] New best overall loss: 0.001738
+  [   7]   eval  loss=0.001745  ||  [   7]    sgd  loss=0.001738  ||2026-08-27 17:52:38.873 [INFO] New best overall loss: 0.001732
+  [   8]   eval  loss=0.001738  ||  [   8]    sgd  loss=0.001732  ||2026-08-27 17:52:38.937 [INFO] New best overall loss: 0.001727
+  [   9]   eval  loss=0.001732  ||  [   9]    sgd  loss=0.001727  ||2026-08-27 17:52:38.998 [INFO] New best overall loss: 0.001722
+  [  10]   eval  loss=0.001727  ||  [  10]    sgd  loss=0.001722  ||2026-08-27 17:52:39.059 [INFO] New best overall loss: 0.001717
+  [  11]   eval  loss=0.001722  ||  [  11]    sgd  loss=0.001717  ||2026-08-27 17:52:39.118 [INFO] New best overall loss: 0.001713
+  [  12]   eval  loss=0.001717  ||  [  12]    sgd  loss=0.001713  ||2026-08-27 17:52:39.177 [INFO] New best overall loss: 0.001709
+  [  13]   eval  loss=0.001713  ||  [  13]    sgd  loss=0.001709  ||2026-08-27 17:52:39.236 [INFO] New best overall loss: 0.001706
+  [  14]   eval  loss=0.001709  ||  [  14]    sgd  loss=0.001706  ||2026-08-27 17:52:39.297 [INFO] New best overall loss: 0.001703
+  [  15]   eval  loss=0.001706  ||  [  15]    sgd  loss=0.001703  ||2026-08-27 17:52:39.358 [INFO] New best overall loss: 0.001700
+  [  16]   eval  loss=0.001703  ||  [  16]    sgd  loss=0.001700  ||2026-08-27 17:52:39.420 [INFO] New best overall loss: 0.001697
+  [  17]   eval  loss=0.001700  ||  [  17]    sgd  loss=0.001697  ||2026-08-27 17:52:39.477 [INFO] New best overall loss: 0.001694
+  [  18]   eval  loss=0.001697  ||  [  18]    sgd  loss=0.001694  ||2026-08-27 17:52:39.536 [INFO] New best overall loss: 0.001692
+  [  19]   eval  loss=0.001694  ||  [  19]    sgd  loss=0.001692  ||2026-08-27 17:52:39.593 [INFO] New best overall loss: 0.001689
+  [  20]   eval  loss=0.001692  ||  [  20]    sgd  loss=0.001689  ||2026-08-27 17:52:39.594 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-08-27 17:52:39.594 [INFO] Plateau triggered at epoch 20 (counter=0, loss=0.001689)
+2026-08-27 17:52:39.611 [INFO] Structural inability detected 鈥?surfacing bottleneck node 10 (blame=0.011092)
+2026-08-27 17:52:39.612 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:39.612 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:39.612 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
+2026-08-27 17:52:39.626 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:42.372 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.001622 train_loss=0.000738 new train_loss=0.000704
+2026-08-27 17:52:42.372 [INFO] Plateau state reset 鈥?best_phase2=0.000704
+2026-08-27 17:52:42.372 [INFO] Plateau state reset — best_phase2=0.000704
+  [  21]   eval  loss=0.000704  ||  [  21]    sgd  loss=0.000720  ||  [  22]   eval  loss=0.000720  ||  [  22]    sgd  loss=0.000721  ||  [  23]   eval  loss=0.000721  ||  [  23]    sgd  loss=0.000723  ||2026-08-27 17:52:42.648 [INFO] Plateau triggered at epoch 23 (counter=3, loss=0.000723)
+2026-08-27 17:52:42.672 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.009024)
+2026-08-27 17:52:42.674 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:42.675 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:42.691 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:43.458 [INFO]   COMMIT rank=0 type=MULTIPLY_INJECTION val_loss=0.000896 train_loss=0.000273 new train_loss=0.000241
+2026-08-27 17:52:43.459 [INFO] Plateau state reset 鈥?best_phase2=0.000241
+2026-08-27 17:52:43.459 [INFO] Plateau state reset — best_phase2=0.000241
+2026-08-27 17:52:43.562 [INFO] New best overall loss: 0.000238
+  [  24]   eval  loss=0.000241  ||  [  24]    sgd  loss=0.000238  ||  [  25]   eval  loss=0.000238  ||  [  25]    sgd  loss=0.000249  ||  [  26]   eval  loss=0.000249  ||  [  26]    sgd  loss=0.000241  ||  [  27]   eval  loss=0.000241  ||  [  27]    sgd  loss=0.000271  ||  [  28]   eval  loss=0.000271  ||  [  28]    sgd  loss=0.000245  ||  [  29]   eval  loss=0.000245  ||  [  29]    sgd  loss=0.000268  ||  [  30]   eval  loss=0.000268  ||  [  30]    sgd  loss=0.000243  ||  [  31]   eval  loss=0.000243  ||  [  31]    sgd  loss=0.000274  ||  [  32]   eval  loss=0.000274  ||  [  32]    sgd  loss=0.000246  ||  [  33]   eval  loss=0.000246  ||  [  33]    sgd  loss=0.000266  ||  [  34]   eval  loss=0.000266  ||  [  34]    sgd  loss=0.000243  ||  [  35]   eval  loss=0.000243  ||  [  35]    sgd  loss=0.000275  ||  [  36]   eval  loss=0.000275  ||  [  36]    sgd  loss=0.000246  ||  [  37]   eval  loss=0.000246  ||  [  37]    sgd  loss=0.000275  ||  [  38]   eval  loss=0.000275  ||  [  38]    sgd  loss=0.000246  ||  [  39]   eval  loss=0.000246  ||  [  39]    sgd  loss=0.000275  ||  [  40]   eval  loss=0.000275  ||  [  40]    sgd  loss=0.000246  ||  [  41]   eval  loss=0.000246  ||  [  41]    sgd  loss=0.000274  ||  [  42]   eval  loss=0.000274  ||  [  42]    sgd  loss=0.000246  ||  [  43]   eval  loss=0.000246  ||  [  43]    sgd  loss=0.000272  ||2026-08-27 17:52:45.584 [INFO] Forced structural trigger at epoch 43 (epochs since last structural: 20)
+2026-08-27 17:52:45.584 [INFO] Plateau triggered at epoch 43 (counter=1, loss=0.000272)
+2026-08-27 17:52:45.612 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005184)
+2026-08-27 17:52:45.614 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:45.614 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:45.614 [INFO] MULTIPLY dedup: switching to input=3^2
+2026-08-27 17:52:45.629 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:46.695 [INFO]   COMMIT rank=0 type=MULTIPLY_INJECTION val_loss=0.000840 train_loss=0.000276 new train_loss=0.000251
+2026-08-27 17:52:46.695 [INFO] Plateau state reset 鈥?best_phase2=0.000251
+2026-08-27 17:52:46.695 [INFO] Plateau state reset — best_phase2=0.000251
+2026-08-27 17:52:46.809 [INFO] New best overall loss: 0.000235
+  [  44]   eval  loss=0.000251  ||  [  44]    sgd  loss=0.000235  ||  [  45]   eval  loss=0.000235  ||  [  45]    sgd  loss=0.000249  ||  [  46]   eval  loss=0.000249  ||  [  46]    sgd  loss=0.000238  ||  [  47]   eval  loss=0.000238  ||  [  47]    sgd  loss=0.000238  ||  [  48]   eval  loss=0.000238  ||  [  48]    sgd  loss=0.000239  ||  [  49]   eval  loss=0.000239  ||  [  49]    sgd  loss=0.000244  ||  [  50]   eval  loss=0.000244  ||  [  50]    sgd  loss=0.000237  ||  [  51]   eval  loss=0.000237  ||  [  51]    sgd  loss=0.000240  ||2026-08-27 17:52:47.699 [INFO] New best overall loss: 0.000234
+  [  52]   eval  loss=0.000240  ||  [  52]    sgd  loss=0.000234  ||  [  53]   eval  loss=0.000234  ||  [  53]    sgd  loss=0.000236  ||2026-08-27 17:52:47.920 [INFO] New best overall loss: 0.000230
+  [  54]   eval  loss=0.000236  ||  [  54]    sgd  loss=0.000230  ||2026-08-27 17:52:48.028 [INFO] New best overall loss: 0.000228
+  [  55]   eval  loss=0.000230  ||  [  55]    sgd  loss=0.000228  ||2026-08-27 17:52:48.139 [INFO] New best overall loss: 0.000227
+  [  56]   eval  loss=0.000228  ||  [  56]    sgd  loss=0.000227  ||2026-08-27 17:52:48.245 [INFO] New best overall loss: 0.000227
+  [  57]   eval  loss=0.000227  ||  [  57]    sgd  loss=0.000227  ||2026-08-27 17:52:48.354 [INFO] New best overall loss: 0.000227
+  [  58]   eval  loss=0.000227  ||  [  58]    sgd  loss=0.000227  ||2026-08-27 17:52:48.464 [INFO] New best overall loss: 0.000226
+  [  59]   eval  loss=0.000227  ||  [  59]    sgd  loss=0.000226  ||2026-08-27 17:52:48.577 [INFO] New best overall loss: 0.000225
+  [  60]   eval  loss=0.000226  ||  [  60]    sgd  loss=0.000225  ||2026-08-27 17:52:48.689 [INFO] New best overall loss: 0.000223
+  [  61]   eval  loss=0.000225  ||  [  61]    sgd  loss=0.000223  ||2026-08-27 17:52:48.800 [INFO] New best overall loss: 0.000222
+  [  62]   eval  loss=0.000223  ||  [  62]    sgd  loss=0.000222  ||2026-08-27 17:52:48.917 [INFO] New best overall loss: 0.000221
+  [  63]   eval  loss=0.000222  ||  [  63]    sgd  loss=0.000221  ||2026-08-27 17:52:48.917 [INFO] Forced structural trigger at epoch 63 (epochs since last structural: 20)
+2026-08-27 17:52:48.917 [INFO] Plateau triggered at epoch 63 (counter=0, loss=0.000221)
+2026-08-27 17:52:48.949 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004396)
+2026-08-27 17:52:48.951 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:48.951 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:48.951 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:48.966 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:50.009 [INFO] New best overall loss: 0.000220
+  [  64]   eval  loss=0.000221  ||  [  64]    sgd  loss=0.000220  ||2026-08-27 17:52:50.009 [INFO] Forced structural trigger at epoch 64 (epochs since last structural: 21)
+2026-08-27 17:52:50.009 [INFO] Plateau triggered at epoch 64 (counter=0, loss=0.000220)
+2026-08-27 17:52:50.043 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004417)
+2026-08-27 17:52:50.045 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:50.045 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:50.045 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:50.061 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:51.062 [INFO] New best overall loss: 0.000219
+  [  65]   eval  loss=0.000220  ||  [  65]    sgd  loss=0.000219  ||2026-08-27 17:52:51.063 [INFO] Forced structural trigger at epoch 65 (epochs since last structural: 22)
+2026-08-27 17:52:51.063 [INFO] Plateau triggered at epoch 65 (counter=0, loss=0.000219)
+2026-08-27 17:52:51.097 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004442)
+2026-08-27 17:52:51.099 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:51.099 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:51.099 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:51.115 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:52.183 [INFO] New best overall loss: 0.000218
+  [  66]   eval  loss=0.000219  ||  [  66]    sgd  loss=0.000218  ||2026-08-27 17:52:52.183 [INFO] Forced structural trigger at epoch 66 (epochs since last structural: 23)
+2026-08-27 17:52:52.183 [INFO] Plateau triggered at epoch 66 (counter=0, loss=0.000218)
+2026-08-27 17:52:52.216 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004471)
+2026-08-27 17:52:52.217 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:52.217 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:52.217 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:52.232 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:53.329 [INFO] New best overall loss: 0.000217
+  [  67]   eval  loss=0.000218  ||  [  67]    sgd  loss=0.000217  ||2026-08-27 17:52:53.330 [INFO] Forced structural trigger at epoch 67 (epochs since last structural: 24)
+2026-08-27 17:52:53.330 [INFO] Plateau triggered at epoch 67 (counter=0, loss=0.000217)
+2026-08-27 17:52:53.366 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004504)
+2026-08-27 17:52:53.368 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:53.368 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:53.368 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:53.383 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:54.284 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 17:52:54.398 [INFO] New best overall loss: 0.000217
+  [  68]   eval  loss=0.000217  ||  [  68]    sgd  loss=0.000217  ||2026-08-27 17:52:54.398 [INFO] Structural search in cooldown (9 epochs left) at epoch 68 鈥?letting SGD settle
+2026-08-27 17:52:54.514 [INFO] New best overall loss: 0.000216
+  [  69]   eval  loss=0.000217  ||  [  69]    sgd  loss=0.000216  ||2026-08-27 17:52:54.514 [INFO] Structural search in cooldown (8 epochs left) at epoch 69 鈥?letting SGD settle
+2026-08-27 17:52:54.629 [INFO] New best overall loss: 0.000215
+  [  70]   eval  loss=0.000216  ||  [  70]    sgd  loss=0.000215  ||2026-08-27 17:52:54.630 [INFO] Structural search in cooldown (7 epochs left) at epoch 70 鈥?letting SGD settle
+2026-08-27 17:52:54.740 [INFO] New best overall loss: 0.000215
+  [  71]   eval  loss=0.000215  ||  [  71]    sgd  loss=0.000215  ||2026-08-27 17:52:54.741 [INFO] Structural search in cooldown (6 epochs left) at epoch 71 鈥?letting SGD settle
+2026-08-27 17:52:54.853 [INFO] New best overall loss: 0.000215
+  [  72]   eval  loss=0.000215  ||  [  72]    sgd  loss=0.000215  ||2026-08-27 17:52:54.854 [INFO] Structural search in cooldown (5 epochs left) at epoch 72 鈥?letting SGD settle
+2026-08-27 17:52:54.966 [INFO] New best overall loss: 0.000214
+  [  73]   eval  loss=0.000215  ||  [  73]    sgd  loss=0.000214  ||2026-08-27 17:52:54.966 [INFO] Structural search in cooldown (4 epochs left) at epoch 73 鈥?letting SGD settle
+2026-08-27 17:52:55.082 [INFO] New best overall loss: 0.000214
+  [  74]   eval  loss=0.000214  ||  [  74]    sgd  loss=0.000214  ||2026-08-27 17:52:55.082 [INFO] Structural search in cooldown (3 epochs left) at epoch 74 鈥?letting SGD settle
+2026-08-27 17:52:55.190 [INFO] New best overall loss: 0.000213
+  [  75]   eval  loss=0.000214  ||  [  75]    sgd  loss=0.000213  ||2026-08-27 17:52:55.191 [INFO] Structural search in cooldown (2 epochs left) at epoch 75 鈥?letting SGD settle
+2026-08-27 17:52:55.302 [INFO] New best overall loss: 0.000213
+  [  76]   eval  loss=0.000213  ||  [  76]    sgd  loss=0.000213  ||2026-08-27 17:52:55.302 [INFO] Structural search in cooldown (1 epochs left) at epoch 76 鈥?letting SGD settle
+2026-08-27 17:52:55.411 [INFO] New best overall loss: 0.000213
+  [  77]   eval  loss=0.000213  ||  [  77]    sgd  loss=0.000213  ||2026-08-27 17:52:55.411 [INFO] Forced structural trigger at epoch 77 (epochs since last structural: 34)
+2026-08-27 17:52:55.411 [INFO] Plateau triggered at epoch 77 (counter=0, loss=0.000213)
+2026-08-27 17:52:55.445 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004911)
+2026-08-27 17:52:55.446 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:55.447 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:55.447 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:55.462 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:56.561 [INFO] New best overall loss: 0.000213
+  [  78]   eval  loss=0.000213  ||  [  78]    sgd  loss=0.000213  ||2026-08-27 17:52:56.562 [INFO] Forced structural trigger at epoch 78 (epochs since last structural: 35)
+2026-08-27 17:52:56.562 [INFO] Plateau triggered at epoch 78 (counter=0, loss=0.000213)
+2026-08-27 17:52:56.597 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004953)
+2026-08-27 17:52:56.599 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:56.599 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:56.599 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:56.613 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:57.780 [INFO] New best overall loss: 0.000212
+  [  79]   eval  loss=0.000213  ||  [  79]    sgd  loss=0.000212  ||2026-08-27 17:52:57.780 [INFO] Forced structural trigger at epoch 79 (epochs since last structural: 36)
+2026-08-27 17:52:57.780 [INFO] Plateau triggered at epoch 79 (counter=0, loss=0.000212)
+2026-08-27 17:52:57.812 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.004994)
+2026-08-27 17:52:57.815 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:57.815 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:57.815 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:57.831 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:52:58.990 [INFO] New best overall loss: 0.000212
+  [  80]   eval  loss=0.000212  ||  [  80]    sgd  loss=0.000212  ||2026-08-27 17:52:58.990 [INFO] Forced structural trigger at epoch 80 (epochs since last structural: 37)
+2026-08-27 17:52:58.990 [INFO] Plateau triggered at epoch 80 (counter=0, loss=0.000212)
+2026-08-27 17:52:59.028 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005034)
+2026-08-27 17:52:59.030 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:52:59.030 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:52:59.030 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:52:59.046 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:00.186 [INFO] New best overall loss: 0.000212
+  [  81]   eval  loss=0.000212  ||  [  81]    sgd  loss=0.000212  ||2026-08-27 17:53:00.186 [INFO] Forced structural trigger at epoch 81 (epochs since last structural: 38)
+2026-08-27 17:53:00.186 [INFO] Plateau triggered at epoch 81 (counter=0, loss=0.000212)
+2026-08-27 17:53:00.220 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005074)
+2026-08-27 17:53:00.222 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:00.222 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:00.222 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:00.240 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:01.488 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 17:53:01.595 [INFO] New best overall loss: 0.000211
+  [  82]   eval  loss=0.000212  ||  [  82]    sgd  loss=0.000211  ||2026-08-27 17:53:01.596 [INFO] Structural search in cooldown (9 epochs left) at epoch 82 鈥?letting SGD settle
+2026-08-27 17:53:01.709 [INFO] New best overall loss: 0.000211
+  [  83]   eval  loss=0.000211  ||  [  83]    sgd  loss=0.000211  ||2026-08-27 17:53:01.709 [INFO] Structural search in cooldown (8 epochs left) at epoch 83 鈥?letting SGD settle
+2026-08-27 17:53:01.822 [INFO] New best overall loss: 0.000211
+  [  84]   eval  loss=0.000211  ||  [  84]    sgd  loss=0.000211  ||2026-08-27 17:53:01.822 [INFO] Structural search in cooldown (7 epochs left) at epoch 84 鈥?letting SGD settle
+2026-08-27 17:53:01.933 [INFO] New best overall loss: 0.000211
+  [  85]   eval  loss=0.000211  ||  [  85]    sgd  loss=0.000211  ||2026-08-27 17:53:01.933 [INFO] Structural search in cooldown (6 epochs left) at epoch 85 鈥?letting SGD settle
+2026-08-27 17:53:02.049 [INFO] New best overall loss: 0.000211
+  [  86]   eval  loss=0.000211  ||  [  86]    sgd  loss=0.000211  ||2026-08-27 17:53:02.049 [INFO] Structural search in cooldown (5 epochs left) at epoch 86 鈥?letting SGD settle
+2026-08-27 17:53:02.158 [INFO] New best overall loss: 0.000210
+  [  87]   eval  loss=0.000211  ||  [  87]    sgd  loss=0.000210  ||2026-08-27 17:53:02.158 [INFO] Structural search in cooldown (4 epochs left) at epoch 87 鈥?letting SGD settle
+2026-08-27 17:53:02.265 [INFO] New best overall loss: 0.000210
+  [  88]   eval  loss=0.000210  ||  [  88]    sgd  loss=0.000210  ||2026-08-27 17:53:02.265 [INFO] Structural search in cooldown (3 epochs left) at epoch 88 鈥?letting SGD settle
+2026-08-27 17:53:02.376 [INFO] New best overall loss: 0.000210
+  [  89]   eval  loss=0.000210  ||  [  89]    sgd  loss=0.000210  ||2026-08-27 17:53:02.377 [INFO] Structural search in cooldown (2 epochs left) at epoch 89 鈥?letting SGD settle
+2026-08-27 17:53:02.494 [INFO] New best overall loss: 0.000210
+  [  90]   eval  loss=0.000210  ||  [  90]    sgd  loss=0.000210  ||2026-08-27 17:53:02.495 [INFO] Structural search in cooldown (1 epochs left) at epoch 90 鈥?letting SGD settle
+2026-08-27 17:53:02.604 [INFO] New best overall loss: 0.000210
+  [  91]   eval  loss=0.000210  ||  [  91]    sgd  loss=0.000210  ||2026-08-27 17:53:02.604 [INFO] Forced structural trigger at epoch 91 (epochs since last structural: 48)
+2026-08-27 17:53:02.604 [INFO] Plateau triggered at epoch 91 (counter=3, loss=0.000210)
+2026-08-27 17:53:02.642 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005445)
+2026-08-27 17:53:02.644 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:02.644 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:02.644 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:02.659 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:03.734 [INFO] New best overall loss: 0.000209
+  [  92]   eval  loss=0.000210  ||  [  92]    sgd  loss=0.000209  ||2026-08-27 17:53:03.734 [INFO] Forced structural trigger at epoch 92 (epochs since last structural: 49)
+2026-08-27 17:53:03.734 [INFO] Plateau triggered at epoch 92 (counter=4, loss=0.000209)
+2026-08-27 17:53:03.770 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005480)
+2026-08-27 17:53:03.772 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:03.772 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:03.772 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:03.788 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:04.862 [INFO] New best overall loss: 0.000209
+  [  93]   eval  loss=0.000209  ||  [  93]    sgd  loss=0.000209  ||2026-08-27 17:53:04.862 [INFO] Forced structural trigger at epoch 93 (epochs since last structural: 50)
+2026-08-27 17:53:04.862 [INFO] Plateau triggered at epoch 93 (counter=5, loss=0.000209)
+2026-08-27 17:53:04.897 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005513)
+2026-08-27 17:53:04.899 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:04.900 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:04.900 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:04.916 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:06.245 [INFO] New best overall loss: 0.000209
+  [  94]   eval  loss=0.000209  ||  [  94]    sgd  loss=0.000209  ||2026-08-27 17:53:06.246 [INFO] Forced structural trigger at epoch 94 (epochs since last structural: 51)
+2026-08-27 17:53:06.246 [INFO] Plateau triggered at epoch 94 (counter=6, loss=0.000209)
+2026-08-27 17:53:06.283 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005547)
+2026-08-27 17:53:06.285 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:06.286 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:06.286 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:06.301 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:07.462 [INFO] New best overall loss: 0.000209
+  [  95]   eval  loss=0.000209  ||  [  95]    sgd  loss=0.000209  ||2026-08-27 17:53:07.462 [INFO] Forced structural trigger at epoch 95 (epochs since last structural: 52)
+2026-08-27 17:53:07.462 [INFO] Plateau triggered at epoch 95 (counter=7, loss=0.000209)
+2026-08-27 17:53:07.495 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005580)
+2026-08-27 17:53:07.497 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:07.497 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:07.497 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:07.511 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:08.419 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 17:53:08.532 [INFO] New best overall loss: 0.000209
+  [  96]   eval  loss=0.000209  ||  [  96]    sgd  loss=0.000209  ||2026-08-27 17:53:08.533 [INFO] Structural search in cooldown (9 epochs left) at epoch 96 鈥?letting SGD settle
+2026-08-27 17:53:08.648 [INFO] New best overall loss: 0.000208
+  [  97]   eval  loss=0.000209  ||  [  97]    sgd  loss=0.000208  ||2026-08-27 17:53:08.648 [INFO] Structural search in cooldown (8 epochs left) at epoch 97 鈥?letting SGD settle
+2026-08-27 17:53:08.766 [INFO] New best overall loss: 0.000208
+  [  98]   eval  loss=0.000208  ||  [  98]    sgd  loss=0.000208  ||2026-08-27 17:53:08.766 [INFO] Structural search in cooldown (7 epochs left) at epoch 98 鈥?letting SGD settle
+2026-08-27 17:53:08.875 [INFO] New best overall loss: 0.000208
+  [  99]   eval  loss=0.000208  ||  [  99]    sgd  loss=0.000208  ||2026-08-27 17:53:08.875 [INFO] Structural search in cooldown (6 epochs left) at epoch 99 鈥?letting SGD settle
+2026-08-27 17:53:08.989 [INFO] New best overall loss: 0.000208
+  [ 100]   eval  loss=0.000208  ||  [ 100]    sgd  loss=0.000208  ||2026-08-27 17:53:08.989 [INFO] Structural search in cooldown (5 epochs left) at epoch 100 鈥?letting SGD settle
+2026-08-27 17:53:09.101 [INFO] New best overall loss: 0.000208
+  [ 101]   eval  loss=0.000208  ||  [ 101]    sgd  loss=0.000208  ||2026-08-27 17:53:09.101 [INFO] Structural search in cooldown (4 epochs left) at epoch 101 鈥?letting SGD settle
+2026-08-27 17:53:09.213 [INFO] New best overall loss: 0.000208
+  [ 102]   eval  loss=0.000208  ||  [ 102]    sgd  loss=0.000208  ||2026-08-27 17:53:09.213 [INFO] Structural search in cooldown (3 epochs left) at epoch 102 鈥?letting SGD settle
+2026-08-27 17:53:09.324 [INFO] New best overall loss: 0.000207
+  [ 103]   eval  loss=0.000208  ||  [ 103]    sgd  loss=0.000207  ||2026-08-27 17:53:09.324 [INFO] Structural search in cooldown (2 epochs left) at epoch 103 鈥?letting SGD settle
+2026-08-27 17:53:09.435 [INFO] New best overall loss: 0.000207
+  [ 104]   eval  loss=0.000207  ||  [ 104]    sgd  loss=0.000207  ||2026-08-27 17:53:09.435 [INFO] Structural search in cooldown (1 epochs left) at epoch 104 鈥?letting SGD settle
+2026-08-27 17:53:09.545 [INFO] New best overall loss: 0.000207
+  [ 105]   eval  loss=0.000207  ||  [ 105]    sgd  loss=0.000207  ||2026-08-27 17:53:09.545 [INFO] Forced structural trigger at epoch 105 (epochs since last structural: 62)
+2026-08-27 17:53:09.545 [INFO] Plateau triggered at epoch 105 (counter=17, loss=0.000207)
+2026-08-27 17:53:09.579 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005884)
+2026-08-27 17:53:09.581 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:09.581 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:09.581 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:09.596 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:10.658 [INFO] New best overall loss: 0.000207
+  [ 106]   eval  loss=0.000207  ||  [ 106]    sgd  loss=0.000207  ||2026-08-27 17:53:10.658 [INFO] Forced structural trigger at epoch 106 (epochs since last structural: 63)
+2026-08-27 17:53:10.658 [INFO] Plateau triggered at epoch 106 (counter=18, loss=0.000207)
+2026-08-27 17:53:10.693 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005912)
+2026-08-27 17:53:10.695 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:10.695 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:10.695 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:10.713 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:11.727 [INFO] New best overall loss: 0.000207
+  [ 107]   eval  loss=0.000207  ||  [ 107]    sgd  loss=0.000207  ||2026-08-27 17:53:11.728 [INFO] Forced structural trigger at epoch 107 (epochs since last structural: 64)
+2026-08-27 17:53:11.728 [INFO] Plateau triggered at epoch 107 (counter=19, loss=0.000207)
+2026-08-27 17:53:11.765 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005939)
+2026-08-27 17:53:11.766 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:11.767 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:11.767 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:11.784 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:12.824 [INFO] New best overall loss: 0.000207
+  [ 108]   eval  loss=0.000207  ||  [ 108]    sgd  loss=0.000207  ||2026-08-27 17:53:12.824 [INFO] Forced structural trigger at epoch 108 (epochs since last structural: 65)
+2026-08-27 17:53:12.824 [INFO] Plateau triggered at epoch 108 (counter=20, loss=0.000207)
+2026-08-27 17:53:12.857 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005967)
+2026-08-27 17:53:12.859 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:12.860 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:12.860 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:12.875 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:14.097 [INFO] New best overall loss: 0.000207
+  [ 109]   eval  loss=0.000207  ||  [ 109]    sgd  loss=0.000207  ||2026-08-27 17:53:14.097 [INFO] Forced structural trigger at epoch 109 (epochs since last structural: 66)
+2026-08-27 17:53:14.097 [INFO] Plateau triggered at epoch 109 (counter=21, loss=0.000207)
+2026-08-27 17:53:14.135 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.005993)
+2026-08-27 17:53:14.137 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:14.137 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:14.137 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:14.151 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:15.152 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 17:53:15.259 [INFO] New best overall loss: 0.000206
+  [ 110]   eval  loss=0.000207  ||  [ 110]    sgd  loss=0.000206  ||2026-08-27 17:53:15.260 [INFO] Structural search in cooldown (9 epochs left) at epoch 110 鈥?letting SGD settle
+2026-08-27 17:53:15.371 [INFO] New best overall loss: 0.000206
+  [ 111]   eval  loss=0.000206  ||  [ 111]    sgd  loss=0.000206  ||2026-08-27 17:53:15.371 [INFO] Structural search in cooldown (8 epochs left) at epoch 111 鈥?letting SGD settle
+2026-08-27 17:53:15.483 [INFO] New best overall loss: 0.000206
+  [ 112]   eval  loss=0.000206  ||  [ 112]    sgd  loss=0.000206  ||2026-08-27 17:53:15.483 [INFO] Structural search in cooldown (7 epochs left) at epoch 112 鈥?letting SGD settle
+2026-08-27 17:53:15.601 [INFO] New best overall loss: 0.000206
+  [ 113]   eval  loss=0.000206  ||  [ 113]    sgd  loss=0.000206  ||2026-08-27 17:53:15.601 [INFO] Structural search in cooldown (6 epochs left) at epoch 113 鈥?letting SGD settle
+2026-08-27 17:53:15.716 [INFO] New best overall loss: 0.000206
+  [ 114]   eval  loss=0.000206  ||  [ 114]    sgd  loss=0.000206  ||2026-08-27 17:53:15.716 [INFO] Structural search in cooldown (5 epochs left) at epoch 114 鈥?letting SGD settle
+2026-08-27 17:53:15.828 [INFO] New best overall loss: 0.000206
+  [ 115]   eval  loss=0.000206  ||  [ 115]    sgd  loss=0.000206  ||2026-08-27 17:53:15.829 [INFO] Structural search in cooldown (4 epochs left) at epoch 115 鈥?letting SGD settle
+2026-08-27 17:53:15.932 [INFO] New best overall loss: 0.000206
+  [ 116]   eval  loss=0.000206  ||  [ 116]    sgd  loss=0.000206  ||2026-08-27 17:53:15.932 [INFO] Structural search in cooldown (3 epochs left) at epoch 116 鈥?letting SGD settle
+2026-08-27 17:53:16.048 [INFO] New best overall loss: 0.000205
+  [ 117]   eval  loss=0.000206  ||  [ 117]    sgd  loss=0.000205  ||2026-08-27 17:53:16.048 [INFO] Structural search in cooldown (2 epochs left) at epoch 117 鈥?letting SGD settle
+2026-08-27 17:53:16.164 [INFO] New best overall loss: 0.000205
+  [ 118]   eval  loss=0.000205  ||  [ 118]    sgd  loss=0.000205  ||2026-08-27 17:53:16.164 [INFO] Structural search in cooldown (1 epochs left) at epoch 118 鈥?letting SGD settle
+2026-08-27 17:53:16.272 [INFO] New best overall loss: 0.000205
+  [ 119]   eval  loss=0.000205  ||  [ 119]    sgd  loss=0.000205  ||2026-08-27 17:53:16.273 [INFO] Forced structural trigger at epoch 119 (epochs since last structural: 76)
+2026-08-27 17:53:16.273 [INFO] Plateau triggered at epoch 119 (counter=31, loss=0.000205)
+2026-08-27 17:53:16.309 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006242)
+2026-08-27 17:53:16.312 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:16.312 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:16.312 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:16.328 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:17.350 [INFO] New best overall loss: 0.000205
+  [ 120]   eval  loss=0.000205  ||  [ 120]    sgd  loss=0.000205  ||2026-08-27 17:53:17.350 [INFO] Forced structural trigger at epoch 120 (epochs since last structural: 77)
+2026-08-27 17:53:17.350 [INFO] Plateau triggered at epoch 120 (counter=32, loss=0.000205)
+2026-08-27 17:53:17.386 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006265)
+2026-08-27 17:53:17.389 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:17.389 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:17.389 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:17.404 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:18.461 [INFO] New best overall loss: 0.000205
+  [ 121]   eval  loss=0.000205  ||  [ 121]    sgd  loss=0.000205  ||2026-08-27 17:53:18.461 [INFO] Forced structural trigger at epoch 121 (epochs since last structural: 78)
+2026-08-27 17:53:18.461 [INFO] Plateau triggered at epoch 121 (counter=33, loss=0.000205)
+2026-08-27 17:53:18.496 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006288)
+2026-08-27 17:53:18.498 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:18.498 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:18.498 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:18.511 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:19.717 [INFO] New best overall loss: 0.000205
+  [ 122]   eval  loss=0.000205  ||  [ 122]    sgd  loss=0.000205  ||2026-08-27 17:53:19.717 [INFO] Forced structural trigger at epoch 122 (epochs since last structural: 79)
+2026-08-27 17:53:19.717 [INFO] Plateau triggered at epoch 122 (counter=34, loss=0.000205)
+2026-08-27 17:53:19.754 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006310)
+2026-08-27 17:53:19.755 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:19.755 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:19.755 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:19.769 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:20.816 [INFO] New best overall loss: 0.000205
+  [ 123]   eval  loss=0.000205  ||  [ 123]    sgd  loss=0.000205  ||2026-08-27 17:53:20.817 [INFO] Forced structural trigger at epoch 123 (epochs since last structural: 80)
+2026-08-27 17:53:20.817 [INFO] Plateau triggered at epoch 123 (counter=35, loss=0.000205)
+2026-08-27 17:53:20.855 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006332)
+2026-08-27 17:53:20.858 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:20.859 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:20.859 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:20.874 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:21.875 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 17:53:21.983 [INFO] New best overall loss: 0.000204
+  [ 124]   eval  loss=0.000205  ||  [ 124]    sgd  loss=0.000204  ||2026-08-27 17:53:21.984 [INFO] Structural search in cooldown (9 epochs left) at epoch 124 鈥?letting SGD settle
+2026-08-27 17:53:22.098 [INFO] New best overall loss: 0.000204
+  [ 125]   eval  loss=0.000204  ||  [ 125]    sgd  loss=0.000204  ||2026-08-27 17:53:22.099 [INFO] Structural search in cooldown (8 epochs left) at epoch 125 鈥?letting SGD settle
+2026-08-27 17:53:22.217 [INFO] New best overall loss: 0.000204
+  [ 126]   eval  loss=0.000204  ||  [ 126]    sgd  loss=0.000204  ||2026-08-27 17:53:22.218 [INFO] Structural search in cooldown (7 epochs left) at epoch 126 鈥?letting SGD settle
+2026-08-27 17:53:22.337 [INFO] New best overall loss: 0.000204
+  [ 127]   eval  loss=0.000204  ||  [ 127]    sgd  loss=0.000204  ||2026-08-27 17:53:22.337 [INFO] Structural search in cooldown (6 epochs left) at epoch 127 鈥?letting SGD settle
+2026-08-27 17:53:22.458 [INFO] New best overall loss: 0.000204
+  [ 128]   eval  loss=0.000204  ||  [ 128]    sgd  loss=0.000204  ||2026-08-27 17:53:22.458 [INFO] Structural search in cooldown (5 epochs left) at epoch 128 鈥?letting SGD settle
+2026-08-27 17:53:22.570 [INFO] New best overall loss: 0.000204
+  [ 129]   eval  loss=0.000204  ||  [ 129]    sgd  loss=0.000204  ||2026-08-27 17:53:22.571 [INFO] Structural search in cooldown (4 epochs left) at epoch 129 鈥?letting SGD settle
+2026-08-27 17:53:22.679 [INFO] New best overall loss: 0.000204
+  [ 130]   eval  loss=0.000204  ||  [ 130]    sgd  loss=0.000204  ||2026-08-27 17:53:22.680 [INFO] Structural search in cooldown (3 epochs left) at epoch 130 鈥?letting SGD settle
+2026-08-27 17:53:22.799 [INFO] New best overall loss: 0.000204
+  [ 131]   eval  loss=0.000204  ||  [ 131]    sgd  loss=0.000204  ||2026-08-27 17:53:22.799 [INFO] Structural search in cooldown (2 epochs left) at epoch 131 鈥?letting SGD settle
+2026-08-27 17:53:22.912 [INFO] New best overall loss: 0.000203
+  [ 132]   eval  loss=0.000204  ||  [ 132]    sgd  loss=0.000203  ||2026-08-27 17:53:22.912 [INFO] Structural search in cooldown (1 epochs left) at epoch 132 鈥?letting SGD settle
+2026-08-27 17:53:23.022 [INFO] New best overall loss: 0.000203
+  [ 133]   eval  loss=0.000203  ||  [ 133]    sgd  loss=0.000203  ||2026-08-27 17:53:23.022 [INFO] Forced structural trigger at epoch 133 (epochs since last structural: 90)
+2026-08-27 17:53:23.022 [INFO] Plateau triggered at epoch 133 (counter=45, loss=0.000203)
+2026-08-27 17:53:23.054 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006535)
+2026-08-27 17:53:23.056 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:23.057 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:23.057 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:23.074 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:24.141 [INFO] New best overall loss: 0.000203
+  [ 134]   eval  loss=0.000203  ||  [ 134]    sgd  loss=0.000203  ||2026-08-27 17:53:24.141 [INFO] Forced structural trigger at epoch 134 (epochs since last structural: 91)
+2026-08-27 17:53:24.141 [INFO] Plateau triggered at epoch 134 (counter=46, loss=0.000203)
+2026-08-27 17:53:24.175 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006553)
+2026-08-27 17:53:24.177 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:24.177 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:24.178 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:24.194 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:25.240 [INFO] New best overall loss: 0.000203
+  [ 135]   eval  loss=0.000203  ||  [ 135]    sgd  loss=0.000203  ||2026-08-27 17:53:25.241 [INFO] Forced structural trigger at epoch 135 (epochs since last structural: 92)
+2026-08-27 17:53:25.241 [INFO] Plateau triggered at epoch 135 (counter=47, loss=0.000203)
+2026-08-27 17:53:25.276 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006572)
+2026-08-27 17:53:25.278 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:25.279 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:25.279 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:25.295 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:26.347 [INFO] New best overall loss: 0.000203
+  [ 136]   eval  loss=0.000203  ||  [ 136]    sgd  loss=0.000203  ||2026-08-27 17:53:26.348 [INFO] Forced structural trigger at epoch 136 (epochs since last structural: 93)
+2026-08-27 17:53:26.348 [INFO] Plateau triggered at epoch 136 (counter=48, loss=0.000203)
+2026-08-27 17:53:26.385 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006590)
+2026-08-27 17:53:26.388 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:26.388 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:26.388 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:26.404 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:27.570 [INFO] New best overall loss: 0.000203
+  [ 137]   eval  loss=0.000203  ||  [ 137]    sgd  loss=0.000203  ||2026-08-27 17:53:27.571 [INFO] Forced structural trigger at epoch 137 (epochs since last structural: 94)
+2026-08-27 17:53:27.571 [INFO] Plateau triggered at epoch 137 (counter=49, loss=0.000203)
+2026-08-27 17:53:27.605 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006608)
+2026-08-27 17:53:27.607 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:27.607 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:27.607 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:27.621 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:28.559 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 17:53:28.666 [INFO] New best overall loss: 0.000203
+  [ 138]   eval  loss=0.000203  ||  [ 138]    sgd  loss=0.000203  ||2026-08-27 17:53:28.666 [INFO] Structural search in cooldown (9 epochs left) at epoch 138 鈥?letting SGD settle
+2026-08-27 17:53:28.784 [INFO] New best overall loss: 0.000202
+  [ 139]   eval  loss=0.000203  ||  [ 139]    sgd  loss=0.000202  ||2026-08-27 17:53:28.784 [INFO] Structural search in cooldown (8 epochs left) at epoch 139 鈥?letting SGD settle
+2026-08-27 17:53:28.902 [INFO] New best overall loss: 0.000202
+  [ 140]   eval  loss=0.000202  ||  [ 140]    sgd  loss=0.000202  ||2026-08-27 17:53:28.903 [INFO] Structural search in cooldown (7 epochs left) at epoch 140 鈥?letting SGD settle
+2026-08-27 17:53:29.014 [INFO] New best overall loss: 0.000202
+  [ 141]   eval  loss=0.000202  ||  [ 141]    sgd  loss=0.000202  ||2026-08-27 17:53:29.014 [INFO] Structural search in cooldown (6 epochs left) at epoch 141 鈥?letting SGD settle
+2026-08-27 17:53:29.129 [INFO] New best overall loss: 0.000202
+  [ 142]   eval  loss=0.000202  ||  [ 142]    sgd  loss=0.000202  ||2026-08-27 17:53:29.129 [INFO] Structural search in cooldown (5 epochs left) at epoch 142 鈥?letting SGD settle
+2026-08-27 17:53:29.238 [INFO] New best overall loss: 0.000202
+  [ 143]   eval  loss=0.000202  ||  [ 143]    sgd  loss=0.000202  ||2026-08-27 17:53:29.238 [INFO] Structural search in cooldown (4 epochs left) at epoch 143 鈥?letting SGD settle
+2026-08-27 17:53:29.353 [INFO] New best overall loss: 0.000202
+  [ 144]   eval  loss=0.000202  ||  [ 144]    sgd  loss=0.000202  ||2026-08-27 17:53:29.354 [INFO] Structural search in cooldown (3 epochs left) at epoch 144 鈥?letting SGD settle
+2026-08-27 17:53:29.466 [INFO] New best overall loss: 0.000202
+  [ 145]   eval  loss=0.000202  ||  [ 145]    sgd  loss=0.000202  ||2026-08-27 17:53:29.466 [INFO] Structural search in cooldown (2 epochs left) at epoch 145 鈥?letting SGD settle
+2026-08-27 17:53:29.585 [INFO] New best overall loss: 0.000202
+  [ 146]   eval  loss=0.000202  ||  [ 146]    sgd  loss=0.000202  ||2026-08-27 17:53:29.585 [INFO] Structural search in cooldown (1 epochs left) at epoch 146 鈥?letting SGD settle
+2026-08-27 17:53:29.704 [INFO] New best overall loss: 0.000201
+  [ 147]   eval  loss=0.000202  ||  [ 147]    sgd  loss=0.000201  ||2026-08-27 17:53:29.704 [INFO] Forced structural trigger at epoch 147 (epochs since last structural: 104)
+2026-08-27 17:53:29.704 [INFO] Plateau triggered at epoch 147 (counter=59, loss=0.000201)
+2026-08-27 17:53:29.742 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006771)
+2026-08-27 17:53:29.744 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:29.745 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:29.745 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:29.761 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:30.905 [INFO] New best overall loss: 0.000201
+  [ 148]   eval  loss=0.000201  ||  [ 148]    sgd  loss=0.000201  ||2026-08-27 17:53:30.905 [INFO] Forced structural trigger at epoch 148 (epochs since last structural: 105)
+2026-08-27 17:53:30.905 [INFO] Plateau triggered at epoch 148 (counter=60, loss=0.000201)
+2026-08-27 17:53:30.941 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006786)
+2026-08-27 17:53:30.943 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:30.943 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:30.943 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:30.959 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:32.201 [INFO] New best overall loss: 0.000201
+  [ 149]   eval  loss=0.000201  ||  [ 149]    sgd  loss=0.000201  ||2026-08-27 17:53:32.201 [INFO] Forced structural trigger at epoch 149 (epochs since last structural: 106)
+2026-08-27 17:53:32.201 [INFO] Plateau triggered at epoch 149 (counter=61, loss=0.000201)
+2026-08-27 17:53:32.237 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006801)
+2026-08-27 17:53:32.239 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:32.240 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:32.240 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:32.256 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:33.310 [INFO] New best overall loss: 0.000201
+  [ 150]   eval  loss=0.000201  ||  [ 150]    sgd  loss=0.000201  ||2026-08-27 17:53:33.310 [INFO] Forced structural trigger at epoch 150 (epochs since last structural: 107)
+2026-08-27 17:53:33.310 [INFO] Plateau triggered at epoch 150 (counter=62, loss=0.000201)
+2026-08-27 17:53:33.344 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.006815)
+2026-08-27 17:53:33.346 [INFO] [PROFILE] F=8 N=240 var_r=0.0269 bound_ratio=5.3364 poly_r2=0.9269 a12=0.2341 max_coef[i=1]=-0.4224 sobol_pair(0,1)=0.1638 quad=[0.123,0.123,0.123,0.123] L_max=0.875 | flags: none
+2026-08-27 17:53:33.346 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 3.094246 over 240 paired samples)
+2026-08-27 17:53:33.346 [INFO] MULTIPLY dedup: switching to input=4^2
+2026-08-27 17:53:33.361 [INFO] Library prior (dist=0.405 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-27 17:53:34.396 [INFO] Restored best-val graph snapshot (val=0.000840, train=0.000251)
 
 
 ================================================
@@ -305,31 +464,31 @@ Starting evolution...
 
   Total epochs:         150
   SGD epochs run:       7500
-  Structural changes:   7
-  Failed commits:       120
+  Structural changes:   3
+  Failed commits:       145
   Compiles performed:   0
   Dead nodes removed:   0
   Constants folded:     0
   Neurons compressed:   0
-  Initial loss:         0.0583305
-  Final loss:           0.000294658
-  Best loss:            0.000294144
-  Wall time:            16470 ms
+  Initial loss:         0.0559242
+  Final loss:           0.000250859
+  Best loss:            0.000200927
+  Wall time:            56306 ms
 
-  [Expression] 1.185*tanh(tanh(1.226*(tanh(-1.494*x0-0.361*x1-0.048*x2+0.047*x3+0.040*x4+0.023*x5+0.018*x6+0.007*x7+0.654)+tanh(-0.519*x0-1.254*x1-1.387*x2-0.631*x3-0.405*x4-0.158*x5-0.089*x6-0.010*x7-0.478))-0.2...
+  [Expression] 0.715*(((tanh(-1.638*x0-1.722*x1-1.696*x2-0.773*x3-0.448*x4-0.150*x5-0.043*x6+0.059*x7-0.316)+tanh(-0.434*x0-0.198*x1-0.064*x2+0.016*x3+0.009*x4+0.005*x5+0.000*x6-0.003*x7-0.203))+tanh(0.046*(x2*x2...
 
-  [Library] Behavioral fingerprint: k=8 bounded=1 interact=0 sign_sym=1 sharp=0 lipsch=3.0
+  [Library] Behavioral fingerprint: k=8 bounded=1 interact=0 sign_sym=1 sharp=0 lipsch=3.6
   [Library] Closest existing entries:
-    bench_narma30.csv (dist=1.165)
-    bench_hetero3.csv (dist=1.270)
-    bench_count8.csv (dist=2.273)
+    bench_firstpos8.csv (dist=0.189)
+    bench_stripes20.csv (dist=0.214)
+    bench_narma30.csv (dist=1.120)
   [Library] Pattern: tanh_stack
-  [Library] Saved (library now has 32 entries)
-  [Library] Extracted 2 sub-expression block(s) (library now has 34 entries)
-  [FailureLib] Appended 117 failure records to failure_library.txt
+  [Library] Saved (library now has 43 entries)
+  [Library] Extracted 2 sub-expression block(s) (library now has 45 entries)
+  [FailureLib] Appended 143 failure records to failure_library.txt
 
 ================================================
   Held-out Evaluation  (1499 samples)
 ================================================
-  Eval R2[out0]:   0.989246
-  Eval MSE[out0]:  0.000280   MAE: 0.011375
+  Eval R2[out0]:   0.985824
+  Eval MSE[out0]:  0.000369   MAE: 0.011324

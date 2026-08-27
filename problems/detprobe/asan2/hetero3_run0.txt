@@ -1,0 +1,535 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-limits\bench_hetero3.csv
+  Loaded 1199 samples
+  Train: 959  Validation: 240
+
+Starting evolution...
+2026-08-27 18:47:59.495 [INFO] New best overall loss: 0.649205
+  [   1]   eval  loss=17.392938  |====================|  [   1]    sgd  loss=0.649205  |======|2026-08-27 18:48:03.765 [INFO] New best overall loss: 0.514947
+  [   2]   eval  loss=0.649205  |======|  [   2]    sgd  loss=0.514947  |=====|2026-08-27 18:48:08.245 [INFO] New best overall loss: 0.505035
+  [   3]   eval  loss=0.514947  |=====|  [   3]    sgd  loss=0.505035  |=====|2026-08-27 18:48:09.318 [INFO] New best overall loss: 0.504210
+  [   4]   eval  loss=0.505035  |=====|  [   4]    sgd  loss=0.504210  |=====|2026-08-27 18:48:10.336 [INFO] New best overall loss: 0.504010
+  [   5]   eval  loss=0.504210  |=====|  [   5]    sgd  loss=0.504010  |=====|2026-08-27 18:48:11.349 [INFO] New best overall loss: 0.503855
+  [   6]   eval  loss=0.504010  |=====|  [   6]    sgd  loss=0.503855  |=====|2026-08-27 18:48:12.459 [INFO] New best overall loss: 0.503755
+  [   7]   eval  loss=0.503855  |=====|  [   7]    sgd  loss=0.503755  |=====|2026-08-27 18:48:13.128 [INFO] New best overall loss: 0.503074
+  [   8]   eval  loss=0.503755  |=====|  [   8]    sgd  loss=0.503074  |=====|  [   9]   eval  loss=0.503074  |=====|  [   9]    sgd  loss=0.503474  |=====|2026-08-27 18:48:14.900 [INFO] New best overall loss: 0.502998
+  [  10]   eval  loss=0.503474  |=====|  [  10]    sgd  loss=0.502998  |=====|  [  11]   eval  loss=0.502998  |=====|  [  11]    sgd  loss=0.503119  |=====|2026-08-27 18:48:16.647 [INFO] New best overall loss: 0.502463
+  [  12]   eval  loss=0.503119  |=====|  [  12]    sgd  loss=0.502463  |=====|2026-08-27 18:48:17.628 [INFO] New best overall loss: 0.502392
+  [  13]   eval  loss=0.502463  |=====|  [  13]    sgd  loss=0.502392  |=====|2026-08-27 18:48:18.413 [INFO] New best overall loss: 0.501755
+  [  14]   eval  loss=0.502392  |=====|  [  14]    sgd  loss=0.501755  |=====|2026-08-27 18:48:20.790 [INFO] New best overall loss: 0.499475
+  [  15]   eval  loss=0.501755  |=====|  [  15]    sgd  loss=0.499475  |====|  [  16]   eval  loss=0.499475  |====|  [  16]    sgd  loss=0.501400  |=====|2026-08-27 18:48:23.167 [INFO] New best overall loss: 0.499152
+  [  17]   eval  loss=0.501400  |=====|  [  17]    sgd  loss=0.499152  |====|  [  18]   eval  loss=0.499152  |====|  [  18]    sgd  loss=0.500662  |=====|2026-08-27 18:48:25.440 [INFO] New best overall loss: 0.498969
+  [  19]   eval  loss=0.500662  |=====|  [  19]    sgd  loss=0.498969  |====|2026-08-27 18:48:26.744 [INFO] New best overall loss: 0.498877
+  [  20]   eval  loss=0.498969  |====|  [  20]    sgd  loss=0.498877  |====|2026-08-27 18:48:26.745 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-08-27 18:48:26.745 [INFO] Plateau triggered at epoch 20 (counter=1, loss=0.498877)
+2026-08-27 18:48:26.993 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.691179)
+2026-08-27 18:48:27.045 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.004185)
+2026-08-27 18:48:27.100 [INFO] Structural inability 鈥?output-specific bottleneck node 7 (blame=0.001004)
+2026-08-27 18:48:27.105 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:48:27.106 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:48:27.107 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 18:48:53.740 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.509608 train_loss=0.509322 new train_loss=0.496492
+2026-08-27 18:48:53.747 [INFO] [PROFILE] F=1 N=240 var_r=0.5092 bound_ratio=2.8026 poly_r2=0.0284 max_coef[i=1]=0.0704 L_max=2.9994 | flags: BOUNDED
+2026-08-27 18:48:53.748 [INFO] IFELSE set-guided split: thr=2.186235 (SSE reduction 18.468022 over 240 paired samples)
+2026-08-27 18:48:53.748 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=2.999448 var_r=0.509235)
+2026-08-27 18:48:53.749 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=2.186235 a=node=5 b=node=7)
+2026-08-27 18:48:53.749 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=30.662742, 5 sign changes)
+2026-08-27 18:48:53.750 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 18:53:32.596 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.450446 train_loss=0.390036 new train_loss=0.447611
+2026-08-27 18:53:32.599 [INFO] Plateau state reset 鈥?best_phase2=0.447611
+2026-08-27 18:53:32.600 [INFO] Plateau state reset — best_phase2=0.447611
+2026-08-27 18:53:33.788 [INFO] New best overall loss: 0.447407
+  [  21]   eval  loss=0.447611  |====|  [  21]    sgd  loss=0.447407  |====|  [  22]   eval  loss=0.447407  |====|  [  22]    sgd  loss=0.447414  |====|2026-08-27 18:53:35.970 [INFO] New best overall loss: 0.447397
+  [  23]   eval  loss=0.447414  |====|  [  23]    sgd  loss=0.447397  |====|2026-08-27 18:53:35.971 [INFO] Plateau triggered at epoch 23 (counter=3, loss=0.447397)
+2026-08-27 18:53:36.387 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.498422)
+2026-08-27 18:53:36.452 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.498422)
+2026-08-27 18:53:36.533 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.498422)
+2026-08-27 18:53:36.603 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.005058)
+2026-08-27 18:53:36.677 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.005058)
+2026-08-27 18:53:36.758 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.005058)
+2026-08-27 18:53:36.818 [INFO] Structural inability 鈥?output-specific bottleneck node 10 (blame=0.001977)
+2026-08-27 18:53:36.882 [INFO] Structural inability 鈥?output-specific bottleneck node 7 (blame=0.001075)
+2026-08-27 18:53:36.886 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:53:36.887 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:53:36.887 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 18:54:22.431 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:54:22.431 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:54:22.432 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 18:55:19.837 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.450079 train_loss=0.389672 new train_loss=0.447259
+2026-08-27 18:55:19.844 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:55:19.845 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:55:19.845 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=7.936341, 15 sign changes)
+2026-08-27 18:55:19.845 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 18:56:10.466 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.452579 train_loss=0.391803 new train_loss=0.449727
+2026-08-27 18:56:10.467 [INFO] Plateau state reset 鈥?best_phase2=0.449727
+2026-08-27 18:56:10.468 [INFO] Plateau state reset — best_phase2=0.449727
+2026-08-27 18:56:11.926 [INFO] New best overall loss: 0.447385
+  [  24]   eval  loss=0.449727  |====|  [  24]    sgd  loss=0.447385  |====|  [  25]   eval  loss=0.447385  |====|  [  25]    sgd  loss=0.447434  |====|  [  26]   eval  loss=0.447434  |====|  [  26]    sgd  loss=0.447418  |====|  [  27]   eval  loss=0.447418  |====|  [  27]    sgd  loss=0.447439  |====|2026-08-27 18:56:16.625 [INFO] Plateau triggered at epoch 27 (counter=3, loss=0.447439)
+2026-08-27 18:56:17.310 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.207741)
+2026-08-27 18:56:17.384 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.207741)
+2026-08-27 18:56:17.479 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.207741)
+2026-08-27 18:56:17.554 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.207741)
+2026-08-27 18:56:17.639 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.207741)
+2026-08-27 18:56:17.723 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.207741)
+2026-08-27 18:56:17.836 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.207741)
+2026-08-27 18:56:17.910 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.202263)
+2026-08-27 18:56:17.984 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.005059)
+2026-08-27 18:56:18.073 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.005059)
+2026-08-27 18:56:18.153 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.005059)
+2026-08-27 18:56:18.227 [INFO] Structural inability 鈥?output-specific bottleneck node 10 (blame=0.001978)
+2026-08-27 18:56:18.302 [INFO] Structural inability 鈥?output-specific bottleneck node 7 (blame=0.001087)
+2026-08-27 18:56:18.306 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:56:18.307 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:56:18.308 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 18:57:06.625 [INFO]   COMMIT rank=3 type=MULTIPLY_INJECTION val_loss=0.450080 train_loss=0.389680 new train_loss=0.447236
+2026-08-27 18:57:06.631 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:57:06.632 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:57:06.633 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 18:57:54.420 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.450025 train_loss=0.389619 new train_loss=0.447198
+2026-08-27 18:57:54.428 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:57:54.429 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:57:54.430 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=6.878162, 13 sign changes)
+2026-08-27 18:57:54.430 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 18:58:57.001 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.450333 train_loss=0.389843 new train_loss=0.447503
+2026-08-27 18:58:57.003 [INFO] Plateau state reset 鈥?best_phase2=0.447503
+2026-08-27 18:58:57.003 [INFO] Plateau state reset — best_phase2=0.447503
+2026-08-27 18:58:58.947 [INFO] New best overall loss: 0.447085
+  [  28]   eval  loss=0.447503  |====|  [  28]    sgd  loss=0.447085  |====|  [  29]   eval  loss=0.447085  |====|  [  29]    sgd  loss=0.447151  |====|  [  30]   eval  loss=0.447151  |====|  [  30]    sgd  loss=0.447086  |====|2026-08-27 18:59:02.861 [INFO] Plateau triggered at epoch 30 (counter=3, loss=0.447086)
+2026-08-27 18:59:03.834 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.135221)
+2026-08-27 18:59:03.915 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.135221)
+2026-08-27 18:59:03.999 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.135221)
+2026-08-27 18:59:04.076 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.135221)
+2026-08-27 18:59:04.164 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.135221)
+2026-08-27 18:59:04.286 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.135221)
+2026-08-27 18:59:04.365 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.135221)
+2026-08-27 18:59:04.464 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.135221)
+2026-08-27 18:59:04.615 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.135221)
+2026-08-27 18:59:04.700 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.135221)
+2026-08-27 18:59:04.838 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.135221)
+2026-08-27 18:59:04.916 [INFO] Structural inability 鈥?output-specific bottleneck node 21 (blame=0.134185)
+2026-08-27 18:59:04.997 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.130070)
+2026-08-27 18:59:05.184 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.005059)
+2026-08-27 18:59:05.272 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.005059)
+2026-08-27 18:59:05.278 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 18:59:05.279 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 18:59:05.280 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 19:00:01.487 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:00:01.488 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:00:01.489 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:01:01.416 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:01:01.418 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  31]   eval  loss=0.447086  |====|  [  31]    sgd  loss=0.447164  |====|2026-08-27 19:01:13.690 [INFO] Plateau triggered at epoch 31 (counter=4, loss=0.447164)
+2026-08-27 19:01:14.638 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:01:14.638 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:01:14.639 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:02:14.423 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.450179 train_loss=0.389760 new train_loss=0.447384
+2026-08-27 19:02:14.427 [INFO] Plateau state reset 鈥?best_phase2=0.447384
+2026-08-27 19:02:14.427 [INFO] Plateau state reset — best_phase2=0.447384
+2026-08-27 19:02:14.428 [INFO] Suppressing hypothesis type 11 (3 consecutive commits without meaningful improvement)
+  [  32]   eval  loss=0.447384  |====|  [  32]    sgd  loss=0.447338  |====|  [  33]   eval  loss=0.447338  |====|  [  33]    sgd  loss=0.447208  |====|  [  34]   eval  loss=0.447208  |====|  [  34]    sgd  loss=0.447428  |====|2026-08-27 19:02:20.014 [INFO] Plateau triggered at epoch 34 (counter=3, loss=0.447428)
+2026-08-27 19:02:21.269 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.088267)
+2026-08-27 19:02:21.355 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.088267)
+2026-08-27 19:02:21.506 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.088267)
+2026-08-27 19:02:21.598 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.088267)
+2026-08-27 19:02:21.703 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.088267)
+2026-08-27 19:02:21.787 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.088267)
+2026-08-27 19:02:21.879 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.088267)
+2026-08-27 19:02:21.970 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.088267)
+2026-08-27 19:02:22.130 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.088267)
+2026-08-27 19:02:22.220 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.088267)
+2026-08-27 19:02:22.391 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.088267)
+2026-08-27 19:02:22.476 [INFO] Structural inability 鈥?output-specific bottleneck node 21 (blame=0.087419)
+2026-08-27 19:02:22.558 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.082635)
+2026-08-27 19:02:22.645 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.005056)
+2026-08-27 19:02:22.749 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.005056)
+2026-08-27 19:02:22.755 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:02:22.756 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:02:22.758 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 19:03:28.786 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.450199 train_loss=0.389799 new train_loss=0.447389
+2026-08-27 19:03:28.799 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:03:28.801 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:03:28.802 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:04:34.766 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.449992 train_loss=0.389588 new train_loss=0.447163
+2026-08-27 19:04:34.778 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:04:34.779 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:04:48.030 [INFO] Plateau state reset 鈥?best_phase2=0.447163
+2026-08-27 19:04:48.030 [INFO] Plateau state reset — best_phase2=0.447163
+  [  35]   eval  loss=0.447163  |====|  [  35]    sgd  loss=0.447262  |====|  [  36]   eval  loss=0.447262  |====|  [  36]    sgd  loss=0.447179  |====|  [  37]   eval  loss=0.447179  |====|  [  37]    sgd  loss=0.447307  |====|2026-08-27 19:04:53.965 [INFO] Plateau triggered at epoch 37 (counter=3, loss=0.447307)
+2026-08-27 19:04:55.219 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.082291)
+2026-08-27 19:04:55.307 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.082291)
+2026-08-27 19:04:55.417 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.082291)
+2026-08-27 19:04:55.498 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.082291)
+2026-08-27 19:04:55.648 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.082291)
+2026-08-27 19:04:55.737 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.082291)
+2026-08-27 19:04:55.854 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.082291)
+2026-08-27 19:04:56.065 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.082291)
+2026-08-27 19:04:56.166 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.082291)
+2026-08-27 19:04:56.249 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.082291)
+2026-08-27 19:04:56.340 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.082291)
+2026-08-27 19:04:56.520 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.082291)
+2026-08-27 19:04:56.702 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.082291)
+2026-08-27 19:04:56.807 [INFO] Structural inability 鈥?output-specific bottleneck node 21 (blame=0.081677)
+2026-08-27 19:04:56.909 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.076257)
+2026-08-27 19:04:56.914 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:04:56.915 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:04:56.916 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:05:59.204 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:05:59.204 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:06:13.299 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:06:13.301 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:06:13.302 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+  [  38]   eval  loss=0.447307  |====|  [  38]    sgd  loss=0.447168  |====|2026-08-27 19:07:15.137 [INFO] Plateau triggered at epoch 38 (counter=4, loss=0.447168)
+2026-08-27 19:07:16.722 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:07:16.723 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:07:16.723 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:07:29.797 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:07:29.798 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:07:29.799 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=2.645447, 5 sign changes)
+2026-08-27 19:07:29.799 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:07:43.901 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:07:43.902 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:07:43.904 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:07:57.899 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:07:57.899 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:07:57.900 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+  [  39]   eval  loss=0.447168  |====|  [  39]    sgd  loss=0.447319  |====|2026-08-27 19:09:04.045 [INFO] Plateau triggered at epoch 39 (counter=5, loss=0.447319)
+2026-08-27 19:09:05.296 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.080139)
+2026-08-27 19:09:05.395 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.080139)
+2026-08-27 19:09:05.490 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.080139)
+2026-08-27 19:09:05.583 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.080139)
+2026-08-27 19:09:05.698 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.080139)
+2026-08-27 19:09:05.784 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.080139)
+2026-08-27 19:09:05.943 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.080139)
+2026-08-27 19:09:06.028 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.080139)
+2026-08-27 19:09:06.144 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.080139)
+2026-08-27 19:09:06.227 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.080139)
+2026-08-27 19:09:06.338 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.080139)
+2026-08-27 19:09:06.507 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.080139)
+2026-08-27 19:09:06.867 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.080139)
+2026-08-27 19:09:06.959 [INFO] Structural inability 鈥?output-specific bottleneck node 21 (blame=0.079519)
+2026-08-27 19:09:07.048 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.074011)
+2026-08-27 19:09:07.053 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:09:07.054 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:09:07.054 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:10:14.330 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:10:14.331 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:10:28.900 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:10:28.901 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:10:42.905 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:10:42.906 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  40]   eval  loss=0.447319  |====|  [  40]    sgd  loss=0.447162  |====|2026-08-27 19:10:56.365 [INFO] Plateau triggered at epoch 40 (counter=6, loss=0.447162)
+2026-08-27 19:10:57.977 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:10:57.978 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:10:57.979 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:11:21.054 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:11:21.061 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:11:21.061 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=3.703626, 7 sign changes)
+2026-08-27 19:11:21.061 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:12:01.631 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:12:01.632 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:12:01.637 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:12:40.560 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:12:40.566 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:12:40.566 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+  [  41]   eval  loss=0.447162  |====|  [  41]    sgd  loss=0.447325  |====|2026-08-27 19:15:26.643 [INFO] Plateau triggered at epoch 41 (counter=7, loss=0.447325)
+2026-08-27 19:15:29.299 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.078157)
+2026-08-27 19:15:29.541 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.078157)
+2026-08-27 19:15:30.071 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.078157)
+2026-08-27 19:15:30.325 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.078157)
+2026-08-27 19:15:30.571 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.078157)
+2026-08-27 19:15:30.776 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.078157)
+2026-08-27 19:15:30.988 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.078157)
+2026-08-27 19:15:31.349 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.078157)
+2026-08-27 19:15:31.553 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.078157)
+2026-08-27 19:15:31.833 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.078157)
+2026-08-27 19:15:32.074 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.078157)
+2026-08-27 19:15:32.457 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.078157)
+2026-08-27 19:15:32.657 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.078157)
+2026-08-27 19:15:32.852 [INFO] Structural inability 鈥?output-specific bottleneck node 21 (blame=0.077532)
+2026-08-27 19:15:33.521 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.071931)
+2026-08-27 19:15:33.536 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:15:33.541 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:15:33.542 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 19:17:17.724 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:17:17.725 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:17:32.160 [INFO]   COMMIT rank=3 type=NEURON_TANH_INJECTION val_loss=0.450089 train_loss=0.389683 new train_loss=0.447278
+2026-08-27 19:17:32.173 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:17:32.174 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:17:47.492 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:17:47.493 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:17:57.391 [INFO] Plateau state reset 鈥?best_phase2=0.447278
+2026-08-27 19:17:57.392 [INFO] Plateau state reset — best_phase2=0.447278
+2026-08-27 19:17:59.466 [INFO] New best overall loss: 0.447079
+  [  42]   eval  loss=0.447278  |====|  [  42]    sgd  loss=0.447079  |====|  [  43]   eval  loss=0.447079  |====|  [  43]    sgd  loss=0.447109  |====|2026-08-27 19:18:03.350 [INFO] New best overall loss: 0.447017
+  [  44]   eval  loss=0.447109  |====|  [  44]    sgd  loss=0.447017  |====|2026-08-27 19:18:03.351 [INFO] Plateau triggered at epoch 44 (counter=3, loss=0.447017)
+2026-08-27 19:18:04.804 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.076542)
+2026-08-27 19:18:04.897 [INFO] Structural inability 鈥?output-specific bottleneck node 30 (blame=0.076542)
+2026-08-27 19:18:05.001 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.076542)
+2026-08-27 19:18:05.081 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.076542)
+2026-08-27 19:18:05.221 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.076542)
+2026-08-27 19:18:05.298 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.076542)
+2026-08-27 19:18:05.404 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.076542)
+2026-08-27 19:18:05.582 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.076542)
+2026-08-27 19:18:05.666 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.076542)
+2026-08-27 19:18:05.765 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.076542)
+2026-08-27 19:18:05.924 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.076542)
+2026-08-27 19:18:06.001 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.076542)
+2026-08-27 19:18:06.090 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.076542)
+2026-08-27 19:18:06.179 [INFO] Structural inability 鈥?output-specific bottleneck node 29 (blame=0.075548)
+2026-08-27 19:18:06.259 [INFO] Structural inability 鈥?output-specific bottleneck node 21 (blame=0.075315)
+2026-08-27 19:18:06.263 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:18:06.264 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:18:20.917 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:18:20.918 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:18:35.921 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:18:35.922 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:18:35.922 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+2026-08-27 19:19:44.908 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.449875 train_loss=0.389461 new train_loss=0.447031
+2026-08-27 19:19:44.919 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:19:44.919 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:19:44.920 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:19:55.864 [INFO] Plateau state reset 鈥?best_phase2=0.447031
+2026-08-27 19:19:55.864 [INFO] Plateau state reset — best_phase2=0.447031
+2026-08-27 19:19:55.865 [INFO] Suppressing hypothesis type 2 (3 consecutive commits without meaningful improvement)
+2026-08-27 19:19:58.305 [INFO] New best overall loss: 0.446989
+  [  45]   eval  loss=0.447031  |====|  [  45]    sgd  loss=0.446989  |====|  [  46]   eval  loss=0.446989  |====|  [  46]    sgd  loss=0.447022  |====|  [  47]   eval  loss=0.447022  |====|  [  47]    sgd  loss=0.447004  |====|2026-08-27 19:20:02.997 [INFO] Plateau triggered at epoch 47 (counter=3, loss=0.447004)
+2026-08-27 19:20:04.449 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.070563)
+2026-08-27 19:20:04.543 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.070563)
+2026-08-27 19:20:04.664 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.070563)
+2026-08-27 19:20:04.772 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.070563)
+2026-08-27 19:20:05.086 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.070563)
+2026-08-27 19:20:05.185 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.070563)
+2026-08-27 19:20:05.362 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.070563)
+2026-08-27 19:20:05.489 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.070563)
+2026-08-27 19:20:05.717 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.070563)
+2026-08-27 19:20:05.919 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.070563)
+2026-08-27 19:20:06.014 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.070563)
+2026-08-27 19:20:06.122 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.070563)
+2026-08-27 19:20:06.246 [INFO] Structural inability 鈥?output-specific bottleneck node 30 (blame=0.070563)
+2026-08-27 19:20:06.398 [INFO] Structural inability 鈥?output-specific bottleneck node 31 (blame=0.070563)
+2026-08-27 19:20:06.559 [INFO] Structural inability 鈥?output-specific bottleneck node 32 (blame=0.070563)
+2026-08-27 19:20:06.564 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:20:06.565 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:20:06.565 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:21:31.230 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:21:31.230 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:21:31.232 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:22:46.226 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:22:46.227 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:23:03.307 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:23:03.308 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  48]   eval  loss=0.447004  |====|  [  48]    sgd  loss=0.447018  |====|2026-08-27 19:23:24.912 [INFO] Plateau triggered at epoch 48 (counter=4, loss=0.447018)
+2026-08-27 19:23:26.729 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:23:26.732 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+  [  49]   eval  loss=0.447018  |====|  [  49]    sgd  loss=0.447030  |====|2026-08-27 19:24:42.212 [INFO] Plateau triggered at epoch 49 (counter=5, loss=0.447030)
+2026-08-27 19:24:44.608 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:24:44.609 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:24:44.610 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:25:02.886 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.449872 train_loss=0.389460 new train_loss=0.447029
+2026-08-27 19:25:02.893 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:25:02.894 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=1.587268, 3 sign changes)
+2026-08-27 19:25:02.894 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:25:18.196 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:25:18.200 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:25:18.200 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 19:25:36.041 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.449870 train_loss=0.389454 new train_loss=0.447025
+2026-08-27 19:25:36.047 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:25:36.050 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:26:48.518 [INFO] Plateau state reset 鈥?best_phase2=0.447025
+2026-08-27 19:26:48.518 [INFO] Plateau state reset — best_phase2=0.447025
+  [  50]   eval  loss=0.447025  |====|  [  50]    sgd  loss=0.446991  |====|  [  51]   eval  loss=0.446991  |====|  [  51]    sgd  loss=0.447025  |====|  [  52]   eval  loss=0.447025  |====|  [  52]    sgd  loss=0.447007  |====|2026-08-27 19:26:55.546 [INFO] Plateau triggered at epoch 52 (counter=3, loss=0.447007)
+2026-08-27 19:26:57.304 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.060811)
+2026-08-27 19:26:57.418 [INFO] Structural inability 鈥?output-specific bottleneck node 30 (blame=0.060811)
+2026-08-27 19:26:57.522 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.060811)
+2026-08-27 19:26:57.651 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.060811)
+2026-08-27 19:26:57.793 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.060811)
+2026-08-27 19:26:58.063 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.060811)
+2026-08-27 19:26:58.177 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.060811)
+2026-08-27 19:26:58.360 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.060811)
+2026-08-27 19:26:58.527 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.060811)
+2026-08-27 19:26:58.697 [INFO] Structural inability 鈥?output-specific bottleneck node 31 (blame=0.060811)
+2026-08-27 19:26:58.836 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.060811)
+2026-08-27 19:26:59.033 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.060811)
+2026-08-27 19:26:59.222 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.060811)
+2026-08-27 19:26:59.417 [INFO] Structural inability 鈥?output-specific bottleneck node 32 (blame=0.060811)
+2026-08-27 19:26:59.720 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.060811)
+2026-08-27 19:26:59.733 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:26:59.734 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:27:19.434 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:27:19.436 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:27:36.280 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:27:36.280 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:27:36.281 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:28:50.413 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:28:50.415 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:29:07.769 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:29:07.771 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:29:07.771 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=6 b=node=7)
+  [  53]   eval  loss=0.447007  |====|  [  53]    sgd  loss=0.447021  |====|2026-08-27 19:29:21.639 [INFO] Plateau triggered at epoch 53 (counter=4, loss=0.447021)
+2026-08-27 19:29:23.228 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.060309)
+2026-08-27 19:29:23.324 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.060309)
+2026-08-27 19:29:23.505 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.060309)
+2026-08-27 19:29:23.604 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.060309)
+2026-08-27 19:29:23.724 [INFO] Structural inability 鈥?output-specific bottleneck node 30 (blame=0.060309)
+2026-08-27 19:29:23.837 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.060309)
+2026-08-27 19:29:23.932 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.060309)
+2026-08-27 19:29:24.060 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.060309)
+2026-08-27 19:29:24.269 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.060309)
+2026-08-27 19:29:24.367 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.060309)
+2026-08-27 19:29:24.484 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.060309)
+2026-08-27 19:29:24.589 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.060309)
+2026-08-27 19:29:24.702 [INFO] Structural inability 鈥?output-specific bottleneck node 31 (blame=0.060309)
+2026-08-27 19:29:24.821 [INFO] Structural inability 鈥?output-specific bottleneck node 32 (blame=0.060309)
+2026-08-27 19:29:24.990 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.060309)
+2026-08-27 19:29:24.995 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:29:24.996 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:29:24.997 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:30:33.972 [INFO]   COMMIT rank=4 type=MUX_INJECTION val_loss=0.449862 train_loss=0.395055 new train_loss=0.450281
+2026-08-27 19:30:33.984 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:30:33.985 [INFO] IFELSE set-guided split: thr=0.287747 (SSE reduction 1908.344967 over 240 paired samples)
+2026-08-27 19:30:56.849 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:30:56.850 [INFO] IFELSE set-guided split: thr=0.287747 (SSE reduction 1908.344967 over 240 paired samples)
+2026-08-27 19:31:17.610 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:31:17.611 [INFO] IFELSE set-guided split: thr=0.287747 (SSE reduction 1908.344967 over 240 paired samples)
+2026-08-27 19:31:17.612 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:32:46.418 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.449857 train_loss=0.389537 new train_loss=0.447089
+2026-08-27 19:32:46.421 [INFO] Plateau state reset 鈥?best_phase2=0.447089
+2026-08-27 19:32:46.421 [INFO] Plateau state reset — best_phase2=0.447089
+  [  54]   eval  loss=0.447089  |====|  [  54]    sgd  loss=0.447058  |====|  [  55]   eval  loss=0.447058  |====|  [  55]    sgd  loss=0.447099  |====|  [  56]   eval  loss=0.447099  |====|  [  56]    sgd  loss=0.447077  |====|2026-08-27 19:32:53.476 [INFO] Plateau triggered at epoch 56 (counter=3, loss=0.447077)
+2026-08-27 19:32:55.187 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:32:55.188 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  57]   eval  loss=0.447077  |====|  [  57]    sgd  loss=0.447112  |====|2026-08-27 19:33:12.829 [INFO] Plateau triggered at epoch 57 (counter=4, loss=0.447112)
+2026-08-27 19:33:14.568 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:33:14.569 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  58]   eval  loss=0.447112  |====|  [  58]    sgd  loss=0.447111  |====|2026-08-27 19:33:31.708 [INFO] Plateau triggered at epoch 58 (counter=5, loss=0.447111)
+2026-08-27 19:33:33.489 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:33:33.490 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  59]   eval  loss=0.447111  |====|  [  59]    sgd  loss=0.447110  |====|2026-08-27 19:33:50.696 [INFO] Plateau triggered at epoch 59 (counter=6, loss=0.447110)
+2026-08-27 19:33:52.357 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:33:52.357 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:34:04.596 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.449865 train_loss=0.389547 new train_loss=0.447100
+2026-08-27 19:34:04.599 [INFO] Plateau state reset 鈥?best_phase2=0.447100
+2026-08-27 19:34:04.599 [INFO] Plateau state reset — best_phase2=0.447100
+2026-08-27 19:34:04.599 [INFO] Suppressing hypothesis type 3 (3 consecutive commits without meaningful improvement)
+  [  60]   eval  loss=0.447100  |====|  [  60]    sgd  loss=0.447084  |====|  [  61]   eval  loss=0.447084  |====|  [  61]    sgd  loss=0.447113  |====|  [  62]   eval  loss=0.447113  |====|  [  62]    sgd  loss=0.447127  |====|2026-08-27 19:34:10.195 [INFO] Plateau triggered at epoch 62 (counter=3, loss=0.447127)
+2026-08-27 19:34:11.880 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:34:11.880 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  63]   eval  loss=0.447127  |====|  [  63]    sgd  loss=0.447183  |====|2026-08-27 19:34:25.789 [INFO] Plateau triggered at epoch 63 (counter=4, loss=0.447183)
+2026-08-27 19:34:27.466 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:34:27.467 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  64]   eval  loss=0.447183  |====|  [  64]    sgd  loss=0.447197  |====|2026-08-27 19:34:43.167 [INFO] Plateau triggered at epoch 64 (counter=5, loss=0.447197)
+2026-08-27 19:34:44.877 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:34:44.877 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  65]   eval  loss=0.447197  |====|  [  65]    sgd  loss=0.447223  |====|2026-08-27 19:35:01.617 [INFO] Plateau triggered at epoch 65 (counter=6, loss=0.447223)
+2026-08-27 19:35:03.328 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:35:03.329 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  66]   eval  loss=0.447223  |====|  [  66]    sgd  loss=0.447225  |====|2026-08-27 19:35:20.178 [INFO] Plateau triggered at epoch 66 (counter=7, loss=0.447225)
+2026-08-27 19:35:21.957 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:35:21.958 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:35:36.874 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  67]   eval  loss=0.447225  |====|  [  67]    sgd  loss=0.447245  |====|2026-08-27 19:35:39.548 [INFO] Structural search in cooldown (9 epochs left) at epoch 67 鈥?letting SGD settle
+  [  68]   eval  loss=0.447245  |====|  [  68]    sgd  loss=0.447215  |====|2026-08-27 19:35:42.691 [INFO] Structural search in cooldown (8 epochs left) at epoch 68 鈥?letting SGD settle
+  [  69]   eval  loss=0.447215  |====|  [  69]    sgd  loss=0.447231  |====|2026-08-27 19:35:45.647 [INFO] Structural search in cooldown (7 epochs left) at epoch 69 鈥?letting SGD settle
+  [  70]   eval  loss=0.447231  |====|  [  70]    sgd  loss=0.447243  |====|2026-08-27 19:35:48.775 [INFO] Structural search in cooldown (6 epochs left) at epoch 70 鈥?letting SGD settle
+  [  71]   eval  loss=0.447243  |====|  [  71]    sgd  loss=0.447252  |====|2026-08-27 19:35:52.008 [INFO] Structural search in cooldown (5 epochs left) at epoch 71 鈥?letting SGD settle
+  [  72]   eval  loss=0.447252  |====|  [  72]    sgd  loss=0.447255  |====|2026-08-27 19:35:54.786 [INFO] Structural search in cooldown (4 epochs left) at epoch 72 鈥?letting SGD settle
+  [  73]   eval  loss=0.447255  |====|  [  73]    sgd  loss=0.447278  |====|2026-08-27 19:35:57.871 [INFO] Structural search in cooldown (3 epochs left) at epoch 73 鈥?letting SGD settle
+  [  74]   eval  loss=0.447278  |====|  [  74]    sgd  loss=0.447295  |====|2026-08-27 19:36:00.839 [INFO] Structural search in cooldown (2 epochs left) at epoch 74 鈥?letting SGD settle
+  [  75]   eval  loss=0.447295  |====|  [  75]    sgd  loss=0.447307  |====|2026-08-27 19:36:03.989 [INFO] Structural search in cooldown (1 epochs left) at epoch 75 鈥?letting SGD settle
+  [  76]   eval  loss=0.447307  |====|  [  76]    sgd  loss=0.447322  |====|2026-08-27 19:36:06.967 [INFO] Plateau triggered at epoch 76 (counter=17, loss=0.447322)
+2026-08-27 19:36:08.888 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:36:08.889 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  77]   eval  loss=0.447322  |====|  [  77]    sgd  loss=0.447330  |====|2026-08-27 19:36:31.359 [INFO] Plateau triggered at epoch 77 (counter=18, loss=0.447330)
+2026-08-27 19:36:33.184 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:36:33.185 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:36:52.217 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449945 train_loss=0.389547 new train_loss=0.447104
+2026-08-27 19:36:52.220 [INFO] Plateau state reset 鈥?best_phase2=0.447104
+2026-08-27 19:36:52.220 [INFO] Plateau state reset — best_phase2=0.447104
+  [  78]   eval  loss=0.447104  |====|  [  78]    sgd  loss=0.447009  |====|  [  79]   eval  loss=0.447009  |====|  [  79]    sgd  loss=0.447034  |====|  [  80]   eval  loss=0.447034  |====|  [  80]    sgd  loss=0.447028  |====|2026-08-27 19:37:03.751 [INFO] Plateau triggered at epoch 80 (counter=3, loss=0.447028)
+2026-08-27 19:37:05.936 [INFO] Structural inability 鈥?output-specific bottleneck node 23 (blame=0.036136)
+2026-08-27 19:37:06.188 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.036136)
+2026-08-27 19:37:06.516 [INFO] Structural inability 鈥?output-specific bottleneck node 17 (blame=0.036136)
+2026-08-27 19:37:06.649 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.036136)
+2026-08-27 19:37:06.916 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.036136)
+2026-08-27 19:37:07.067 [INFO] Structural inability 鈥?output-specific bottleneck node 30 (blame=0.036136)
+2026-08-27 19:37:07.198 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.036136)
+2026-08-27 19:37:07.424 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.036136)
+2026-08-27 19:37:07.551 [INFO] Structural inability 鈥?output-specific bottleneck node 27 (blame=0.036136)
+2026-08-27 19:37:07.791 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.036136)
+2026-08-27 19:37:07.932 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.036136)
+2026-08-27 19:37:08.100 [INFO] Structural inability 鈥?output-specific bottleneck node 32 (blame=0.036136)
+2026-08-27 19:37:08.252 [INFO] Structural inability 鈥?output-specific bottleneck node 31 (blame=0.036136)
+2026-08-27 19:37:08.390 [INFO] Structural inability 鈥?output-specific bottleneck node 19 (blame=0.036136)
+2026-08-27 19:37:08.781 [INFO] Structural inability 鈥?output-specific bottleneck node 37 (blame=0.036136)
+2026-08-27 19:37:08.789 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:37:08.791 [INFO] IFELSE set-guided split: thr=0.220628 (SSE reduction 1915.708571 over 240 paired samples)
+2026-08-27 19:37:28.661 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:37:28.663 [INFO] IFELSE set-guided split: thr=0.220628 (SSE reduction 1915.708571 over 240 paired samples)
+2026-08-27 19:37:48.847 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449870 train_loss=0.389468 new train_loss=0.447042
+2026-08-27 19:37:48.858 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:37:48.858 [INFO] IFELSE set-guided split: thr=-0.058615 (SSE reduction 1919.714662 over 240 paired samples)
+2026-08-27 19:38:09.147 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.449868 train_loss=0.389459 new train_loss=0.447034
+2026-08-27 19:38:09.154 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:38:09.155 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:38:09.156 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:40:00.931 [INFO]   COMMIT rank=4 type=MUX_INJECTION val_loss=0.449763 train_loss=0.389347 new train_loss=0.447058
+2026-08-27 19:40:00.947 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:40:00.948 [INFO] IFELSE set-guided split: thr=0.170814 (SSE reduction 1923.036395 over 240 paired samples)
+2026-08-27 19:40:22.545 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:40:22.546 [INFO] IFELSE set-guided split: thr=0.170814 (SSE reduction 1923.036395 over 240 paired samples)
+2026-08-27 19:40:43.688 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:40:43.689 [INFO] IFELSE set-guided split: thr=0.170814 (SSE reduction 1923.036395 over 240 paired samples)
+2026-08-27 19:40:43.690 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.102979 a=node=5 b=node=6)
+2026-08-27 19:41:04.502 [INFO] Plateau state reset 鈥?best_phase2=0.447058
+2026-08-27 19:41:04.502 [INFO] Plateau state reset — best_phase2=0.447058
+  [  81]   eval  loss=0.447058  |====|  [  81]    sgd  loss=0.447035  |====|  [  82]   eval  loss=0.447035  |====|  [  82]    sgd  loss=0.447056  |====|  [  83]   eval  loss=0.447056  |====|  [  83]    sgd  loss=0.447052  |====|2026-08-27 19:41:15.519 [INFO] Plateau triggered at epoch 83 (counter=3, loss=0.447052)
+2026-08-27 19:41:18.135 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:41:18.136 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:41:39.465 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:41:39.466 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  84]   eval  loss=0.447052  |====|  [  84]    sgd  loss=0.447070  |====|2026-08-27 19:42:03.657 [INFO] Plateau triggered at epoch 84 (counter=4, loss=0.447070)
+2026-08-27 19:42:06.499 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:42:06.500 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:42:27.716 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:42:27.717 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  85]   eval  loss=0.447070  |====|  [  85]    sgd  loss=0.447085  |====|2026-08-27 19:42:52.465 [INFO] Plateau triggered at epoch 85 (counter=5, loss=0.447085)
+2026-08-27 19:42:55.874 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:42:55.875 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:43:15.761 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:43:15.762 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  86]   eval  loss=0.447085  |====|  [  86]    sgd  loss=0.447068  |====|2026-08-27 19:43:39.799 [INFO] Plateau triggered at epoch 86 (counter=6, loss=0.447068)
+2026-08-27 19:43:43.070 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:43:43.071 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:44:03.504 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:44:03.506 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+  [  87]   eval  loss=0.447068  |====|  [  87]    sgd  loss=0.447070  |====|2026-08-27 19:44:31.907 [INFO] Plateau triggered at epoch 87 (counter=7, loss=0.447070)
+2026-08-27 19:44:35.171 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:44:35.172 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:44:57.173 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:44:57.174 [INFO] IFELSE set-guided split: thr=0.102979 (SSE reduction 1924.875555 over 240 paired samples)
+2026-08-27 19:45:18.128 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  88]   eval  loss=0.447070  |====|  [  88]    sgd  loss=0.447069  |====|2026-08-27 19:45:21.619 [INFO] Structural search in cooldown (9 epochs left) at epoch 88 鈥?letting SGD settle
+  [  89]   eval  loss=0.447069  |====|  [  89]    sgd  loss=0.447065  |====|2026-08-27 19:45:25.668 [INFO] Structural search in cooldown (8 epochs left) at epoch 89 鈥?letting SGD settle
+  [  90]   eval  loss=0.447065  |====|  [  90]    sgd  loss=0.447070  |====|2026-08-27 19:45:29.854 [INFO] Structural search in cooldown (7 epochs left) at epoch 90 鈥?letting SGD settle
+  [  91]   eval  loss=0.447070  |====|  [  91]    sgd  loss=0.447074  |====|2026-08-27 19:45:33.238 [INFO] Structural search in cooldown (6 epochs left) at epoch 91 鈥?letting SGD settle
+  [  92]   eval  loss=0.447074  |====|  [  92]    sgd  loss=0.447066  |====|2026-08-27 19:45:36.804 [INFO] Structural search in cooldown (5 epochs left) at epoch 92 鈥?letting SGD settle
+  [  93]   eval  loss=0.447066  |====|  [  93]    sgd  loss=0.447072  |====|2026-08-27 19:45:40.853 [INFO] Structural search in cooldown (4 epochs left) at epoch 93 鈥?letting SGD settle
+  [  94]   eval  loss=0.447072  |====|  [  94]    sgd  loss=0.447065  |====|2026-08-27 19:45:44.346 [INFO] Structural search in cooldown (3 epochs left) at epoch 94 鈥?letting SGD settle
+  [  95]   eval  loss=0.447065  |====|  [  95]    sgd  loss=0.447065  |====|2026-08-27 19:45:47.845 [INFO] Structural search in cooldown (2 epochs left) at epoch 95 鈥?letting SGD settle
+  [  96]   eval  loss=0.447065  |====|  [  96]    sgd  loss=0.447072  |====|2026-08-27 19:45:51.720 [INFO] Structural search in cooldown (1 epochs left) at epoch 96 鈥?letting SGD settle
+  [  97]   eval  loss=0.447072  |====|  [  97]    sgd  loss=0.447059  |====|2026-08-27 19:45:55.081 [INFO] Plateau triggered at epoch 97 (counter=17, loss=0.447059)
+2026-08-27 19:45:58.364 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:45:58.365 [INFO] IFELSE set-guided split: thr=0.255028 (SSE reduction 1911.197478 over 240 paired samples)
+2026-08-27 19:46:18.620 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:46:18.622 [INFO] IFELSE set-guided split: thr=0.255028 (SSE reduction 1911.197478 over 240 paired samples)
+  [  98]   eval  loss=0.447059  |====|  [  98]    sgd  loss=0.447057  |====|2026-08-27 19:46:42.543 [INFO] Plateau triggered at epoch 98 (counter=18, loss=0.447057)
+2026-08-27 19:46:46.165 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:46:46.165 [INFO] IFELSE set-guided split: thr=0.255028 (SSE reduction 1911.197478 over 240 paired samples)
+2026-08-27 19:47:07.886 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:47:07.888 [INFO] IFELSE set-guided split: thr=0.255028 (SSE reduction 1911.197478 over 240 paired samples)
+  [  99]   eval  loss=0.447057  |====|  [  99]    sgd  loss=0.447069  |====|2026-08-27 19:47:34.946 [INFO] Plateau triggered at epoch 99 (counter=19, loss=0.447069)
+2026-08-27 19:47:38.371 [INFO] [PROFILE] F=1 N=240 var_r=10.8115 bound_ratio=3.6117 poly_r2=1.0000 max_coef[i=1]=2.0000 L_max=2.0134 | flags: BOUNDED
+2026-08-27 19:47:38.372 [INFO] IFELSE set-guided split: thr=0.255028 (SSE reduction 1911.197478 over 240 paired samples)

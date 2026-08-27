@@ -2226,6 +2226,8 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // Using the target median places the boundary at the wrong position
         // (e.g., median of y 鈭?[-10,3] 鈮?-3.5 instead of x boundary at 0).
         bool threshold_found = false;
+        bool zero_plateau_hit = false;
+        std::vector<Value> zp_edges;   // all uncommitted plateau edges (capped)
         if (ibs.condition_source_node != 0) {
             // SET-GUIDED SPLIT: derive the guard region {x | x <= t} from
             // where the residual changes character, not from the value
@@ -2261,10 +2263,162 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 }
             }
             Value excl_margin = cond_ranged ? (cond_max - cond_min) * 0.05 : 0.0;
+            // M5.7 ZERO-PLATEAU detection: flat runs in the RAW labels.
+            // Windowed functions (t22: sin(x)·[0≤x≤2π]) have crisp label-
+            // space boundaries that the residual profile misses — after a
+            // partial harmonic fit the residual stays oscillatory
+            // EVERYWHERE (the fit predicts structure in the dead zone),
+            // so CART SSE-reduction never isolates the edges. On the raw
+            // labels the dead zone is exactly flat. Single-output graphs
+            // only (v1); candidates still pass shadow validation, so a
+            // misdetected edge can only lose, never corrupt.
+            if (ibs.condition_source_node != 0) {
+                size_t out_count = 0;
+                uint64_t out_gid = 0;
+                for (const auto& n : graph_->get_nodes()) {
+                    if (n->get_type() == NodeType::OUTPUT) {
+                        ++out_count;
+                        out_gid = n->get_id();
+                    }
+                }
+                if (out_count == 1 && !training_data_.samples.empty()) {
+                    // samples are keyed by DATA keys, not graph node ids
+                    // (same as denom_safe's reverse-map) — invert both maps.
+                    uint64_t out_key = 0; bool have_out_key = false;
+                    for (const auto& kv : output_data_to_graph_) {
+                        if (kv.second == out_gid) {
+                            out_key = kv.first; have_out_key = true; break;
+                        }
+                    }
+                    uint64_t cond_key = 0; bool have_cond_key = false;
+                    for (const auto& kv : input_data_to_graph_) {
+                        if (kv.second == ibs.condition_source_node) {
+                            cond_key = kv.first; have_cond_key = true; break;
+                        }
+                    }
+                    std::vector<std::pair<Value, Value>> xy;
+                    if (have_out_key && have_cond_key) {
+                        if (!training_data_.samples.empty()) {
+                            const auto& s0 = training_data_.samples.front();
+                            std::string in_str, tg_str;
+                            for (const auto& kv : s0.inputs) {
+                                in_str += std::to_string(kv.first) + "="
+                                        + std::to_string(kv.second) + " ";
+                            }
+                            for (const auto& kv : s0.targets) {
+                                tg_str += std::to_string(kv.first) + "="
+                                        + std::to_string(kv.second) + " ";
+                            }
+                            Logger::info("Zero-plateau sample0: inputs[" + in_str
+                                        + "] targets[" + tg_str + "]");
+                        }
+                        xy.reserve(training_data_.samples.size());
+                        for (const auto& s : training_data_.samples) {
+                            auto xi = s.inputs.find(cond_key);
+                            auto yi = s.targets.find(out_key);
+                            if (xi != s.inputs.end() && yi != s.targets.end()) {
+                                xy.emplace_back(xi->second, yi->second);
+                            }
+                        }
+                    }
+                    if (xy.size() >= 16) {
+                        std::sort(xy.begin(), xy.end(),
+                                  [](const std::pair<Value, Value>& a,
+                                     const std::pair<Value, Value>& b) {
+                                      return a.first < b.first;
+                                  });
+                        Value y_min = xy.front().second, y_max = y_min;
+                        for (const auto& pr : xy) {
+                            y_min = std::min(y_min, pr.second);
+                            y_max = std::max(y_max, pr.second);
+                        }
+                        const Value y_range = y_max - y_min;
+                        if (y_range > 1e-9) {
+                            const Value flat_eps =
+                                y_range * config::ZERO_PLATEAU_FLAT_EPS;
+                            const size_t min_run = std::max<size_t>(
+                                static_cast<size_t>(config::ZERO_PLATEAU_MIN_RUN),
+                                xy.size() / 20);
+                            std::vector<Value> edges;
+                            size_t in_flat = 0, flat_total = 0;
+                            Value run_min = 0, run_max = 0;
+                            bool have_run = false;
+                            auto flush_run = [&](size_t run_end) {
+                                if (in_flat >= min_run) {
+                                    flat_total += in_flat;
+                                    const size_t run_start = run_end - in_flat;
+                                    if (run_start > 0) {
+                                        edges.push_back(0.5 * (xy[run_start - 1].first
+                                                              + xy[run_start].first));
+                                    }
+                                    if (run_end < xy.size()) {
+                                        edges.push_back(0.5 * (xy[run_end - 1].first
+                                                              + xy[run_end].first));
+                                    }
+                                }
+                            };
+                            for (size_t i = 0; i < xy.size(); ++i) {
+                                const Value y = xy[i].second;
+                                if (!have_run) {
+                                    run_min = y; run_max = y;
+                                    have_run = true; in_flat = 1;
+                                } else if (std::max(run_max, y) - std::min(run_min, y)
+                                           <= flat_eps) {
+                                    run_max = std::max(run_max, y);
+                                    run_min = std::min(run_min, y);
+                                    ++in_flat;
+                                } else {
+                                    flush_run(i);
+                                    run_min = y; run_max = y; in_flat = 1;
+                                }
+                            }
+                            flush_run(xy.size());
+                            const double frac = static_cast<double>(flat_total)
+                                             / static_cast<double>(xy.size());
+                            Logger::info("Zero-plateau scan: n=" + std::to_string(xy.size())
+                                        + " cond_key=" + std::to_string(cond_key)
+                                        + " out_key=" + std::to_string(out_key)
+                                        + " p0=(" + std::to_string(xy[0].first) + "," + std::to_string(xy[0].second) + ")"
+                                        + " p50=(" + std::to_string(xy[50].first) + "," + std::to_string(xy[50].second) + ")"
+                                        + " p100=(" + std::to_string(xy[100].first) + "," + std::to_string(xy[100].second) + ")"
+                                        + " frac=" + std::to_string(frac));
+                            if (frac >= config::ZERO_PLATEAU_MIN_FRACTION
+                                && !edges.empty()) {
+                                for (Value e : edges) {
+                                    bool near_committed = false;
+                                    for (Value ct : committed_thr) {
+                                        if (std::abs(e - ct) <= excl_margin) {
+                                            near_committed = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!near_committed) {
+                                        zp_edges.push_back(e);
+                                        if (zp_edges.size() >= 3) break;
+                                    }
+                                }
+                                if (!zp_edges.empty()) {
+                                    ibs.split_threshold = zp_edges[0];
+                                    threshold_found = true;
+                                    zero_plateau_hit = true;
+                                    Logger::info(
+                                        "Zero-plateau boundary: thr="
+                                        + std::to_string(zp_edges[0]) + " (flat fraction "
+                                        + std::to_string(frac) + ", "
+                                        + std::to_string(edges.size())
+                                        + " edges, using " + std::to_string(zp_edges.size())
+                                        + ")");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             Value guided_thr = 0.0;
-            double reduction = error_weighted_split(vx, guided_thr,
-                                                    committed_thr, excl_margin);
-            if (reduction > 0.0) {
+            double reduction = zero_plateau_hit
+                ? 0.0
+                : error_weighted_split(vx, guided_thr, committed_thr, excl_margin);
+            if (!zero_plateau_hit && reduction > 0.0) {
                 ibs.split_threshold = guided_thr;
                 threshold_found = true;
                 Logger::info("IFELSE set-guided split: thr=" + std::to_string(guided_thr)
@@ -2303,6 +2457,8 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         if (ftype == FailureType::BOOLEAN_BOUNDARY)      score = std::max(score, config::SCORE_IFELSE_BOOLEAN_BOOST);
         // M5.4: piecewise regime — the boundary family owns this residual
         if (piecewise_signature)                            score = std::max(score, 0.94);
+        // M5.7: label-space plateau edges are near-exact boundaries
+        if (zero_plateau_hit)                               score = std::max(score, config::SCORE_IFELSE_PLATEAU_BOOST);
 
         // Emit the PRESERVE variant (both-branches) as a sibling candidate
         // in the piecewise regime: for striped residuals both sides carry
@@ -2310,7 +2466,14 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // v3 MULTI-SPLIT: K boundaries at once (greedy tree) — single
         // splits move ~1/K of the loss, below the strict gate; the atomic
         // tree gives validation the full reduction to judge.
-        if (piecewise_signature && threshold_found) {
+        if ((piecewise_signature || zero_plateau_hit) && threshold_found) {
+            // M5.7: in the plateau regime the label-space edges ARE the
+            // boundaries — skip CART re-derivation (which re-finds the
+            // same edges noisily) and use them directly.
+            std::vector<Value> ks;
+            if (zero_plateau_hit && zp_edges.size() >= 2) {
+                ks = zp_edges;
+            } else {
             // Build the (input, residual) pairs for multi-split.
             std::vector<std::pair<Value, Value>> vx_m;
             for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {
@@ -2323,8 +2486,9 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                     }
                 }
             }
-            std::vector<Value> ks = error_weighted_multi_split(vx_m, 4);
-            Logger::verbose("[MULTI-DBG] vx_m.size()=" + std::to_string(vx_m.size())
+            ks = error_weighted_multi_split(vx_m, 4);
+            }
+            Logger::verbose("[MULTI-DBG] vx_m.size()=" + std::to_string(ks.size())
                           + " -> K found=" + std::to_string(ks.size()));
             if (ks.size() >= 2) {
                 Hypothesis ibm = ibs;
@@ -2371,7 +2535,20 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                                + " committed, score -" + std::to_string(fatigue));
             }
         }
+        uint64_t ibs_cond_src_cache = ibs.condition_source_node;
         candidates.push_back({std::move(ibs), score});
+
+        // M5.7: additional plateau edges as separate boundary candidates —
+        // a windowed function needs BOTH edges; each gets its own shadow.
+        for (size_t zei = 1; zei < zp_edges.size(); ++zei) {
+            Hypothesis ibs2;
+            ibs2.type = Hypothesis::IFELSE_BOUNDARY_SPLIT;
+            ibs2.condition_source_node = ibs_cond_src_cache;
+            ibs2.split_threshold = zp_edges[zei];
+            candidates.push_back({std::move(ibs2), score});
+            Logger::info("Zero-plateau sibling boundary: thr="
+                        + std::to_string(zp_edges[zei]));
+        }
     }
 
     // --- Candidate 3: NEURON_TANH_INJECTION 鈥?always viable fallback ---

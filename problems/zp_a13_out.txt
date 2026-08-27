@@ -1,0 +1,4 @@
+t22_windowed_sine    R2=0.9508 [FAIL] plateau_thrs=none (3s)
+t21_three_region     R2=0.9936 [PASS] plateau_thrs=none (22s)
+d1_step              R2=0.993 [PASS] plateau_thrs=none (4s)
+d9_noise             R2=0.8027 [FAIL] plateau_thrs=none (88s)

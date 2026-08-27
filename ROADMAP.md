@@ -287,14 +287,22 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   zero-crossing rate; it fails validation and dedup blocks retries.
   Fix direction: multi-peak freq-init (autocorrelation or sign-change
   scale decomposition) emitting COMPOUND_TWO_SINE(f1, f2).
-- **t22_windowed_sine (0.96)**: needs IFELSE_BOUNDARY_SPLIT at the
-  window edges (x=0, 2pi) wrapping a sine. The piecewise signature
-  never fires — the residual looks oscillatory, and 2 boundary points
-  among 160 give weak CART SSE reduction. Ground truth: 85/200 samples
-  are exactly y=0 on two contiguous intervals. Fix direction:
-  ZERO-PLATEAU detector (contiguous input interval where target
-  variance~0 and |mean|~0 → emit boundary splits at the plateau edges).
-  Cheapest and highest-certainty of the three.
+- **t22_windowed_sine (0.95)**: needs IFELSE_BOUNDARY_SPLIT at the
+  window edges (x=0, 2pi) wrapping a sine. [ZERO-PLATEAU DETECTOR
+  IMPLEMENTED 2026-08-27 in aria13: detection VERIFIED — flat-run scan
+  on raw labels finds both edges exactly (normalized input space, z-
+  scored since std>2); both emitted as boundary candidates at top
+  score; PRESERVE multi-split consumes them directly. REMAINING
+  BLOCKER: the boundary candidates lose the shadow-validation race to
+  micro-gain TANH/MULTIPLY commits every cycle — val subsample already
+  at 0.0087 while eval R2 stays 0.95 (edge error invisible to the
+  strided val). Third observed instance of the investment-arc problem:
+  short-SGD shadow validation cannot price commits whose payoff needs
+  post-commit training (d2 harmonics, hetero3 sin arc, t22 boundaries).
+  Fix direction now clear: shadow validation must include a boundary-
+  commit grace budget (train masked shadows longer), or accept-as-
+  epsilon commits for candidates with exact structural evidence.]
+  d9_noise unaffected (detector correctly silent); t21/d1 pass with it.
 
 ### 1.5 Failure-library hypothesis versioning [DONE 2026-08-27 in aria12: FAILURE_FAMILY_VERSION=1 written per record; legacy (v0/unversioned) records discount to 25% penalty; loader back-compat]
 Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures

@@ -144,6 +144,16 @@ constexpr int    STRUCTURAL_INTER_CYCLE_GAP       = 3;
 constexpr int    FAILURE_FAMILY_VERSION           = 1;     // v1 = post-stripes-v3 (PRESERVE gates, port-0 fix, set-guided splits)
 constexpr double FAILURE_LEGACY_VERSION_DISCOUNT  = 0.25;  // records older than the current version contribute 25% penalty
 
+// M5.7 zero-plateau detection: flat runs in the RAW labels define true
+// boundaries for windowed/dead-zone targets (t22: sin(x)·[0≤x≤2π]) that
+// residual-space CART splits miss (the residual oscillates everywhere
+// after a partial harmonic fit). Edges from label-space plateaus are
+// near-exact; candidates still pass shadow validation.
+constexpr double ZERO_PLATEAU_FLAT_EPS            = 0.02;  // run max-min <= 2% of label range
+constexpr int    ZERO_PLATEAU_MIN_RUN             = 8;     // min samples per flat run
+constexpr double ZERO_PLATEAU_MIN_FRACTION        = 0.15;  // min fraction of samples inside flat runs
+constexpr double SCORE_IFELSE_PLATEAU_BOOST       = 0.97;  // top of the boundary family: label-space plateau edges are near-exact boundaries
+
 // Below this training loss, plateau-triggered structural search is skipped
 // (nothing can pass the scaled commit gate; force-structural still probes).
 // Feynman-style tasks converge to 1e-6..1e-8; d9-style noise floors sit at
