@@ -136,6 +136,14 @@ constexpr int    TRAIN_MIN_SAMPLES_PER_THREAD     = 8;
 // (measured: I.47.23 spent 60+ consecutive cycles x 65s at loss 1e-6).
 constexpr int    STRUCTURAL_INTER_CYCLE_GAP       = 3;
 
+// M1.5 failure-library versioning: bump FAILURE_FAMILY_VERSION whenever a
+// hypothesis family's emission/routing semantics change (e.g. the v3
+// multi-split arc rewrote IFELSE_PRESERVE). Old-version failure records
+// penalize families for behavior the current engine no longer produces;
+// their penalty contribution is discounted.
+constexpr int    FAILURE_FAMILY_VERSION           = 1;     // v1 = post-stripes-v3 (PRESERVE gates, port-0 fix, set-guided splits)
+constexpr double FAILURE_LEGACY_VERSION_DISCOUNT  = 0.25;  // records older than the current version contribute 25% penalty
+
 // Below this training loss, plateau-triggered structural search is skipped
 // (nothing can pass the scaled commit gate; force-structural still probes).
 // Feynman-style tasks converge to 1e-6..1e-8; d9-style noise floors sit at

@@ -3515,7 +3515,13 @@ if (profile.bounded
                     if (fr.fingerprint.num_inputs != needed.num_inputs) continue;
                     double d = fingerprint_distance(needed, fr.fingerprint);
                     if (d < config::FAILURE_MATCH_RADIUS) {
-                        family_penalty[fr.hyp_type] += config::FAILURE_PENALTY_UNIT;
+                        // M1.5: records written under older family
+                        // semantics describe candidates the current
+                        // engine no longer emits — discount them so v3
+                        // candidates aren't pre-penalized by v1 failures.
+                        double w = (fr.version < config::FAILURE_FAMILY_VERSION)
+                                 ? config::FAILURE_LEGACY_VERSION_DISCOUNT : 1.0;
+                        family_penalty[fr.hyp_type] += config::FAILURE_PENALTY_UNIT * w;
                     }
                 }
                 // Cap per-family penalty so nothing is banned outright on
@@ -4611,19 +4617,26 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         }
 
         // Rewire every OUTPUT: current input + trunk feature via per-OUTPUT ADD
-        for (auto& n : shadow->get_nodes()) {
-            if (n->get_type() != NodeType::OUTPUT) continue;
+        // NOTE: collect output ids FIRST — the loop body calls add_node,
+        // which appends to the nodes vector and invalidates any reference
+        // into it (use-after-realloc; crashed deterministically on charLM's
+        // 65 outputs).
+        std::vector<uint64_t> output_ids;
+        for (const auto& n : shadow->get_nodes()) {
+            if (n->get_type() == NodeType::OUTPUT) output_ids.push_back(n->get_id());
+        }
+        for (uint64_t oid : output_ids) {
             // Save the OUTPUT's existing incoming connections
             std::vector<Connection> outs_in;
             for (const auto& c : shadow->get_connections()) {
-                if (c.dst_node == n->get_id()) outs_in.push_back(c);
+                if (c.dst_node == oid) outs_in.push_back(c);
             }
             for (const auto& c : outs_in) {
                 shadow->remove_connection(c.src_node, c.src_port,
                                          c.dst_node, c.dst_port);
             }
             uint64_t add_id = shadow->add_node(NodeType::ADD,
-                                               "embed_trunk_add" + std::to_string(n->get_id()));
+                                               "embed_trunk_add" + std::to_string(oid));
             // original input -> ADD port 0
             for (const auto& c : outs_in) {
                 shadow->add_connection(c.src_node, c.src_port, add_id, 0);
@@ -4631,7 +4644,7 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             // trunk -> ADD port 1
             shadow->add_connection(combine_id, 0, add_id, 1);
             // ADD -> OUTPUT port 0
-            shadow->add_connection(add_id, 0, n->get_id(), 0);
+            shadow->add_connection(add_id, 0, oid, 0);
         }
         Logger::info("  [EMBED_TRUNK] built K=" + std::to_string(K)
                     + " trunk over " + std::to_string(in_ids.size()) + " inputs");

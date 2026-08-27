@@ -1,0 +1,17 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-language\bench_shakespeare_w8.csv
+  Loaded 59999 samples
+  Train: 47999  Validation: 12000
+
+Starting evolution...
+2026-08-27 15:33:16.690 [INFO] New best overall loss: 3.977723
+  [   1]   eval  loss=51.693815  |====================|  [   1]    sgd  loss=3.977723  |====================|2026-08-27 15:34:00.460 [INFO] New best overall loss: 3.977630
+  [   2]   eval  loss=3.977723  |====================|  [   2]    sgd  loss=3.977630  |====================|2026-08-27 15:34:43.324 [INFO] New best overall loss: 3.977529
+  [   3]   eval  loss=3.977630  |====================|  [   3]    sgd  loss=3.977529  |====================|2026-08-27 15:35:27.099 [INFO] New best overall loss: 3.977450
+  [   4]   eval  loss=3.977529  |====================|  [   4]    sgd  loss=3.977450  |====================|2026-08-27 15:35:27.100 [INFO] Plateau triggered at epoch 4 (counter=3, loss=3.977450)
+2026-08-27 15:38:39.264 [INFO] [PROFILE] F=8 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 a12=0.0000 max_coef[i=0]=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-27 15:38:39.311 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.298207 a=node=2 b=node=3)
+2026-08-27 15:38:39.312 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)

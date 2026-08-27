@@ -1,0 +1,1 @@
+mode=A exe=aria12.exe rc=3221225477 (385s)

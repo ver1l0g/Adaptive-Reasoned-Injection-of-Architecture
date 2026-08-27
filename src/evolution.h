@@ -65,6 +65,13 @@ public:
         int   hyp_type;
         double val_delta;    // result.val_loss - baseline_val (>0 = made it worse)
         std::string task;
+        // M1.5: semantics version of the hypothesis families at write
+        // time. Records from older family semantics (e.g. legacy type-23
+        // IFELSE_PRESERVE from before the v3 multi-split arc) describe
+        // behavior the current engine no longer produces — their
+        // penalties are discounted by FAILURE_LEGACY_VERSION_DISCOUNT.
+        // Records without a version field parse as 0 (pre-versioning).
+        int   version = 0;
     };
     void set_failure_library(const std::vector<FailureRecord>* fl) { failure_library_ = fl; }
 

@@ -5,6 +5,48 @@
 #include "serialize.h"
 #define NOMINMAX
 #include <windows.h>
+#include <dbghelp.h>
+#include <cstdio>
+#pragma comment(lib, "dbghelp.lib")
+
+// Crash diagnostics: access violations in release builds die silently
+// (observed: charLM shadow-validation AV, no stderr). Log a symbolized
+// stack to crash_stack.txt before terminating.
+static LONG WINAPI crash_handler(EXCEPTION_POINTERS* ep) {
+    const char* fpath = "crash_stack.txt";
+    FILE* f = fopen(fpath, "a");
+    if (!f) return EXCEPTION_CONTINUE_SEARCH;
+    fprintf(f, "=== CRASH code=0x%08X addr=%p tid=%lu ===\n",
+            ep->ExceptionRecord->ExceptionCode,
+            ep->ExceptionRecord->ExceptionAddress,
+            GetCurrentThreadId());
+    SymSetOptions(SYMOPT_UNDNAME | SYMOPT_DEFERRED_LOADS | SYMOPT_LOAD_LINES);
+    SymInitialize(GetCurrentProcess(), nullptr, TRUE);
+    void* frames[40];
+    WORD n = CaptureStackBackTrace(0, 40, frames, nullptr);
+    for (WORD i = 0; i < n; ++i) {
+        char buf[sizeof(SYMBOL_INFO) + 256] = {};
+        auto* si = reinterpret_cast<SYMBOL_INFO*>(buf);
+        si->SizeOfStruct = sizeof(SYMBOL_INFO);
+        si->MaxNameLen = 255;
+        DWORD64 disp = 0;
+        if (SymFromAddr(GetCurrentProcess(), (DWORD64)frames[i], &disp, si)) {
+            IMAGEHLP_LINE64 line = { sizeof(IMAGEHLP_LINE64) };
+            DWORD ldisp = 0;
+            const char* loc = "";
+            if (SymGetLineFromAddr64(GetCurrentProcess(), (DWORD64)frames[i], &ldisp, &line)) {
+                loc = line.FileName ? strrchr(line.FileName, '\\') ? strrchr(line.FileName, '\\') + 1 : line.FileName : "";
+            }
+            fprintf(f, "  #%02d %s+0x%llx %s:%lu\n", i, si->Name,
+                    (unsigned long long)disp, loc, line.LineNumber);
+        } else {
+            fprintf(f, "  #%02d %p\n", i, frames[i]);
+        }
+    }
+    fprintf(f, "=== end ===\n");
+    fclose(f);
+    return EXCEPTION_EXECUTE_HANDLER;
+}
 #include <iostream>
 #include <chrono>
 #include <iomanip>
@@ -44,6 +86,8 @@ void print_progress(int epoch, double loss, const std::string& phase) {
 
 int main(int argc, char* argv[]) {
     using namespace aria;
+
+    SetUnhandledExceptionFilter(crash_handler);
 
     // Unbuffered stdout: when redirected to a file (background runs),
     // block buffering would hide all progress until exit.
@@ -332,6 +376,10 @@ int main(int argc, char* argv[]) {
                 std::string quoted_task;
                 ss >> std::quoted(quoted_task) >> fr.hyp_type >> fr.val_delta;
                 fr.task = quoted_task;
+                // M1.5: optional trailing version field; absent (old
+                // records) leaves version=0 = pre-versioning legacy.
+                ss >> fr.version;
+                if (ss.fail()) fr.version = 0;
                 if (!std::getline(inf, line)) break;
                 std::istringstream fs(line);
                 BehavioralFingerprint& fp = fr.fingerprint;
@@ -484,7 +532,8 @@ int main(int argc, char* argv[]) {
                     const auto& fp = fr.fingerprint;
                     outf << std::quoted(fr.task) << "\t"
                          << fr.hyp_type << "\t"
-                         << std::setprecision(8) << fr.val_delta << "\n"
+                         << std::setprecision(8) << fr.val_delta << "\t"
+                         << config::FAILURE_FAMILY_VERSION << "\n"
                          << fp.num_inputs << " " << fp.num_outputs << " "
                          << fp.mean << " " << fp.var << " " << fp.min_val << " " << fp.max_val << " "
                          << fp.bound_ratio << " " << fp.poly_r2 << " "
