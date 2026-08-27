@@ -271,7 +271,32 @@ d2/d3/t22 were NEVER solved by any archived binary (all 6 fail in
 clean-dir runs; library state and 400 epochs both don't help) — the
 16/17 card was session-library-dependent. Reproducible: 12/16 + d9-NF.
 
-### 1.5 Failure-library hypothesis versioning [S]
+### 5.7 Standard-suite never-solved trio — diagnosed 2026-08-27 (analysis complete, fixes unimplemented)
+The three tasks no archived binary ever solved (see M5.5 bisect). Log
+forensics on aria11 runs pin three DISTINCT engine gaps:
+- **d2_mod3 (0.76)**: needs ~6 stacked SIN harmonics; freq-init picks
+  the right first freq (w=36.5 from 7 sign changes) but each subsequent
+  harmonic fails the strict commit gate individually — value only
+  materializes collectively. Same class as hetero3's sin arc (the M1.3
+  lesson: val-gain gates cannot price investment arcs). Fix direction:
+  harmonic-grace gate (a SIN commit following a SIN commit gets a
+  relaxed gate + longer validation train), or COMPOUND_TANH_SERIES with
+  K matched to detected knot count.
+- **d3_two_sines (0.55)**: freq-init emits ONE mixed-frequency sine
+  (w=28.2 — neither true component) from the residual's blended
+  zero-crossing rate; it fails validation and dedup blocks retries.
+  Fix direction: multi-peak freq-init (autocorrelation or sign-change
+  scale decomposition) emitting COMPOUND_TWO_SINE(f1, f2).
+- **t22_windowed_sine (0.96)**: needs IFELSE_BOUNDARY_SPLIT at the
+  window edges (x=0, 2pi) wrapping a sine. The piecewise signature
+  never fires — the residual looks oscillatory, and 2 boundary points
+  among 160 give weak CART SSE reduction. Ground truth: 85/200 samples
+  are exactly y=0 on two contiguous intervals. Fix direction:
+  ZERO-PLATEAU detector (contiguous input interval where target
+  variance~0 and |mean|~0 → emit boundary splits at the plateau edges).
+  Cheapest and highest-certainty of the three.
+
+### 1.5 Failure-library hypothesis versioning [DONE 2026-08-27 in aria12: FAILURE_FAMILY_VERSION=1 written per record; legacy (v0/unversioned) records discount to 25% penalty; loader back-compat]
 Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures
 from v1/v2 runs penalize the v3 multi-split candidates before
 validation (-0.16). Fix: version the family ids in failure records, or
