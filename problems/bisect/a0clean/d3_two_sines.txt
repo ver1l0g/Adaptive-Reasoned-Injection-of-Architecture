@@ -1,0 +1,309 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-standard\bench_d3_two_sines.csv
+  Loaded 240 samples
+  Train: 192  Validation: 48
+
+  Loaded subgraph library: 3 entries
+Starting evolution...
+2026-08-27 11:23:41.329 [INFO] New best overall loss: 0.275155
+  [   1]   eval  loss=0.517432  |=====|  [   1]    sgd  loss=0.275155  |==|2026-08-27 11:23:41.342 [INFO] New best overall loss: 0.275148
+  [   2]   eval  loss=0.275155  |==|  [   2]    sgd  loss=0.275148  |==|2026-08-27 11:23:41.359 [INFO] New best overall loss: 0.275128
+  [   3]   eval  loss=0.275148  |==|  [   3]    sgd  loss=0.275128  |==|2026-08-27 11:23:41.371 [INFO] New best overall loss: 0.275121
+  [   4]   eval  loss=0.275128  |==|  [   4]    sgd  loss=0.275121  |==|2026-08-27 11:23:41.371 [INFO] Plateau triggered at epoch 4 (counter=3, loss=0.275121)
+2026-08-27 11:23:41.373 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.005164)
+2026-08-27 11:23:41.373 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:41.374 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=6.837766 var_r=0.287039)
+2026-08-27 11:23:41.374 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.557323, 19 sign changes)
+2026-08-27 11:23:41.374 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:41.374 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:43.743 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.246704 train_loss=0.269780 new train_loss=0.269780
+2026-08-27 11:23:43.743 [INFO] Plateau state reset 鈥?best_phase2=0.269780
+2026-08-27 11:23:43.760 [INFO] New best overall loss: 0.269630
+  [   5]   eval  loss=0.269780  |==|  [   5]    sgd  loss=0.269630  |==|2026-08-27 11:23:43.776 [INFO] New best overall loss: 0.269480
+  [   6]   eval  loss=0.269630  |==|  [   6]    sgd  loss=0.269480  |==|  [   7]   eval  loss=0.269480  |==|  [   7]    sgd  loss=0.269484  |==|2026-08-27 11:23:43.788 [INFO] Plateau triggered at epoch 7 (counter=3, loss=0.269484)
+2026-08-27 11:23:43.790 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.010345)
+2026-08-27 11:23:43.790 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:43.790 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=6.837766 var_r=0.287039)
+2026-08-27 11:23:43.790 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.557323, 19 sign changes)
+2026-08-27 11:23:43.790 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:43.790 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:47.124 [INFO]   COMMIT rank=1 type=SIN_INJECTION val_loss=0.209428 train_loss=0.253383 new train_loss=0.253383
+2026-08-27 11:23:47.124 [INFO] Plateau state reset 鈥?best_phase2=0.253383
+  [   8]   eval  loss=0.253383  |==|  [   8]    sgd  loss=0.253716  |==|2026-08-27 11:23:47.187 [INFO] New best overall loss: 0.253322
+  [   9]   eval  loss=0.253716  |==|  [   9]    sgd  loss=0.253322  |==|  [  10]   eval  loss=0.253322  |==|  [  10]    sgd  loss=0.253657  |==|  [  11]   eval  loss=0.253657  |==|  [  11]    sgd  loss=0.253363  |==|  [  12]   eval  loss=0.253363  |==|  [  12]    sgd  loss=0.253539  |==|  [  13]   eval  loss=0.253539  |==|  [  13]    sgd  loss=0.253385  |==|  [  14]   eval  loss=0.253385  |==|  [  14]    sgd  loss=0.253488  |==|2026-08-27 11:23:47.291 [INFO] Plateau triggered at epoch 14 (counter=3, loss=0.253488)
+2026-08-27 11:23:47.295 [INFO] Structural inability detected 鈥?surfacing bottleneck node 5 (blame=0.024982)
+2026-08-27 11:23:47.296 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:47.296 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.557323, 19 sign changes)
+2026-08-27 11:23:47.296 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:47.296 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:48.248 [INFO]   COMMIT rank=3 type=IFELSE_BOUNDARY_SPLIT val_loss=0.199647 train_loss=0.221135 new train_loss=0.221135
+2026-08-27 11:23:48.248 [INFO] Plateau state reset 鈥?best_phase2=0.221135
+  [  15]   eval  loss=0.221135  |==|  [  15]    sgd  loss=0.221159  |==|2026-08-27 11:23:48.315 [INFO] New best overall loss: 0.220285
+  [  16]   eval  loss=0.221159  |==|  [  16]    sgd  loss=0.220285  |==|  [  17]   eval  loss=0.220285  |==|  [  17]    sgd  loss=0.234591  |==|  [  18]   eval  loss=0.234591  |==|  [  18]    sgd  loss=0.235942  |==|  [  19]   eval  loss=0.235942  |==|  [  19]    sgd  loss=0.242498  |==|2026-08-27 11:23:48.407 [INFO] Plateau triggered at epoch 19 (counter=3, loss=0.242498)
+2026-08-27 11:23:48.410 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:48.410 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=6.837766 var_r=0.287039)
+2026-08-27 11:23:48.410 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.557323, 19 sign changes)
+2026-08-27 11:23:48.410 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:48.411 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:52.152 [INFO]   COMMIT rank=0 type=SIN_INJECTION val_loss=0.200416 train_loss=0.211091 new train_loss=0.211091
+2026-08-27 11:23:52.152 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:52.152 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.557323, 19 sign changes)
+2026-08-27 11:23:52.152 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:52.152 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:53.134 [INFO] Plateau state reset 鈥?best_phase2=0.211091
+2026-08-27 11:23:53.272 [INFO] New best overall loss: 0.193045
+  [  20]   eval  loss=0.211091  |==|  [  20]    sgd  loss=0.193045  |=|2026-08-27 11:23:53.374 [INFO] New best overall loss: 0.190126
+  [  21]   eval  loss=0.193045  |=|  [  21]    sgd  loss=0.190126  |=|  [  22]   eval  loss=0.190126  |=|  [  22]    sgd  loss=0.190560  |=|  [  23]   eval  loss=0.190560  |=|  [  23]    sgd  loss=0.190716  |=|  [  24]   eval  loss=0.190716  |=|  [  24]    sgd  loss=0.190637  |=|2026-08-27 11:23:53.465 [INFO] Plateau triggered at epoch 24 (counter=3, loss=0.190637)
+2026-08-27 11:23:53.469 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.105624)
+2026-08-27 11:23:53.469 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:53.469 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  25]   eval  loss=0.190637  |=|  [  25]    sgd  loss=0.190541  |=|2026-08-27 11:23:53.742 [INFO] Plateau triggered at epoch 25 (counter=4, loss=0.190541)
+2026-08-27 11:23:53.747 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.105421)
+2026-08-27 11:23:53.747 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:53.747 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  26]   eval  loss=0.190541  |=|  [  26]    sgd  loss=0.190219  |=|2026-08-27 11:23:54.048 [INFO] New best overall loss: 0.190115
+  [  27]   eval  loss=0.190219  |=|  [  27]    sgd  loss=0.190115  |=|2026-08-27 11:23:54.186 [INFO] New best overall loss: 0.177553
+  [  28]   eval  loss=0.190115  |=|  [  28]    sgd  loss=0.177553  |=|  [  29]   eval  loss=0.177553  |=|  [  29]    sgd  loss=0.180787  |=|  [  30]   eval  loss=0.180787  |=|  [  30]    sgd  loss=0.180506  |=|  [  31]   eval  loss=0.180506  |=|  [  31]    sgd  loss=0.180471  |=|  [  32]   eval  loss=0.180471  |=|  [  32]    sgd  loss=0.180305  |=|  [  33]   eval  loss=0.180305  |=|  [  33]    sgd  loss=0.180247  |=|2026-08-27 11:23:54.310 [INFO] Plateau triggered at epoch 33 (counter=3, loss=0.180247)
+2026-08-27 11:23:54.314 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:54.314 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.557323, 19 sign changes)
+2026-08-27 11:23:54.314 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:54.315 [INFO] Library INJECT (dist=0.395 src=bench_d2_mod3.csv) -> IFELSE [gate-bypass]
+2026-08-27 11:23:55.415 [INFO]   COMMIT rank=4 type=MULTIPLY_INJECTION val_loss=0.179792 train_loss=0.185468 new train_loss=0.185468
+2026-08-27 11:23:55.415 [INFO] Plateau state reset 鈥?best_phase2=0.185468
+  [  34]   eval  loss=0.185468  |=|  [  34]    sgd  loss=0.180296  |=|  [  35]   eval  loss=0.180296  |=|  [  35]    sgd  loss=0.181283  |=|  [  36]   eval  loss=0.181283  |=|  [  36]    sgd  loss=0.183262  |=|  [  37]   eval  loss=0.183262  |=|  [  37]    sgd  loss=0.183095  |=|2026-08-27 11:23:55.449 [INFO] Plateau triggered at epoch 37 (counter=3, loss=0.183095)
+2026-08-27 11:23:55.453 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.108380)
+2026-08-27 11:23:55.454 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:55.454 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:55.454 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:55.454 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  38]   eval  loss=0.183095  |=|  [  38]    sgd  loss=0.182449  |=|  [  39]   eval  loss=0.182449  |=|  [  39]    sgd  loss=0.180582  |=|  [  40]   eval  loss=0.180582  |=|  [  40]    sgd  loss=0.180750  |=|  [  41]   eval  loss=0.180750  |=|  [  41]    sgd  loss=0.180150  |=|  [  42]   eval  loss=0.180150  |=|  [  42]    sgd  loss=0.180186  |=|  [  43]   eval  loss=0.180186  |=|  [  43]    sgd  loss=0.180046  |=|  [  44]   eval  loss=0.180046  |=|  [  44]    sgd  loss=0.180046  |=|2026-08-27 11:23:55.645 [INFO] Plateau triggered at epoch 44 (counter=3, loss=0.180046)
+2026-08-27 11:23:55.649 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.108629)
+2026-08-27 11:23:55.650 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:55.650 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:55.650 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:55.650 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  45]   eval  loss=0.180046  |=|  [  45]    sgd  loss=0.179944  |=|2026-08-27 11:23:55.793 [INFO] Plateau triggered at epoch 45 (counter=4, loss=0.179944)
+2026-08-27 11:23:55.798 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.109084)
+2026-08-27 11:23:55.798 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:55.798 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:55.798 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:55.798 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  46]   eval  loss=0.179944  |=|  [  46]    sgd  loss=0.179906  |=|2026-08-27 11:23:55.941 [INFO] Plateau triggered at epoch 46 (counter=5, loss=0.179906)
+2026-08-27 11:23:55.946 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.109168)
+2026-08-27 11:23:55.946 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:55.947 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:55.947 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:55.947 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  47]   eval  loss=0.179906  |=|  [  47]    sgd  loss=0.179816  |=|2026-08-27 11:23:56.086 [INFO] Plateau triggered at epoch 47 (counter=6, loss=0.179816)
+2026-08-27 11:23:56.091 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.109503)
+2026-08-27 11:23:56.091 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:56.091 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:56.091 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:56.091 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:56.239 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  48]   eval  loss=0.179816  |=|  [  48]    sgd  loss=0.179767  |=|2026-08-27 11:23:56.245 [INFO] Structural search in cooldown (9 epochs left) at epoch 48 鈥?letting SGD settle
+  [  49]   eval  loss=0.179767  |=|  [  49]    sgd  loss=0.179683  |=|2026-08-27 11:23:56.250 [INFO] Structural search in cooldown (8 epochs left) at epoch 49 鈥?letting SGD settle
+2026-08-27 11:23:56.258 [INFO] New best overall loss: 0.176289
+  [  50]   eval  loss=0.179683  |=|  [  50]    sgd  loss=0.176289  |=|  [  51]   eval  loss=0.176289  |=|  [  51]    sgd  loss=0.177584  |=|  [  52]   eval  loss=0.177584  |=|  [  52]    sgd  loss=0.179472  |=|  [  53]   eval  loss=0.179472  |=|  [  53]    sgd  loss=0.179403  |=|2026-08-27 11:23:56.275 [INFO] Structural search in cooldown (4 epochs left) at epoch 53 鈥?letting SGD settle
+2026-08-27 11:23:56.287 [INFO] New best overall loss: 0.175710
+  [  54]   eval  loss=0.179403  |=|  [  54]    sgd  loss=0.175710  |=|2026-08-27 11:23:56.287 [INFO] Structural search in cooldown (3 epochs left) at epoch 54 鈥?letting SGD settle
+2026-08-27 11:23:56.292 [INFO] New best overall loss: 0.174258
+  [  55]   eval  loss=0.175710  |=|  [  55]    sgd  loss=0.174258  |=|2026-08-27 11:23:56.292 [INFO] Structural search in cooldown (2 epochs left) at epoch 55 鈥?letting SGD settle
+2026-08-27 11:23:56.297 [INFO] New best overall loss: 0.173979
+  [  56]   eval  loss=0.174258  |=|  [  56]    sgd  loss=0.173979  |=|2026-08-27 11:23:56.297 [INFO] Structural search in cooldown (1 epochs left) at epoch 56 鈥?letting SGD settle
+  [  57]   eval  loss=0.173979  |=|  [  57]    sgd  loss=0.174620  |=|2026-08-27 11:23:56.305 [INFO] Forced structural trigger at epoch 57 (epochs since last structural: 24)
+2026-08-27 11:23:56.305 [INFO] Plateau triggered at epoch 57 (counter=1, loss=0.174620)
+2026-08-27 11:23:56.309 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.121538)
+2026-08-27 11:23:56.310 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:56.310 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:56.310 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:56.310 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  58]   eval  loss=0.174620  |=|  [  58]    sgd  loss=0.174131  |=|2026-08-27 11:23:56.463 [INFO] Forced structural trigger at epoch 58 (epochs since last structural: 25)
+2026-08-27 11:23:56.463 [INFO] Plateau triggered at epoch 58 (counter=0, loss=0.174131)
+2026-08-27 11:23:56.467 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.120885)
+2026-08-27 11:23:56.467 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:56.468 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:56.468 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:56.468 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  59]   eval  loss=0.174131  |=|  [  59]    sgd  loss=0.174092  |=|2026-08-27 11:23:56.619 [INFO] Forced structural trigger at epoch 59 (epochs since last structural: 26)
+2026-08-27 11:23:56.619 [INFO] Plateau triggered at epoch 59 (counter=1, loss=0.174092)
+2026-08-27 11:23:56.625 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.121925)
+2026-08-27 11:23:56.625 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:56.625 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:56.625 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:56.625 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  60]   eval  loss=0.174092  |=|  [  60]    sgd  loss=0.173984  |=|2026-08-27 11:23:56.783 [INFO] Forced structural trigger at epoch 60 (epochs since last structural: 27)
+2026-08-27 11:23:56.783 [INFO] Plateau triggered at epoch 60 (counter=2, loss=0.173984)
+2026-08-27 11:23:56.789 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.122385)
+2026-08-27 11:23:56.790 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:56.790 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:56.790 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:56.790 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:56.971 [INFO] New best overall loss: 0.170096
+  [  61]   eval  loss=0.173984  |=|  [  61]    sgd  loss=0.170096  |=|2026-08-27 11:23:56.971 [INFO] Forced structural trigger at epoch 61 (epochs since last structural: 28)
+2026-08-27 11:23:56.971 [INFO] Plateau triggered at epoch 61 (counter=0, loss=0.170096)
+2026-08-27 11:23:56.977 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.131127)
+2026-08-27 11:23:56.977 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:56.978 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845130, 19 sign changes)
+2026-08-27 11:23:56.978 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:56.978 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:57.125 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 11:23:57.131 [INFO] New best overall loss: 0.169666
+  [  62]   eval  loss=0.170096  |=|  [  62]    sgd  loss=0.169666  |=|2026-08-27 11:23:57.131 [INFO] Structural search in cooldown (9 epochs left) at epoch 62 鈥?letting SGD settle
+  [  63]   eval  loss=0.169666  |=|  [  63]    sgd  loss=0.169721  |=|2026-08-27 11:23:57.137 [INFO] Structural search in cooldown (8 epochs left) at epoch 63 鈥?letting SGD settle
+  [  64]   eval  loss=0.169721  |=|  [  64]    sgd  loss=0.169752  |=|2026-08-27 11:23:57.142 [INFO] Structural search in cooldown (7 epochs left) at epoch 64 鈥?letting SGD settle
+  [  65]   eval  loss=0.169752  |=|  [  65]    sgd  loss=0.169804  |=|2026-08-27 11:23:57.148 [INFO] Structural search in cooldown (6 epochs left) at epoch 65 鈥?letting SGD settle
+2026-08-27 11:23:57.153 [INFO] New best overall loss: 0.169507
+  [  66]   eval  loss=0.169804  |=|  [  66]    sgd  loss=0.169507  |=|2026-08-27 11:23:57.153 [INFO] Structural search in cooldown (5 epochs left) at epoch 66 鈥?letting SGD settle
+2026-08-27 11:23:57.158 [INFO] New best overall loss: 0.168445
+  [  67]   eval  loss=0.169507  |=|  [  67]    sgd  loss=0.168445  |=|2026-08-27 11:23:57.158 [INFO] Structural search in cooldown (4 epochs left) at epoch 67 鈥?letting SGD settle
+2026-08-27 11:23:57.164 [INFO] New best overall loss: 0.168232
+  [  68]   eval  loss=0.168445  |=|  [  68]    sgd  loss=0.168232  |=|2026-08-27 11:23:57.164 [INFO] Structural search in cooldown (3 epochs left) at epoch 68 鈥?letting SGD settle
+2026-08-27 11:23:57.169 [INFO] New best overall loss: 0.168013
+  [  69]   eval  loss=0.168232  |=|  [  69]    sgd  loss=0.168013  |=|2026-08-27 11:23:57.169 [INFO] Structural search in cooldown (2 epochs left) at epoch 69 鈥?letting SGD settle
+2026-08-27 11:23:57.174 [INFO] New best overall loss: 0.167898
+  [  70]   eval  loss=0.168013  |=|  [  70]    sgd  loss=0.167898  |=|2026-08-27 11:23:57.175 [INFO] Structural search in cooldown (1 epochs left) at epoch 70 鈥?letting SGD settle
+  [  71]   eval  loss=0.167898  |=|  [  71]    sgd  loss=0.170769  |=|2026-08-27 11:23:57.185 [INFO] Forced structural trigger at epoch 71 (epochs since last structural: 38)
+2026-08-27 11:23:57.185 [INFO] Plateau triggered at epoch 71 (counter=2, loss=0.170769)
+2026-08-27 11:23:57.190 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.144937)
+2026-08-27 11:23:57.191 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:57.191 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845133, 19 sign changes)
+2026-08-27 11:23:57.191 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:57.191 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  72]   eval  loss=0.170769  |=|  [  72]    sgd  loss=0.170639  |=|2026-08-27 11:23:57.343 [INFO] Forced structural trigger at epoch 72 (epochs since last structural: 39)
+2026-08-27 11:23:57.343 [INFO] Plateau triggered at epoch 72 (counter=3, loss=0.170639)
+2026-08-27 11:23:57.351 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.145178)
+2026-08-27 11:23:57.351 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:57.351 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845133, 19 sign changes)
+2026-08-27 11:23:57.352 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:57.352 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  73]   eval  loss=0.170639  |=|  [  73]    sgd  loss=0.170425  |=|2026-08-27 11:23:57.503 [INFO] Forced structural trigger at epoch 73 (epochs since last structural: 40)
+2026-08-27 11:23:57.503 [INFO] Plateau triggered at epoch 73 (counter=0, loss=0.170425)
+2026-08-27 11:23:57.509 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.144838)
+2026-08-27 11:23:57.509 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:57.509 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845134, 19 sign changes)
+2026-08-27 11:23:57.509 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:57.509 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  74]   eval  loss=0.170425  |=|  [  74]    sgd  loss=0.170472  |=|2026-08-27 11:23:57.663 [INFO] Forced structural trigger at epoch 74 (epochs since last structural: 41)
+2026-08-27 11:23:57.663 [INFO] Plateau triggered at epoch 74 (counter=1, loss=0.170472)
+2026-08-27 11:23:57.668 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.145590)
+2026-08-27 11:23:57.668 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:57.668 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845134, 19 sign changes)
+2026-08-27 11:23:57.668 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:57.668 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  75]   eval  loss=0.170472  |=|  [  75]    sgd  loss=0.171244  |=|2026-08-27 11:23:57.839 [INFO] Forced structural trigger at epoch 75 (epochs since last structural: 42)
+2026-08-27 11:23:57.839 [INFO] Plateau triggered at epoch 75 (counter=2, loss=0.171244)
+2026-08-27 11:23:57.844 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.142241)
+2026-08-27 11:23:57.845 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:57.845 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845134, 19 sign changes)
+2026-08-27 11:23:57.845 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:57.845 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:58.002 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-08-27 11:23:58.010 [INFO] New best overall loss: 0.167549
+  [  76]   eval  loss=0.171244  |=|  [  76]    sgd  loss=0.167549  |=|2026-08-27 11:23:58.010 [INFO] Structural search in cooldown (9 epochs left) at epoch 76 鈥?letting SGD settle
+  [  77]   eval  loss=0.167549  |=|  [  77]    sgd  loss=0.170201  |=|2026-08-27 11:23:58.016 [INFO] Structural search in cooldown (8 epochs left) at epoch 77 鈥?letting SGD settle
+  [  78]   eval  loss=0.170201  |=|  [  78]    sgd  loss=0.170131  |=|2026-08-27 11:23:58.021 [INFO] Structural search in cooldown (7 epochs left) at epoch 78 鈥?letting SGD settle
+  [  79]   eval  loss=0.170131  |=|  [  79]    sgd  loss=0.170511  |=|2026-08-27 11:23:58.027 [INFO] Structural search in cooldown (6 epochs left) at epoch 79 鈥?letting SGD settle
+  [  80]   eval  loss=0.170511  |=|  [  80]    sgd  loss=0.170014  |=|2026-08-27 11:23:58.033 [INFO] Structural search in cooldown (5 epochs left) at epoch 80 鈥?letting SGD settle
+  [  81]   eval  loss=0.170014  |=|  [  81]    sgd  loss=0.170471  |=|2026-08-27 11:23:58.039 [INFO] Structural search in cooldown (4 epochs left) at epoch 81 鈥?letting SGD settle
+  [  82]   eval  loss=0.170471  |=|  [  82]    sgd  loss=0.169858  |=|2026-08-27 11:23:58.044 [INFO] Structural search in cooldown (3 epochs left) at epoch 82 鈥?letting SGD settle
+  [  83]   eval  loss=0.169858  |=|  [  83]    sgd  loss=0.169875  |=|2026-08-27 11:23:58.050 [INFO] Structural search in cooldown (2 epochs left) at epoch 83 鈥?letting SGD settle
+  [  84]   eval  loss=0.169875  |=|  [  84]    sgd  loss=0.170334  |=|2026-08-27 11:23:58.056 [INFO] Structural search in cooldown (1 epochs left) at epoch 84 鈥?letting SGD settle
+  [  85]   eval  loss=0.170334  |=|  [  85]    sgd  loss=0.169863  |=|2026-08-27 11:23:58.061 [INFO] Forced structural trigger at epoch 85 (epochs since last structural: 52)
+2026-08-27 11:23:58.061 [INFO] Plateau triggered at epoch 85 (counter=0, loss=0.169863)
+2026-08-27 11:23:58.067 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.145698)
+2026-08-27 11:23:58.067 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:58.067 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845137, 19 sign changes)
+2026-08-27 11:23:58.067 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:58.067 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  86]   eval  loss=0.169863  |=|  [  86]    sgd  loss=0.169719  |=|2026-08-27 11:23:58.232 [INFO] Forced structural trigger at epoch 86 (epochs since last structural: 53)
+2026-08-27 11:23:58.232 [INFO] Plateau triggered at epoch 86 (counter=1, loss=0.169719)
+2026-08-27 11:23:58.238 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.144437)
+2026-08-27 11:23:58.238 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:58.238 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845137, 19 sign changes)
+2026-08-27 11:23:58.238 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:58.239 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  87]   eval  loss=0.169719  |=|  [  87]    sgd  loss=0.169691  |=|2026-08-27 11:23:58.395 [INFO] Forced structural trigger at epoch 87 (epochs since last structural: 54)
+2026-08-27 11:23:58.395 [INFO] Plateau triggered at epoch 87 (counter=2, loss=0.169691)
+2026-08-27 11:23:58.401 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.145347)
+2026-08-27 11:23:58.401 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:58.402 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845138, 19 sign changes)
+2026-08-27 11:23:58.402 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:58.402 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  88]   eval  loss=0.169691  |=|  [  88]    sgd  loss=0.169639  |=|2026-08-27 11:23:58.553 [INFO] Forced structural trigger at epoch 88 (epochs since last structural: 55)
+2026-08-27 11:23:58.553 [INFO] Plateau triggered at epoch 88 (counter=3, loss=0.169639)
+2026-08-27 11:23:58.558 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.145687)
+2026-08-27 11:23:58.558 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:58.558 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845139, 19 sign changes)
+2026-08-27 11:23:58.559 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:58.559 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  89]   eval  loss=0.169639  |=|  [  89]    sgd  loss=0.169606  |=|2026-08-27 11:23:58.731 [INFO] Forced structural trigger at epoch 89 (epochs since last structural: 56)
+2026-08-27 11:23:58.731 [INFO] Plateau triggered at epoch 89 (counter=4, loss=0.169606)
+2026-08-27 11:23:58.737 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.146102)
+2026-08-27 11:23:58.737 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:58.737 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845139, 19 sign changes)
+2026-08-27 11:23:58.737 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:58.737 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:58.887 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  90]   eval  loss=0.169606  |=|  [  90]    sgd  loss=0.169629  |=|2026-08-27 11:23:58.894 [INFO] Structural search in cooldown (9 epochs left) at epoch 90 鈥?letting SGD settle
+  [  91]   eval  loss=0.169629  |=|  [  91]    sgd  loss=0.169563  |=|2026-08-27 11:23:58.900 [INFO] Structural search in cooldown (8 epochs left) at epoch 91 鈥?letting SGD settle
+  [  92]   eval  loss=0.169563  |=|  [  92]    sgd  loss=0.169494  |=|2026-08-27 11:23:58.905 [INFO] Structural search in cooldown (7 epochs left) at epoch 92 鈥?letting SGD settle
+  [  93]   eval  loss=0.169494  |=|  [  93]    sgd  loss=0.169475  |=|2026-08-27 11:23:58.911 [INFO] Structural search in cooldown (6 epochs left) at epoch 93 鈥?letting SGD settle
+  [  94]   eval  loss=0.169475  |=|  [  94]    sgd  loss=0.169485  |=|2026-08-27 11:23:58.917 [INFO] Structural search in cooldown (5 epochs left) at epoch 94 鈥?letting SGD settle
+  [  95]   eval  loss=0.169485  |=|  [  95]    sgd  loss=0.170507  |=|2026-08-27 11:23:58.926 [INFO] Structural search in cooldown (4 epochs left) at epoch 95 鈥?letting SGD settle
+  [  96]   eval  loss=0.170507  |=|  [  96]    sgd  loss=0.171565  |=|2026-08-27 11:23:58.932 [INFO] Structural search in cooldown (3 epochs left) at epoch 96 鈥?letting SGD settle
+  [  97]   eval  loss=0.171565  |=|  [  97]    sgd  loss=0.171032  |=|2026-08-27 11:23:58.938 [INFO] Structural search in cooldown (2 epochs left) at epoch 97 鈥?letting SGD settle
+  [  98]   eval  loss=0.171032  |=|  [  98]    sgd  loss=0.171134  |=|2026-08-27 11:23:58.944 [INFO] Structural search in cooldown (1 epochs left) at epoch 98 鈥?letting SGD settle
+  [  99]   eval  loss=0.171134  |=|  [  99]    sgd  loss=0.171018  |=|2026-08-27 11:23:58.950 [INFO] Forced structural trigger at epoch 99 (epochs since last structural: 66)
+2026-08-27 11:23:58.950 [INFO] Plateau triggered at epoch 99 (counter=2, loss=0.171018)
+2026-08-27 11:23:58.955 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.141033)
+2026-08-27 11:23:58.955 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:58.956 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845142, 19 sign changes)
+2026-08-27 11:23:58.956 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:58.956 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [ 100]   eval  loss=0.171018  |=|  [ 100]    sgd  loss=0.170517  |=|2026-08-27 11:23:59.120 [INFO] Forced structural trigger at epoch 100 (epochs since last structural: 67)
+2026-08-27 11:23:59.120 [INFO] Plateau triggered at epoch 100 (counter=0, loss=0.170517)
+2026-08-27 11:23:59.126 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=0.140136)
+2026-08-27 11:23:59.127 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:23:59.127 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=29.845142, 19 sign changes)
+2026-08-27 11:23:59.127 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:23:59.127 [INFO] Library prior (dist=0.395 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:23:59.281 [INFO] Restored best-val graph snapshot (val=0.175366, train=0.180787)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   5
+  Failed commits:       171
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         0.517432
+  Final loss:           0.180787
+  Best loss:            0.167549
+  Wall time:            18021 ms
+
+  [Expression] 1.447*((tanh(1.285*x0+2.435)+sin(tanh(-0.474*x0-0.726)))+((x0>1.5895?1:0)?0:sin((tanh(-0.977*x0-0.383)+sin(tanh(6.649*x0+0.196))))))-0.261
+
+  [Library] Behavioral fingerprint: k=1 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=7.0
+  [Library] Closest existing entries:
+    bench_d2_mod3.csv (dist=0.358)
+    bench_d2_mod3.csv (dist=1.474)
+    bench_d2_mod3.csv (dist=1.474)
+  [Library] Pattern: sin_chain
+  [Library] Saved (library now has 4 entries)
+  [Library] Extracted 3 sub-expression block(s) (library now has 7 entries)
+
+================================================
+  Held-out Evaluation  (240 samples)
+================================================
+  Eval R2[out0]:   0.358198
+  Eval MSE[out0]:  0.179703   MAE: 0.343452

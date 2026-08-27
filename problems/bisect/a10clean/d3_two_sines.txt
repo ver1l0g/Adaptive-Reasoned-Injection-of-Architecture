@@ -1,0 +1,395 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-standard\bench_d3_two_sines.csv
+  Loaded 240 samples
+  Train: 192  Validation: 48
+
+  Loaded subgraph library: 3 entries
+Starting evolution...
+2026-08-27 11:11:05.845 [INFO] New best overall loss: 0.275155
+  [   1]   eval  loss=0.517432  |=====|  [   1]    sgd  loss=0.275155  |==|2026-08-27 11:11:05.854 [INFO] New best overall loss: 0.275148
+  [   2]   eval  loss=0.275155  |==|  [   2]    sgd  loss=0.275148  |==|2026-08-27 11:11:05.862 [INFO] New best overall loss: 0.275128
+  [   3]   eval  loss=0.275148  |==|  [   3]    sgd  loss=0.275128  |==|2026-08-27 11:11:05.868 [INFO] New best overall loss: 0.275121
+  [   4]   eval  loss=0.275128  |==|  [   4]    sgd  loss=0.275121  |==|2026-08-27 11:11:05.868 [INFO] Plateau triggered at epoch 4 (counter=3, loss=0.275121)
+2026-08-27 11:11:05.871 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.003631)
+2026-08-27 11:11:05.871 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:05.871 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:05.871 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:05.871 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:05.871 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:05.871 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=6.837766 var_r=0.287039)
+2026-08-27 11:11:05.871 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=9.557323, 19 sign changes)
+2026-08-27 11:11:05.871 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-08-27 11:11:05.871 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:05.872 [INFO]   [PRESERVE-MULTI] built K=4 split chain
+2026-08-27 11:11:06.473 [INFO]   COMMIT rank=0 type=IFELSE_BOUNDARY_SPLIT val_loss=0.227586 train_loss=0.255301 new train_loss=0.255301
+2026-08-27 11:11:06.473 [INFO] Plateau state reset 鈥?best_phase2=0.255301
+2026-08-27 11:11:06.473 [INFO] Plateau state reset — best_phase2=0.255301
+  [   5]   eval  loss=0.255301  |==|  [   5]    sgd  loss=0.256618  |==|  [   6]   eval  loss=0.256618  |==|  [   6]    sgd  loss=0.256610  |==|  [   7]   eval  loss=0.256610  |==|  [   7]    sgd  loss=0.256978  |==|2026-08-27 11:11:06.498 [INFO] Plateau triggered at epoch 7 (counter=3, loss=0.256978)
+2026-08-27 11:11:06.501 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026045)
+2026-08-27 11:11:06.501 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:06.501 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:06.501 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:06.501 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:06.502 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:06.502 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [   8]   eval  loss=0.256978  |==|  [   8]    sgd  loss=0.257030  |==|2026-08-27 11:11:06.552 [INFO] Plateau triggered at epoch 8 (counter=4, loss=0.257030)
+2026-08-27 11:11:06.555 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.025439)
+2026-08-27 11:11:06.556 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:06.556 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:06.556 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:06.556 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:06.556 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:06.556 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:06.608 [INFO] New best overall loss: 0.254733
+  [   9]   eval  loss=0.257030  |==|  [   9]    sgd  loss=0.254733  |==|2026-08-27 11:11:06.616 [INFO] New best overall loss: 0.253801
+  [  10]   eval  loss=0.254733  |==|  [  10]    sgd  loss=0.253801  |==|  [  11]   eval  loss=0.253801  |==|  [  11]    sgd  loss=0.254503  |==|  [  12]   eval  loss=0.254503  |==|  [  12]    sgd  loss=0.255628  |==|  [  13]   eval  loss=0.255628  |==|  [  13]    sgd  loss=0.256903  |==|2026-08-27 11:11:06.642 [INFO] Plateau triggered at epoch 13 (counter=3, loss=0.256903)
+2026-08-27 11:11:06.645 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.023767)
+2026-08-27 11:11:06.645 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:06.646 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:06.646 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:06.646 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:06.646 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:06.646 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  14]   eval  loss=0.256903  |==|  [  14]    sgd  loss=0.257509  |==|2026-08-27 11:11:06.692 [INFO] Plateau triggered at epoch 14 (counter=4, loss=0.257509)
+2026-08-27 11:11:06.694 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.023187)
+2026-08-27 11:11:06.695 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:06.695 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:06.695 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:06.695 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:06.695 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:06.695 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  15]   eval  loss=0.257509  |==|  [  15]    sgd  loss=0.255737  |==|  [  16]   eval  loss=0.255737  |==|  [  16]    sgd  loss=0.254244  |==|  [  17]   eval  loss=0.254244  |==|  [  17]    sgd  loss=0.254297  |==|  [  18]   eval  loss=0.254297  |==|  [  18]    sgd  loss=0.255939  |==|  [  19]   eval  loss=0.255939  |==|  [  19]    sgd  loss=0.255665  |==|2026-08-27 11:11:06.799 [INFO] New best overall loss: 0.252709
+  [  20]   eval  loss=0.255665  |==|  [  20]    sgd  loss=0.252709  |==|  [  21]   eval  loss=0.252709  |==|  [  21]    sgd  loss=0.252856  |==|  [  22]   eval  loss=0.252856  |==|  [  22]    sgd  loss=0.253211  |==|  [  23]   eval  loss=0.253211  |==|  [  23]    sgd  loss=0.255240  |==|2026-08-27 11:11:06.822 [INFO] Plateau triggered at epoch 23 (counter=3, loss=0.255240)
+2026-08-27 11:11:06.825 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026249)
+2026-08-27 11:11:06.825 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:06.825 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:06.825 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:06.826 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:06.826 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:06.826 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:06.851 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  24]   eval  loss=0.255240  |==|  [  24]    sgd  loss=0.253170  |==|2026-08-27 11:11:06.860 [INFO] Structural search in cooldown (9 epochs left) at epoch 24 鈥?letting SGD settle
+  [  25]   eval  loss=0.253170  |==|  [  25]    sgd  loss=0.253210  |==|2026-08-27 11:11:06.868 [INFO] Structural search in cooldown (8 epochs left) at epoch 25 鈥?letting SGD settle
+  [  26]   eval  loss=0.253210  |==|  [  26]    sgd  loss=0.256301  |==|2026-08-27 11:11:06.876 [INFO] Structural search in cooldown (7 epochs left) at epoch 26 鈥?letting SGD settle
+2026-08-27 11:11:06.888 [INFO] New best overall loss: 0.252359
+  [  27]   eval  loss=0.256301  |==|  [  27]    sgd  loss=0.252359  |==|2026-08-27 11:11:06.888 [INFO] Structural search in cooldown (6 epochs left) at epoch 27 鈥?letting SGD settle
+  [  28]   eval  loss=0.252359  |==|  [  28]    sgd  loss=0.253639  |==|2026-08-27 11:11:06.896 [INFO] Structural search in cooldown (5 epochs left) at epoch 28 鈥?letting SGD settle
+  [  29]   eval  loss=0.253639  |==|  [  29]    sgd  loss=0.253652  |==|2026-08-27 11:11:06.904 [INFO] Structural search in cooldown (4 epochs left) at epoch 29 鈥?letting SGD settle
+  [  30]   eval  loss=0.253652  |==|  [  30]    sgd  loss=0.254430  |==|2026-08-27 11:11:06.910 [INFO] Structural search in cooldown (3 epochs left) at epoch 30 鈥?letting SGD settle
+  [  31]   eval  loss=0.254430  |==|  [  31]    sgd  loss=0.255162  |==|2026-08-27 11:11:06.918 [INFO] Structural search in cooldown (2 epochs left) at epoch 31 鈥?letting SGD settle
+  [  32]   eval  loss=0.255162  |==|  [  32]    sgd  loss=0.252759  |==|2026-08-27 11:11:06.928 [INFO] Structural search in cooldown (1 epochs left) at epoch 32 鈥?letting SGD settle
+  [  33]   eval  loss=0.252759  |==|  [  33]    sgd  loss=0.254773  |==|2026-08-27 11:11:06.943 [INFO] Forced structural trigger at epoch 33 (epochs since last structural: 29)
+2026-08-27 11:11:06.943 [INFO] Plateau triggered at epoch 33 (counter=1, loss=0.254773)
+2026-08-27 11:11:06.947 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026949)
+2026-08-27 11:11:06.948 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:06.948 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:06.948 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:06.948 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:06.948 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:06.948 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  34]   eval  loss=0.254773  |==|  [  34]    sgd  loss=0.252767  |==|2026-08-27 11:11:06.996 [INFO] Forced structural trigger at epoch 34 (epochs since last structural: 30)
+2026-08-27 11:11:06.996 [INFO] Plateau triggered at epoch 34 (counter=0, loss=0.252767)
+2026-08-27 11:11:07.001 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026499)
+2026-08-27 11:11:07.001 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.001 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.001 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.001 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.001 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.002 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  35]   eval  loss=0.252767  |==|  [  35]    sgd  loss=0.254863  |==|2026-08-27 11:11:07.057 [INFO] Forced structural trigger at epoch 35 (epochs since last structural: 31)
+2026-08-27 11:11:07.058 [INFO] Plateau triggered at epoch 35 (counter=1, loss=0.254863)
+2026-08-27 11:11:07.062 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026633)
+2026-08-27 11:11:07.062 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.062 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.062 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.062 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.062 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.063 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  36]   eval  loss=0.254863  |==|  [  36]    sgd  loss=0.252728  |==|2026-08-27 11:11:07.115 [INFO] Forced structural trigger at epoch 36 (epochs since last structural: 32)
+2026-08-27 11:11:07.115 [INFO] Plateau triggered at epoch 36 (counter=0, loss=0.252728)
+2026-08-27 11:11:07.118 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026519)
+2026-08-27 11:11:07.118 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.118 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.118 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.118 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.118 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.119 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  37]   eval  loss=0.252728  |==|  [  37]    sgd  loss=0.254898  |==|2026-08-27 11:11:07.170 [INFO] Forced structural trigger at epoch 37 (epochs since last structural: 33)
+2026-08-27 11:11:07.170 [INFO] Plateau triggered at epoch 37 (counter=1, loss=0.254898)
+2026-08-27 11:11:07.174 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026586)
+2026-08-27 11:11:07.174 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.174 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.175 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.175 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.175 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.175 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:07.230 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  38]   eval  loss=0.254898  |==|  [  38]    sgd  loss=0.253036  |==|2026-08-27 11:11:07.238 [INFO] Structural search in cooldown (9 epochs left) at epoch 38 鈥?letting SGD settle
+  [  39]   eval  loss=0.253036  |==|  [  39]    sgd  loss=0.253024  |==|2026-08-27 11:11:07.247 [INFO] Structural search in cooldown (8 epochs left) at epoch 39 鈥?letting SGD settle
+  [  40]   eval  loss=0.253024  |==|  [  40]    sgd  loss=0.256118  |==|2026-08-27 11:11:07.258 [INFO] Structural search in cooldown (7 epochs left) at epoch 40 鈥?letting SGD settle
+2026-08-27 11:11:07.269 [INFO] New best overall loss: 0.252165
+  [  41]   eval  loss=0.256118  |==|  [  41]    sgd  loss=0.252165  |==|2026-08-27 11:11:07.269 [INFO] Structural search in cooldown (6 epochs left) at epoch 41 鈥?letting SGD settle
+  [  42]   eval  loss=0.252165  |==|  [  42]    sgd  loss=0.252370  |==|2026-08-27 11:11:07.279 [INFO] Structural search in cooldown (5 epochs left) at epoch 42 鈥?letting SGD settle
+  [  43]   eval  loss=0.252370  |==|  [  43]    sgd  loss=0.252699  |==|2026-08-27 11:11:07.288 [INFO] Structural search in cooldown (4 epochs left) at epoch 43 鈥?letting SGD settle
+  [  44]   eval  loss=0.252699  |==|  [  44]    sgd  loss=0.252979  |==|2026-08-27 11:11:07.296 [INFO] Structural search in cooldown (3 epochs left) at epoch 44 鈥?letting SGD settle
+  [  45]   eval  loss=0.252979  |==|  [  45]    sgd  loss=0.254819  |==|2026-08-27 11:11:07.303 [INFO] Structural search in cooldown (2 epochs left) at epoch 45 鈥?letting SGD settle
+  [  46]   eval  loss=0.254819  |==|  [  46]    sgd  loss=0.252314  |==|2026-08-27 11:11:07.312 [INFO] Structural search in cooldown (1 epochs left) at epoch 46 鈥?letting SGD settle
+  [  47]   eval  loss=0.252314  |==|  [  47]    sgd  loss=0.252850  |==|2026-08-27 11:11:07.320 [INFO] Forced structural trigger at epoch 47 (epochs since last structural: 43)
+2026-08-27 11:11:07.320 [INFO] Plateau triggered at epoch 47 (counter=1, loss=0.252850)
+2026-08-27 11:11:07.323 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026222)
+2026-08-27 11:11:07.323 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.323 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.323 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.323 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.323 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.323 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  48]   eval  loss=0.252850  |==|  [  48]    sgd  loss=0.254742  |==|2026-08-27 11:11:07.362 [INFO] Forced structural trigger at epoch 48 (epochs since last structural: 44)
+2026-08-27 11:11:07.362 [INFO] Plateau triggered at epoch 48 (counter=2, loss=0.254742)
+2026-08-27 11:11:07.366 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.027139)
+2026-08-27 11:11:07.366 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.366 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.366 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.366 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.366 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.366 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  49]   eval  loss=0.254742  |==|  [  49]    sgd  loss=0.252537  |==|2026-08-27 11:11:07.407 [INFO] Forced structural trigger at epoch 49 (epochs since last structural: 45)
+2026-08-27 11:11:07.407 [INFO] Plateau triggered at epoch 49 (counter=0, loss=0.252537)
+2026-08-27 11:11:07.410 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026611)
+2026-08-27 11:11:07.411 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.411 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.411 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.411 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.411 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.411 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  50]   eval  loss=0.252537  |==|  [  50]    sgd  loss=0.252824  |==|2026-08-27 11:11:07.458 [INFO] Forced structural trigger at epoch 50 (epochs since last structural: 46)
+2026-08-27 11:11:07.458 [INFO] Plateau triggered at epoch 50 (counter=1, loss=0.252824)
+2026-08-27 11:11:07.461 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026437)
+2026-08-27 11:11:07.462 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.462 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.462 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.462 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.462 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.462 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  51]   eval  loss=0.252824  |==|  [  51]    sgd  loss=0.254653  |==|2026-08-27 11:11:07.504 [INFO] Forced structural trigger at epoch 51 (epochs since last structural: 47)
+2026-08-27 11:11:07.504 [INFO] Plateau triggered at epoch 51 (counter=2, loss=0.254653)
+2026-08-27 11:11:07.507 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.027191)
+2026-08-27 11:11:07.508 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.508 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.508 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.508 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.508 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.508 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:07.536 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  52]   eval  loss=0.254653  |==|  [  52]    sgd  loss=0.252810  |==|2026-08-27 11:11:07.546 [INFO] Structural search in cooldown (9 epochs left) at epoch 52 鈥?letting SGD settle
+  [  53]   eval  loss=0.252810  |==|  [  53]    sgd  loss=0.252920  |==|2026-08-27 11:11:07.553 [INFO] Structural search in cooldown (8 epochs left) at epoch 53 鈥?letting SGD settle
+  [  54]   eval  loss=0.252920  |==|  [  54]    sgd  loss=0.254121  |==|2026-08-27 11:11:07.561 [INFO] Structural search in cooldown (7 epochs left) at epoch 54 鈥?letting SGD settle
+  [  55]   eval  loss=0.254121  |==|  [  55]    sgd  loss=0.255508  |==|2026-08-27 11:11:07.569 [INFO] Structural search in cooldown (6 epochs left) at epoch 55 鈥?letting SGD settle
+  [  56]   eval  loss=0.255508  |==|  [  56]    sgd  loss=0.252363  |==|2026-08-27 11:11:07.581 [INFO] Structural search in cooldown (5 epochs left) at epoch 56 鈥?letting SGD settle
+  [  57]   eval  loss=0.252363  |==|  [  57]    sgd  loss=0.252585  |==|2026-08-27 11:11:07.588 [INFO] Structural search in cooldown (4 epochs left) at epoch 57 鈥?letting SGD settle
+  [  58]   eval  loss=0.252585  |==|  [  58]    sgd  loss=0.253619  |==|2026-08-27 11:11:07.597 [INFO] Structural search in cooldown (3 epochs left) at epoch 58 鈥?letting SGD settle
+  [  59]   eval  loss=0.253619  |==|  [  59]    sgd  loss=0.252405  |==|2026-08-27 11:11:07.604 [INFO] Structural search in cooldown (2 epochs left) at epoch 59 鈥?letting SGD settle
+  [  60]   eval  loss=0.252405  |==|  [  60]    sgd  loss=0.253219  |==|2026-08-27 11:11:07.614 [INFO] Structural search in cooldown (1 epochs left) at epoch 60 鈥?letting SGD settle
+  [  61]   eval  loss=0.253219  |==|  [  61]    sgd  loss=0.254853  |==|2026-08-27 11:11:07.622 [INFO] Forced structural trigger at epoch 61 (epochs since last structural: 57)
+2026-08-27 11:11:07.622 [INFO] Plateau triggered at epoch 61 (counter=2, loss=0.254853)
+2026-08-27 11:11:07.625 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026639)
+2026-08-27 11:11:07.626 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.626 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.626 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.626 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.626 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.626 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  62]   eval  loss=0.254853  |==|  [  62]    sgd  loss=0.252724  |==|2026-08-27 11:11:07.667 [INFO] Forced structural trigger at epoch 62 (epochs since last structural: 58)
+2026-08-27 11:11:07.667 [INFO] Plateau triggered at epoch 62 (counter=0, loss=0.252724)
+2026-08-27 11:11:07.671 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026525)
+2026-08-27 11:11:07.671 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.671 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.671 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.671 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.671 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.671 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  63]   eval  loss=0.252724  |==|  [  63]    sgd  loss=0.253617  |==|2026-08-27 11:11:07.735 [INFO] Forced structural trigger at epoch 63 (epochs since last structural: 59)
+2026-08-27 11:11:07.735 [INFO] Plateau triggered at epoch 63 (counter=1, loss=0.253617)
+2026-08-27 11:11:07.742 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.024298)
+2026-08-27 11:11:07.743 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.743 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.743 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.743 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.743 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.743 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  64]   eval  loss=0.253617  |==|  [  64]    sgd  loss=0.254626  |==|2026-08-27 11:11:07.788 [INFO] Forced structural trigger at epoch 64 (epochs since last structural: 60)
+2026-08-27 11:11:07.788 [INFO] Plateau triggered at epoch 64 (counter=2, loss=0.254626)
+2026-08-27 11:11:07.794 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.027515)
+2026-08-27 11:11:07.794 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.794 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.794 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.794 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.794 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.794 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  65]   eval  loss=0.254626  |==|  [  65]    sgd  loss=0.252178  |==|2026-08-27 11:11:07.842 [INFO] Forced structural trigger at epoch 65 (epochs since last structural: 61)
+2026-08-27 11:11:07.842 [INFO] Plateau triggered at epoch 65 (counter=0, loss=0.252178)
+2026-08-27 11:11:07.845 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.027967)
+2026-08-27 11:11:07.845 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.845 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.845 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.845 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.845 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.846 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:07.878 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  66]   eval  loss=0.252178  |==|  [  66]    sgd  loss=0.253761  |==|2026-08-27 11:11:07.886 [INFO] Structural search in cooldown (9 epochs left) at epoch 66 鈥?letting SGD settle
+  [  67]   eval  loss=0.253761  |==|  [  67]    sgd  loss=0.254338  |==|2026-08-27 11:11:07.896 [INFO] Structural search in cooldown (8 epochs left) at epoch 67 鈥?letting SGD settle
+  [  68]   eval  loss=0.254338  |==|  [  68]    sgd  loss=0.255971  |==|2026-08-27 11:11:07.906 [INFO] Structural search in cooldown (7 epochs left) at epoch 68 鈥?letting SGD settle
+  [  69]   eval  loss=0.255971  |==|  [  69]    sgd  loss=0.253055  |==|2026-08-27 11:11:07.917 [INFO] Structural search in cooldown (6 epochs left) at epoch 69 鈥?letting SGD settle
+  [  70]   eval  loss=0.253055  |==|  [  70]    sgd  loss=0.255159  |==|2026-08-27 11:11:07.925 [INFO] Structural search in cooldown (5 epochs left) at epoch 70 鈥?letting SGD settle
+  [  71]   eval  loss=0.255159  |==|  [  71]    sgd  loss=0.252807  |==|2026-08-27 11:11:07.934 [INFO] Structural search in cooldown (4 epochs left) at epoch 71 鈥?letting SGD settle
+  [  72]   eval  loss=0.252807  |==|  [  72]    sgd  loss=0.252730  |==|2026-08-27 11:11:07.942 [INFO] Structural search in cooldown (3 epochs left) at epoch 72 鈥?letting SGD settle
+  [  73]   eval  loss=0.252730  |==|  [  73]    sgd  loss=0.254111  |==|2026-08-27 11:11:07.949 [INFO] Structural search in cooldown (2 epochs left) at epoch 73 鈥?letting SGD settle
+  [  74]   eval  loss=0.254111  |==|  [  74]    sgd  loss=0.255443  |==|2026-08-27 11:11:07.957 [INFO] Structural search in cooldown (1 epochs left) at epoch 74 鈥?letting SGD settle
+  [  75]   eval  loss=0.255443  |==|  [  75]    sgd  loss=0.253103  |==|2026-08-27 11:11:07.964 [INFO] Forced structural trigger at epoch 75 (epochs since last structural: 71)
+2026-08-27 11:11:07.964 [INFO] Plateau triggered at epoch 75 (counter=0, loss=0.253103)
+2026-08-27 11:11:07.968 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.025817)
+2026-08-27 11:11:07.968 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:07.968 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:07.968 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:07.968 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:07.968 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:07.968 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  76]   eval  loss=0.253103  |==|  [  76]    sgd  loss=0.254982  |==|2026-08-27 11:11:08.014 [INFO] Forced structural trigger at epoch 76 (epochs since last structural: 72)
+2026-08-27 11:11:08.014 [INFO] Plateau triggered at epoch 76 (counter=1, loss=0.254982)
+2026-08-27 11:11:08.017 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026965)
+2026-08-27 11:11:08.017 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.017 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.017 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.017 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.017 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.018 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:08.061 [INFO] New best overall loss: 0.252120
+  [  77]   eval  loss=0.254982  |==|  [  77]    sgd  loss=0.252120  |==|2026-08-27 11:11:08.061 [INFO] Forced structural trigger at epoch 77 (epochs since last structural: 73)
+2026-08-27 11:11:08.061 [INFO] Plateau triggered at epoch 77 (counter=0, loss=0.252120)
+2026-08-27 11:11:08.064 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.028169)
+2026-08-27 11:11:08.065 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.065 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.065 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.065 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.065 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.065 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  78]   eval  loss=0.252120  |==|  [  78]    sgd  loss=0.252289  |==|2026-08-27 11:11:08.102 [INFO] Forced structural trigger at epoch 78 (epochs since last structural: 74)
+2026-08-27 11:11:08.102 [INFO] Plateau triggered at epoch 78 (counter=1, loss=0.252289)
+2026-08-27 11:11:08.106 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.028654)
+2026-08-27 11:11:08.106 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.106 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.106 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.106 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.106 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.106 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  79]   eval  loss=0.252289  |==|  [  79]    sgd  loss=0.253033  |==|2026-08-27 11:11:08.145 [INFO] Forced structural trigger at epoch 79 (epochs since last structural: 75)
+2026-08-27 11:11:08.145 [INFO] Plateau triggered at epoch 79 (counter=2, loss=0.253033)
+2026-08-27 11:11:08.148 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.027019)
+2026-08-27 11:11:08.149 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.149 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.149 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.149 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.149 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.149 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:08.180 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  80]   eval  loss=0.253033  |==|  [  80]    sgd  loss=0.253928  |==|2026-08-27 11:11:08.191 [INFO] Structural search in cooldown (9 epochs left) at epoch 80 鈥?letting SGD settle
+  [  81]   eval  loss=0.253928  |==|  [  81]    sgd  loss=0.253917  |==|2026-08-27 11:11:08.199 [INFO] Structural search in cooldown (8 epochs left) at epoch 81 鈥?letting SGD settle
+  [  82]   eval  loss=0.253917  |==|  [  82]    sgd  loss=0.255575  |==|2026-08-27 11:11:08.206 [INFO] Structural search in cooldown (7 epochs left) at epoch 82 鈥?letting SGD settle
+  [  83]   eval  loss=0.255575  |==|  [  83]    sgd  loss=0.252535  |==|2026-08-27 11:11:08.217 [INFO] Structural search in cooldown (6 epochs left) at epoch 83 鈥?letting SGD settle
+  [  84]   eval  loss=0.252535  |==|  [  84]    sgd  loss=0.252723  |==|2026-08-27 11:11:08.225 [INFO] Structural search in cooldown (5 epochs left) at epoch 84 鈥?letting SGD settle
+  [  85]   eval  loss=0.252723  |==|  [  85]    sgd  loss=0.253439  |==|2026-08-27 11:11:08.232 [INFO] Structural search in cooldown (4 epochs left) at epoch 85 鈥?letting SGD settle
+  [  86]   eval  loss=0.253439  |==|  [  86]    sgd  loss=0.254306  |==|2026-08-27 11:11:08.242 [INFO] Structural search in cooldown (3 epochs left) at epoch 86 鈥?letting SGD settle
+  [  87]   eval  loss=0.254306  |==|  [  87]    sgd  loss=0.256063  |==|2026-08-27 11:11:08.249 [INFO] Structural search in cooldown (2 epochs left) at epoch 87 鈥?letting SGD settle
+  [  88]   eval  loss=0.256063  |==|  [  88]    sgd  loss=0.253144  |==|2026-08-27 11:11:08.260 [INFO] Structural search in cooldown (1 epochs left) at epoch 88 鈥?letting SGD settle
+  [  89]   eval  loss=0.253144  |==|  [  89]    sgd  loss=0.253067  |==|2026-08-27 11:11:08.268 [INFO] Forced structural trigger at epoch 89 (epochs since last structural: 85)
+2026-08-27 11:11:08.268 [INFO] Plateau triggered at epoch 89 (counter=1, loss=0.253067)
+2026-08-27 11:11:08.271 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026312)
+2026-08-27 11:11:08.272 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.272 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.272 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.272 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.272 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.272 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  90]   eval  loss=0.253067  |==|  [  90]    sgd  loss=0.253202  |==|2026-08-27 11:11:08.312 [INFO] Forced structural trigger at epoch 90 (epochs since last structural: 86)
+2026-08-27 11:11:08.312 [INFO] Plateau triggered at epoch 90 (counter=2, loss=0.253202)
+2026-08-27 11:11:08.316 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026337)
+2026-08-27 11:11:08.316 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.316 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.316 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.316 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.316 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.316 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  91]   eval  loss=0.253202  |==|  [  91]    sgd  loss=0.253023  |==|2026-08-27 11:11:08.360 [INFO] Forced structural trigger at epoch 91 (epochs since last structural: 87)
+2026-08-27 11:11:08.360 [INFO] Plateau triggered at epoch 91 (counter=3, loss=0.253023)
+2026-08-27 11:11:08.364 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.026611)
+2026-08-27 11:11:08.364 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.364 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.364 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.364 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.364 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.364 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  92]   eval  loss=0.253023  |==|  [  92]    sgd  loss=0.256264  |==|2026-08-27 11:11:08.405 [INFO] Forced structural trigger at epoch 92 (epochs since last structural: 88)
+2026-08-27 11:11:08.405 [INFO] Plateau triggered at epoch 92 (counter=4, loss=0.256264)
+2026-08-27 11:11:08.410 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.025342)
+2026-08-27 11:11:08.410 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.410 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.410 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.410 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.410 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.410 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+  [  93]   eval  loss=0.256264  |==|  [  93]    sgd  loss=0.253607  |==|2026-08-27 11:11:08.454 [INFO] Forced structural trigger at epoch 93 (epochs since last structural: 89)
+2026-08-27 11:11:08.454 [INFO] Plateau triggered at epoch 93 (counter=0, loss=0.253607)
+2026-08-27 11:11:08.458 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.025768)
+2026-08-27 11:11:08.458 [INFO] [PROFILE] F=1 N=192 var_r=0.2870 bound_ratio=3.7181 poly_r2=0.0501 max_coef[i=1]=0.0590 L_max=6.8378 | flags: BOUNDED SHARP
+2026-08-27 11:11:08.458 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-08-27 11:11:08.458 [INFO] IFELSE set-guided split: thr=-2.305950 (SSE reduction 8.123180 over 192 paired samples)
+2026-08-27 11:11:08.458 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=4 (first thr=-2.305950)
+2026-08-27 11:11:08.458 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-2.305950)
+2026-08-27 11:11:08.458 [INFO] Library prior (dist=1.371 src=bench_d2_mod3.csv) boosts IFELSE by 0.200000
+2026-08-27 11:11:08.493 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  94]   eval  loss=0.253607  |==|  [  94]    sgd  loss=0.253358  |==|2026-08-27 11:11:08.501 [INFO] Structural search in cooldown (9 epochs left) at epoch 94 鈥?letting SGD settle
+  [  95]   eval  loss=0.253358  |==|  [  95]    sgd  loss=0.253357  |==|2026-08-27 11:11:08.509 [INFO] Structural search in cooldown (8 epochs left) at epoch 95 鈥?letting SGD settle
+  [  96]   eval  loss=0.253357  |==|  [  96]    sgd  loss=0.255389  |==|2026-08-27 11:11:08.519 [INFO] Structural search in cooldown (7 epochs left) at epoch 96 鈥?letting SGD settle
+  [  97]   eval  loss=0.255389  |==|  [  97]    sgd  loss=0.253449  |==|2026-08-27 11:11:08.528 [INFO] Structural search in cooldown (6 epochs left) at epoch 97 鈥?letting SGD settle
+  [  98]   eval  loss=0.253449  |==|  [  98]    sgd  loss=0.253527  |==|2026-08-27 11:11:08.537 [INFO] Structural search in cooldown (5 epochs left) at epoch 98 鈥?letting SGD settle
+  [  99]   eval  loss=0.253527  |==|  [  99]    sgd  loss=0.256646  |==|2026-08-27 11:11:08.547 [INFO] Structural search in cooldown (4 epochs left) at epoch 99 鈥?letting SGD settle
+  [ 100]   eval  loss=0.256646  |==|  [ 100]    sgd  loss=0.252529  |==|2026-08-27 11:11:08.564 [INFO] Structural search in cooldown (3 epochs left) at epoch 100 鈥?letting SGD settle
+2026-08-27 11:11:08.564 [INFO] Restored best-val graph snapshot (val=0.227586, train=0.255301)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   1
+  Failed commits:       96
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         0.517432
+  Final loss:           0.255301
+  Best loss:            0.25212
+  Wall time:            2736 ms
+
+  [Expression] 1.079*((x0>-1.8933?1:0)?0:tanh(0.378*x0+0.619))+0.060
+
+  [Library] Behavioral fingerprint: k=1 bounded=0 interact=0 sign_sym=1 sharp=0 lipsch=0.0
+  [Library] Closest existing entries:
+    bench_d2_mod3.csv (dist=1.000)
+    bench_d2_mod3.csv (dist=1.000)
+    bench_d2_mod3.csv (dist=3.443)
+  [Library] Pattern: single_tanh
+  [Library] Saved (library now has 4 entries)
+  [Library] Extracted 1 sub-expression block(s) (library now has 5 entries)
+  [FailureLib] Appended 96 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (240 samples)
+================================================
+  Eval R2[out0]:   0.107998
+  Eval MSE[out0]:  0.249758   MAE: 0.407630

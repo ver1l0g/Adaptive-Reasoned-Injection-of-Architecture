@@ -1,0 +1,154 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-standard\bench_d7_multiout.csv
+  Loaded 200 samples
+  Train: 160  Validation: 40
+
+  Loaded subgraph library: 7 entries
+Starting evolution...
+2026-08-27 11:15:48.876 [INFO] New best overall loss: 0.440536
+  [   1]   eval  loss=1.116831  |===========|  [   1]    sgd  loss=0.440536  |====|2026-08-27 11:15:49.143 [INFO] New best overall loss: 0.105837
+  [   2]   eval  loss=0.440536  |====|  [   2]    sgd  loss=0.105837  |=|2026-08-27 11:15:49.257 [INFO] New best overall loss: 0.093901
+  [   3]   eval  loss=0.105837  |=|  [   3]    sgd  loss=0.093901  ||2026-08-27 11:15:49.365 [INFO] New best overall loss: 0.093547
+  [   4]   eval  loss=0.093901  ||  [   4]    sgd  loss=0.093547  ||2026-08-27 11:15:49.507 [INFO] New best overall loss: 0.093377
+  [   5]   eval  loss=0.093547  ||  [   5]    sgd  loss=0.093377  ||2026-08-27 11:15:49.589 [INFO] New best overall loss: 0.093210
+  [   6]   eval  loss=0.093377  ||  [   6]    sgd  loss=0.093210  ||  [   7]   eval  loss=0.093210  ||  [   7]    sgd  loss=0.093243  ||2026-08-27 11:15:49.827 [INFO] New best overall loss: 0.093179
+  [   8]   eval  loss=0.093243  ||  [   8]    sgd  loss=0.093179  ||  [   9]   eval  loss=0.093179  ||  [   9]    sgd  loss=0.093192  ||2026-08-27 11:15:49.886 [INFO] Plateau triggered at epoch 9 (counter=3, loss=0.093192)
+2026-08-27 11:15:49.892 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.008033)
+2026-08-27 11:15:49.892 [INFO] Structural inability 鈥?output-specific bottleneck node 7 (blame=0.006334)
+2026-08-27 11:15:49.893 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.003344)
+2026-08-27 11:15:49.893 [INFO] [PROFILE] F=1 N=160 var_r=0.3422 bound_ratio=3.4146 poly_r2=1.0000 max_coef[i=1]=1.0000 L_max=1.0000 | flags: BOUNDED
+2026-08-27 11:15:49.893 [INFO] Compound candidate emitted: TANH_SERIES(input=1)脳3 (bounded smooth residual, var_r=0.3422, L_max=1.0000)
+2026-08-27 11:15:49.893 [INFO] Library prior (dist=0.035 src=bench_d2_mod3.csv) boosts TANH_SERIES by 0.200000
+2026-08-27 11:15:52.196 [INFO]   COMMIT rank=0 type=COMPOUND_TANH_SERIES val_loss=0.080830 train_loss=0.092608 new train_loss=0.092608
+2026-08-27 11:15:52.197 [INFO] [PROFILE] F=1 N=160 var_r=0.2787 bound_ratio=3.1851 poly_r2=0.9978 max_coef[i=1]=0.9016 L_max=1.0714 | flags: BOUNDED
+2026-08-27 11:15:52.198 [INFO] Compound candidate emitted: TANH_SERIES(input=1)脳3 (bounded smooth residual, var_r=0.2787, L_max=1.0714)
+2026-08-27 11:15:52.198 [INFO] Library prior (dist=0.051 src=bench_d2_mod3.csv) boosts TANH_SERIES by 0.200000
+2026-08-27 11:15:54.152 [INFO]   COMMIT rank=0 type=COMPOUND_TANH_SERIES val_loss=0.080766 train_loss=0.092535 new train_loss=0.092535
+2026-08-27 11:15:54.152 [INFO] [PROFILE] F=1 N=160 var_r=0.0925 bound_ratio=3.2799 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.0000 | flags: BOUNDED
+2026-08-27 11:15:54.152 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-27 11:15:55.485 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.009044 train_loss=0.010567 new train_loss=0.010567
+2026-08-27 11:15:55.485 [INFO] Plateau state reset 鈥?best_phase2=0.010567
+2026-08-27 11:15:55.653 [INFO] New best overall loss: 0.000311
+  [  10]   eval  loss=0.010567  ||  [  10]    sgd  loss=0.000311  ||  [  11]   eval  loss=0.000311  ||  [  11]    sgd  loss=0.000858  ||2026-08-27 11:15:55.754 [INFO] New best overall loss: 0.000235
+  [  12]   eval  loss=0.000858  ||  [  12]    sgd  loss=0.000235  ||  [  13]   eval  loss=0.000235  ||  [  13]    sgd  loss=0.000466  ||  [  14]   eval  loss=0.000466  ||  [  14]    sgd  loss=0.000274  ||  [  15]   eval  loss=0.000274  ||  [  15]    sgd  loss=0.000398  ||  [  16]   eval  loss=0.000398  ||  [  16]    sgd  loss=0.000298  ||  [  17]   eval  loss=0.000298  ||  [  17]    sgd  loss=0.000366  ||  [  18]   eval  loss=0.000366  ||  [  18]    sgd  loss=0.000311  ||  [  19]   eval  loss=0.000311  ||  [  19]    sgd  loss=0.000350  ||  [  20]   eval  loss=0.000350  ||  [  20]    sgd  loss=0.000318  ||  [  21]   eval  loss=0.000318  ||  [  21]    sgd  loss=0.000340  ||  [  22]   eval  loss=0.000340  ||  [  22]    sgd  loss=0.000321  ||  [  23]   eval  loss=0.000321  ||  [  23]    sgd  loss=0.000334  ||  [  24]   eval  loss=0.000334  ||  [  24]    sgd  loss=0.000322  ||  [  25]   eval  loss=0.000322  ||  [  25]    sgd  loss=0.000329  ||  [  26]   eval  loss=0.000329  ||  [  26]    sgd  loss=0.000321  ||  [  27]   eval  loss=0.000321  ||  [  27]    sgd  loss=0.000326  ||  [  28]   eval  loss=0.000326  ||  [  28]    sgd  loss=0.000320  ||  [  29]   eval  loss=0.000320  ||  [  29]    sgd  loss=0.000323  ||2026-08-27 11:15:56.568 [INFO] Forced structural trigger at epoch 29 (epochs since last structural: 20)
+2026-08-27 11:15:56.568 [INFO] Plateau triggered at epoch 29 (counter=1, loss=0.000323)
+2026-08-27 11:15:56.578 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.009297)
+2026-08-27 11:15:56.578 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.006610)
+2026-08-27 11:15:56.579 [INFO] Structural inability 鈥?output-specific bottleneck node 5 (blame=0.006610)
+2026-08-27 11:15:56.580 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.006610)
+2026-08-27 11:15:56.580 [INFO] Structural inability 鈥?output-specific bottleneck node 9 (blame=0.006610)
+2026-08-27 11:15:56.581 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.006610)
+2026-08-27 11:15:56.582 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.006610)
+2026-08-27 11:15:56.583 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.006610)
+2026-08-27 11:15:56.584 [INFO] Structural inability 鈥?output-specific bottleneck node 8 (blame=0.006507)
+2026-08-27 11:15:56.584 [INFO] Structural inability 鈥?output-specific bottleneck node 10 (blame=0.006506)
+2026-08-27 11:15:56.585 [INFO] Structural inability 鈥?output-specific bottleneck node 12 (blame=0.006505)
+2026-08-27 11:15:56.586 [INFO] Structural inability 鈥?output-specific bottleneck node 18 (blame=0.005560)
+2026-08-27 11:15:56.587 [INFO] Structural inability 鈥?output-specific bottleneck node 22 (blame=0.005560)
+2026-08-27 11:15:56.587 [INFO] Structural inability 鈥?output-specific bottleneck node 24 (blame=0.005560)
+2026-08-27 11:15:56.588 [INFO] Structural inability 鈥?output-specific bottleneck node 20 (blame=0.005560)
+2026-08-27 11:15:56.588 [INFO] [PROFILE] F=1 N=160 var_r=0.0925 bound_ratio=3.2799 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.0000 | flags: BOUNDED
+2026-08-27 11:15:56.588 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-27 11:15:58.128 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.000053 train_loss=0.000063 new train_loss=0.000063
+2026-08-27 11:15:58.128 [INFO] [PROFILE] F=1 N=160 var_r=0.3422 bound_ratio=3.4146 poly_r2=1.0000 max_coef[i=1]=1.0000 L_max=1.0000 | flags: BOUNDED
+2026-08-27 11:15:58.128 [INFO] Compound candidate emitted: TANH_SERIES(input=1)脳3 (bounded smooth residual, var_r=0.3422, L_max=1.0000)
+2026-08-27 11:15:58.128 [INFO] Library prior (dist=0.035 src=bench_d2_mod3.csv) boosts TANH_SERIES by 0.200000
+2026-08-27 11:15:59.795 [INFO]   COMMIT rank=0 type=COMPOUND_TANH_SERIES val_loss=0.000027 train_loss=0.000033 new train_loss=0.000033
+2026-08-27 11:15:59.795 [INFO] [PROFILE] F=1 N=160 var_r=0.3422 bound_ratio=3.4146 poly_r2=1.0000 max_coef[i=1]=1.0000 L_max=1.0000 | flags: BOUNDED
+2026-08-27 11:15:59.795 [INFO] Compound candidate emitted: TANH_SERIES(input=1)脳3 (bounded smooth residual, var_r=0.3422, L_max=1.0000)
+2026-08-27 11:15:59.795 [INFO] Library prior (dist=0.035 src=bench_d2_mod3.csv) boosts TANH_SERIES by 0.200000
+2026-08-27 11:16:01.812 [INFO]   COMMIT rank=0 type=COMPOUND_TANH_SERIES val_loss=0.000023 train_loss=0.000027 new train_loss=0.000027
+2026-08-27 11:16:01.812 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-27 11:16:01.812 [INFO] Plateau state reset 鈥?best_phase2=0.000027
+  [  30]   eval  loss=0.000027  ||  [  30]    sgd  loss=0.000100  ||  [  31]   eval  loss=0.000100  ||  [  31]    sgd  loss=0.000046  ||  [  32]   eval  loss=0.000046  ||  [  32]    sgd  loss=0.000099  ||  [  33]   eval  loss=0.000099  ||  [  33]    sgd  loss=0.000033  ||  [  34]   eval  loss=0.000033  ||  [  34]    sgd  loss=0.000106  ||  [  35]   eval  loss=0.000106  ||  [  35]    sgd  loss=0.000029  ||  [  36]   eval  loss=0.000029  ||  [  36]    sgd  loss=0.000116  ||  [  37]   eval  loss=0.000116  ||  [  37]    sgd  loss=0.000028  ||  [  38]   eval  loss=0.000028  ||  [  38]    sgd  loss=0.000118  ||  [  39]   eval  loss=0.000118  ||  [  39]    sgd  loss=0.000027  ||  [  40]   eval  loss=0.000027  ||  [  40]    sgd  loss=0.000118  ||2026-08-27 11:16:03.072 [INFO] New best overall loss: 0.000027
+  [  41]   eval  loss=0.000118  ||  [  41]    sgd  loss=0.000027  ||  [  42]   eval  loss=0.000027  ||  [  42]    sgd  loss=0.000118  ||  [  43]   eval  loss=0.000118  ||  [  43]    sgd  loss=0.000027  ||  [  44]   eval  loss=0.000027  ||  [  44]    sgd  loss=0.000117  ||2026-08-27 11:16:03.622 [INFO] New best overall loss: 0.000026
+  [  45]   eval  loss=0.000117  ||  [  45]    sgd  loss=0.000026  ||  [  46]   eval  loss=0.000026  ||  [  46]    sgd  loss=0.000117  ||  [  47]   eval  loss=0.000117  ||  [  47]    sgd  loss=0.000026  ||  [  48]   eval  loss=0.000026  ||  [  48]    sgd  loss=0.000115  ||2026-08-27 11:16:04.124 [INFO] New best overall loss: 0.000026
+  [  49]   eval  loss=0.000115  ||  [  49]    sgd  loss=0.000026  ||  [  50]   eval  loss=0.000026  ||  [  50]    sgd  loss=0.000116  ||  [  51]   eval  loss=0.000116  ||  [  51]    sgd  loss=0.000026  ||  [  52]   eval  loss=0.000026  ||  [  52]    sgd  loss=0.000114  ||2026-08-27 11:16:04.586 [INFO] New best overall loss: 0.000025
+  [  53]   eval  loss=0.000114  ||  [  53]    sgd  loss=0.000025  ||  [  54]   eval  loss=0.000025  ||  [  54]    sgd  loss=0.000115  ||  [  55]   eval  loss=0.000115  ||  [  55]    sgd  loss=0.000026  ||  [  56]   eval  loss=0.000026  ||  [  56]    sgd  loss=0.000113  ||2026-08-27 11:16:05.078 [INFO] New best overall loss: 0.000025
+  [  57]   eval  loss=0.000113  ||  [  57]    sgd  loss=0.000025  ||  [  58]   eval  loss=0.000025  ||  [  58]    sgd  loss=0.000114  ||  [  59]   eval  loss=0.000114  ||  [  59]    sgd  loss=0.000025  ||  [  60]   eval  loss=0.000025  ||  [  60]    sgd  loss=0.000112  ||2026-08-27 11:16:05.571 [INFO] New best overall loss: 0.000025
+  [  61]   eval  loss=0.000112  ||  [  61]    sgd  loss=0.000025  ||  [  62]   eval  loss=0.000025  ||  [  62]    sgd  loss=0.000113  ||  [  63]   eval  loss=0.000113  ||  [  63]    sgd  loss=0.000025  ||  [  64]   eval  loss=0.000025  ||  [  64]    sgd  loss=0.000111  ||2026-08-27 11:16:06.153 [INFO] New best overall loss: 0.000024
+  [  65]   eval  loss=0.000111  ||  [  65]    sgd  loss=0.000024  ||  [  66]   eval  loss=0.000024  ||  [  66]    sgd  loss=0.000112  ||  [  67]   eval  loss=0.000112  ||  [  67]    sgd  loss=0.000025  ||  [  68]   eval  loss=0.000025  ||  [  68]    sgd  loss=0.000111  ||2026-08-27 11:16:06.753 [INFO] New best overall loss: 0.000024
+  [  69]   eval  loss=0.000111  ||  [  69]    sgd  loss=0.000024  ||  [  70]   eval  loss=0.000024  ||  [  70]    sgd  loss=0.000111  ||  [  71]   eval  loss=0.000111  ||  [  71]    sgd  loss=0.000024  ||  [  72]   eval  loss=0.000024  ||  [  72]    sgd  loss=0.000110  ||2026-08-27 11:16:07.256 [INFO] New best overall loss: 0.000024
+  [  73]   eval  loss=0.000110  ||  [  73]    sgd  loss=0.000024  ||  [  74]   eval  loss=0.000024  ||  [  74]    sgd  loss=0.000110  ||  [  75]   eval  loss=0.000110  ||  [  75]    sgd  loss=0.000024  ||  [  76]   eval  loss=0.000024  ||  [  76]    sgd  loss=0.000109  ||2026-08-27 11:16:07.730 [INFO] New best overall loss: 0.000023
+  [  77]   eval  loss=0.000109  ||  [  77]    sgd  loss=0.000023  ||  [  78]   eval  loss=0.000023  ||  [  78]    sgd  loss=0.000109  ||  [  79]   eval  loss=0.000109  ||  [  79]    sgd  loss=0.002098  ||  [  80]   eval  loss=0.002098  ||  [  80]    sgd  loss=0.000436  ||  [  81]   eval  loss=0.000436  ||  [  81]    sgd  loss=0.001155  ||2026-08-27 11:16:07.937 [INFO] Divergence safety: loss=0.001155 > 5.000000x best=0.000023 for 3 epochs; restoring best snapshot
+2026-08-27 11:16:07.941 [INFO] Divergence LR reduced to 0.500000x
+  [  82]   eval  loss=0.000023  ||  [  82]    sgd  loss=0.000994  ||  [  83]   eval  loss=0.000994  ||  [  83]    sgd  loss=0.000260  ||  [  84]   eval  loss=0.000260  ||  [  84]    sgd  loss=0.000315  ||2026-08-27 11:16:08.124 [INFO] Divergence safety: loss=0.000315 > 5.000000x best=0.000023 for 3 epochs; restoring best snapshot
+2026-08-27 11:16:08.130 [INFO] Divergence LR reduced to 0.289406x
+  [  85]   eval  loss=0.000023  ||  [  85]    sgd  loss=0.000322  ||  [  86]   eval  loss=0.000322  ||  [  86]    sgd  loss=0.000340  ||  [  87]   eval  loss=0.000340  ||  [  87]    sgd  loss=0.000134  ||2026-08-27 11:16:08.287 [INFO] Divergence safety: loss=0.000134 > 5.000000x best=0.000023 for 3 epochs; restoring best snapshot
+2026-08-27 11:16:08.292 [INFO] Divergence LR reduced to 0.167512x
+  [  88]   eval  loss=0.000023  ||  [  88]    sgd  loss=0.000111  ||  [  89]   eval  loss=0.000111  ||  [  89]    sgd  loss=0.000036  ||  [  90]   eval  loss=0.000036  ||  [  90]    sgd  loss=0.000073  ||  [  91]   eval  loss=0.000073  ||  [  91]    sgd  loss=0.000046  ||  [  92]   eval  loss=0.000046  ||  [  92]    sgd  loss=0.000073  ||  [  93]   eval  loss=0.000073  ||  [  93]    sgd  loss=0.000057  ||  [  94]   eval  loss=0.000057  ||  [  94]    sgd  loss=0.000078  ||  [  95]   eval  loss=0.000078  ||  [  95]    sgd  loss=0.000069  ||  [  96]   eval  loss=0.000069  ||  [  96]    sgd  loss=0.000086  ||  [  97]   eval  loss=0.000086  ||  [  97]    sgd  loss=0.000083  ||  [  98]   eval  loss=0.000083  ||  [  98]    sgd  loss=0.000097  ||  [  99]   eval  loss=0.000097  ||  [  99]    sgd  loss=0.000098  ||2026-08-27 11:16:08.748 [INFO] Forced structural trigger at epoch 99 (epochs since last structural: 20)
+2026-08-27 11:16:08.748 [INFO] Plateau triggered at epoch 99 (counter=2, loss=0.000098)
+2026-08-27 11:16:08.761 [INFO] Structural inability 鈥?output-specific bottleneck node 6 (blame=0.008629)
+2026-08-27 11:16:08.762 [INFO] Structural inability 鈥?output-specific bottleneck node 32 (blame=0.005380)
+2026-08-27 11:16:08.763 [INFO] Structural inability 鈥?output-specific bottleneck node 33 (blame=0.005380)
+2026-08-27 11:16:08.765 [INFO] Structural inability 鈥?output-specific bottleneck node 37 (blame=0.005380)
+2026-08-27 11:16:08.766 [INFO] Structural inability 鈥?output-specific bottleneck node 11 (blame=0.005380)
+2026-08-27 11:16:08.767 [INFO] Structural inability 鈥?output-specific bottleneck node 35 (blame=0.005380)
+2026-08-27 11:16:08.768 [INFO] Structural inability 鈥?output-specific bottleneck node 34 (blame=0.005380)
+2026-08-27 11:16:08.770 [INFO] Structural inability 鈥?output-specific bottleneck node 43 (blame=0.005380)
+2026-08-27 11:16:08.771 [INFO] Structural inability 鈥?output-specific bottleneck node 28 (blame=0.005380)
+2026-08-27 11:16:08.772 [INFO] Structural inability 鈥?output-specific bottleneck node 30 (blame=0.005380)
+2026-08-27 11:16:08.774 [INFO] Structural inability 鈥?output-specific bottleneck node 15 (blame=0.005380)
+2026-08-27 11:16:08.775 [INFO] Structural inability 鈥?output-specific bottleneck node 13 (blame=0.005380)
+2026-08-27 11:16:08.777 [INFO] Structural inability 鈥?output-specific bottleneck node 42 (blame=0.005380)
+2026-08-27 11:16:08.778 [INFO] Structural inability 鈥?output-specific bottleneck node 16 (blame=0.005380)
+2026-08-27 11:16:08.780 [INFO] Structural inability 鈥?output-specific bottleneck node 14 (blame=0.005380)
+2026-08-27 11:16:08.780 [INFO] [PROFILE] F=1 N=160 var_r=0.0925 bound_ratio=3.2799 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.0000 | flags: BOUNDED
+2026-08-27 11:16:08.780 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-08-27 11:16:10.095 [INFO]   COMMIT rank=0 type=CONTEXT_WIRE val_loss=0.000060 train_loss=0.000062 new train_loss=0.000062
+2026-08-27 11:16:10.095 [INFO] [PROFILE] F=1 N=160 var_r=0.3422 bound_ratio=3.4146 poly_r2=1.0000 max_coef[i=1]=1.0000 L_max=1.0000 | flags: BOUNDED
+2026-08-27 11:16:10.095 [INFO] Compound candidate emitted: TANH_SERIES(input=1)脳3 (bounded smooth residual, var_r=0.3422, L_max=1.0000)
+2026-08-27 11:16:10.095 [INFO] Library prior (dist=0.035 src=bench_d2_mod3.csv) boosts TANH_SERIES by 0.200000
+2026-08-27 11:16:11.338 [INFO]   COMMIT rank=0 type=COMPOUND_TANH_SERIES val_loss=0.000017 train_loss=0.000020 new train_loss=0.000020
+2026-08-27 11:16:11.339 [INFO] [PROFILE] F=1 N=160 var_r=0.3422 bound_ratio=3.4146 poly_r2=1.0000 max_coef[i=1]=1.0000 L_max=1.0000 | flags: BOUNDED
+2026-08-27 11:16:11.339 [INFO] Compound candidate emitted: TANH_SERIES(input=1)脳3 (bounded smooth residual, var_r=0.3422, L_max=1.0000)
+2026-08-27 11:16:11.339 [INFO] Library prior (dist=0.035 src=bench_d2_mod3.csv) boosts TANH_SERIES by 0.200000
+2026-08-27 11:16:12.654 [INFO]   COMMIT rank=0 type=COMPOUND_TANH_SERIES val_loss=0.000015 train_loss=0.000018 new train_loss=0.000018
+2026-08-27 11:16:12.655 [INFO] [PROFILE] F=1 N=160 var_r=0.3422 bound_ratio=3.4146 poly_r2=1.0000 max_coef[i=1]=1.0000 L_max=1.0000 | flags: BOUNDED
+2026-08-27 11:16:12.655 [INFO] Compound candidate emitted: TANH_SERIES(input=1)脳3 (bounded smooth residual, var_r=0.3422, L_max=1.0000)
+2026-08-27 11:16:12.655 [INFO] Library prior (dist=0.035 src=bench_d2_mod3.csv) boosts TANH_SERIES by 0.200000
+2026-08-27 11:16:13.393 [INFO]   COMMIT rank=0 type=COMPOUND_TANH_SERIES val_loss=0.000014 train_loss=0.000016 new train_loss=0.000016
+2026-08-27 11:16:13.393 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-27 11:16:13.393 [INFO] Plateau state reset 鈥?best_phase2=0.000016
+  [ 100]   eval  loss=0.000016  ||  [ 100]    sgd  loss=0.000036  ||2026-08-27 11:16:13.527 [INFO] Restored best-val graph snapshot (val=0.000014, train=0.000016)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   10
+  Failed commits:       27
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         1.11683
+  Final loss:           1.63537e-05
+  Best loss:            1.63537e-05
+  Wall time:            24851 ms
+
+  [Expression] 1.136*((((((tanh(0.322*x0-0.006)+(((tanh(tanh(0.025*x0+0.000))+tanh(tanh(0.001*x0-0.000)))+tanh(tanh(0.002*x0-0.000)))+tanh(tanh(0.003*x0-0.000))))+tanh(tanh(0.026*x0+0.000)))+tanh(tanh(0.027*x0+0....
+
+  [Library] Behavioral fingerprint: k=1 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=1.0
+  [Library] Closest existing entries:
+    bench_d2_mod3.csv (dist=0.025)
+    bench_d3_two_sines.csv (dist=0.333)
+    bench_d2_mod3.csv (dist=1.446)
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 8 entries)
+
+================================================
+  Held-out Evaluation  (200 samples)
+================================================
+  Eval R2[out0]:   0.999982
+  Eval MSE[out0]:  0.000006   MAE: 0.002145
+  Eval R2[out1]:   0.999907
+  Eval MSE[out1]:  0.000008   MAE: 0.002428
+  Eval R2[out2]:   0.999995
+  Eval MSE[out2]:  0.000001   MAE: 0.001006

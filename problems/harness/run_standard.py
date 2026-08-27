@@ -23,7 +23,7 @@ TASKS = [
     ("d8_compose_absprod", 2, 1, [],              False),
     ("d9_noise",     2, 1, [],                    True),
     ("t21_three_region", 1, 1, [],                False),
-    ("t22_windowed_sine", 2, 1, [],               False),
+    ("t22_windowed_sine", 1, 1, [],               False),
     ("t23_quadratic", 2, 1, [],                   False),
     ("t24_quadrant_xor", 2, 1, [],                False),
     ("t31_three_way_product", 3, 1, [],           False),

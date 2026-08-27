@@ -1,0 +1,6 @@
+task,min_r2,per_out,wall_s
+d2_mod3,0.062632,o1=0.0626,5.6
+d3_two_sines,0.503414,o1=0.5034,5.6
+d7_multiout,0.341434,o1=1.0000 o2=0.3414 o3=0.9993,10.5
+t21_three_region,0.913248,o1=0.9132,5.7
+t22_windowed_sine,0.968952,o1=0.9690,2.1

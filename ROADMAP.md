@@ -11,7 +11,7 @@ ordered within each. Effort: S = hours, M = days, L = weeks.
 
 | Suite | Status |
 |-------|--------|
-| suite-standard (17) | 16/17 solved (d9 = noise floor) |
+| suite-standard (17) | 12/17 reproducible on aria10 (d9=NF; d7 regressed@381caad fix pending; d2/d3/t22 never-solved, ex-16/17 claim stale — see M5.5) |
 | suite-hard (6) | all solved (spirals, checkerboard, XOR-5D) |
 | suite-temporal (4+2) | all solved |
 | suite-feynman (25) | 23/25 ≥ 0.99 (I.32.8 0.97, I.29.16 seed-varies) |
@@ -252,10 +252,13 @@ language ladder). Current numbers span evolving builds. Freeze = git tag
 The repo front page undersells current state (22 hypotheses stated,
 ~25 actual; pre-EMBED language numbers). Update after 6.5 freeze.
 
-### 5.5 Post-arc regression battery [S]
-The stripes arc changed IFELSE/MUX semantics (gates, port-0 ADDs, chain
-protection). A full standard+limits battery on the final binary has not
-run as one unit since. Fold into 6.5 freeze.
+### 5.5 Post-arc regression battery [DONE 2026-08-27: root-caused — see results/M5P5_regression_bisect.md]
+Verdict: d7_multiout genuinely regressed at 381caad (MUX_INJECTION
+crowds out the MULTIPLY_INJECTION emission slot after a poly-fit hit;
+a6/a7 commit MULTIPLY at rank 2, a8+ never emit it). Fix pending.
+d2/d3/t22 were NEVER solved by any archived binary (all 6 fail in
+clean-dir runs; library state and 400 epochs both don't help) — the
+16/17 card was session-library-dependent. Reproducible: 12/16 + d9-NF.
 
 ### 1.5 Failure-library hypothesis versioning [S]
 Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures

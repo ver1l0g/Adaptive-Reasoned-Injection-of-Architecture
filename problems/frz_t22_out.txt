@@ -1,0 +1,2 @@
+t22: R2s=[('0', '0.969633')] commits=['COMPOUND_TANH_SERIES', 'COMPOUND_TANH_SERIES'] (2s)
+results/standard_results.csv updated

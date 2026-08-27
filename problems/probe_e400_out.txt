@@ -1,0 +1,3 @@
+d2_mod3            R2=0.9165 [FAIL] (145s)
+d3_two_sines       R2=0.1080 [FAIL] (4s)
+t22_windowed_sine  R2=0.9744 [FAIL] (10s)
