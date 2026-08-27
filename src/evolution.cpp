@@ -671,6 +671,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 struct ShadowSpec {
                     int         rank;
                     int         type;  // Hypothesis::Type as int
+                    bool        evidence = false;  // structural-evidence flag
                     std::unique_ptr<Graph> shadow;
                 };
                 std::vector<ShadowSpec> specs;
@@ -700,7 +701,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                             else if (n->get_type() == NodeType::OUTPUT) ++cout;
                         }
                         if (pin == cin && pout == cout && cin > 0) {
-                            specs.push_back({-1, -1, std::move(prior)});
+                            specs.push_back({-1, -1, false, std::move(prior)});
                             Logger::info("  [RECALL] prior graph injected as candidate ("
                                         + std::to_string(pin) + " inputs / "
                                         + std::to_string(pout) + " outputs, from "
@@ -745,7 +746,8 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                         continue;
                     }
 
-                    specs.push_back({hyp_idx, static_cast<int>(hyp.type), std::move(shadow)});
+                    specs.push_back({hyp_idx, static_cast<int>(hyp.type),
+                                     hyp.structural_evidence, std::move(shadow)});
                     hyp_idx++;
                     fixes_attempted++;
                     if (fixes_attempted >= cfg_.max_failures_to_fix) break;
@@ -781,7 +783,8 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                                     current_loss,
                                     baseline_val,
                                     specs[i].rank,
-                                    specs[i].type);
+                                    specs[i].type,
+                                    specs[i].evidence);
                             } catch (const std::exception& e) {
                                 results[i].acceptable = false;
                                 results[i].hyp_rank = specs[i].rank;
@@ -844,6 +847,13 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                           }
                         double effective = results[i].val_loss
                                          + rank_bonus * static_cast<double>(results[i].hyp_rank);
+                        // M5.7: measured-evidence candidates carry a race
+                        // advantage (10 rank-steps) — their structure is
+                        // label-space fact, not a statistical hypothesis;
+                        // micro-gain alternatives shouldn't crowd them out.
+                        if (specs[i].evidence) {
+                            effective -= rank_bonus * 10.0;
+                        }
                         if (winner_idx < 0 || effective < winner_effective) {
                             // Replace previous winner 鈥?release its shadow first
                             if (winner_idx >= 0) {
@@ -2094,6 +2104,119 @@ EvolutionEngine::Hypothesis EvolutionEngine::form_hypothesis(
 }
 
 // ============================================================================
+// M5.7 zero-plateau edge detection — see constants.h for gating rationale
+// ============================================================================
+std::vector<Value> EvolutionEngine::detect_zero_plateau_edges(
+    uint64_t cond_graph_id, const Graph& g) const {
+    std::vector<Value> result;
+    // Single-output graphs only (v1)
+    size_t out_count = 0;
+    uint64_t out_gid = 0;
+    for (const auto& n : g.get_nodes()) {
+        if (n->get_type() == NodeType::OUTPUT) {
+            ++out_count;
+            out_gid = n->get_id();
+        }
+    }
+    if (out_count != 1 || training_data_.samples.empty()) return result;
+    // samples are keyed by DATA keys, not graph node ids — invert both maps
+    uint64_t out_key = 0; bool have_out_key = false;
+    for (const auto& kv : output_data_to_graph_) {
+        if (kv.second == out_gid) { out_key = kv.first; have_out_key = true; break; }
+    }
+    uint64_t cond_key = 0; bool have_cond_key = false;
+    for (const auto& kv : input_data_to_graph_) {
+        if (kv.second == cond_graph_id) { cond_key = kv.first; have_cond_key = true; break; }
+    }
+    if (!have_out_key || !have_cond_key) return result;
+
+    std::vector<std::pair<Value, Value>> xy;
+    xy.reserve(training_data_.samples.size());
+    for (const auto& s : training_data_.samples) {
+        auto xi = s.inputs.find(cond_key);
+        auto yi = s.targets.find(out_key);
+        if (xi != s.inputs.end() && yi != s.targets.end()) {
+            xy.emplace_back(xi->second, yi->second);
+        }
+    }
+    if (xy.size() < 16) return result;
+    std::sort(xy.begin(), xy.end(),
+              [](const std::pair<Value, Value>& a, const std::pair<Value, Value>& b) {
+                  return a.first < b.first;
+              });
+    Value y_min = xy.front().second, y_max = y_min;
+    Value x_min = xy.front().first, x_max = x_min;
+    for (const auto& pr : xy) {
+        y_min = std::min(y_min, pr.second); y_max = std::max(y_max, pr.second);
+        x_min = std::min(x_min, pr.first);  x_max = std::max(x_max, pr.first);
+    }
+    const Value y_range = y_max - y_min;
+    if (y_range <= 1e-9) return result;
+    const Value flat_eps = y_range * config::ZERO_PLATEAU_FLAT_EPS;
+    const size_t min_run = std::max<size_t>(
+        static_cast<size_t>(config::ZERO_PLATEAU_MIN_RUN), xy.size() / 20);
+
+    std::vector<Value> edges;
+    size_t in_flat = 0, flat_total = 0;
+    Value run_min = 0, run_max = 0;
+    bool have_run = false;
+    auto flush_run = [&](size_t run_end) {
+        if (in_flat >= min_run) {
+            flat_total += in_flat;
+            const size_t run_start = run_end - in_flat;
+            if (run_start > 0) {
+                edges.push_back(0.5 * (xy[run_start - 1].first + xy[run_start].first));
+            }
+            if (run_end < xy.size()) {
+                edges.push_back(0.5 * (xy[run_end - 1].first + xy[run_end].first));
+            }
+        }
+    };
+    for (size_t i = 0; i < xy.size(); ++i) {
+        const Value y = xy[i].second;
+        if (!have_run) {
+            run_min = y; run_max = y; have_run = true; in_flat = 1;
+        } else if (std::max(run_max, y) - std::min(run_min, y) <= flat_eps) {
+            run_max = std::max(run_max, y);
+            run_min = std::min(run_min, y);
+            ++in_flat;
+        } else {
+            flush_run(i);
+            run_min = y; run_max = y; in_flat = 1;
+        }
+    }
+    flush_run(xy.size());
+    const double frac = static_cast<double>(flat_total) / static_cast<double>(xy.size());
+    if (frac < config::ZERO_PLATEAU_MIN_FRACTION || edges.empty()) return result;
+
+    // Exclude thresholds already committed in the graph (sequential
+    // commits must find the NEXT boundary — same margin logic as the
+    // set-guided split's v2 exclusion).
+    std::vector<Value> committed_thr;
+    for (const auto& n : g.get_nodes()) {
+        const std::string& nm = n->get_name();
+        if ((nm == "ifelse_threshold" || nm == "mux_threshold")
+            && n->get_type() == NodeType::CONSTANT) {
+            committed_thr.push_back(static_cast<const ConstantNode*>(n.get())->get_value());
+        }
+    }
+    const Value excl_margin = (x_max - x_min) * 0.05;
+    for (Value e : edges) {
+        bool near_committed = false;
+        for (Value ct : committed_thr) {
+            if (std::abs(e - ct) <= excl_margin) { near_committed = true; break; }
+        }
+        if (!near_committed) {
+            result.push_back(e);
+            if (result.size() >= 3) break;
+        }
+    }
+    Logger::info("Zero-plateau edges: " + std::to_string(result.size()) + " (flat fraction "
+                + std::to_string(frac) + ")");
+    return result;
+}
+
+// ============================================================================
 // generate_candidates 鈥?produce scored, ranked hypotheses for retry loop
 // ============================================================================
 std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
@@ -2263,156 +2386,17 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 }
             }
             Value excl_margin = cond_ranged ? (cond_max - cond_min) * 0.05 : 0.0;
-            // M5.7 ZERO-PLATEAU detection: flat runs in the RAW labels.
-            // Windowed functions (t22: sin(x)·[0≤x≤2π]) have crisp label-
-            // space boundaries that the residual profile misses — after a
-            // partial harmonic fit the residual stays oscillatory
-            // EVERYWHERE (the fit predicts structure in the dead zone),
-            // so CART SSE-reduction never isolates the edges. On the raw
-            // labels the dead zone is exactly flat. Single-output graphs
-            // only (v1); candidates still pass shadow validation, so a
-            // misdetected edge can only lose, never corrupt.
-            if (ibs.condition_source_node != 0) {
-                size_t out_count = 0;
-                uint64_t out_gid = 0;
-                for (const auto& n : graph_->get_nodes()) {
-                    if (n->get_type() == NodeType::OUTPUT) {
-                        ++out_count;
-                        out_gid = n->get_id();
-                    }
-                }
-                if (out_count == 1 && !training_data_.samples.empty()) {
-                    // samples are keyed by DATA keys, not graph node ids
-                    // (same as denom_safe's reverse-map) — invert both maps.
-                    uint64_t out_key = 0; bool have_out_key = false;
-                    for (const auto& kv : output_data_to_graph_) {
-                        if (kv.second == out_gid) {
-                            out_key = kv.first; have_out_key = true; break;
-                        }
-                    }
-                    uint64_t cond_key = 0; bool have_cond_key = false;
-                    for (const auto& kv : input_data_to_graph_) {
-                        if (kv.second == ibs.condition_source_node) {
-                            cond_key = kv.first; have_cond_key = true; break;
-                        }
-                    }
-                    std::vector<std::pair<Value, Value>> xy;
-                    if (have_out_key && have_cond_key) {
-                        if (!training_data_.samples.empty()) {
-                            const auto& s0 = training_data_.samples.front();
-                            std::string in_str, tg_str;
-                            for (const auto& kv : s0.inputs) {
-                                in_str += std::to_string(kv.first) + "="
-                                        + std::to_string(kv.second) + " ";
-                            }
-                            for (const auto& kv : s0.targets) {
-                                tg_str += std::to_string(kv.first) + "="
-                                        + std::to_string(kv.second) + " ";
-                            }
-                            Logger::info("Zero-plateau sample0: inputs[" + in_str
-                                        + "] targets[" + tg_str + "]");
-                        }
-                        xy.reserve(training_data_.samples.size());
-                        for (const auto& s : training_data_.samples) {
-                            auto xi = s.inputs.find(cond_key);
-                            auto yi = s.targets.find(out_key);
-                            if (xi != s.inputs.end() && yi != s.targets.end()) {
-                                xy.emplace_back(xi->second, yi->second);
-                            }
-                        }
-                    }
-                    if (xy.size() >= 16) {
-                        std::sort(xy.begin(), xy.end(),
-                                  [](const std::pair<Value, Value>& a,
-                                     const std::pair<Value, Value>& b) {
-                                      return a.first < b.first;
-                                  });
-                        Value y_min = xy.front().second, y_max = y_min;
-                        for (const auto& pr : xy) {
-                            y_min = std::min(y_min, pr.second);
-                            y_max = std::max(y_max, pr.second);
-                        }
-                        const Value y_range = y_max - y_min;
-                        if (y_range > 1e-9) {
-                            const Value flat_eps =
-                                y_range * config::ZERO_PLATEAU_FLAT_EPS;
-                            const size_t min_run = std::max<size_t>(
-                                static_cast<size_t>(config::ZERO_PLATEAU_MIN_RUN),
-                                xy.size() / 20);
-                            std::vector<Value> edges;
-                            size_t in_flat = 0, flat_total = 0;
-                            Value run_min = 0, run_max = 0;
-                            bool have_run = false;
-                            auto flush_run = [&](size_t run_end) {
-                                if (in_flat >= min_run) {
-                                    flat_total += in_flat;
-                                    const size_t run_start = run_end - in_flat;
-                                    if (run_start > 0) {
-                                        edges.push_back(0.5 * (xy[run_start - 1].first
-                                                              + xy[run_start].first));
-                                    }
-                                    if (run_end < xy.size()) {
-                                        edges.push_back(0.5 * (xy[run_end - 1].first
-                                                              + xy[run_end].first));
-                                    }
-                                }
-                            };
-                            for (size_t i = 0; i < xy.size(); ++i) {
-                                const Value y = xy[i].second;
-                                if (!have_run) {
-                                    run_min = y; run_max = y;
-                                    have_run = true; in_flat = 1;
-                                } else if (std::max(run_max, y) - std::min(run_min, y)
-                                           <= flat_eps) {
-                                    run_max = std::max(run_max, y);
-                                    run_min = std::min(run_min, y);
-                                    ++in_flat;
-                                } else {
-                                    flush_run(i);
-                                    run_min = y; run_max = y; in_flat = 1;
-                                }
-                            }
-                            flush_run(xy.size());
-                            const double frac = static_cast<double>(flat_total)
-                                             / static_cast<double>(xy.size());
-                            Logger::info("Zero-plateau scan: n=" + std::to_string(xy.size())
-                                        + " cond_key=" + std::to_string(cond_key)
-                                        + " out_key=" + std::to_string(out_key)
-                                        + " p0=(" + std::to_string(xy[0].first) + "," + std::to_string(xy[0].second) + ")"
-                                        + " p50=(" + std::to_string(xy[50].first) + "," + std::to_string(xy[50].second) + ")"
-                                        + " p100=(" + std::to_string(xy[100].first) + "," + std::to_string(xy[100].second) + ")"
-                                        + " frac=" + std::to_string(frac));
-                            if (frac >= config::ZERO_PLATEAU_MIN_FRACTION
-                                && !edges.empty()) {
-                                for (Value e : edges) {
-                                    bool near_committed = false;
-                                    for (Value ct : committed_thr) {
-                                        if (std::abs(e - ct) <= excl_margin) {
-                                            near_committed = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!near_committed) {
-                                        zp_edges.push_back(e);
-                                        if (zp_edges.size() >= 3) break;
-                                    }
-                                }
-                                if (!zp_edges.empty()) {
-                                    ibs.split_threshold = zp_edges[0];
-                                    threshold_found = true;
-                                    zero_plateau_hit = true;
-                                    Logger::info(
-                                        "Zero-plateau boundary: thr="
-                                        + std::to_string(zp_edges[0]) + " (flat fraction "
-                                        + std::to_string(frac) + ", "
-                                        + std::to_string(edges.size())
-                                        + " edges, using " + std::to_string(zp_edges.size())
-                                        + ")");
-                                }
-                            }
-                        }
-                    }
-                }
+            // M5.7 ZERO-PLATEAU detection: see detect_zero_plateau_edges.
+            // Label-space flat-run edges override the residual-space CART
+            // split when present (windowed/dead-zone targets).
+            zp_edges = detect_zero_plateau_edges(ibs.condition_source_node, *graph_);
+            if (!zp_edges.empty()) {
+                ibs.split_threshold = zp_edges[0];
+                threshold_found = true;
+                zero_plateau_hit = true;
+                ibs.structural_evidence = true;
+                Logger::info("Zero-plateau boundary: thr=" + std::to_string(zp_edges[0])
+                            + " (" + std::to_string(zp_edges.size()) + " edges)");
             }
             Value guided_thr = 0.0;
             double reduction = zero_plateau_hit
@@ -2545,6 +2529,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             ibs2.type = Hypothesis::IFELSE_BOUNDARY_SPLIT;
             ibs2.condition_source_node = ibs_cond_src_cache;
             ibs2.split_threshold = zp_edges[zei];
+            ibs2.structural_evidence = true;
             candidates.push_back({std::move(ibs2), score});
             Logger::info("Zero-plateau sibling boundary: thr="
                         + std::to_string(zp_edges[zei]));
@@ -4857,18 +4842,28 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         int K = std::max(1, hyp.compound_K);
         if (K > 1) {
             // Re-derive the multi-split thresholds deterministically.
+            // M5.7: measured-evidence candidates use the label-space
+            // plateau edges (same helper, same committed-exclusion as
+            // emission — the structure validated is the structure
+            // emitted). CART re-derivation only for ordinary candidates.
+            std::vector<Value> ks;
+            if (hyp.structural_evidence) {
+                ks = detect_zero_plateau_edges(hyp.condition_source_node, *shadow);
+            }
             std::vector<std::pair<Value, Value>> vx_m;
-            for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {
-                if (!diag.local_inputs[i].empty()) {
-                    auto it = diag.local_inputs[i].find(hyp.condition_source_node);
-                    if (it == diag.local_inputs[i].end()) {
-                        vx_m.emplace_back(diag.local_inputs[i].begin()->second, diag.targets[i]);
-                    } else {
-                        vx_m.emplace_back(it->second, diag.targets[i]);
+            if (ks.size() < 2) {
+                for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {
+                    if (!diag.local_inputs[i].empty()) {
+                        auto it = diag.local_inputs[i].find(hyp.condition_source_node);
+                        if (it == diag.local_inputs[i].end()) {
+                            vx_m.emplace_back(diag.local_inputs[i].begin()->second, diag.targets[i]);
+                        } else {
+                            vx_m.emplace_back(it->second, diag.targets[i]);
+                        }
                     }
                 }
+                ks = error_weighted_multi_split(vx_m, K);
             }
-            std::vector<Value> ks = error_weighted_multi_split(vx_m, K);
             if (ks.size() >= 2) {
                 // Chain: each IFELSE's FALSE output feeds the next IFELSE.
                 uint64_t prev_false_src = failing_id;
@@ -6193,7 +6188,8 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
     double baseline_loss,
     double baseline_val,
     int hyp_rank,
-    int hyp_type) {
+    int hyp_type,
+    bool structural_evidence) {
 
     ShadowValidationResult result;
     result.hyp_rank = hyp_rank;
@@ -6262,6 +6258,15 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             // receives gradient from its side of the split (1/K of samples),
             // so retraining the separated copies needs K-times the epochs.
             train_cfg.epochs *= config::SHADOW_COMPOUND_SGD_MULTIPLIER * 2;
+        }
+        // M5.7: measured-evidence boundary candidates get an extended
+        // budget — masking re-routes half the samples through fresh
+        // structure; the payoff materializes only after retraining, which
+        // the default budget under-prices (t22 boundary candidates lost
+        // every validation race to immediate micro-gains).
+        if (structural_evidence
+            && hyp_type == static_cast<int>(Hypothesis::IFELSE_BOUNDARY_SPLIT)) {
+            train_cfg.epochs *= config::SHADOW_BOUNDARY_SGD_MULTIPLIER;
         }
         train_cfg.learning_rate = cfg_.sgd_learning_rate;
         // Compound shadow: reduce LR so zero-init chains grow without
@@ -6433,6 +6438,18 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
                                            std::min(cfg_.validation_threshold, rel));
 
     if (result.val_loss < baseline_val - required_improvement) {
+        result.acceptable = true;
+    } else if (structural_evidence
+               && result.val_loss <= baseline_val * 1.001) {
+        // M5.7: MEASURED structure (label-space plateau edge) commits on
+        // any improvement. The threshold is evidence, not a statistical
+        // fit — the standard gate prices it like an ordinary hypothesis
+        // and rejects the exact boundary while accepting micro-gain
+        // alternatives (t22: boundary candidate rejected at val 0.0086 vs
+        // 0.0087 while a TANH commit won with less). Identity-start split
+        // chains can sit exactly AT baseline before per-side training —
+        // the 0.1% tolerance accepts neutral, deferring payoff to
+        // post-commit SGD.
         result.acceptable = true;
     } else if ((hyp_type == static_cast<int>(Hypothesis::COMPOUND_MULTIPLY_NEURON)
                 || hyp_type == static_cast<int>(Hypothesis::COMPOUND_TANH_SERIES)

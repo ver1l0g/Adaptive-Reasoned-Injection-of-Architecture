@@ -303,6 +303,20 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   commit grace budget (train masked shadows longer), or accept-as-
   epsilon commits for candidates with exact structural evidence.]
   d9_noise unaffected (detector correctly silent); t21/d1 pass with it.
+  [ATTEMPTED 2026-08-27 (aria14, 4 variants — NEGATIVE): structural_
+  evidence flag plumbed Hypothesis→specs→validate_shadow_only with
+  (a) 3x shadow budget, (b) any-improvement gate, (c) 0.1%-neutral
+  tolerance, (d) 10-rank-step race advantage; PRESERVE multi-split
+  routing consumes plateau edges directly (verified: "[PRESERVE-MULTI]
+  built K=2 split chain"). STILL zero boundary commits and R2 pinned
+  at 0.9518 — the rejection happens at a layer ABOVE the accept gate
+  (drift guards? family suppression? specs cap?). Next lead: raise log
+  verbosity on evidence candidates and read the exact reject_reason.
+  Also noted: IFELSE_BOUNDARY_SPLIT always masks x>thr — for a LEFT
+  plateau edge this masks the entire active region (correctly
+  rejected); only PRESERVE (both-branches) fits windowed targets.
+  Evidence plumbing kept in aria14 (inert without plateaus; t21/d1/d9
+  sentinels pass).]
 
 ### 1.5 Failure-library hypothesis versioning [DONE 2026-08-27 in aria12: FAILURE_FAMILY_VERSION=1 written per record; legacy (v0/unversioned) records discount to 25% penalty; loader back-compat]
 Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures

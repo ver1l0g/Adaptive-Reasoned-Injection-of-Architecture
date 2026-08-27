@@ -393,7 +393,24 @@ private:
         // Growing w from 0 to the target frequency (~7.3 on d2) via SGD is
         // far slower than the validation budget; smart-init skips that phase.
         double    sin_freq_init   = 0.0;
+
+        // M5.7: the candidate's structure is MEASURED from label-space
+        // evidence (zero-plateau edges), not statistically fitted from
+        // residuals. Shadow validation gives such candidates a longer
+        // training budget and a relaxed commit gate (any val improvement
+        // suffices) — masking/boundary commits need post-commit training
+        // to show their payoff, which the default gate under-prices
+        // (observed: t22 boundary candidates losing to micro-gain TANH
+        // commits every cycle while eval R2 stalled 0.05 below val).
+        bool      structural_evidence = false;
     };
+
+    // M5.7 zero-plateau edge detection: flat runs in the RAW labels (see
+    // constants.h). Returns label-space boundary edges for the given
+    // condition source, excluding thresholds already committed in `g`.
+    // Empty when no plateau structure clears the gating fraction.
+    std::vector<Value> detect_zero_plateau_edges(uint64_t cond_graph_id,
+                                                 const Graph& g) const;
 
     // Form a hypothesis about how to fix the failure.
     Hypothesis form_hypothesis(const FailureDiagnosis& diag,
@@ -467,7 +484,8 @@ private:
                                                 double baseline_loss,
                                                 double baseline_val,
                                                 int hyp_rank,
-                                                int hyp_type);
+                                                int hyp_type,
+                                                bool structural_evidence = false);
 
     // Evaluate any graph on validation_data_ and return mean loss.
     // Read-only 鈥?does not mutate the input graph beyond temporary input

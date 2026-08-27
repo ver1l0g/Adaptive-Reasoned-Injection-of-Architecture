@@ -153,6 +153,7 @@ constexpr double ZERO_PLATEAU_FLAT_EPS            = 0.02;  // run max-min <= 2% 
 constexpr int    ZERO_PLATEAU_MIN_RUN             = 8;     // min samples per flat run
 constexpr double ZERO_PLATEAU_MIN_FRACTION        = 0.15;  // min fraction of samples inside flat runs
 constexpr double SCORE_IFELSE_PLATEAU_BOOST       = 0.97;  // top of the boundary family: label-space plateau edges are near-exact boundaries
+constexpr int    SHADOW_BOUNDARY_SGD_MULTIPLIER   = 3;     // measured-evidence boundary shadows train 3x (payoff needs post-commit retraining)
 
 // Below this training loss, plateau-triggered structural search is skipped
 // (nothing can pass the scaled commit gate; force-structural still probes).

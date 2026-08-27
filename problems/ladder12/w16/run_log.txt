@@ -91,3 +91,18 @@ Starting evolution...
 2026-08-27 19:49:38.725 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
 2026-08-27 19:49:38.726 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
 2026-08-27 19:50:16.573 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-27 19:51:47.091 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-27 19:51:47.091 [INFO] Plateau state reset 鈥?best_phase2=3.913972
+2026-08-27 19:51:47.091 [INFO] Plateau state reset — best_phase2=3.913972
+2026-08-27 19:55:11.754 [INFO] New best overall loss: 3.860411
+  [  16]   eval  loss=3.913972  |====================|  [  16]    sgd  loss=3.860411  |====================|2026-08-27 19:57:40.406 [INFO] New best overall loss: 3.853765
+  [  17]   eval  loss=3.860411  |====================|  [  17]    sgd  loss=3.853765  |====================|2026-08-27 20:00:24.543 [INFO] New best overall loss: 3.850124
+  [  18]   eval  loss=3.853765  |====================|  [  18]    sgd  loss=3.850124  |====================|2026-08-27 20:04:10.220 [INFO] New best overall loss: 3.848786
+  [  19]   eval  loss=3.850124  |====================|  [  19]    sgd  loss=3.848786  |====================|2026-08-27 20:09:15.258 [INFO] New best overall loss: 3.848659
+  [  20]   eval  loss=3.848786  |====================|  [  20]    sgd  loss=3.848659  |====================|  [  21]   eval  loss=3.848659  |====================|  [  21]    sgd  loss=3.849505  |====================|2026-08-27 20:18:47.683 [INFO] New best overall loss: 3.848363
+  [  22]   eval  loss=3.849505  |====================|  [  22]    sgd  loss=3.848363  |====================|2026-08-27 20:18:47.683 [INFO] Plateau triggered at epoch 22 (counter=3, loss=3.848363)
+2026-08-27 20:25:36.219 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-27 20:25:36.234 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-27 20:25:36.234 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-27 20:26:15.970 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-27 20:26:16.353 [INFO]   [EMBED_TRUNK] built K=8 trunk over 16 inputs
