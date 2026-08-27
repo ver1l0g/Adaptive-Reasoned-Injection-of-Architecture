@@ -1,0 +1,13 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\suite-language\bench_shakespeare_w16.csv
+  Loaded 59999 samples
+  Train: 47999  Validation: 12000
+
+  Loaded subgraph library: 1038 entries
+  Loaded failure library: 6024 records
+Starting evolution...
+2026-08-27 16:44:42.143 [INFO] New best overall loss: 3.970041
+  [   1]   eval  loss=53.538161  |====================|  [   1]    sgd  loss=3.970041  |====================|  [   2]   eval  loss=3.970041  |====================|  [   2]    sgd  loss=3.970176  |====================|

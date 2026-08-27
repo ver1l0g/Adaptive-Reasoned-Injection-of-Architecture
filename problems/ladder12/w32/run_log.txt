@@ -1,0 +1,11 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\suite-language\bench_shakespeare_w32.csv
+  Loaded 59999 samples
+  Train: 47999  Validation: 12000
+
+  Loaded subgraph library: 1038 entries
+  Loaded failure library: 6024 records
+Starting evolution...

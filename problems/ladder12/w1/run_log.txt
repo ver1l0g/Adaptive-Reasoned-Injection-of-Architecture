@@ -1,0 +1,27 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\suite-language\bench_shakespeare_w1.csv
+  Loaded 59999 samples
+  Train: 47999  Validation: 12000
+
+  Loaded subgraph library: 1038 entries
+  Loaded failure library: 6024 records
+Starting evolution...
+2026-08-27 16:33:26.935 [INFO] New best overall loss: 4.155530
+  [   1]   eval  loss=47.840871  |====================|  [   1]    sgd  loss=4.155530  |====================|2026-08-27 16:33:47.001 [INFO] New best overall loss: 4.152882
+  [   2]   eval  loss=4.155530  |====================|  [   2]    sgd  loss=4.152882  |====================|2026-08-27 16:34:06.302 [INFO] New best overall loss: 4.150012
+  [   3]   eval  loss=4.152882  |====================|  [   3]    sgd  loss=4.150012  |====================|2026-08-27 16:34:27.393 [INFO] New best overall loss: 4.146936
+  [   4]   eval  loss=4.150012  |====================|  [   4]    sgd  loss=4.146936  |====================|2026-08-27 16:34:47.594 [INFO] New best overall loss: 4.144282
+  [   5]   eval  loss=4.146936  |====================|  [   5]    sgd  loss=4.144282  |====================|2026-08-27 16:35:07.257 [INFO] New best overall loss: 4.142753
+  [   6]   eval  loss=4.144282  |====================|  [   6]    sgd  loss=4.142753  |====================|2026-08-27 16:35:28.148 [INFO] New best overall loss: 4.142016
+  [   7]   eval  loss=4.142753  |====================|  [   7]    sgd  loss=4.142016  |====================|2026-08-27 16:35:49.946 [INFO] New best overall loss: 4.141521
+  [   8]   eval  loss=4.142016  |====================|  [   8]    sgd  loss=4.141521  |====================|2026-08-27 16:36:11.765 [INFO] New best overall loss: 4.141171
+  [   9]   eval  loss=4.141521  |====================|  [   9]    sgd  loss=4.141171  |====================|2026-08-27 16:36:31.912 [INFO] New best overall loss: 4.140895
+  [  10]   eval  loss=4.141171  |====================|  [  10]    sgd  loss=4.140895  |====================|2026-08-27 16:36:51.877 [INFO] New best overall loss: 4.140598
+  [  11]   eval  loss=4.140895  |====================|  [  11]    sgd  loss=4.140598  |====================|2026-08-27 16:36:51.877 [INFO] Plateau triggered at epoch 11 (counter=3, loss=4.140598)
+2026-08-27 16:37:23.417 [INFO] [PROFILE] F=1 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 max_coef[i=0]=0.0000 L_max=0.0000 | flags: none
+2026-08-27 16:37:23.424 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.298207 a=node=67 b=node=68)
+2026-08-27 16:37:23.424 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-27 16:37:23.476 [INFO]   [EMBED_TRUNK] built K=8 trunk over 1 inputs

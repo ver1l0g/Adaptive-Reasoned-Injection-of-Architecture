@@ -9,50 +9,55 @@ Loading dataset from: bench_highdim15.csv
   Loaded subgraph library: 34 entries
   Loaded failure library: 409 records
 Starting evolution...
-2026-08-27 14:20:14.691 [INFO] New best overall loss: 3.169879
-  [   1]   eval  loss=9.504612  |====================|  [   1]    sgd  loss=3.169879  |====================|2026-08-27 14:20:14.956 [INFO] New best overall loss: 3.149443
-  [   2]   eval  loss=3.169879  |====================|  [   2]    sgd  loss=3.149443  |====================|2026-08-27 14:20:14.996 [INFO] New best overall loss: 3.149016
-  [   3]   eval  loss=3.149443  |====================|  [   3]    sgd  loss=3.149016  |====================|2026-08-27 14:20:15.037 [INFO] New best overall loss: 3.148698
-  [   4]   eval  loss=3.149016  |====================|  [   4]    sgd  loss=3.148698  |====================|2026-08-27 14:20:15.080 [INFO] New best overall loss: 3.148475
-  [   5]   eval  loss=3.148698  |====================|  [   5]    sgd  loss=3.148475  |====================|2026-08-27 14:20:15.080 [INFO] Plateau triggered at epoch 5 (counter=3, loss=3.148475)
-2026-08-27 14:20:15.092 [INFO] Structural inability detected 鈥?surfacing bottleneck node 17 (blame=0.063994)
-2026-08-27 14:20:15.097 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-27 14:20:15.097 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-27 14:20:15.097 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-27 14:20:15.097 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-27 14:20:15.097 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-27 14:21:14.931 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.692793 train_loss=0.336954 new train_loss=0.354404
-2026-08-27 14:21:14.931 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-27 14:21:14.931 [INFO] Plateau state reset 鈥?best_phase2=0.354404
-2026-08-27 14:21:14.931 [INFO] Plateau state reset — best_phase2=0.354404
-  [   6]   eval  loss=0.354404  |===|  [   6]    sgd  loss=0.397719  |===|  [   7]   eval  loss=0.397719  |===|  [   7]    sgd  loss=0.391600  |===|  [   8]   eval  loss=0.391600  |===|  [   8]    sgd  loss=0.389998  |===|  [   9]   eval  loss=0.389998  |===|  [   9]    sgd  loss=0.388273  |===|  [  10]   eval  loss=0.388273  |===|  [  10]    sgd  loss=0.386438  |===|  [  11]   eval  loss=0.386438  |===|  [  11]    sgd  loss=0.384514  |===|  [  12]   eval  loss=0.384514  |===|  [  12]    sgd  loss=0.382687  |===|  [  13]   eval  loss=0.382687  |===|  [  13]    sgd  loss=0.380998  |===|  [  14]   eval  loss=0.380998  |===|  [  14]    sgd  loss=0.379468  |===|  [  15]   eval  loss=0.379468  |===|  [  15]    sgd  loss=0.378106  |===|  [  16]   eval  loss=0.378106  |===|  [  16]    sgd  loss=0.376844  |===|  [  17]   eval  loss=0.376844  |===|  [  17]    sgd  loss=0.375712  |===|  [  18]   eval  loss=0.375712  |===|  [  18]    sgd  loss=0.374676  |===|  [  19]   eval  loss=0.374676  |===|  [  19]    sgd  loss=0.373665  |===|  [  20]   eval  loss=0.373665  |===|  [  20]    sgd  loss=0.371395  |===|  [  21]   eval  loss=0.371395  |===|  [  21]    sgd  loss=0.369839  |===|  [  22]   eval  loss=0.369839  |===|  [  22]    sgd  loss=0.369325  |===|  [  23]   eval  loss=0.369325  |===|  [  23]    sgd  loss=0.368819  |===|  [  24]   eval  loss=0.368819  |===|  [  24]    sgd  loss=0.368376  |===|  [  25]   eval  loss=0.368376  |===|  [  25]    sgd  loss=0.368062  |===|  [  26]   eval  loss=0.368062  |===|  [  26]    sgd  loss=0.367833  |===|  [  27]   eval  loss=0.367833  |===|  [  27]    sgd  loss=0.367549  |===|2026-08-27 14:21:35.084 [INFO] Plateau triggered at epoch 27 (counter=3, loss=0.367549)
-2026-08-27 14:21:35.166 [INFO] Structural inability detected 鈥?surfacing bottleneck node 26 (blame=0.444809)
-2026-08-27 14:21:35.175 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-27 14:21:35.176 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-27 14:21:35.176 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-27 14:21:35.176 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-27 14:21:35.176 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-27 14:23:05.451 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.614847 train_loss=0.300026 new train_loss=0.300179
-2026-08-27 14:23:05.451 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-27 14:23:05.451 [INFO] Plateau state reset 鈥?best_phase2=0.300179
-2026-08-27 14:23:05.451 [INFO] Plateau state reset — best_phase2=0.300179
-  [  28]   eval  loss=0.300179  |===|  [  28]    sgd  loss=0.322999  |===|  [  29]   eval  loss=0.322999  |===|  [  29]    sgd  loss=0.318940  |===|  [  30]   eval  loss=0.318940  |===|  [  30]    sgd  loss=0.316940  |===|  [  31]   eval  loss=0.316940  |===|  [  31]    sgd  loss=0.315590  |===|  [  32]   eval  loss=0.315590  |===|  [  32]    sgd  loss=0.315489  |===|  [  33]   eval  loss=0.315489  |===|  [  33]    sgd  loss=0.315185  |===|  [  34]   eval  loss=0.315185  |===|  [  34]    sgd  loss=0.315065  |===|2026-08-27 14:23:19.291 [INFO] Plateau triggered at epoch 34 (counter=3, loss=0.315065)
-2026-08-27 14:23:19.452 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-27 14:23:19.452 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-27 14:23:19.452 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-27 14:23:19.452 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-27 14:24:53.087 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.677013 train_loss=0.284543 new train_loss=0.286808
-2026-08-27 14:24:53.096 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-27 14:24:53.097 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-27 14:24:53.097 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-27 14:24:53.097 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-27 14:24:53.097 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-27 14:26:50.944 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-27 14:26:50.945 [INFO] Plateau state reset 鈥?best_phase2=0.286808
-2026-08-27 14:26:50.945 [INFO] Plateau state reset — best_phase2=0.286808
-  [  35]   eval  loss=0.286808  |==|  [  35]    sgd  loss=0.312455  |===|  [  36]   eval  loss=0.312455  |===|  [  36]    sgd  loss=0.313631  |===|  [  37]   eval  loss=0.313631  |===|  [  37]    sgd  loss=0.315649  |===|  [  38]   eval  loss=0.315649  |===|  [  38]    sgd  loss=0.317328  |===|  [  39]   eval  loss=0.317328  |===|  [  39]    sgd  loss=0.319333  |===|  [  40]   eval  loss=0.319333  |===|  [  40]    sgd  loss=0.320559  |===|  [  41]   eval  loss=0.320559  |===|  [  41]    sgd  loss=0.319818  |===|  [  42]   eval  loss=0.319818  |===|  [  42]    sgd  loss=0.321794  |===|  [  43]   eval  loss=0.321794  |===|  [  43]    sgd  loss=0.322638  |===|  [  44]   eval  loss=0.322638  |===|  [  44]    sgd  loss=0.322663  |===|2026-08-27 14:27:10.319 [INFO] Plateau triggered at epoch 44 (counter=3, loss=0.322663)
-2026-08-27 14:27:10.549 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-27 14:27:10.550 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-27 14:27:10.550 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-27 14:27:10.550 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-27 14:27:10.550 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
+2026-08-27 16:32:42.813 [INFO] New best overall loss: 3.169879
+  [   1]   eval  loss=9.504612  |====================|  [   1]    sgd  loss=3.169879  |====================|2026-08-27 16:32:43.142 [INFO] New best overall loss: 3.149443
+  [   2]   eval  loss=3.169879  |====================|  [   2]    sgd  loss=3.149443  |====================|2026-08-27 16:32:43.206 [INFO] New best overall loss: 3.149016
+  [   3]   eval  loss=3.149443  |====================|  [   3]    sgd  loss=3.149016  |====================|2026-08-27 16:32:43.286 [INFO] New best overall loss: 3.148698
+  [   4]   eval  loss=3.149016  |====================|  [   4]    sgd  loss=3.148698  |====================|2026-08-27 16:32:43.332 [INFO] New best overall loss: 3.148475
+  [   5]   eval  loss=3.148698  |====================|  [   5]    sgd  loss=3.148475  |====================|2026-08-27 16:32:43.333 [INFO] Plateau triggered at epoch 5 (counter=3, loss=3.148475)
+2026-08-27 16:32:43.350 [INFO] Structural inability detected 鈥?surfacing bottleneck node 17 (blame=0.063994)
+2026-08-27 16:32:43.357 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
+2026-08-27 16:32:43.358 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
+2026-08-27 16:32:43.358 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
+2026-08-27 16:32:43.358 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
+2026-08-27 16:32:43.358 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
+2026-08-27 16:33:50.267 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.692793 train_loss=0.336954 new train_loss=0.354404
+2026-08-27 16:33:50.267 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-27 16:33:50.267 [INFO] Plateau state reset 鈥?best_phase2=0.354404
+2026-08-27 16:33:50.267 [INFO] Plateau state reset — best_phase2=0.354404
+  [   6]   eval  loss=0.354404  |===|  [   6]    sgd  loss=0.397719  |===|  [   7]   eval  loss=0.397719  |===|  [   7]    sgd  loss=0.391600  |===|  [   8]   eval  loss=0.391600  |===|  [   8]    sgd  loss=0.389998  |===|  [   9]   eval  loss=0.389998  |===|  [   9]    sgd  loss=0.388273  |===|  [  10]   eval  loss=0.388273  |===|  [  10]    sgd  loss=0.386438  |===|  [  11]   eval  loss=0.386438  |===|  [  11]    sgd  loss=0.384514  |===|  [  12]   eval  loss=0.384514  |===|  [  12]    sgd  loss=0.382687  |===|  [  13]   eval  loss=0.382687  |===|  [  13]    sgd  loss=0.380998  |===|  [  14]   eval  loss=0.380998  |===|  [  14]    sgd  loss=0.379468  |===|  [  15]   eval  loss=0.379468  |===|  [  15]    sgd  loss=0.378106  |===|  [  16]   eval  loss=0.378106  |===|  [  16]    sgd  loss=0.376844  |===|  [  17]   eval  loss=0.376844  |===|  [  17]    sgd  loss=0.375712  |===|  [  18]   eval  loss=0.375712  |===|  [  18]    sgd  loss=0.374676  |===|  [  19]   eval  loss=0.374676  |===|  [  19]    sgd  loss=0.373665  |===|  [  20]   eval  loss=0.373665  |===|  [  20]    sgd  loss=0.371395  |===|  [  21]   eval  loss=0.371395  |===|  [  21]    sgd  loss=0.369839  |===|  [  22]   eval  loss=0.369839  |===|  [  22]    sgd  loss=0.369325  |===|  [  23]   eval  loss=0.369325  |===|  [  23]    sgd  loss=0.368819  |===|  [  24]   eval  loss=0.368819  |===|  [  24]    sgd  loss=0.368376  |===|  [  25]   eval  loss=0.368376  |===|  [  25]    sgd  loss=0.368062  |===|  [  26]   eval  loss=0.368062  |===|  [  26]    sgd  loss=0.367833  |===|  [  27]   eval  loss=0.367833  |===|  [  27]    sgd  loss=0.367549  |===|2026-08-27 16:34:09.109 [INFO] Plateau triggered at epoch 27 (counter=3, loss=0.367549)
+2026-08-27 16:34:09.208 [INFO] Structural inability detected 鈥?surfacing bottleneck node 26 (blame=0.444809)
+2026-08-27 16:34:09.220 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
+2026-08-27 16:34:09.221 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
+2026-08-27 16:34:09.221 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
+2026-08-27 16:34:09.221 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
+2026-08-27 16:34:09.221 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
+2026-08-27 16:35:40.956 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.614847 train_loss=0.300026 new train_loss=0.300179
+2026-08-27 16:35:40.956 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-27 16:35:40.956 [INFO] Plateau state reset 鈥?best_phase2=0.300179
+2026-08-27 16:35:40.956 [INFO] Plateau state reset — best_phase2=0.300179
+  [  28]   eval  loss=0.300179  |===|  [  28]    sgd  loss=0.322999  |===|  [  29]   eval  loss=0.322999  |===|  [  29]    sgd  loss=0.318940  |===|  [  30]   eval  loss=0.318940  |===|  [  30]    sgd  loss=0.316940  |===|  [  31]   eval  loss=0.316940  |===|  [  31]    sgd  loss=0.315590  |===|  [  32]   eval  loss=0.315590  |===|  [  32]    sgd  loss=0.315489  |===|  [  33]   eval  loss=0.315489  |===|  [  33]    sgd  loss=0.315185  |===|  [  34]   eval  loss=0.315185  |===|  [  34]    sgd  loss=0.315065  |===|2026-08-27 16:35:55.215 [INFO] Plateau triggered at epoch 34 (counter=3, loss=0.315065)
+2026-08-27 16:35:55.405 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
+2026-08-27 16:35:55.405 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
+2026-08-27 16:35:55.405 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
+2026-08-27 16:35:55.405 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
+2026-08-27 16:38:18.132 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.677013 train_loss=0.284543 new train_loss=0.286808
+2026-08-27 16:38:18.143 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
+2026-08-27 16:38:18.143 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
+2026-08-27 16:38:18.143 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
+2026-08-27 16:38:18.143 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
+2026-08-27 16:38:18.143 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
+2026-08-27 16:41:12.103 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-27 16:41:12.103 [INFO] Plateau state reset 鈥?best_phase2=0.286808
+2026-08-27 16:41:12.103 [INFO] Plateau state reset — best_phase2=0.286808
+  [  35]   eval  loss=0.286808  |==|  [  35]    sgd  loss=0.312455  |===|  [  36]   eval  loss=0.312455  |===|  [  36]    sgd  loss=0.313631  |===|  [  37]   eval  loss=0.313631  |===|  [  37]    sgd  loss=0.315649  |===|  [  38]   eval  loss=0.315649  |===|  [  38]    sgd  loss=0.317328  |===|  [  39]   eval  loss=0.317328  |===|  [  39]    sgd  loss=0.319333  |===|  [  40]   eval  loss=0.319333  |===|  [  40]    sgd  loss=0.320559  |===|  [  41]   eval  loss=0.320559  |===|  [  41]    sgd  loss=0.319818  |===|  [  42]   eval  loss=0.319818  |===|  [  42]    sgd  loss=0.321794  |===|  [  43]   eval  loss=0.321794  |===|  [  43]    sgd  loss=0.322638  |===|  [  44]   eval  loss=0.322638  |===|  [  44]    sgd  loss=0.322663  |===|2026-08-27 16:41:37.881 [INFO] Plateau triggered at epoch 44 (counter=3, loss=0.322663)
+2026-08-27 16:41:38.272 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
+2026-08-27 16:41:38.272 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
+2026-08-27 16:41:38.272 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
+2026-08-27 16:41:38.272 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
+2026-08-27 16:41:38.272 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
+2026-08-27 16:45:34.240 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.697212 train_loss=0.274484 new train_loss=0.284902
+2026-08-27 16:45:34.253 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
+2026-08-27 16:45:34.254 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
+2026-08-27 16:45:34.254 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
+2026-08-27 16:45:34.254 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
