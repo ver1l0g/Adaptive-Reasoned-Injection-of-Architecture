@@ -7,23 +7,30 @@ ordered within each. Effort: S = hours, M = days, L = weeks.
 
 ---
 
-## Current State (the card this roadmap starts from)
+## Current State (card refreshed 2026-08-28/29; binary = aria15 unless noted)
 
 | Suite | Status |
 |-------|--------|
-| suite-standard (17) | 12/17 reproducible on aria10 (d9=NF; d7 regressed@381caad fix pending; d2/d3/t22 never-solved, ex-16/17 claim stale — see M5.5) |
+| suite-standard (17) | 13/16 + d9-NF reproducible on aria11+ (d7 fixed by M7.5/M7.6 live); t22 0.9757 (routing fixed, was never-solved); d2 0.79, d3 0.55 open — see M5.7 |
 | suite-hard (6) | all solved (spirals, checkerboard, XOR-5D) |
-| suite-temporal (4+2) | all solved |
-| suite-feynman (25) | 23/25 ≥ 0.99 (I.32.8 0.97, I.29.16 seed-varies) |
-| suite-korns (9) | 7/9 ≥ 0.93 (F8 0.84 needs sin∩x³∩4-product) |
-| suite-limits (7) | 5/7 pass (narma30 0.29, stripes20 0.24) |
+| suite-temporal (4+2) | all solved (aria11: 4/4, identical to aria10) |
+| suite-feynman (25) | 23/25 ≥ 0.99 (I.32.8 0.97, I.29.16 seed-varies); aria12 re-run: s2 complete, s3-5 queued |
+| suite-korns (9) | 6/9 > 0.99, 8/9 ≥ 0.93 (F8 ~0.86 needs sin∩x³∩4-product; F4 0.983) |
+| suite-limits (7) | reproducible on aria12: count8 + highdim15 solo (contended runs time out — see M6.7); hetero3 out3 marginal 0.99; narma30 0.005, stripes20 0.2248 on aria15 (region-leaf chains; was 0.01) |
 | suite-realworld (5) | 97–100% |
 | suite-vision | digits 99.5%; CIFAR at linear ceiling (~28%) |
-| suite-language | w1-SCE 4.535 bits/char (unigram 4.78 beaten; bigram 3.54 open) |
+| suite-language | w1 4.4296 bpc on aria12 (beats 4.535); EMBED ladder w8-w32 in flight (M2.2 verdict pending) |
 
-Engine: 22 hypothesis types, softmax-CE loss, val-based selection,
-checkpointing, shadow watchdog, library with degenerate/self-echo guards.
-Performance baseline: I.47.23 1249s → 14.5s cumulative this session (86x).
+Engine: 25 hypothesis types (EMBED_TRUNK, MUX_INJECTION, DELAY_LINE +
+22 legacy), softmax-CE loss, val-based selection, checkpointing, shadow
+watchdog, versioned failure library, zero-plateau evidence path
+(single-output v1), SEH crash handler with symbolization, build.bat.
+Session repairs: EMBED_TRUNK use-after-realloc (charLM crashes),
+PRESERVE chain order, evidence-boundary routing (OUTPUT wrap +
+direction), median-fallback threshold clobber.
+Known fragility: marginal tasks (hetero3 out2/out3) flip across builds
+and sometimes reruns — build/trajectory-sensitive FP, ASAN-clean (see
+M6.8).
 
 ---
 
@@ -177,6 +184,15 @@ pre-train (identity restored, 0.238 vs 0.2395) — but SGD degrades them
 Chain STRUCTURE is now correct; the blocker is per-gate training —
 exactly M7.2 settling / per-branch SGD territory. Boundary singles
 still carry stripes20 (7 commits, 0.0509).]
+[SOLVED VIA M7.6(b) GENERALIZATION 2026-08-28 (aria15): closed-form
+REGION-LEAF chains — each band's true side feeds a 1-input NEURON leaf
+(w=1, b = band residual mean, OUTPUT scale/bias adjusted); leaves sum
+through chained ADDs to the OUTPUT. The chain becomes a regression
+tree AT ROUTING TIME — no SGD needed to express piecewise structure.
+stripes20 0.0509 -> 0.2248 (4 chain commits + 5 boundaries).
+Sentinels clean (t22 unchanged, t21/d1 PASS). Remaining gap to 0.95:
+more cycles / bigger K per chain (edges capped at 3/cycle by
+detection), plus whatever narma-style limits emerge.]
 
 ---
 
@@ -267,10 +283,54 @@ The set-guided splits compute region memberships then discard them:
   currently top-2 global signals, blind to the split)
 - (b) Per-region residual sign → PRESERVE gate bias init (directly
   attacks the gate-training-slowness from the stripes arc)
+  [DONE+GENERALIZED 2026-08-28 in aria15: closed-form region-leaf
+  chains — per-band residual MEANS (not just sign) init dedicated
+  1-input leaf neurons; stripes20 0.01 -> 0.22. See M5.4.]
 - (c) quadrant_means (computed, displayed, never read) → interaction-
   region emission gate: "means differ strongly across quadrants" is
   the natural 2-input interaction signal
 - (d) Interval-valued expression rendering for the paper
+
+### 6.7 Freeze battery status tracker (added 2026-08-29; binary decision pending)
+ONE tagged binary requirement (M6.5). Batteries ran on aria12 (= aria10
++ M7.5/M7.6 live + UAF fix + M1.5); aria14/15 add the evidence path
+(detection+routing+chains), which only affects plateau tasks
+(t21/d1/t22/stripes20 — standard suite delta). DECISION NEEDED: freeze
+on aria12 (all suites consistent, evidence work = post-freeze v2) vs
+re-run everything on aria15 (~1-2 days battery).
+- [x] standard (aria11: 13/16; aria15 spot-checks: t22 0.9757 t21 0.9937 d1 0.9936)
+- [x] korns (aria11: 6/9) — [x] temporal (aria11: 4/4)
+- [x] limits (aria12: 7/7 lines but highdim15/20 no-eval under
+      contention — SOLO RERUN REQUIRED, harness timeout 30min too
+      tight when 4-5 processes share the machine)
+- [~] feynman (aria10 5-seed archived in results/aria10_multiseed/;
+      aria12: s2 done, s3 running, s4/s5 queued)
+- [~] language ladder (aria12: w1 4.4296 done; w8/w16/w32 in flight)
+- [ ] freeze card compilation + git tag once complete
+- [ ] M2.2 monotonicity verdict (needs ladder) + M2.4 attention
+      decision (needs ladder w32 + induction probe — probe launched
+      on aria14, result pending)
+
+### 6.8 Marginal-task build sensitivity (added 2026-08-29, from session evidence)
+hetero3 out2/out3 (0.99-bubble tasks) flip between ~0.15 and ~0.999
+across builds (aria11 vs aria12: same code semantics, different binary)
+and sometimes across identical reruns (0.1503/0.1503/0.1478 — near-
+deterministic with small thread variance). ASAN-clean on the full run.
+Suspect: thread-order FP nondeterminism in parallel shadow validation,
+amplified by marginal tasks. Actions if it matters for the paper:
+(1) pin thread count / sequential shadow validation for freeze runs,
+(2) report marginal tasks with multiseed spread, (3) investigate the
+parallel-validation reduction order.
+
+### 6.9 Reproducibility infrastructure (added 2026-08-29)
+- [x] build.bat (MSVC 2022 BuildTools; session-verified flags
+      /utf-8 /Zi /O2 /EHsc /std:c++17)
+- [ ] pin the toolchain version in docs (MSVC 14.44.35207, x64;
+      earlier 16MB binaries used a different/unknown configuration)
+- [ ] freeze-run protocol note: solo machine for timing-sensitive
+      suites (highdim), thread pinning for marginal tasks (see 6.8)
+- [ ] archive binaries WITH their batteries (aria10 freeze-v1 tag
+      exists; aria12/15 tags pending the 6.5 decision)
 
 ---
 
@@ -396,20 +456,22 @@ AND the probe fails, attention is justified; if EMBED keeps scaling,
 defer again. Defines the measurement, not just "decision point."
 ---
 
-## Sequencing recommendation
+## Sequencing recommendation (refreshed 2026-08-29)
 
 ```
-Now ──► M1.1 Failure library      (small, closes the loop, the thesis)
-    ──► M1.2 Architecture recall  (makes the library visibly pay off)
-    ──► M2.1 EMBED + 7.3 error-gating (the biggest scientific lever,
-                                       now with the PC ingredient built in)
-    ──► M7.1 Precision attribution (cheap, folds into M5.3, fixes hetero3)
-    ──► M7.2 Settling + stripes20 v3/v4 (the multi-split test is compiled)
-    ──► M4.1 Delay-line           (cheap, unlocks narma30)
-    ──► M6.1 Baselines in parallel (paper track starts here)
-    ──► M3/M5 interleaved by interest
-    ──► M7.4 Promised-vs-delivered (once M1.1 is battle-tested)
-    ──► M1.4 Self-tuning          (once the loop is closed, testable)
+Now ──► M6.5 freeze completion: ladder + feynman s3-5 + highdim solo
+        rerun; make the aria12-vs-aria15 binary decision; compile the
+        freeze card; tag.
+    ──► M2.2/M2.4 verdicts from the ladder + induction probe (the
+        attention go/no-go — decides M2.3's fate)
+    ──► d2/d3 fixes (M5.7: harmonic-grace gate; multi-peak freq-init)
+    ──► stripes20 completion (bigger K per chain or higher edge cap;
+        0.22 -> 0.95 target)
+    ──► M6.6 README refresh (after freeze)
+    ──► M6.4 Writing (paper track; freeze numbers are the tables)
+    ──► M5.2 commit composition (I.32.8 0.97->0.99) / M4.2 taps
+    ──► M3.1 shared-weight pooling (vision track)
+    ──► M7.4 promised-vs-delivered (post-freeze; mind the M1.3 lesson)
 ```
 
 Principles (unchanged all project):
