@@ -336,6 +336,19 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   still diverge at 0.27 train — momentum suspected), and the interior
   sine precision remains the original limiter. Sentinels clean (t21
   0.9921, d1 0.9977, d9 silent).]
+  [TRUE ROOT CAUSE 2026-08-28 (EVIDENCE-PRE instrumentation): the
+  split shadows are broken BEFORE any SGD — pre-train loss 0.12-0.28
+  vs baseline 0.009. The "identity start" of the boundary/PRESERVE
+  routing does not exist: apply_shadow_routing's IFELSE wiring corrupts
+  the in-window forward pass at ROUTING time (val looks perfect only
+  because the strided val subset is dead-zone dominated, where the
+  mask outputs exact 0). LR/momentum changes were treating symptoms.
+  This is a ROUTING SEMANTICS bug — same family as the stripes-arc
+  port-0 ADD bug. Fix: audit apply_shadow_routing IFELSE_BOUNDARY_SPLIT
+  + IFELSE_PRESERVE wiring (port conventions, gate/ADD combine, execute
+  order) against graph.cpp semantics with a unit test; expected to
+  unlock t22 (and possibly improve stripes20's IFELSE_PRESERVE x5
+  no-progress pattern).]
 
 ### 1.5 Failure-library hypothesis versioning [DONE 2026-08-27 in aria12: FAILURE_FAMILY_VERSION=1 written per record; legacy (v0/unversioned) records discount to 25% penalty; loader back-compat]
 Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures

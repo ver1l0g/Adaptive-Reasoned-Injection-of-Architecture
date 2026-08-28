@@ -18,3 +18,7 @@ Starting evolution...
 2026-08-28 20:01:24.247 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.298207 a=node=2 b=node=3)
 2026-08-28 20:01:24.248 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
 2026-08-28 20:01:24.379 [INFO]   [EMBED_TRUNK] built K=8 trunk over 8 inputs
+2026-08-28 20:16:27.951 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 20:16:33.775 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.988545 train_loss=3.865586 new train_loss=3.958123
+2026-08-28 20:16:33.778 [INFO] [PROFILE] F=8 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 a12=0.0000 max_coef[i=0]=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-28 20:16:33.790 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.298207 a=node=2 b=node=3)

@@ -9,3 +9,5 @@ Loading dataset from: ..\..\suite-language\bench_shakespeare_w32.csv
   Loaded subgraph library: 1038 entries
   Loaded failure library: 6024 records
 Starting evolution...
+2026-08-28 20:12:37.866 [INFO] New best overall loss: 3.957231
+  [   1]   eval  loss=54.786440  |====================|  [   1]    sgd  loss=3.957231  |====================|  [   2]   eval  loss=3.957231  |====================|  [   2]    sgd  loss=3.957279  |====================|  [   3]   eval  loss=3.957279  |====================|  [   3]    sgd  loss=3.957289  |====================|  [   4]   eval  loss=3.957289  |====================|  [   4]    sgd  loss=3.957290  |====================|  [   5]   eval  loss=3.957290  |====================|  [   5]    sgd  loss=3.957290  |====================|  [   6]   eval  loss=3.957290  |====================|  [   6]    sgd  loss=3.957290  |====================|2026-08-28 20:28:42.908 [INFO] Plateau triggered at epoch 6 (counter=5, loss=3.957290)

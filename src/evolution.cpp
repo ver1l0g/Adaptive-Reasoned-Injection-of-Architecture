@@ -6240,6 +6240,36 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
 
     // Phase 6.5: Train shadow graph on training data so new NEURON weights are fitted.
     if (!training_data_.samples.empty()) {
+        // M5.7 diagnostic: pre-training train loss for evidence
+        // candidates. Identity-start structures should sit at ~baseline
+        // BEFORE SGD; a high pre-train loss means the ROUTING itself
+        // breaks the forward pass (vs SGD divergence after).
+        if (structural_evidence) {
+            double pre_loss = 0.0;
+            int pre_n = 0;
+            const size_t pt_total = training_data_.samples.size();
+            const size_t pt_stride = (pt_total > 200) ? (pt_total / 200) : 1;
+            for (size_t pi = 0; pi < pt_total; pi += pt_stride) {
+                for (const auto& kv : training_data_.samples[pi].inputs) {
+                    auto git = input_data_to_graph_.find(kv.first);
+                    if (git != input_data_to_graph_.end()) {
+                        shadow_graph->set_input_value(git->second, kv.second);
+                    }
+                }
+                shadow_graph->execute();
+                for (const auto& kv : training_data_.samples[pi].targets) {
+                    auto oit = output_data_to_graph_.find(kv.first);
+                    if (oit != output_data_to_graph_.end()) {
+                        Value diff = shadow_graph->get_output_value(oit->second) - kv.second;
+                        pre_loss += diff * diff;
+                        ++pre_n;
+                    }
+                }
+                shadow_graph->reset_recurrent_state();
+            }
+            Logger::info("  [EVIDENCE-PRE] pre-train loss="
+                        + std::to_string(pre_n > 0 ? pre_loss / pre_n : -1.0));
+        }
         Graph::TrainConfig train_cfg;
         train_cfg.epochs = cfg_.sgd_epochs_per_phase;
         // MULTI_LAYER_STACK trains K+1 neurons from near-scratch 鈥?needs
@@ -6310,8 +6340,13 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
         // 0.198 vs baseline 0.009 — pure LR blowup, not structure).
         // The structure is MEASURED — only the gates need learning, so a
         // deep LR cut protects the converged weights while gates adapt.
+        // Momentum=0: the split boundary flips per-sample gradients;
+        // momentum accumulates opposite updates across the discontinuity
+        // and oscillates the gates (PRESERVE chains diverged at 0.27
+        // train even at 0.1x LR with momentum on).
         if (structural_evidence) {
             train_cfg.learning_rate *= 0.1;
+            train_cfg.momentum = 0.0;
         }
         train_cfg.gradient_clip = cfg_.sgd_gradient_clip;
         train_cfg.momentum = cfg_.sgd_momentum;
