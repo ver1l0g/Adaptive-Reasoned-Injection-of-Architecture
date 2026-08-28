@@ -167,6 +167,16 @@ drift guard). Cadence is bounded by validation settling, not by gap
 or patience mechanics. Path to 20 regions: multi-boundary commits —
 the PRESERVE K-chain covers 4 regions/commit — pending the same
 wrap/direction routing audit the masking variant just received.]
+[CHAIN ORDER FIXED 2026-08-28: the nested PRESERVE chain requires
+DESCENDING thresholds (each level splits its false side lower); plateau
+edges arrive ASCENDING — feeding them unsorted empties every nested
+band and collapses the chain (the persistent 0.27 pre-train
+divergence). With descending order the chains now start AT baseline
+pre-train (identity restored, 0.238 vs 0.2395) — but SGD degrades them
+(0.2499 post-train, rejected by the any-improvement evidence gate).
+Chain STRUCTURE is now correct; the blocker is per-gate training —
+exactly M7.2 settling / per-branch SGD territory. Boundary singles
+still carry stripes20 (7 commits, 0.0509).]
 
 ---
 

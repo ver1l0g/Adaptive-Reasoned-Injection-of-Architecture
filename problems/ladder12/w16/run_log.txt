@@ -59,3 +59,18 @@ Starting evolution...
 2026-08-28 21:52:08.553 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
 2026-08-28 21:52:08.559 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
 2026-08-28 21:52:51.219 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-28 22:11:43.015 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 22:11:43.016 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 22:11:48.748 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 22:11:48.774 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 22:11:58.819 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 22:11:59.022 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 22:11:59.150 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 22:12:20.668 [INFO]   COMMIT rank=4 type=MULTI_LAYER_STACK val_loss=3.955736 train_loss=4.072468 new train_loss=3.931493
+2026-08-28 22:12:20.701 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-28 22:12:20.701 [INFO] Plateau state reset 鈥?best_phase2=3.931493
+2026-08-28 22:12:20.701 [INFO] Plateau state reset — best_phase2=3.931493
+2026-08-28 22:17:40.676 [INFO] New best overall loss: 3.876902
+  [  12]   eval  loss=3.931493  |====================|  [  12]    sgd  loss=3.876902  |====================|2026-08-28 22:22:59.848 [INFO] New best overall loss: 3.875576
+  [  13]   eval  loss=3.876902  |====================|  [  13]    sgd  loss=3.875576  |====================|2026-08-28 22:29:05.589 [INFO] New best overall loss: 3.875186
+  [  14]   eval  loss=3.875576  |====================|  [  14]    sgd  loss=3.875186  |====================|

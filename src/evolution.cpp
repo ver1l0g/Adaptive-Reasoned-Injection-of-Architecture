@@ -4935,6 +4935,13 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                      detect_zero_plateau_edges(hyp.condition_source_node, *shadow)) {
                     ks.push_back(ze.first);
                 }
+                // The nested chain requires DESCENDING thresholds: level k
+                // splits its FALSE side (x <= e_{k-1}) at e_k < e_{k-1}, so
+                // each TRUE branch is the band (e_k, e_{k-1}]. Plateau edges
+                // arrive ASCENDING (left-to-right scan) — feeding them
+                // unsorted makes every nested band EMPTY (chain collapses;
+                // observed as persistent 0.27 pre-train divergence).
+                std::sort(ks.begin(), ks.end(), std::greater<Value>());
             }
             std::vector<std::pair<Value, Value>> vx_m;
             if (ks.size() < 2) {

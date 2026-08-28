@@ -46,3 +46,9 @@ Starting evolution...
   [  11]   eval  loss=3.908589  |====================|  [  11]    sgd  loss=3.907703  |====================|  [  12]   eval  loss=3.907703  |====================|  [  12]    sgd  loss=3.908310  |====================|2026-08-28 21:52:59.784 [INFO] New best overall loss: 3.907530
   [  13]   eval  loss=3.908310  |====================|  [  13]    sgd  loss=3.907530  |====================|  [  14]   eval  loss=3.907530  |====================|  [  14]    sgd  loss=3.907908  |====================|  [  15]   eval  loss=3.907908  |====================|  [  15]    sgd  loss=3.908220  |====================|2026-08-28 22:02:42.982 [INFO] New best overall loss: 3.906984
   [  16]   eval  loss=3.908220  |====================|  [  16]    sgd  loss=3.906984  |====================|2026-08-28 22:02:42.983 [INFO] Plateau triggered at epoch 16 (counter=5, loss=3.906984)
+2026-08-28 22:13:15.404 [INFO] [PROFILE] F=32 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=-0.0050 max_coef[i=397]=-0.0588 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-28 22:13:15.422 [INFO] IFELSE set-guided split: thr=-1.704229 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-28 22:13:15.423 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457781 var_r=0.015148)
+2026-08-28 22:13:15.426 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.704229 a=node=2 b=node=3)
+2026-08-28 22:13:15.426 [INFO] MULTIPLY sources from poly fit: input=14*input=22 (max_coef_idx=397)
+2026-08-28 22:13:15.435 [INFO] Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input=14*input=22, poly_r2=-0.000000)
