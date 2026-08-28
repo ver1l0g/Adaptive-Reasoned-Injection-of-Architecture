@@ -9,53 +9,3 @@ Loading dataset from: ..\..\suite-language\bench_shakespeare_w32.csv
   Loaded subgraph library: 1038 entries
   Loaded failure library: 6024 records
 Starting evolution...
-2026-08-27 16:48:18.345 [INFO] New best overall loss: 3.957231
-  [   1]   eval  loss=54.786440  |====================|  [   1]    sgd  loss=3.957231  |====================|  [   2]   eval  loss=3.957231  |====================|  [   2]    sgd  loss=3.957279  |====================|  [   3]   eval  loss=3.957279  |====================|  [   3]    sgd  loss=3.957289  |====================|  [   4]   eval  loss=3.957289  |====================|  [   4]    sgd  loss=3.957290  |====================|  [   5]   eval  loss=3.957290  |====================|  [   5]    sgd  loss=3.957290  |====================|  [   6]   eval  loss=3.957290  |====================|  [   6]    sgd  loss=3.957290  |====================|2026-08-27 17:05:34.742 [INFO] Plateau triggered at epoch 6 (counter=5, loss=3.957290)
-2026-08-27 17:09:36.792 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-27 17:09:36.807 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
-2026-08-27 17:09:36.807 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-27 17:09:37.197 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-27 17:24:46.509 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:25:00.402 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:25:00.504 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:25:00.549 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:25:00.693 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:25:02.060 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:25:02.345 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:25:14.442 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=4.059892 train_loss=3.983400 new train_loss=4.007420
-2026-08-27 17:25:14.447 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-27 17:25:14.458 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
-2026-08-27 17:40:24.318 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 17:40:31.783 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=4.083359 train_loss=4.035578 new train_loss=4.023162
-2026-08-27 17:40:31.786 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-27 17:40:31.793 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
-2026-08-27 17:55:37.093 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=4.107298 train_loss=4.056088 new train_loss=4.041007
-2026-08-27 17:55:37.094 [INFO] Plateau state reset 鈥?best_phase2=4.041007
-2026-08-27 17:55:37.094 [INFO] Plateau state reset — best_phase2=4.041007
-2026-08-27 18:02:47.361 [INFO] New best overall loss: 3.911506
-  [   7]   eval  loss=4.041007  |====================|  [   7]    sgd  loss=3.911506  |====================|2026-08-27 18:04:03.791 [INFO] New best overall loss: 3.910595
-  [   8]   eval  loss=3.911506  |====================|  [   8]    sgd  loss=3.910595  |====================|2026-08-27 18:05:18.335 [INFO] New best overall loss: 3.910068
-  [   9]   eval  loss=3.910595  |====================|  [   9]    sgd  loss=3.910068  |====================|2026-08-27 18:06:31.048 [INFO] New best overall loss: 3.908915
-  [  10]   eval  loss=3.910068  |====================|  [  10]    sgd  loss=3.908915  |====================|2026-08-27 18:08:31.035 [INFO] New best overall loss: 3.908108
-  [  11]   eval  loss=3.908915  |====================|  [  11]    sgd  loss=3.908108  |====================|2026-08-27 18:11:38.228 [INFO] New best overall loss: 3.907788
-  [  12]   eval  loss=3.908108  |====================|  [  12]    sgd  loss=3.907788  |====================|2026-08-27 18:14:53.397 [INFO] New best overall loss: 3.907050
-  [  13]   eval  loss=3.907788  |====================|  [  13]    sgd  loss=3.907050  |====================|  [  14]   eval  loss=3.907050  |====================|  [  14]    sgd  loss=3.907059  |====================|2026-08-27 18:21:06.076 [INFO] New best overall loss: 3.906804
-  [  15]   eval  loss=3.907059  |====================|  [  15]    sgd  loss=3.906804  |====================|2026-08-27 18:23:46.326 [INFO] New best overall loss: 3.905823
-  [  16]   eval  loss=3.906804  |====================|  [  16]    sgd  loss=3.905823  |====================|  [  17]   eval  loss=3.905823  |====================|  [  17]    sgd  loss=3.905875  |====================|2026-08-27 18:28:37.093 [INFO] New best overall loss: 3.905459
-  [  18]   eval  loss=3.905875  |====================|  [  18]    sgd  loss=3.905459  |====================|  [  19]   eval  loss=3.905459  |====================|  [  19]    sgd  loss=3.905878  |====================|  [  20]   eval  loss=3.905878  |====================|  [  20]    sgd  loss=3.905641  |====================|2026-08-27 18:35:51.771 [INFO] New best overall loss: 3.905162
-  [  21]   eval  loss=3.905641  |====================|  [  21]    sgd  loss=3.905162  |====================|2026-08-27 18:35:51.771 [INFO] Plateau triggered at epoch 21 (counter=5, loss=3.905162)
-2026-08-27 18:46:35.332 [INFO] [PROFILE] F=32 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=-0.0050 max_coef[i=397]=-0.0588 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
-2026-08-27 18:46:35.354 [INFO] IFELSE set-guided split: thr=-1.704229 (SSE reduction 0.000000 over 13065 paired samples)
-2026-08-27 18:46:35.354 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457781 var_r=0.015148)
-2026-08-27 18:46:35.358 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.704229 a=node=2 b=node=3)
-2026-08-27 18:46:35.358 [INFO] MULTIPLY sources from poly fit: input=14*input=22 (max_coef_idx=397)
-2026-08-27 18:46:35.368 [INFO] Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input=14*input=22, poly_r2=-0.000000)
-2026-08-27 19:50:38.460 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 19:50:38.475 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 19:50:38.926 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-27 19:50:53.259 [INFO] [PROFILE] F=32 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=-0.0050 max_coef[i=397]=-0.0588 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
-2026-08-27 19:50:53.289 [INFO] IFELSE set-guided split: thr=-1.704229 (SSE reduction 0.000000 over 13065 paired samples)
-2026-08-27 19:50:53.289 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457781 var_r=0.015148)
-2026-08-27 19:50:53.293 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.704229 a=node=2 b=node=3)
-2026-08-27 19:50:53.293 [INFO] MULTIPLY sources from poly fit: input=14*input=22 (max_coef_idx=397)
-2026-08-27 19:50:53.301 [INFO] Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input=14*input=22, poly_r2=-0.000000)

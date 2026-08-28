@@ -831,6 +831,19 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                     for (size_t i = 0; i < results.size(); ++i) {
                           if (!results[i].acceptable) {
                               stats_.failed_commits++;
+                              // M5.7 diagnostics: evidence-candidate rejections
+                              // are INFO-level — measured-structure commits
+                              // failing is a signal, not noise (t22 arc).
+                              if (specs[i].evidence) {
+                                  Logger::info("  [EVIDENCE-REJECT] rank="
+                                              + std::to_string(results[i].hyp_rank)
+                                              + " type="
+                                              + (results[i].hyp_type >= 0
+                                                 ? hyp_names[results[i].hyp_type]
+                                                 : std::string("RECALL"))
+                                              + " val=" + std::to_string(results[i].val_loss)
+                                              + " REJECT — " + results[i].reject_reason);
+                              }
                               Logger::verbose("  rank=" + std::to_string(results[i].hyp_rank)
                                              + " REJECT — " + results[i].reject_reason);
                               // M1.1: record the failure for the failure
@@ -6289,6 +6302,16 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             || hyp_type == static_cast<int>(Hypothesis::COMPOUND_SIN_PRODUCT)
             || hyp_type == static_cast<int>(Hypothesis::EMBED_TRUNK)) {
             train_cfg.learning_rate *= config::SHADOW_COMPOUND_LR_MULTIPLIER;
+        }
+        // M5.7: evidence-boundary shadows train longer (3x) — without the
+        // compound LR reduction the fresh split gates diverge during the
+        // extended budget and the drift guard rejects a candidate whose
+        // val is already perfect (measured on t22: val=0.0, shadow_train
+        // 0.198 vs baseline 0.009 — pure LR blowup, not structure).
+        // The structure is MEASURED — only the gates need learning, so a
+        // deep LR cut protects the converged weights while gates adapt.
+        if (structural_evidence) {
+            train_cfg.learning_rate *= 0.1;
         }
         train_cfg.gradient_clip = cfg_.sgd_gradient_clip;
         train_cfg.momentum = cfg_.sgd_momentum;

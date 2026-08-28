@@ -317,6 +317,25 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   rejected); only PRESERVE (both-branches) fits windowed targets.
   Evidence plumbing kept in aria14 (inert without plateaus; t21/d1/d9
   sentinels pass).]
+  [ROOT CAUSE FOUND 2026-08-28 (aria14 + EVIDENCE-REJECT logging): the
+  boundary candidates' VAL IS ALREADY PERFECT (val=0.000000 on the
+  masked graph — the structure is correct!) but the shadow TRAINING
+  diverges: shadow_train 0.17-0.28 vs baseline 0.009, rejected by the
+  drift guard. SGD on the discontinuous masked graph (IFELSE boundary
+  + fresh gates + momentum) breaks the in-window fit during the
+  extended budget; LR reduction does not stabilize it. This is a
+  TRAINING-STABILITY problem (same family as the stripes-arc gate
+  training), NOT validation economics as first hypothesized. Fix
+  direction: freeze non-gate weights during boundary-shadow training,
+  or per-gate gradient clipping, or train gates only (structure is
+  measured — only the gates need learning).]
+  [CONFIRMED + PARTIAL FIX 2026-08-28: evidence shadows at 0.1x LR —
+  the diagnosis was right. First-ever IFELSE_BOUNDARY_SPLIT commit on
+  t22 (val 0.0055, drift guard passed); R2 0.9518 -> 0.9610. Still
+  below 0.99: one boundary is not enough (PRESERVE multi-split chains
+  still diverge at 0.27 train — momentum suspected), and the interior
+  sine precision remains the original limiter. Sentinels clean (t21
+  0.9921, d1 0.9977, d9 silent).]
 
 ### 1.5 Failure-library hypothesis versioning [DONE 2026-08-27 in aria12: FAILURE_FAMILY_VERSION=1 written per record; legacy (v0/unversioned) records discount to 25% penalty; loader back-compat]
 Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures
