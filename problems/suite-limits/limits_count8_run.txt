@@ -6,119 +6,119 @@ Loading dataset from: bench_count8.csv
   Loaded 1499 samples
   Train: 1199  Validation: 300
 
-  Loaded subgraph library: 39 entries
-  Loaded failure library: 1391 records
+  Loaded subgraph library: 49 entries
+  Loaded failure library: 2483 records
 Starting evolution...
-2026-08-27 17:51:57.733 [INFO] New best overall loss: 0.000221
-  [   1]   eval  loss=0.408106  |====|  [   1]    sgd  loss=0.000221  ||2026-08-27 17:51:57.831 [INFO] New best overall loss: 0.000095
-  [   2]   eval  loss=0.000221  ||  [   2]    sgd  loss=0.000095  ||2026-08-27 17:51:57.899 [INFO] New best overall loss: 0.000074
-  [   3]   eval  loss=0.000095  ||  [   3]    sgd  loss=0.000074  ||2026-08-27 17:51:57.967 [INFO] New best overall loss: 0.000058
-  [   4]   eval  loss=0.000074  ||  [   4]    sgd  loss=0.000058  ||2026-08-27 17:51:58.037 [INFO] New best overall loss: 0.000052
-  [   5]   eval  loss=0.000058  ||  [   5]    sgd  loss=0.000052  ||2026-08-27 17:51:58.105 [INFO] New best overall loss: 0.000044
-  [   6]   eval  loss=0.000052  ||  [   6]    sgd  loss=0.000044  ||2026-08-27 17:51:58.172 [INFO] New best overall loss: 0.000041
-  [   7]   eval  loss=0.000044  ||  [   7]    sgd  loss=0.000041  ||2026-08-27 17:51:58.242 [INFO] New best overall loss: 0.000036
-  [   8]   eval  loss=0.000041  ||  [   8]    sgd  loss=0.000036  ||2026-08-27 17:51:58.313 [INFO] New best overall loss: 0.000035
-  [   9]   eval  loss=0.000036  ||  [   9]    sgd  loss=0.000035  ||2026-08-27 17:51:58.381 [INFO] New best overall loss: 0.000032
-  [  10]   eval  loss=0.000035  ||  [  10]    sgd  loss=0.000032  ||2026-08-27 17:51:58.448 [INFO] New best overall loss: 0.000030
-  [  11]   eval  loss=0.000032  ||  [  11]    sgd  loss=0.000030  ||2026-08-27 17:51:58.522 [INFO] New best overall loss: 0.000028
-  [  12]   eval  loss=0.000030  ||  [  12]    sgd  loss=0.000028  ||2026-08-27 17:51:58.596 [INFO] New best overall loss: 0.000027
-  [  13]   eval  loss=0.000028  ||  [  13]    sgd  loss=0.000027  ||2026-08-27 17:51:58.663 [INFO] New best overall loss: 0.000026
-  [  14]   eval  loss=0.000027  ||  [  14]    sgd  loss=0.000026  ||2026-08-27 17:51:58.732 [INFO] New best overall loss: 0.000025
-  [  15]   eval  loss=0.000026  ||  [  15]    sgd  loss=0.000025  ||2026-08-27 17:51:58.803 [INFO] New best overall loss: 0.000023
-  [  16]   eval  loss=0.000025  ||  [  16]    sgd  loss=0.000023  ||2026-08-27 17:51:58.871 [INFO] New best overall loss: 0.000022
-  [  17]   eval  loss=0.000023  ||  [  17]    sgd  loss=0.000022  ||2026-08-27 17:51:58.942 [INFO] New best overall loss: 0.000021
-  [  18]   eval  loss=0.000022  ||  [  18]    sgd  loss=0.000021  ||2026-08-27 17:51:59.003 [INFO] New best overall loss: 0.000020
-  [  19]   eval  loss=0.000021  ||  [  19]    sgd  loss=0.000020  ||2026-08-27 17:51:59.074 [INFO] New best overall loss: 0.000020
-  [  20]   eval  loss=0.000020  ||  [  20]    sgd  loss=0.000020  ||2026-08-27 17:51:59.075 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
-2026-08-27 17:51:59.075 [INFO] Plateau triggered at epoch 20 (counter=0, loss=0.000020)
-2026-08-27 17:51:59.094 [INFO] Structural inability detected 鈥?surfacing bottleneck node 10 (blame=0.016258)
-2026-08-27 17:51:59.096 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:51:59.096 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:51:59.096 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
-2026-08-27 17:51:59.111 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-2026-08-27 17:52:01.878 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.000007 train_loss=0.000006 new train_loss=0.000006
-2026-08-27 17:52:01.878 [INFO] Plateau state reset 鈥?best_phase2=0.000006
-2026-08-27 17:52:01.878 [INFO] Plateau state reset — best_phase2=0.000006
-2026-08-27 17:52:01.968 [INFO] New best overall loss: 0.000005
-  [  21]   eval  loss=0.000006  ||  [  21]    sgd  loss=0.000005  ||2026-08-27 17:52:02.053 [INFO] New best overall loss: 0.000004
-  [  22]   eval  loss=0.000005  ||  [  22]    sgd  loss=0.000004  ||  [  23]   eval  loss=0.000004  ||  [  23]    sgd  loss=0.000005  ||  [  24]   eval  loss=0.000005  ||  [  24]    sgd  loss=0.000007  ||  [  25]   eval  loss=0.000007  ||  [  25]    sgd  loss=0.000008  ||  [  26]   eval  loss=0.000008  ||  [  26]    sgd  loss=0.000009  ||  [  27]   eval  loss=0.000009  ||  [  27]    sgd  loss=0.000010  ||  [  28]   eval  loss=0.000010  ||  [  28]    sgd  loss=0.000011  ||  [  29]   eval  loss=0.000011  ||  [  29]    sgd  loss=0.000012  ||  [  30]   eval  loss=0.000012  ||  [  30]    sgd  loss=0.000012  ||  [  31]   eval  loss=0.000012  ||  [  31]    sgd  loss=0.000013  ||  [  32]   eval  loss=0.000013  ||  [  32]    sgd  loss=0.000013  ||  [  33]   eval  loss=0.000013  ||  [  33]    sgd  loss=0.000013  ||  [  34]   eval  loss=0.000013  ||  [  34]    sgd  loss=0.000013  ||  [  35]   eval  loss=0.000013  ||  [  35]    sgd  loss=0.000012  ||  [  36]   eval  loss=0.000012  ||  [  36]    sgd  loss=0.000012  ||  [  37]   eval  loss=0.000012  ||  [  37]    sgd  loss=0.000012  ||  [  38]   eval  loss=0.000012  ||  [  38]    sgd  loss=0.000012  ||  [  39]   eval  loss=0.000012  ||  [  39]    sgd  loss=0.000011  ||  [  40]   eval  loss=0.000011  ||  [  40]    sgd  loss=0.000011  ||2026-08-27 17:52:03.592 [INFO] Forced structural trigger at epoch 40 (epochs since last structural: 20)
-2026-08-27 17:52:03.592 [INFO] Plateau triggered at epoch 40 (counter=0, loss=0.000011)
-2026-08-27 17:52:03.613 [INFO] Structural inability detected 鈥?surfacing bottleneck node 11 (blame=0.003972)
-2026-08-27 17:52:03.615 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:52:03.615 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:52:03.615 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
-2026-08-27 17:52:03.630 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-2026-08-27 17:52:07.267 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.000006 train_loss=0.000004 new train_loss=0.000005
-2026-08-27 17:52:07.268 [INFO] Plateau state reset 鈥?best_phase2=0.000005
-2026-08-27 17:52:07.268 [INFO] Plateau state reset — best_phase2=0.000005
-2026-08-27 17:52:07.378 [INFO] New best overall loss: 0.000003
-  [  41]   eval  loss=0.000005  ||  [  41]    sgd  loss=0.000003  ||  [  42]   eval  loss=0.000003  ||  [  42]    sgd  loss=0.000004  ||  [  43]   eval  loss=0.000004  ||  [  43]    sgd  loss=0.000006  ||  [  44]   eval  loss=0.000006  ||  [  44]    sgd  loss=0.000007  ||  [  45]   eval  loss=0.000007  ||  [  45]    sgd  loss=0.000007  ||  [  46]   eval  loss=0.000007  ||  [  46]    sgd  loss=0.000008  ||  [  47]   eval  loss=0.000008  ||  [  47]    sgd  loss=0.000008  ||  [  48]   eval  loss=0.000008  ||  [  48]    sgd  loss=0.000009  ||  [  49]   eval  loss=0.000009  ||  [  49]    sgd  loss=0.000009  ||  [  50]   eval  loss=0.000009  ||  [  50]    sgd  loss=0.000009  ||  [  51]   eval  loss=0.000009  ||  [  51]    sgd  loss=0.000009  ||  [  52]   eval  loss=0.000009  ||  [  52]    sgd  loss=0.000009  ||  [  53]   eval  loss=0.000009  ||  [  53]    sgd  loss=0.000009  ||  [  54]   eval  loss=0.000009  ||  [  54]    sgd  loss=0.000008  ||  [  55]   eval  loss=0.000008  ||  [  55]    sgd  loss=0.000008  ||  [  56]   eval  loss=0.000008  ||  [  56]    sgd  loss=0.000008  ||  [  57]   eval  loss=0.000008  ||  [  57]    sgd  loss=0.000008  ||  [  58]   eval  loss=0.000008  ||  [  58]    sgd  loss=0.000008  ||  [  59]   eval  loss=0.000008  ||  [  59]    sgd  loss=0.000008  ||  [  60]   eval  loss=0.000008  ||  [  60]    sgd  loss=0.000008  ||2026-08-27 17:52:09.415 [INFO] Forced structural trigger at epoch 60 (epochs since last structural: 20)
-2026-08-27 17:52:09.415 [INFO] Plateau triggered at epoch 60 (counter=0, loss=0.000008)
-2026-08-27 17:52:09.443 [INFO] Structural inability detected 鈥?surfacing bottleneck node 13 (blame=0.001584)
-2026-08-27 17:52:09.445 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:52:09.445 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:52:09.445 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
-2026-08-27 17:52:09.460 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-2026-08-27 17:52:13.822 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.000006 train_loss=0.000004 new train_loss=0.000004
-2026-08-27 17:52:13.823 [INFO] Plateau state reset 鈥?best_phase2=0.000004
-2026-08-27 17:52:13.823 [INFO] Plateau state reset — best_phase2=0.000004
-2026-08-27 17:52:13.962 [INFO] New best overall loss: 0.000003
-  [  61]   eval  loss=0.000004  ||  [  61]    sgd  loss=0.000003  ||  [  62]   eval  loss=0.000003  ||  [  62]    sgd  loss=0.000004  ||  [  63]   eval  loss=0.000004  ||  [  63]    sgd  loss=0.000005  ||  [  64]   eval  loss=0.000005  ||  [  64]    sgd  loss=0.000006  ||  [  65]   eval  loss=0.000006  ||  [  65]    sgd  loss=0.000007  ||  [  66]   eval  loss=0.000007  ||  [  66]    sgd  loss=0.000007  ||  [  67]   eval  loss=0.000007  ||  [  67]    sgd  loss=0.000007  ||  [  68]   eval  loss=0.000007  ||  [  68]    sgd  loss=0.000007  ||  [  69]   eval  loss=0.000007  ||  [  69]    sgd  loss=0.000008  ||  [  70]   eval  loss=0.000008  ||  [  70]    sgd  loss=0.000008  ||  [  71]   eval  loss=0.000008  ||  [  71]    sgd  loss=0.000008  ||  [  72]   eval  loss=0.000008  ||  [  72]    sgd  loss=0.000008  ||  [  73]   eval  loss=0.000008  ||  [  73]    sgd  loss=0.000007  ||  [  74]   eval  loss=0.000007  ||  [  74]    sgd  loss=0.000007  ||  [  75]   eval  loss=0.000007  ||  [  75]    sgd  loss=0.000007  ||  [  76]   eval  loss=0.000007  ||  [  76]    sgd  loss=0.000007  ||  [  77]   eval  loss=0.000007  ||  [  77]    sgd  loss=0.000007  ||  [  78]   eval  loss=0.000007  ||  [  78]    sgd  loss=0.000007  ||  [  79]   eval  loss=0.000007  ||  [  79]    sgd  loss=0.000007  ||  [  80]   eval  loss=0.000007  ||  [  80]    sgd  loss=0.000007  ||2026-08-27 17:52:16.406 [INFO] Forced structural trigger at epoch 80 (epochs since last structural: 20)
-2026-08-27 17:52:16.406 [INFO] Plateau triggered at epoch 80 (counter=0, loss=0.000007)
-2026-08-27 17:52:16.439 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.000863)
-2026-08-27 17:52:16.441 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:52:16.441 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:52:16.458 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-2026-08-27 17:52:17.677 [INFO]   COMMIT rank=3 type=NEURON_TANH_INJECTION val_loss=0.000007 train_loss=0.000004 new train_loss=0.000004
-2026-08-27 17:52:17.677 [INFO] Plateau state reset 鈥?best_phase2=0.000004
-2026-08-27 17:52:17.677 [INFO] Plateau state reset — best_phase2=0.000004
-2026-08-27 17:52:17.677 [INFO] Suppressing hypothesis type 2 (3 consecutive commits without meaningful improvement)
-  [  81]   eval  loss=0.000004  ||  [  81]    sgd  loss=0.000003  ||  [  82]   eval  loss=0.000003  ||  [  82]    sgd  loss=0.000004  ||  [  83]   eval  loss=0.000004  ||  [  83]    sgd  loss=0.000004  ||  [  84]   eval  loss=0.000004  ||  [  84]    sgd  loss=0.000005  ||  [  85]   eval  loss=0.000005  ||  [  85]    sgd  loss=0.000003  ||  [  86]   eval  loss=0.000003  ||  [  86]    sgd  loss=0.000004  ||  [  87]   eval  loss=0.000004  ||  [  87]    sgd  loss=0.000003  ||  [  88]   eval  loss=0.000003  ||  [  88]    sgd  loss=0.000003  ||  [  89]   eval  loss=0.000003  ||  [  89]    sgd  loss=0.000003  ||2026-08-27 17:52:19.035 [INFO] New best overall loss: 0.000003
-  [  90]   eval  loss=0.000003  ||  [  90]    sgd  loss=0.000003  ||2026-08-27 17:52:19.160 [INFO] New best overall loss: 0.000003
-  [  91]   eval  loss=0.000003  ||  [  91]    sgd  loss=0.000003  ||2026-08-27 17:52:19.283 [INFO] New best overall loss: 0.000003
-  [  92]   eval  loss=0.000003  ||  [  92]    sgd  loss=0.000003  ||2026-08-27 17:52:19.405 [INFO] New best overall loss: 0.000002
-  [  93]   eval  loss=0.000003  ||  [  93]    sgd  loss=0.000002  ||  [  94]   eval  loss=0.000002  ||  [  94]    sgd  loss=0.000003  ||  [  95]   eval  loss=0.000003  ||  [  95]    sgd  loss=0.000002  ||  [  96]   eval  loss=0.000002  ||  [  96]    sgd  loss=0.000002  ||  [  97]   eval  loss=0.000002  ||  [  97]    sgd  loss=0.000002  ||2026-08-27 17:52:20.057 [INFO] New best overall loss: 0.000002
-  [  98]   eval  loss=0.000002  ||  [  98]    sgd  loss=0.000002  ||2026-08-27 17:52:20.219 [INFO] New best overall loss: 0.000002
-  [  99]   eval  loss=0.000002  ||  [  99]    sgd  loss=0.000002  ||2026-08-27 17:52:20.362 [INFO] New best overall loss: 0.000002
-  [ 100]   eval  loss=0.000002  ||  [ 100]    sgd  loss=0.000002  ||2026-08-27 17:52:20.362 [INFO] Forced structural trigger at epoch 100 (epochs since last structural: 20)
-2026-08-27 17:52:20.362 [INFO] Plateau triggered at epoch 100 (counter=0, loss=0.000002)
-2026-08-27 17:52:20.399 [INFO] Structural inability detected 鈥?surfacing bottleneck node 18 (blame=0.004000)
-2026-08-27 17:52:20.403 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:52:20.403 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:52:20.416 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-2026-08-27 17:52:21.431 [INFO]   COMMIT rank=0 type=MULTIPLY_INJECTION val_loss=0.000004 train_loss=0.000003 new train_loss=0.000003
-2026-08-27 17:52:21.431 [INFO] Plateau state reset 鈥?best_phase2=0.000003
-2026-08-27 17:52:21.431 [INFO] Plateau state reset — best_phase2=0.000003
-2026-08-27 17:52:21.582 [INFO] New best overall loss: 0.000002
-  [ 101]   eval  loss=0.000003  ||  [ 101]    sgd  loss=0.000002  ||2026-08-27 17:52:21.721 [INFO] New best overall loss: 0.000001
-  [ 102]   eval  loss=0.000002  ||  [ 102]    sgd  loss=0.000001  ||  [ 103]   eval  loss=0.000001  ||  [ 103]    sgd  loss=0.000002  ||  [ 104]   eval  loss=0.000002  ||  [ 104]    sgd  loss=0.000002  ||  [ 105]   eval  loss=0.000002  ||  [ 105]    sgd  loss=0.000002  ||  [ 106]   eval  loss=0.000002  ||  [ 106]    sgd  loss=0.000003  ||  [ 107]   eval  loss=0.000003  ||  [ 107]    sgd  loss=0.000002  ||  [ 108]   eval  loss=0.000002  ||  [ 108]    sgd  loss=0.000002  ||  [ 109]   eval  loss=0.000002  ||  [ 109]    sgd  loss=0.000002  ||  [ 110]   eval  loss=0.000002  ||  [ 110]    sgd  loss=0.000002  ||  [ 111]   eval  loss=0.000002  ||  [ 111]    sgd  loss=0.000002  ||  [ 112]   eval  loss=0.000002  ||  [ 112]    sgd  loss=0.000002  ||  [ 113]   eval  loss=0.000002  ||  [ 113]    sgd  loss=0.000002  ||  [ 114]   eval  loss=0.000002  ||  [ 114]    sgd  loss=0.000002  ||  [ 115]   eval  loss=0.000002  ||  [ 115]    sgd  loss=0.000002  ||  [ 116]   eval  loss=0.000002  ||  [ 116]    sgd  loss=0.000002  ||  [ 117]   eval  loss=0.000002  ||  [ 117]    sgd  loss=0.000002  ||  [ 118]   eval  loss=0.000002  ||  [ 118]    sgd  loss=0.000002  ||  [ 119]   eval  loss=0.000002  ||  [ 119]    sgd  loss=0.000002  ||  [ 120]   eval  loss=0.000002  ||  [ 120]    sgd  loss=0.000002  ||2026-08-27 17:52:24.303 [INFO] Forced structural trigger at epoch 120 (epochs since last structural: 20)
-2026-08-27 17:52:24.303 [INFO] Plateau triggered at epoch 120 (counter=2, loss=0.000002)
-2026-08-27 17:52:24.353 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:52:24.353 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:52:24.353 [INFO] MULTIPLY dedup: switching to input=3^2
-2026-08-27 17:52:24.369 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-  [ 121]   eval  loss=0.000002  ||  [ 121]    sgd  loss=0.000002  ||2026-08-27 17:52:25.739 [INFO] Forced structural trigger at epoch 121 (epochs since last structural: 21)
-2026-08-27 17:52:25.740 [INFO] Plateau triggered at epoch 121 (counter=3, loss=0.000002)
-2026-08-27 17:52:25.785 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:52:25.785 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:52:25.785 [INFO] MULTIPLY dedup: switching to input=3^2
-2026-08-27 17:52:25.800 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-2026-08-27 17:52:26.912 [INFO]   COMMIT rank=2 type=IFELSE_BOUNDARY_SPLIT val_loss=0.000004 train_loss=0.000002 new train_loss=0.000002
-2026-08-27 17:52:26.912 [INFO] Plateau state reset 鈥?best_phase2=0.000002
-2026-08-27 17:52:26.912 [INFO] Plateau state reset — best_phase2=0.000002
-2026-08-27 17:52:27.072 [INFO] New best overall loss: 0.000001
-  [ 122]   eval  loss=0.000002  ||  [ 122]    sgd  loss=0.000001  ||  [ 123]   eval  loss=0.000001  ||  [ 123]    sgd  loss=0.000001  ||  [ 124]   eval  loss=0.000001  ||  [ 124]    sgd  loss=0.000002  ||  [ 125]   eval  loss=0.000002  ||  [ 125]    sgd  loss=0.000002  ||  [ 126]   eval  loss=0.000002  ||  [ 126]    sgd  loss=0.000002  ||  [ 127]   eval  loss=0.000002  ||  [ 127]    sgd  loss=0.000002  ||  [ 128]   eval  loss=0.000002  ||  [ 128]    sgd  loss=0.000002  ||  [ 129]   eval  loss=0.000002  ||  [ 129]    sgd  loss=0.000002  ||  [ 130]   eval  loss=0.000002  ||  [ 130]    sgd  loss=0.000002  ||  [ 131]   eval  loss=0.000002  ||  [ 131]    sgd  loss=0.000002  ||  [ 132]   eval  loss=0.000002  ||  [ 132]    sgd  loss=0.000002  ||  [ 133]   eval  loss=0.000002  ||  [ 133]    sgd  loss=0.000002  ||  [ 134]   eval  loss=0.000002  ||  [ 134]    sgd  loss=0.000002  ||  [ 135]   eval  loss=0.000002  ||  [ 135]    sgd  loss=0.000002  ||  [ 136]   eval  loss=0.000002  ||  [ 136]    sgd  loss=0.000002  ||  [ 137]   eval  loss=0.000002  ||  [ 137]    sgd  loss=0.000002  ||  [ 138]   eval  loss=0.000002  ||  [ 138]    sgd  loss=0.000002  ||  [ 139]   eval  loss=0.000002  ||  [ 139]    sgd  loss=0.000002  ||  [ 140]   eval  loss=0.000002  ||  [ 140]    sgd  loss=0.000002  ||  [ 141]   eval  loss=0.000002  ||  [ 141]    sgd  loss=0.000002  ||2026-08-27 17:52:30.124 [INFO] Forced structural trigger at epoch 141 (epochs since last structural: 20)
-2026-08-27 17:52:30.124 [INFO] Plateau triggered at epoch 141 (counter=19, loss=0.000002)
-2026-08-27 17:52:30.175 [INFO] Structural inability detected 鈥?surfacing bottleneck node 10 (blame=0.003595)
-2026-08-27 17:52:30.177 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
-2026-08-27 17:52:30.177 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
-2026-08-27 17:52:30.178 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
-2026-08-27 17:52:30.178 [INFO] MULTIPLY dedup: switching to input=3^2
-2026-08-27 17:52:30.193 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
-2026-08-27 17:52:36.505 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.000004 train_loss=0.000002 new train_loss=0.000003
-2026-08-27 17:52:36.505 [INFO] Plateau state reset 鈥?best_phase2=0.000003
-2026-08-27 17:52:36.505 [INFO] Plateau state reset — best_phase2=0.000003
-  [ 142]   eval  loss=0.000003  ||  [ 142]    sgd  loss=0.000001  ||  [ 143]   eval  loss=0.000001  ||  [ 143]    sgd  loss=0.000001  ||  [ 144]   eval  loss=0.000001  ||  [ 144]    sgd  loss=0.000002  ||  [ 145]   eval  loss=0.000002  ||  [ 145]    sgd  loss=0.000002  ||  [ 146]   eval  loss=0.000002  ||  [ 146]    sgd  loss=0.000002  ||  [ 147]   eval  loss=0.000002  ||  [ 147]    sgd  loss=0.000002  ||  [ 148]   eval  loss=0.000002  ||  [ 148]    sgd  loss=0.000002  ||  [ 149]   eval  loss=0.000002  ||  [ 149]    sgd  loss=0.000002  ||  [ 150]   eval  loss=0.000002  ||  [ 150]    sgd  loss=0.000002  ||2026-08-27 17:52:37.912 [INFO] Restored best-val graph snapshot (val=0.000004, train=0.000002)
+2026-08-28 21:07:29.376 [INFO] New best overall loss: 0.000221
+  [   1]   eval  loss=0.408106  |====|  [   1]    sgd  loss=0.000221  ||2026-08-28 21:07:29.430 [INFO] New best overall loss: 0.000095
+  [   2]   eval  loss=0.000221  ||  [   2]    sgd  loss=0.000095  ||2026-08-28 21:07:29.472 [INFO] New best overall loss: 0.000074
+  [   3]   eval  loss=0.000095  ||  [   3]    sgd  loss=0.000074  ||2026-08-28 21:07:29.514 [INFO] New best overall loss: 0.000058
+  [   4]   eval  loss=0.000074  ||  [   4]    sgd  loss=0.000058  ||2026-08-28 21:07:29.554 [INFO] New best overall loss: 0.000052
+  [   5]   eval  loss=0.000058  ||  [   5]    sgd  loss=0.000052  ||2026-08-28 21:07:29.598 [INFO] New best overall loss: 0.000044
+  [   6]   eval  loss=0.000052  ||  [   6]    sgd  loss=0.000044  ||2026-08-28 21:07:29.639 [INFO] New best overall loss: 0.000041
+  [   7]   eval  loss=0.000044  ||  [   7]    sgd  loss=0.000041  ||2026-08-28 21:07:29.678 [INFO] New best overall loss: 0.000036
+  [   8]   eval  loss=0.000041  ||  [   8]    sgd  loss=0.000036  ||2026-08-28 21:07:29.719 [INFO] New best overall loss: 0.000035
+  [   9]   eval  loss=0.000036  ||  [   9]    sgd  loss=0.000035  ||2026-08-28 21:07:29.761 [INFO] New best overall loss: 0.000032
+  [  10]   eval  loss=0.000035  ||  [  10]    sgd  loss=0.000032  ||2026-08-28 21:07:29.805 [INFO] New best overall loss: 0.000030
+  [  11]   eval  loss=0.000032  ||  [  11]    sgd  loss=0.000030  ||2026-08-28 21:07:29.847 [INFO] New best overall loss: 0.000028
+  [  12]   eval  loss=0.000030  ||  [  12]    sgd  loss=0.000028  ||2026-08-28 21:07:29.894 [INFO] New best overall loss: 0.000027
+  [  13]   eval  loss=0.000028  ||  [  13]    sgd  loss=0.000027  ||2026-08-28 21:07:29.939 [INFO] New best overall loss: 0.000026
+  [  14]   eval  loss=0.000027  ||  [  14]    sgd  loss=0.000026  ||2026-08-28 21:07:29.988 [INFO] New best overall loss: 0.000025
+  [  15]   eval  loss=0.000026  ||  [  15]    sgd  loss=0.000025  ||2026-08-28 21:07:30.036 [INFO] New best overall loss: 0.000023
+  [  16]   eval  loss=0.000025  ||  [  16]    sgd  loss=0.000023  ||2026-08-28 21:07:30.087 [INFO] New best overall loss: 0.000022
+  [  17]   eval  loss=0.000023  ||  [  17]    sgd  loss=0.000022  ||2026-08-28 21:07:30.130 [INFO] New best overall loss: 0.000021
+  [  18]   eval  loss=0.000022  ||  [  18]    sgd  loss=0.000021  ||2026-08-28 21:07:30.173 [INFO] New best overall loss: 0.000020
+  [  19]   eval  loss=0.000021  ||  [  19]    sgd  loss=0.000020  ||2026-08-28 21:07:30.213 [INFO] New best overall loss: 0.000020
+  [  20]   eval  loss=0.000020  ||  [  20]    sgd  loss=0.000020  ||2026-08-28 21:07:30.214 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-08-28 21:07:30.214 [INFO] Plateau triggered at epoch 20 (counter=0, loss=0.000020)
+2026-08-28 21:07:30.227 [INFO] Structural inability detected 鈥?surfacing bottleneck node 10 (blame=0.016258)
+2026-08-28 21:07:30.228 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:07:30.228 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:07:30.228 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
+2026-08-28 21:07:30.236 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-28 21:07:31.543 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.000007 train_loss=0.000006 new train_loss=0.000006
+2026-08-28 21:07:31.543 [INFO] Plateau state reset 鈥?best_phase2=0.000006
+2026-08-28 21:07:31.543 [INFO] Plateau state reset — best_phase2=0.000006
+2026-08-28 21:07:31.608 [INFO] New best overall loss: 0.000005
+  [  21]   eval  loss=0.000006  ||  [  21]    sgd  loss=0.000005  ||2026-08-28 21:07:31.658 [INFO] New best overall loss: 0.000004
+  [  22]   eval  loss=0.000005  ||  [  22]    sgd  loss=0.000004  ||  [  23]   eval  loss=0.000004  ||  [  23]    sgd  loss=0.000005  ||  [  24]   eval  loss=0.000005  ||  [  24]    sgd  loss=0.000007  ||  [  25]   eval  loss=0.000007  ||  [  25]    sgd  loss=0.000008  ||  [  26]   eval  loss=0.000008  ||  [  26]    sgd  loss=0.000009  ||  [  27]   eval  loss=0.000009  ||  [  27]    sgd  loss=0.000010  ||  [  28]   eval  loss=0.000010  ||  [  28]    sgd  loss=0.000011  ||  [  29]   eval  loss=0.000011  ||  [  29]    sgd  loss=0.000012  ||  [  30]   eval  loss=0.000012  ||  [  30]    sgd  loss=0.000012  ||  [  31]   eval  loss=0.000012  ||  [  31]    sgd  loss=0.000013  ||  [  32]   eval  loss=0.000013  ||  [  32]    sgd  loss=0.000013  ||  [  33]   eval  loss=0.000013  ||  [  33]    sgd  loss=0.000013  ||  [  34]   eval  loss=0.000013  ||  [  34]    sgd  loss=0.000013  ||  [  35]   eval  loss=0.000013  ||  [  35]    sgd  loss=0.000012  ||  [  36]   eval  loss=0.000012  ||  [  36]    sgd  loss=0.000012  ||  [  37]   eval  loss=0.000012  ||  [  37]    sgd  loss=0.000012  ||  [  38]   eval  loss=0.000012  ||  [  38]    sgd  loss=0.000012  ||  [  39]   eval  loss=0.000012  ||  [  39]    sgd  loss=0.000011  ||  [  40]   eval  loss=0.000011  ||  [  40]    sgd  loss=0.000011  ||2026-08-28 21:07:32.833 [INFO] Forced structural trigger at epoch 40 (epochs since last structural: 20)
+2026-08-28 21:07:32.833 [INFO] Plateau triggered at epoch 40 (counter=0, loss=0.000011)
+2026-08-28 21:07:32.864 [INFO] Structural inability detected 鈥?surfacing bottleneck node 11 (blame=0.003972)
+2026-08-28 21:07:32.866 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:07:32.866 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:07:32.866 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
+2026-08-28 21:07:32.881 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-28 21:07:36.776 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.000006 train_loss=0.000004 new train_loss=0.000005
+2026-08-28 21:07:36.776 [INFO] Plateau state reset 鈥?best_phase2=0.000005
+2026-08-28 21:07:36.777 [INFO] Plateau state reset — best_phase2=0.000005
+2026-08-28 21:07:37.103 [INFO] New best overall loss: 0.000003
+  [  41]   eval  loss=0.000005  ||  [  41]    sgd  loss=0.000003  ||  [  42]   eval  loss=0.000003  ||  [  42]    sgd  loss=0.000004  ||  [  43]   eval  loss=0.000004  ||  [  43]    sgd  loss=0.000006  ||  [  44]   eval  loss=0.000006  ||  [  44]    sgd  loss=0.000007  ||  [  45]   eval  loss=0.000007  ||  [  45]    sgd  loss=0.000007  ||  [  46]   eval  loss=0.000007  ||  [  46]    sgd  loss=0.000008  ||  [  47]   eval  loss=0.000008  ||  [  47]    sgd  loss=0.000008  ||  [  48]   eval  loss=0.000008  ||  [  48]    sgd  loss=0.000009  ||  [  49]   eval  loss=0.000009  ||  [  49]    sgd  loss=0.000009  ||  [  50]   eval  loss=0.000009  ||  [  50]    sgd  loss=0.000009  ||  [  51]   eval  loss=0.000009  ||  [  51]    sgd  loss=0.000009  ||  [  52]   eval  loss=0.000009  ||  [  52]    sgd  loss=0.000009  ||  [  53]   eval  loss=0.000009  ||  [  53]    sgd  loss=0.000009  ||  [  54]   eval  loss=0.000009  ||  [  54]    sgd  loss=0.000008  ||  [  55]   eval  loss=0.000008  ||  [  55]    sgd  loss=0.000008  ||  [  56]   eval  loss=0.000008  ||  [  56]    sgd  loss=0.000008  ||  [  57]   eval  loss=0.000008  ||  [  57]    sgd  loss=0.000008  ||  [  58]   eval  loss=0.000008  ||  [  58]    sgd  loss=0.000008  ||  [  59]   eval  loss=0.000008  ||  [  59]    sgd  loss=0.000008  ||  [  60]   eval  loss=0.000008  ||  [  60]    sgd  loss=0.000008  ||2026-08-28 21:07:41.346 [INFO] Forced structural trigger at epoch 60 (epochs since last structural: 20)
+2026-08-28 21:07:41.346 [INFO] Plateau triggered at epoch 60 (counter=0, loss=0.000008)
+2026-08-28 21:07:41.395 [INFO] Structural inability detected 鈥?surfacing bottleneck node 13 (blame=0.001584)
+2026-08-28 21:07:41.397 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:07:41.397 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:07:41.397 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
+2026-08-28 21:07:41.415 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-28 21:07:46.502 [INFO]   COMMIT rank=5 type=NEURON_TANH_INJECTION val_loss=0.000006 train_loss=0.000004 new train_loss=0.000004
+2026-08-28 21:07:46.502 [INFO] Plateau state reset 鈥?best_phase2=0.000004
+2026-08-28 21:07:46.503 [INFO] Plateau state reset — best_phase2=0.000004
+2026-08-28 21:07:46.661 [INFO] New best overall loss: 0.000003
+  [  61]   eval  loss=0.000004  ||  [  61]    sgd  loss=0.000003  ||  [  62]   eval  loss=0.000003  ||  [  62]    sgd  loss=0.000004  ||  [  63]   eval  loss=0.000004  ||  [  63]    sgd  loss=0.000005  ||  [  64]   eval  loss=0.000005  ||  [  64]    sgd  loss=0.000006  ||  [  65]   eval  loss=0.000006  ||  [  65]    sgd  loss=0.000007  ||  [  66]   eval  loss=0.000007  ||  [  66]    sgd  loss=0.000007  ||  [  67]   eval  loss=0.000007  ||  [  67]    sgd  loss=0.000007  ||  [  68]   eval  loss=0.000007  ||  [  68]    sgd  loss=0.000007  ||  [  69]   eval  loss=0.000007  ||  [  69]    sgd  loss=0.000008  ||  [  70]   eval  loss=0.000008  ||  [  70]    sgd  loss=0.000008  ||  [  71]   eval  loss=0.000008  ||  [  71]    sgd  loss=0.000008  ||  [  72]   eval  loss=0.000008  ||  [  72]    sgd  loss=0.000008  ||  [  73]   eval  loss=0.000008  ||  [  73]    sgd  loss=0.000007  ||  [  74]   eval  loss=0.000007  ||  [  74]    sgd  loss=0.000007  ||  [  75]   eval  loss=0.000007  ||  [  75]    sgd  loss=0.000007  ||  [  76]   eval  loss=0.000007  ||  [  76]    sgd  loss=0.000007  ||  [  77]   eval  loss=0.000007  ||  [  77]    sgd  loss=0.000007  ||  [  78]   eval  loss=0.000007  ||  [  78]    sgd  loss=0.000007  ||  [  79]   eval  loss=0.000007  ||  [  79]    sgd  loss=0.000007  ||  [  80]   eval  loss=0.000007  ||  [  80]    sgd  loss=0.000007  ||2026-08-28 21:07:50.582 [INFO] Forced structural trigger at epoch 80 (epochs since last structural: 20)
+2026-08-28 21:07:50.582 [INFO] Plateau triggered at epoch 80 (counter=0, loss=0.000007)
+2026-08-28 21:07:50.630 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.000863)
+2026-08-28 21:07:50.631 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:07:50.632 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:07:50.647 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-28 21:07:52.724 [INFO]   COMMIT rank=3 type=NEURON_TANH_INJECTION val_loss=0.000007 train_loss=0.000004 new train_loss=0.000004
+2026-08-28 21:07:52.725 [INFO] Plateau state reset 鈥?best_phase2=0.000004
+2026-08-28 21:07:52.725 [INFO] Plateau state reset — best_phase2=0.000004
+2026-08-28 21:07:52.725 [INFO] Suppressing hypothesis type 2 (3 consecutive commits without meaningful improvement)
+  [  81]   eval  loss=0.000004  ||  [  81]    sgd  loss=0.000003  ||  [  82]   eval  loss=0.000003  ||  [  82]    sgd  loss=0.000004  ||  [  83]   eval  loss=0.000004  ||  [  83]    sgd  loss=0.000004  ||  [  84]   eval  loss=0.000004  ||  [  84]    sgd  loss=0.000005  ||  [  85]   eval  loss=0.000005  ||  [  85]    sgd  loss=0.000003  ||  [  86]   eval  loss=0.000003  ||  [  86]    sgd  loss=0.000004  ||  [  87]   eval  loss=0.000004  ||  [  87]    sgd  loss=0.000003  ||  [  88]   eval  loss=0.000003  ||  [  88]    sgd  loss=0.000003  ||  [  89]   eval  loss=0.000003  ||  [  89]    sgd  loss=0.000003  ||2026-08-28 21:07:54.116 [INFO] New best overall loss: 0.000003
+  [  90]   eval  loss=0.000003  ||  [  90]    sgd  loss=0.000003  ||2026-08-28 21:07:54.255 [INFO] New best overall loss: 0.000003
+  [  91]   eval  loss=0.000003  ||  [  91]    sgd  loss=0.000003  ||2026-08-28 21:07:54.392 [INFO] New best overall loss: 0.000003
+  [  92]   eval  loss=0.000003  ||  [  92]    sgd  loss=0.000003  ||2026-08-28 21:07:54.533 [INFO] New best overall loss: 0.000002
+  [  93]   eval  loss=0.000003  ||  [  93]    sgd  loss=0.000002  ||  [  94]   eval  loss=0.000002  ||  [  94]    sgd  loss=0.000003  ||  [  95]   eval  loss=0.000003  ||  [  95]    sgd  loss=0.000002  ||  [  96]   eval  loss=0.000002  ||  [  96]    sgd  loss=0.000002  ||  [  97]   eval  loss=0.000002  ||  [  97]    sgd  loss=0.000002  ||2026-08-28 21:07:55.226 [INFO] New best overall loss: 0.000002
+  [  98]   eval  loss=0.000002  ||  [  98]    sgd  loss=0.000002  ||2026-08-28 21:07:55.367 [INFO] New best overall loss: 0.000002
+  [  99]   eval  loss=0.000002  ||  [  99]    sgd  loss=0.000002  ||2026-08-28 21:07:55.502 [INFO] New best overall loss: 0.000002
+  [ 100]   eval  loss=0.000002  ||  [ 100]    sgd  loss=0.000002  ||2026-08-28 21:07:55.502 [INFO] Forced structural trigger at epoch 100 (epochs since last structural: 20)
+2026-08-28 21:07:55.502 [INFO] Plateau triggered at epoch 100 (counter=0, loss=0.000002)
+2026-08-28 21:07:55.554 [INFO] Structural inability detected 鈥?surfacing bottleneck node 18 (blame=0.004000)
+2026-08-28 21:07:55.556 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:07:55.556 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:07:55.571 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-28 21:07:56.547 [INFO]   COMMIT rank=0 type=MULTIPLY_INJECTION val_loss=0.000004 train_loss=0.000003 new train_loss=0.000003
+2026-08-28 21:07:56.547 [INFO] Plateau state reset 鈥?best_phase2=0.000003
+2026-08-28 21:07:56.548 [INFO] Plateau state reset — best_phase2=0.000003
+2026-08-28 21:07:56.717 [INFO] New best overall loss: 0.000002
+  [ 101]   eval  loss=0.000003  ||  [ 101]    sgd  loss=0.000002  ||2026-08-28 21:07:56.883 [INFO] New best overall loss: 0.000001
+  [ 102]   eval  loss=0.000002  ||  [ 102]    sgd  loss=0.000001  ||  [ 103]   eval  loss=0.000001  ||  [ 103]    sgd  loss=0.000002  ||  [ 104]   eval  loss=0.000002  ||  [ 104]    sgd  loss=0.000002  ||  [ 105]   eval  loss=0.000002  ||  [ 105]    sgd  loss=0.000002  ||  [ 106]   eval  loss=0.000002  ||  [ 106]    sgd  loss=0.000003  ||  [ 107]   eval  loss=0.000003  ||  [ 107]    sgd  loss=0.000002  ||  [ 108]   eval  loss=0.000002  ||  [ 108]    sgd  loss=0.000002  ||  [ 109]   eval  loss=0.000002  ||  [ 109]    sgd  loss=0.000002  ||  [ 110]   eval  loss=0.000002  ||  [ 110]    sgd  loss=0.000002  ||  [ 111]   eval  loss=0.000002  ||  [ 111]    sgd  loss=0.000002  ||  [ 112]   eval  loss=0.000002  ||  [ 112]    sgd  loss=0.000002  ||  [ 113]   eval  loss=0.000002  ||  [ 113]    sgd  loss=0.000002  ||  [ 114]   eval  loss=0.000002  ||  [ 114]    sgd  loss=0.000002  ||  [ 115]   eval  loss=0.000002  ||  [ 115]    sgd  loss=0.000002  ||  [ 116]   eval  loss=0.000002  ||  [ 116]    sgd  loss=0.000002  ||  [ 117]   eval  loss=0.000002  ||  [ 117]    sgd  loss=0.000002  ||  [ 118]   eval  loss=0.000002  ||  [ 118]    sgd  loss=0.000002  ||  [ 119]   eval  loss=0.000002  ||  [ 119]    sgd  loss=0.000002  ||  [ 120]   eval  loss=0.000002  ||  [ 120]    sgd  loss=0.000002  ||2026-08-28 21:07:59.685 [INFO] Forced structural trigger at epoch 120 (epochs since last structural: 20)
+2026-08-28 21:07:59.685 [INFO] Plateau triggered at epoch 120 (counter=2, loss=0.000002)
+2026-08-28 21:07:59.757 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:07:59.757 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:07:59.757 [INFO] MULTIPLY dedup: switching to input=3^2
+2026-08-28 21:07:59.773 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+  [ 121]   eval  loss=0.000002  ||  [ 121]    sgd  loss=0.000002  ||2026-08-28 21:08:00.992 [INFO] Forced structural trigger at epoch 121 (epochs since last structural: 21)
+2026-08-28 21:08:00.992 [INFO] Plateau triggered at epoch 121 (counter=3, loss=0.000002)
+2026-08-28 21:08:01.060 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:08:01.060 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:08:01.060 [INFO] MULTIPLY dedup: switching to input=3^2
+2026-08-28 21:08:01.075 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-28 21:08:02.236 [INFO]   COMMIT rank=2 type=IFELSE_BOUNDARY_SPLIT val_loss=0.000004 train_loss=0.000002 new train_loss=0.000002
+2026-08-28 21:08:02.236 [INFO] Plateau state reset 鈥?best_phase2=0.000002
+2026-08-28 21:08:02.236 [INFO] Plateau state reset — best_phase2=0.000002
+2026-08-28 21:08:02.402 [INFO] New best overall loss: 0.000001
+  [ 122]   eval  loss=0.000002  ||  [ 122]    sgd  loss=0.000001  ||  [ 123]   eval  loss=0.000001  ||  [ 123]    sgd  loss=0.000001  ||  [ 124]   eval  loss=0.000001  ||  [ 124]    sgd  loss=0.000002  ||  [ 125]   eval  loss=0.000002  ||  [ 125]    sgd  loss=0.000002  ||  [ 126]   eval  loss=0.000002  ||  [ 126]    sgd  loss=0.000002  ||  [ 127]   eval  loss=0.000002  ||  [ 127]    sgd  loss=0.000002  ||  [ 128]   eval  loss=0.000002  ||  [ 128]    sgd  loss=0.000002  ||  [ 129]   eval  loss=0.000002  ||  [ 129]    sgd  loss=0.000002  ||  [ 130]   eval  loss=0.000002  ||  [ 130]    sgd  loss=0.000002  ||  [ 131]   eval  loss=0.000002  ||  [ 131]    sgd  loss=0.000002  ||  [ 132]   eval  loss=0.000002  ||  [ 132]    sgd  loss=0.000002  ||  [ 133]   eval  loss=0.000002  ||  [ 133]    sgd  loss=0.000002  ||  [ 134]   eval  loss=0.000002  ||  [ 134]    sgd  loss=0.000002  ||  [ 135]   eval  loss=0.000002  ||  [ 135]    sgd  loss=0.000002  ||  [ 136]   eval  loss=0.000002  ||  [ 136]    sgd  loss=0.000002  ||  [ 137]   eval  loss=0.000002  ||  [ 137]    sgd  loss=0.000002  ||  [ 138]   eval  loss=0.000002  ||  [ 138]    sgd  loss=0.000002  ||  [ 139]   eval  loss=0.000002  ||  [ 139]    sgd  loss=0.000002  ||  [ 140]   eval  loss=0.000002  ||  [ 140]    sgd  loss=0.000002  ||  [ 141]   eval  loss=0.000002  ||  [ 141]    sgd  loss=0.000002  ||2026-08-28 21:08:05.487 [INFO] Forced structural trigger at epoch 141 (epochs since last structural: 20)
+2026-08-28 21:08:05.487 [INFO] Plateau triggered at epoch 141 (counter=19, loss=0.000002)
+2026-08-28 21:08:05.561 [INFO] Structural inability detected 鈥?surfacing bottleneck node 10 (blame=0.003595)
+2026-08-28 21:08:05.563 [INFO] [PROFILE] F=8 N=240 var_r=0.0314 bound_ratio=4.2296 poly_r2=1.0000 a12=0.0000 max_coef[i=3]=0.1250 sobol_pair(1,2)=0.0254 quad=[0.502,0.502,0.502,0.502] L_max=0.750 | flags: none
+2026-08-28 21:08:05.564 [INFO] IFELSE set-guided split: thr=0.500000 (SSE reduction 0.726239 over 240 paired samples)
+2026-08-28 21:08:05.564 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.500000 a=node=2 b=node=3)
+2026-08-28 21:08:05.564 [INFO] MULTIPLY dedup: switching to input=3^2
+2026-08-28 21:08:05.579 [INFO] Library prior (dist=0.298 src=bench_narma30.csv pattern=single_tanh) boosts NEURON_TANH by 0.200000
+2026-08-28 21:08:14.457 [INFO]   COMMIT rank=1 type=CONTEXT_WIRE val_loss=0.000004 train_loss=0.000002 new train_loss=0.000003
+2026-08-28 21:08:14.457 [INFO] Plateau state reset 鈥?best_phase2=0.000003
+2026-08-28 21:08:14.457 [INFO] Plateau state reset — best_phase2=0.000003
+  [ 142]   eval  loss=0.000003  ||  [ 142]    sgd  loss=0.000001  ||  [ 143]   eval  loss=0.000001  ||  [ 143]    sgd  loss=0.000001  ||  [ 144]   eval  loss=0.000001  ||  [ 144]    sgd  loss=0.000002  ||  [ 145]   eval  loss=0.000002  ||  [ 145]    sgd  loss=0.000002  ||  [ 146]   eval  loss=0.000002  ||  [ 146]    sgd  loss=0.000002  ||  [ 147]   eval  loss=0.000002  ||  [ 147]    sgd  loss=0.000002  ||  [ 148]   eval  loss=0.000002  ||  [ 148]    sgd  loss=0.000002  ||  [ 149]   eval  loss=0.000002  ||  [ 149]    sgd  loss=0.000002  ||  [ 150]   eval  loss=0.000002  ||  [ 150]    sgd  loss=0.000002  ||2026-08-28 21:08:16.371 [INFO] Restored best-val graph snapshot (val=0.000004, train=0.000002)
 
 
 ================================================
@@ -136,18 +136,17 @@ Starting evolution...
   Initial loss:         0.408106
   Final loss:           2.24414e-06
   Best loss:            1.24927e-06
-  Wall time:            40346 ms
+  Wall time:            47082 ms
 
   [Expression] 0.650*(tanh(0.163*x0+0.166*x1+0.167*x2+0.166*x3+0.166*x4+0.165*x5+0.165*x6+0.167*x7-1.010)+(tanh(tanh(0.398*(tanh(0.116*x0+0.117*x1+0.111*x2+0.116*x3+0.116*x4+0.113*x5+0.116*x6+0.117*x7+0.035)+(tan...
 
   [Library] Behavioral fingerprint: k=8 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=1.6
   [Library] Closest existing entries:
+    bench_count8.csv (dist=0.000)
     bench_count8.csv (dist=0.110)
-    bench_hetero3.csv (dist=0.525)
-    bench_hetero3.csv (dist=0.617)
+    bench_hetero3.csv (dist=0.520)
   [Library] Pattern: abs_product
-  [Library] Saved (library now has 40 entries)
-  [Library] Extracted 2 sub-expression block(s) (library now has 42 entries)
+  [Library] Skipped (duplicate expression)
   [FailureLib] Appended 19 failure records to failure_library.txt
 
 ================================================

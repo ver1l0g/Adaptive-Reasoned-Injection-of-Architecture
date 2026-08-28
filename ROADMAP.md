@@ -155,6 +155,18 @@ attribution is the same fix with better justification.]
 The fatigue gate fired but PATCH_POOLING spam replaced it. Finish the
 family-switch logic: after N failed IFELSE-family commits, force-rotate
 to the next family rather than re-scoring the same pool.
+[UPDATE 2026-08-28 (aria14 evidence path): stripes20 = 20 exact-constant
+runs — the zero-plateau detector's ideal target; edges found exactly
+(3/cycle, correct directions) and the OUTPUT-wrap routing commits them.
+FIRST structural progress: 0.0099 -> 0.0509 with 7 exact boundaries.
+Rapid-fire assembly tested and REVERTED (negative): skipping the
+inter-cycle gap AND pre-arming plateau patience both REDUCE boundaries
+(4-7 vs 7) — the settling epochs between boundary commits are load-
+bearing (each boundary's shadow needs the settled state to pass the
+drift guard). Cadence is bounded by validation settling, not by gap
+or patience mechanics. Path to 20 regions: multi-boundary commits —
+the PRESERVE K-chain covers 4 regions/commit — pending the same
+wrap/direction routing audit the masking variant just received.]
 
 ---
 
