@@ -79,4 +79,23 @@ Starting evolution...
   [  13]   eval  loss=3.881446  |====================|  [  13]    sgd  loss=3.880296  |====================|2026-08-28 22:16:50.180 [INFO] New best overall loss: 3.878940
   [  14]   eval  loss=3.880296  |====================|  [  14]    sgd  loss=3.878940  |====================|2026-08-28 22:21:09.740 [INFO] New best overall loss: 3.878060
   [  15]   eval  loss=3.878940  |====================|  [  15]    sgd  loss=3.878060  |====================|2026-08-28 22:26:10.579 [INFO] New best overall loss: 3.877413
-  [  16]   eval  loss=3.878060  |====================|  [  16]    sgd  loss=3.877413  |====================|
+  [  16]   eval  loss=3.878060  |====================|  [  16]    sgd  loss=3.877413  |====================|2026-08-28 22:30:44.711 [INFO] New best overall loss: 3.877207
+  [  17]   eval  loss=3.877413  |====================|  [  17]    sgd  loss=3.877207  |====================|2026-08-28 22:34:36.488 [INFO] New best overall loss: 3.877127
+  [  18]   eval  loss=3.877207  |====================|  [  18]    sgd  loss=3.877127  |====================|2026-08-28 22:39:43.975 [INFO] New best overall loss: 3.877096
+  [  19]   eval  loss=3.877127  |====================|  [  19]    sgd  loss=3.877096  |====================|2026-08-28 22:39:43.975 [INFO] Plateau triggered at epoch 19 (counter=3, loss=3.877096)
+2026-08-28 22:44:19.999 [INFO] [PROFILE] F=8 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=-0.0000 max_coef[i=16]=0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.393 | flags: SHARP
+2026-08-28 22:44:20.007 [INFO] IFELSE set-guided split: thr=-0.964676 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-28 22:44:20.650 [INFO] Library prior (dist=0.833 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-28 22:54:12.241 [INFO] [PROFILE] F=8 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=-0.0000 max_coef[i=16]=0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.393 | flags: SHARP
+2026-08-28 22:54:12.262 [INFO] IFELSE set-guided split: thr=-0.964676 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-28 22:54:12.263 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.393450 var_r=0.015148)
+2026-08-28 22:54:12.266 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-0.964676 a=node=2 b=node=3)
+2026-08-28 22:54:13.266 [INFO] Library prior (dist=0.833 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-28 23:09:19.898 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 23:09:20.348 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 23:09:20.702 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-28 23:09:34.008 [INFO]   COMMIT rank=4 type=MULTI_LAYER_STACK val_loss=3.919696 train_loss=3.819044 new train_loss=3.894069
+2026-08-28 23:09:34.160 [INFO] [PROFILE] F=8 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=-0.0000 max_coef[i=16]=0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.393 | flags: SHARP
+2026-08-28 23:09:34.168 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.393450 var_r=0.015148)
+2026-08-28 23:09:34.173 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-0.964676 a=node=2 b=node=3)
+2026-08-28 23:09:35.181 [INFO] Library INJECT (dist=0.833 src=I.14.3.csv) -> IFELSE [gate-bypass]

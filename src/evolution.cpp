@@ -4923,26 +4923,178 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         }
 
         int K = std::max(1, hyp.compound_K);
-        if (K > 1) {
-            // Re-derive the multi-split thresholds deterministically.
-            // M5.7: measured-evidence candidates use the label-space
-            // plateau edges (same helper, same committed-exclusion as
-            // emission — the structure validated is the structure
-            // emitted). CART re-derivation only for ordinary candidates.
-            std::vector<Value> ks;
-            if (hyp.structural_evidence) {
-                for (const auto& ze :
-                     detect_zero_plateau_edges(hyp.condition_source_node, *shadow)) {
-                    ks.push_back(ze.first);
-                }
-                // The nested chain requires DESCENDING thresholds: level k
-                // splits its FALSE side (x <= e_{k-1}) at e_k < e_{k-1}, so
-                // each TRUE branch is the band (e_k, e_{k-1}]. Plateau edges
-                // arrive ASCENDING (left-to-right scan) — feeding them
-                // unsorted makes every nested band EMPTY (chain collapses;
-                // observed as persistent 0.27 pre-train divergence).
-                std::sort(ks.begin(), ks.end(), std::greater<Value>());
+        // Threshold derivation FIRST (shared by the evidence and generic
+        // chain builders). M5.7: measured-evidence candidates use the
+        // label-space plateau edges (same helper, same committed-exclusion
+        // as emission — the structure validated is the structure emitted).
+        // The nested chain requires DESCENDING thresholds: level k splits
+        // its FALSE side (x <= e_{k-1}) at e_k < e_{k-1}, so each TRUE
+        // branch is the band (e_k, e_{k-1}]. Plateau edges arrive
+        // ASCENDING (left-to-right scan) — feeding them unsorted makes
+        // every nested band EMPTY (chain collapses; observed as persistent
+        // 0.27 pre-train divergence).
+        std::vector<Value> ks;
+        if (hyp.structural_evidence) {
+            for (const auto& ze :
+                 detect_zero_plateau_edges(hyp.condition_source_node, *shadow)) {
+                ks.push_back(ze.first);
             }
+            std::sort(ks.begin(), ks.end(), std::greater<Value>());
+            if (static_cast<int>(ks.size()) > K) ks.resize(static_cast<size_t>(K));
+        }
+        // M7.6(b) GENERALIZED — closed-form region leaves for evidence
+        // chains. The generic chain separates regions but every band
+        // carries the SAME signal S(x): without per-region learnable
+        // leaves it cannot represent piecewise structure, and SGD on the
+        // shared gates degrades (measured: chains 0.238 pre-train ->
+        // 0.2499 post-train). Instead: each band's true side feeds a
+        // 1-input NEURON leaf initialized w=1, b = per-band residual
+        // mean (label mean minus the wrapped signal's mean, adjusted
+        // for the OUTPUT scale/bias) — the chain becomes a regression
+        // tree AT ROUTING TIME. Exact for piecewise-constant targets
+        // (stripes20); identity-plus-shift for mixed windows (t22).
+        if (K > 1 && hyp.structural_evidence && ks.size() >= 2) {
+            // Find OUTPUT and its port-0 source (the final signal).
+            uint64_t out_id = 0, s_src = 0;
+            size_t s_port = 0;
+            for (const auto& n : shadow->get_nodes()) {
+                if (n->get_type() == NodeType::OUTPUT) { out_id = n->get_id(); break; }
+            }
+            if (out_id != 0) {
+                for (const auto& c : shadow->get_connections()) {
+                    if (c.dst_node == out_id && c.dst_port == 0) {
+                        s_src = c.src_node; s_port = c.src_port; break;
+                    }
+                }
+            }
+            if (out_id != 0 && s_src != 0) {
+                // Per-band label/signal stats from the raw training data
+                // (execute the UNMODIFIED shadow clone per sample).
+                const size_t nb = ks.size() + 1;
+                std::vector<Value> sum_y(nb, 0.0), sum_s(nb, 0.0);
+                std::vector<size_t> cnt(nb, 0);
+                Value out_scale = 1.0, out_bias = 0.0;
+                if (Node* on = shadow->get_node(out_id);
+                    on && on->get_type() == NodeType::OUTPUT) {
+                    out_scale = static_cast<OutputNode*>(on)->get_scale();
+                    out_bias = static_cast<OutputNode*>(on)->get_bias();
+                    if (std::abs(out_scale) < 1e-6) out_scale = 1.0;
+                }
+                {
+                    uint64_t cond_key = 0; bool have_ck = false;
+                    for (const auto& kv : input_data_to_graph_) {
+                        if (kv.second == condition_src) { cond_key = kv.first; have_ck = true; break; }
+                    }
+                    uint64_t out_key = 0; bool have_ok = false;
+                    for (const auto& kv : output_data_to_graph_) {
+                        if (kv.second == out_id) { out_key = kv.first; have_ok = true; break; }
+                    }
+                    if (have_ck && have_ok) {
+                        for (const auto& smp : training_data_.samples) {
+                            auto xi = smp.inputs.find(cond_key);
+                            auto yi = smp.targets.find(out_key);
+                            if (xi == smp.inputs.end() || yi == smp.targets.end()) continue;
+                            // band index: ks is DESCENDING; band 0 = x > ks[0],
+                            // band k = (ks[k], ks[k-1]], band K = x <= ks[K-1].
+                            size_t b = 0;
+                            while (b < ks.size() && xi->second <= ks[b]) ++b;
+                            for (const auto& kv : smp.inputs) {
+                                auto git = input_data_to_graph_.find(kv.first);
+                                if (git != input_data_to_graph_.end()) {
+                                    shadow->set_input_value(git->second, kv.second);
+                                }
+                            }
+                            shadow->execute();
+                            sum_y[b] += yi->second;
+                            if (const Node* sn = shadow->get_node(s_src)) {
+                                sum_s[b] += sn->get_output(s_port);
+                            }
+                            ++cnt[b];
+                            shadow->reset_recurrent_state();
+                        }
+                    }
+                }
+                // Build the chain with leaves.
+                uint64_t prev_false_src = s_src;
+                uint64_t accum = 0;   // chained ADD accumulator over leaves
+                auto join_leaf = [&](uint64_t feed_node, size_t feed_port, size_t band) {
+                    uint64_t leaf = shadow->add_node(NodeType::NEURON,
+                                                     "region_leaf");
+                    Node* ln = shadow->get_node(leaf);
+                    if (ln && ln->get_type() == NodeType::NEURON) {
+                        auto* lnn = static_cast<NeuronNode*>(ln);
+                        lnn->set_input_count(1);
+                        if (cnt[band] > 0) {
+                            Value mean_y = sum_y[band] / static_cast<Value>(cnt[band]);
+                            Value mean_s = sum_s[band] / static_cast<Value>(cnt[band]);
+                            lnn->set_weight(0, 1.0);
+                            lnn->set_bias((mean_y - out_bias) / out_scale - mean_s);
+                        } else {
+                            lnn->set_weight(0, 1.0);
+                            lnn->set_bias(0.0);
+                        }
+                    }
+                    shadow->add_connection(feed_node, feed_port, leaf, 0);
+                    if (accum == 0) {
+                        accum = leaf;
+                    } else if (Node* an = shadow->get_node(accum);
+                               an && an->get_type() == NodeType::NEURON) {
+                        // previous accumulator is a leaf NEURON: make an ADD
+                        uint64_t add_id = shadow->add_node(NodeType::ADD, "region_add");
+                        shadow->add_connection(accum, 0, add_id, 0);
+                        shadow->add_connection(leaf, 0, add_id, 1);
+                        accum = add_id;
+                    } else {
+                        uint64_t add_id = shadow->add_node(NodeType::ADD, "region_add");
+                        // reconnect: prior accumulator feeds new ADD port 0
+                        std::vector<Connection> ex;
+                        for (const auto& c : shadow->get_connections()) {
+                            if (c.src_node == accum) ex.push_back(c);
+                        }
+                        for (const auto& c : ex) {
+                            shadow->remove_connection(c.src_node, c.src_port,
+                                                      c.dst_node, c.dst_port);
+                            shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
+                        }
+                        shadow->add_connection(accum, 0, add_id, 0);
+                        shadow->add_connection(leaf, 0, add_id, 1);
+                        accum = add_id;
+                    }
+                };
+                for (size_t k = 0; k < ks.size(); ++k) {
+                    uint64_t threshold_id = shadow->add_node(NodeType::CONSTANT,
+                                                             "ifelse_threshold");
+                    if (Node* cn = shadow->get_node(threshold_id);
+                        cn && cn->get_type() == NodeType::CONSTANT) {
+                        static_cast<ConstantNode*>(cn)->set_value(ks[k]);
+                    }
+                    uint64_t greater_id = shadow->add_node(NodeType::GREATER,
+                                                           "preserve_cond");
+                    shadow->add_connection(condition_src, 0, greater_id, 0);
+                    shadow->add_connection(threshold_id, 0, greater_id, 1);
+                    uint64_t ifelse_id = shadow->add_node(NodeType::IFELSE,
+                                                          "preserve_ifelse");
+                    shadow->add_connection(greater_id, 0, ifelse_id, 0);
+                    shadow->add_connection(prev_false_src, 0, ifelse_id, 1);
+                    join_leaf(ifelse_id, 0, k);          // true side = band k
+                    prev_false_src = ifelse_id;
+                }
+                join_leaf(prev_false_src, 1, ks.size());  // deepest false band
+                // Rewire: accumulator -> OUTPUT (replacing S -> OUTPUT).
+                shadow->remove_connection(s_src, s_port, out_id, 0);
+                shadow->add_connection(accum, 0, out_id, 0);
+                Logger::info("  [EVIDENCE-CHAIN] K=" + std::to_string(ks.size())
+                             + " region leaves (closed-form init), bands n="
+                             + std::to_string(nb));
+                break;
+            }
+            // No OUTPUT/source found: fall through to the generic chain.
+        }
+
+        if (K > 1) {
+            // CART re-derivation for ordinary candidates (evidence ks
+            // were already derived above; the evidence builder returned
+            // before reaching here).
             std::vector<std::pair<Value, Value>> vx_m;
             if (ks.size() < 2) {
                 for (size_t i = 0; i < diag.targets.size() && i < diag.local_inputs.size(); ++i) {

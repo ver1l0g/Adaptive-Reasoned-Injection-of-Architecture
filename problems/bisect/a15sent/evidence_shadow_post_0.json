@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "next_id": 12,
+  "nodes": [
+    {"id":1,"type":"INPUT","name":"input_0"},
+    {"id":2,"type":"OUTPUT","name":"output_0","scale":1.982920,"bias":0.039451},
+    {"id":4,"type":"NEURON","name":"stack_l1_0","weights":[0.390387],"bias":0.128672},
+    {"id":5,"type":"NEURON","name":"stack_l1_1","weights":[-0.385230],"bias":-0.116548},
+    {"id":6,"type":"NEURON","name":"stack_l1_2","weights":[-0.442304],"bias":0.417847},
+    {"id":7,"type":"NEURON","name":"stack_l1_3","weights":[-0.343524],"bias":0.151185},
+    {"id":8,"type":"NEURON","name":"stack_combine","weights":[0.341108,-0.328629,-0.286658,-0.273585],"bias":-0.008731},
+    {"id":9,"type":"CONSTANT","name":"ifelse_threshold","value":-0.604510},
+    {"id":10,"type":"GREATER","name":"ifelse_cond"},
+    {"id":11,"type":"IFELSE","name":"shadow_ifelse"}
+  ],
+  "connections": [
+    {"src_node":1,"src_port":0,"dst_node":4,"dst_port":0,"is_recurrent":false},
+    {"src_node":1,"src_port":0,"dst_node":5,"dst_port":0,"is_recurrent":false},
+    {"src_node":1,"src_port":0,"dst_node":6,"dst_port":0,"is_recurrent":false},
+    {"src_node":1,"src_port":0,"dst_node":7,"dst_port":0,"is_recurrent":false},
+    {"src_node":4,"src_port":0,"dst_node":8,"dst_port":0,"is_recurrent":false},
+    {"src_node":5,"src_port":0,"dst_node":8,"dst_port":1,"is_recurrent":false},
+    {"src_node":6,"src_port":0,"dst_node":8,"dst_port":2,"is_recurrent":false},
+    {"src_node":7,"src_port":0,"dst_node":8,"dst_port":3,"is_recurrent":false},
+    {"src_node":1,"src_port":0,"dst_node":10,"dst_port":0,"is_recurrent":false},
+    {"src_node":9,"src_port":0,"dst_node":10,"dst_port":1,"is_recurrent":false},
+    {"src_node":10,"src_port":0,"dst_node":11,"dst_port":0,"is_recurrent":false},
+    {"src_node":8,"src_port":0,"dst_node":11,"dst_port":1,"is_recurrent":false},
+    {"src_node":11,"src_port":0,"dst_node":2,"dst_port":0,"is_recurrent":false}
+  ]
+}

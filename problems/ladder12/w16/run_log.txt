@@ -73,4 +73,13 @@ Starting evolution...
 2026-08-28 22:17:40.676 [INFO] New best overall loss: 3.876902
   [  12]   eval  loss=3.931493  |====================|  [  12]    sgd  loss=3.876902  |====================|2026-08-28 22:22:59.848 [INFO] New best overall loss: 3.875576
   [  13]   eval  loss=3.876902  |====================|  [  13]    sgd  loss=3.875576  |====================|2026-08-28 22:29:05.589 [INFO] New best overall loss: 3.875186
-  [  14]   eval  loss=3.875576  |====================|  [  14]    sgd  loss=3.875186  |====================|
+  [  14]   eval  loss=3.875576  |====================|  [  14]    sgd  loss=3.875186  |====================|2026-08-28 22:33:46.264 [INFO] New best overall loss: 3.874800
+  [  15]   eval  loss=3.875186  |====================|  [  15]    sgd  loss=3.874800  |====================|2026-08-28 22:39:52.625 [INFO] New best overall loss: 3.874238
+  [  16]   eval  loss=3.874800  |====================|  [  16]    sgd  loss=3.874238  |====================|2026-08-28 22:51:01.100 [INFO] New best overall loss: 3.873716
+  [  17]   eval  loss=3.874238  |====================|  [  17]    sgd  loss=3.873716  |====================|2026-08-28 23:01:51.779 [INFO] New best overall loss: 3.873380
+  [  18]   eval  loss=3.873716  |====================|  [  18]    sgd  loss=3.873380  |====================|2026-08-28 23:09:18.348 [INFO] New best overall loss: 3.873239
+  [  19]   eval  loss=3.873380  |====================|  [  19]    sgd  loss=3.873239  |====================|2026-08-28 23:09:18.349 [INFO] Plateau triggered at epoch 19 (counter=3, loss=3.873239)
+2026-08-28 23:15:11.939 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-28 23:15:11.968 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-28 23:15:11.969 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-28 23:15:11.975 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
