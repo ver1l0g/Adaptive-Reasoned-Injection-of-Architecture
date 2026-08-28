@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "next_id": 7,
+  "nodes": [
+    {"id":1,"type":"INPUT","name":"input_0"},
+    {"id":2,"type":"OUTPUT","name":"output_0","scale":1.010654,"bias":0.002880},
+    {"id":3,"type":"NEURON","name":"starter_neuron","weights":[6.472007],"bias":0.152428},
+    {"id":4,"type":"CONSTANT","name":"ifelse_threshold","value":-0.026000},
+    {"id":5,"type":"GREATER","name":"ifelse_cond"},
+    {"id":6,"type":"IFELSE","name":"shadow_ifelse"}
+  ],
+  "connections": [
+    {"src_node":1,"src_port":0,"dst_node":3,"dst_port":0,"is_recurrent":false},
+    {"src_node":1,"src_port":0,"dst_node":5,"dst_port":0,"is_recurrent":false},
+    {"src_node":4,"src_port":0,"dst_node":5,"dst_port":1,"is_recurrent":false},
+    {"src_node":5,"src_port":0,"dst_node":6,"dst_port":0,"is_recurrent":false},
+    {"src_node":3,"src_port":0,"dst_node":6,"dst_port":1,"is_recurrent":false},
+    {"src_node":6,"src_port":0,"dst_node":2,"dst_port":0,"is_recurrent":false}
+  ]
+}

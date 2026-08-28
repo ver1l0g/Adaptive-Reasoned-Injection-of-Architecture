@@ -344,11 +344,22 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   because the strided val subset is dead-zone dominated, where the
   mask outputs exact 0). LR/momentum changes were treating symptoms.
   This is a ROUTING SEMANTICS bug — same family as the stripes-arc
-  port-0 ADD bug. Fix: audit apply_shadow_routing IFELSE_BOUNDARY_SPLIT
-  + IFELSE_PRESERVE wiring (port conventions, gate/ADD combine, execute
-  order) against graph.cpp semantics with a unit test; expected to
-  unlock t22 (and possibly improve stripes20's IFELSE_PRESERVE x5
-  no-progress pattern).]
+  port-0 ADD bug.]
+  [ROUTING FIXED 2026-08-28 (aria14): hand-execution of the dumped
+  shadow graph pinned the exact bug — the failing node was ONE of two
+  parallel contributors (starter ∥ parallel → ADD → OUTPUT); masking
+  an internal contributor zeroes its share while the OUTPUT scale was
+  calibrated for the SUM. Evidence boundaries now (a) wrap the FINAL
+  signal (OUTPUT's port-0 source) instead of the failing node, (b)
+  carry a DIRECTION per edge (a run's left edge masks above, right
+  edge masks below — detect_zero_plateau_edges returns tagged pairs),
+  and (c) a masked-out median-fallback else-branch that silently
+  clobbered measured thresholds with blackboard medians (thr -1.077
+  → 0.0376) is guarded. RESULT: t22 0.9518 -> 0.9757 with FOUR
+  boundary commits accumulating (val 0.15 -> 0.003); remaining gap is
+  interior-sine fit precision, not structure. Sentinels clean (t21
+  0.9921, d1 0.9977, d9 detector silent). PRESERVE multi-split routing
+  still wraps the failing node — same audit pending for stripes20.]
 
 ### 1.5 Failure-library hypothesis versioning [DONE 2026-08-27 in aria12: FAILURE_FAMILY_VERSION=1 written per record; legacy (v0/unversioned) records discount to 25% penalty; loader back-compat]
 Discovered in the stripes arc: legacy type-23 (IFELSE_PRESERVE) failures

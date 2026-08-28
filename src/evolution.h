@@ -403,14 +403,24 @@ private:
         // (observed: t22 boundary candidates losing to micro-gain TANH
         // commits every cycle while eval R2 stalled 0.05 below val).
         bool      structural_evidence = false;
+
+        // M5.7 routing direction for evidence boundaries: wrap the final
+        // pre-OUTPUT signal and mask ABOVE the threshold (x > thr → 0)
+        // or BELOW it (x ≤ thr → 0). Derived from which side of the edge
+        // the flat run lies on: a run's LEFT edge → mask_above, its
+        // RIGHT edge → mask_below (each edge masks ITS run).
+        bool      mask_above = true;
     };
 
     // M5.7 zero-plateau edge detection: flat runs in the RAW labels (see
-    // constants.h). Returns label-space boundary edges for the given
-    // condition source, excluding thresholds already committed in `g`.
-    // Empty when no plateau structure clears the gating fraction.
-    std::vector<Value> detect_zero_plateau_edges(uint64_t cond_graph_id,
-                                                 const Graph& g) const;
+    // constants.h). Returns (threshold, mask_above) pairs — label-space
+    // boundary edges for the given condition source with the masking
+    // direction implied by which side of the edge the flat run lies on
+    // (a run's LEFT edge masks above, its RIGHT edge masks below).
+    // Excludes thresholds already committed in `g`. Empty when no plateau
+    // structure clears the gating fraction.
+    std::vector<std::pair<Value, bool>> detect_zero_plateau_edges(uint64_t cond_graph_id,
+                                                                  const Graph& g) const;
 
     // Form a hypothesis about how to fix the failure.
     Hypothesis form_hypothesis(const FailureDiagnosis& diag,

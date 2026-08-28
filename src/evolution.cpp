@@ -2119,9 +2119,9 @@ EvolutionEngine::Hypothesis EvolutionEngine::form_hypothesis(
 // ============================================================================
 // M5.7 zero-plateau edge detection — see constants.h for gating rationale
 // ============================================================================
-std::vector<Value> EvolutionEngine::detect_zero_plateau_edges(
+std::vector<std::pair<Value, bool>> EvolutionEngine::detect_zero_plateau_edges(
     uint64_t cond_graph_id, const Graph& g) const {
-    std::vector<Value> result;
+    std::vector<std::pair<Value, bool>> result;
     // Single-output graphs only (v1)
     size_t out_count = 0;
     uint64_t out_gid = 0;
@@ -2169,7 +2169,7 @@ std::vector<Value> EvolutionEngine::detect_zero_plateau_edges(
     const size_t min_run = std::max<size_t>(
         static_cast<size_t>(config::ZERO_PLATEAU_MIN_RUN), xy.size() / 20);
 
-    std::vector<Value> edges;
+    std::vector<std::pair<Value, bool>> edges;
     size_t in_flat = 0, flat_total = 0;
     Value run_min = 0, run_max = 0;
     bool have_run = false;
@@ -2178,10 +2178,12 @@ std::vector<Value> EvolutionEngine::detect_zero_plateau_edges(
             flat_total += in_flat;
             const size_t run_start = run_end - in_flat;
             if (run_start > 0) {
-                edges.push_back(0.5 * (xy[run_start - 1].first + xy[run_start].first));
+                // LEFT edge of the run: flat lies ABOVE this threshold
+                edges.emplace_back(0.5 * (xy[run_start - 1].first + xy[run_start].first), true);
             }
             if (run_end < xy.size()) {
-                edges.push_back(0.5 * (xy[run_end - 1].first + xy[run_end].first));
+                // RIGHT edge: flat lies BELOW this threshold
+                edges.emplace_back(0.5 * (xy[run_end - 1].first + xy[run_end].first), false);
             }
         }
     };
@@ -2214,10 +2216,10 @@ std::vector<Value> EvolutionEngine::detect_zero_plateau_edges(
         }
     }
     const Value excl_margin = (x_max - x_min) * 0.05;
-    for (Value e : edges) {
+    for (const auto& e : edges) {
         bool near_committed = false;
         for (Value ct : committed_thr) {
-            if (std::abs(e - ct) <= excl_margin) { near_committed = true; break; }
+            if (std::abs(e.first - ct) <= excl_margin) { near_committed = true; break; }
         }
         if (!near_committed) {
             result.push_back(e);
@@ -2363,7 +2365,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // (e.g., median of y 鈭?[-10,3] 鈮?-3.5 instead of x boundary at 0).
         bool threshold_found = false;
         bool zero_plateau_hit = false;
-        std::vector<Value> zp_edges;   // all uncommitted plateau edges (capped)
+        std::vector<std::pair<Value, bool>> zp_edges;   // (thr, mask_above), capped
         if (ibs.condition_source_node != 0) {
             // SET-GUIDED SPLIT: derive the guard region {x | x <= t} from
             // where the residual changes character, not from the value
@@ -2404,11 +2406,13 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             // split when present (windowed/dead-zone targets).
             zp_edges = detect_zero_plateau_edges(ibs.condition_source_node, *graph_);
             if (!zp_edges.empty()) {
-                ibs.split_threshold = zp_edges[0];
+                ibs.split_threshold = zp_edges[0].first;
+                ibs.mask_above = zp_edges[0].second;
                 threshold_found = true;
                 zero_plateau_hit = true;
                 ibs.structural_evidence = true;
-                Logger::info("Zero-plateau boundary: thr=" + std::to_string(zp_edges[0])
+                Logger::info("Zero-plateau boundary: thr=" + std::to_string(zp_edges[0].first)
+                            + " mask_" + (zp_edges[0].second ? "above" : "below")
                             + " (" + std::to_string(zp_edges.size()) + " edges)");
             }
             Value guided_thr = 0.0;
@@ -2421,7 +2425,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 Logger::info("IFELSE set-guided split: thr=" + std::to_string(guided_thr)
                             + " (SSE reduction " + std::to_string(reduction)
                             + " over " + std::to_string(vx.size()) + " paired samples)");
-            } else {
+            } else if (!zero_plateau_hit) {
                 auto reg_it = blackboard_registry_.find(ibs.condition_source_node);
                 if (reg_it != blackboard_registry_.end() && reg_it->second.size() >= 2) {
                     std::vector<Value> src_sorted = reg_it->second;
@@ -2469,7 +2473,7 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             // same edges noisily) and use them directly.
             std::vector<Value> ks;
             if (zero_plateau_hit && zp_edges.size() >= 2) {
-                ks = zp_edges;
+                for (const auto& ze : zp_edges) ks.push_back(ze.first);
             } else {
             // Build the (input, residual) pairs for multi-split.
             std::vector<std::pair<Value, Value>> vx_m;
@@ -2541,11 +2545,13 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
             Hypothesis ibs2;
             ibs2.type = Hypothesis::IFELSE_BOUNDARY_SPLIT;
             ibs2.condition_source_node = ibs_cond_src_cache;
-            ibs2.split_threshold = zp_edges[zei];
+            ibs2.split_threshold = zp_edges[zei].first;
+            ibs2.mask_above = zp_edges[zei].second;
             ibs2.structural_evidence = true;
             candidates.push_back({std::move(ibs2), score});
             Logger::info("Zero-plateau sibling boundary: thr="
-                        + std::to_string(zp_edges[zei]));
+                        + std::to_string(zp_edges[zei].first)
+                        + " mask_" + (zp_edges[zei].second ? "above" : "below"));
         }
     }
 
@@ -4115,19 +4121,83 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // Insert IFELSE to mask the failing node's output based on a domain split.
         //
         // The GREATER comparator must compare the RAW INPUT signal against a
-        // threshold constant 鈥?NOT the failing node's (tanh-squashed) output.
+        // threshold constant — NOT the failing node's (tanh-squashed) output.
         // This is the key fix: previously, GREATER(failing_node, condition_src)
         // split on the post-activation output (bounded [-1,1]), which could not
         // correctly partition the input domain.
         //
         // IFELSE semantics: input[0]=condition, input[1]=value.
-        //   condition=true  鈫?output[0]=value, output[1]=0
-        //   condition=false 鈫?output[0]=0,       output[1]=value
+        //   condition=true  → output[0]=value, output[1]=0
+        //   condition=false → output[0]=0,       output[1]=value
         //
         // We connect output[1] (false branch) to downstream. This creates a
-        // domain mask: "pass failing_node through when x 鈮?threshold, output 0
+        // domain mask: "pass failing_node through when x ≤ threshold, output 0
         // when x > threshold." For cliff/piecewise tasks where one region should
         // be suppressed, this is the correct behavior.
+        //
+        // M5.7 EVIDENCE PATH (structural_evidence): the failing node may be
+        // ONE OF SEVERAL parallel contributors to the OUTPUT (observed t22:
+        // starter_neuron ∥ parallel_neuron → ADD → OUTPUT). Masking an
+        // internal contributor zeroes only ITS share while the OUTPUT scale
+        // was calibrated for the SUM — the "identity start" never exists and
+        // the in-region forward is corrupted (pre-train loss 0.12–0.28 vs
+        // baseline 0.009, measured via EVIDENCE-PRE). Instead: wrap the
+        // FINAL signal (the OUTPUT's port-0 source) with a DIRECTIONAL mask
+        // — mask_above (x>thr→0, passes false branch out[1]) or mask_below
+        // (x≤thr→0, passes true branch out[0]), per plateau-edge direction.
+        if (hyp.structural_evidence) {
+            uint64_t out_id = 0;
+            bool out_found = false;
+            uint64_t final_src = 0;
+            size_t final_src_port = 0;
+            for (const auto& n : shadow->get_nodes()) {
+                if (n->get_type() == NodeType::OUTPUT) {
+                    out_id = n->get_id();
+                    out_found = true;
+                    break;
+                }
+            }
+            if (out_found) {
+                int incoming = 0;
+                for (const auto& c : shadow->get_connections()) {
+                    if (c.dst_node == out_id) {
+                        ++incoming;
+                        final_src = c.src_node;
+                        final_src_port = c.src_port;
+                    }
+                }
+            }
+            if (out_found && final_src != 0) {
+                uint64_t condition_src = hyp.condition_source_node;
+                if (condition_src == 0 || !shadow->get_node(condition_src)) {
+                    condition_src = failing_id;
+                }
+                uint64_t threshold_id = shadow->add_node(NodeType::CONSTANT,
+                                                         "ifelse_threshold");
+                Node* cnode = shadow->get_node(threshold_id);
+                if (cnode && cnode->get_type() == NodeType::CONSTANT) {
+                    static_cast<ConstantNode*>(cnode)->set_value(hyp.split_threshold);
+                }
+                uint64_t greater_id = shadow->add_node(NodeType::GREATER, "ifelse_cond");
+                shadow->add_connection(condition_src, 0, greater_id, 0);
+                shadow->add_connection(threshold_id, 0, greater_id, 1);
+                uint64_t ifelse_id = shadow->add_node(NodeType::IFELSE, "shadow_ifelse");
+                shadow->add_connection(greater_id, 0, ifelse_id, 0);
+                shadow->add_connection(final_src, final_src_port, ifelse_id, 1);
+                // mask_above passes the FALSE branch (x≤thr keeps value);
+                // mask_below passes the TRUE branch (x>thr keeps value).
+                size_t pass_port = hyp.mask_above ? 1 : 0;
+                shadow->remove_connection(final_src, final_src_port, out_id, 0);
+                shadow->add_connection(ifelse_id, pass_port, out_id, 0);
+                Logger::info("  [EVIDENCE-BOUNDARY] wrapped OUTPUT source node="
+                             + std::to_string(final_src) + " thr="
+                             + std::to_string(hyp.split_threshold)
+                             + " mask_" + (hyp.mask_above ? "above" : "below"));
+                break;
+            }
+            // No single OUTPUT source (multi-input OUTPUT): fall through
+            // to the legacy failing-node masking below.
+        }
 
         uint64_t condition_src = hyp.condition_source_node;
 
@@ -4861,7 +4931,10 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
             // emitted). CART re-derivation only for ordinary candidates.
             std::vector<Value> ks;
             if (hyp.structural_evidence) {
-                ks = detect_zero_plateau_edges(hyp.condition_source_node, *shadow);
+                for (const auto& ze :
+                     detect_zero_plateau_edges(hyp.condition_source_node, *shadow)) {
+                    ks.push_back(ze.first);
+                }
             }
             std::vector<std::pair<Value, Value>> vx_m;
             if (ks.size() < 2) {
@@ -6224,7 +6297,21 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
     }
 
     // Phase 6 (shadow): Compile the shadow graph before validation.
+    // M5.7 diagnostic: dump evidence-candidate shadows (pre- and
+    // post-compile) for the routing audit — file per candidate rank.
+    if (structural_evidence) {
+        try {
+            save_graph_to_file(*shadow_graph,
+                "evidence_shadow_pre_" + std::to_string(hyp_rank) + ".json");
+        } catch (...) {}
+    }
     graph_eliminate_dead_code(*shadow_graph);
+    if (structural_evidence) {
+        try {
+            save_graph_to_file(*shadow_graph,
+                "evidence_shadow_post_" + std::to_string(hyp_rank) + ".json");
+        } catch (...) {}
+    }
     graph_fold_constants(*shadow_graph);
     graph_compress_neurons(*shadow_graph);
 

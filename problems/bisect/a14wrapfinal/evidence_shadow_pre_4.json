@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "next_id": 13,
+  "nodes": [
+    {"id":1,"type":"INPUT","name":"input_0"},
+    {"id":2,"type":"OUTPUT","name":"output_0","scale":1.010654,"bias":0.002880},
+    {"id":3,"type":"NEURON","name":"starter_neuron","weights":[6.472007],"bias":0.152428},
+    {"id":4,"type":"CONSTANT","name":"ifelse_threshold","value":-0.026000},
+    {"id":5,"type":"IFELSE","name":"preserve_ifelse"},
+    {"id":6,"type":"NEURON","name":"preserve_gate0","weights":[1.000000],"bias":0.000000},
+    {"id":7,"type":"NEURON","name":"preserve_gate1","weights":[1.000000],"bias":0.000000},
+    {"id":8,"type":"ADD","name":"preserve_out_add"},
+    {"id":9,"type":"CONSTANT","name":"ifelse_threshold","value":-0.026000},
+    {"id":10,"type":"IFELSE","name":"preserve_ifelse"},
+    {"id":11,"type":"ADD","name":"preserve_add"},
+    {"id":12,"type":"ADD","name":"preserve_end_add"}
+  ],
+  "connections": [
+    {"src_node":1,"src_port":0,"dst_node":3,"dst_port":0,"is_recurrent":false},
+    {"src_node":1,"src_port":0,"dst_node":5,"dst_port":0,"is_recurrent":false},
+    {"src_node":5,"src_port":0,"dst_node":6,"dst_port":0,"is_recurrent":false},
+    {"src_node":5,"src_port":1,"dst_node":7,"dst_port":0,"is_recurrent":false},
+    {"src_node":6,"src_port":0,"dst_node":8,"dst_port":0,"is_recurrent":false},
+    {"src_node":7,"src_port":0,"dst_node":8,"dst_port":1,"is_recurrent":false},
+    {"src_node":5,"src_port":0,"dst_node":5,"dst_port":1,"is_recurrent":true},
+    {"src_node":1,"src_port":0,"dst_node":10,"dst_port":0,"is_recurrent":false},
+    {"src_node":5,"src_port":0,"dst_node":10,"dst_port":1,"is_recurrent":false},
+    {"src_node":8,"src_port":0,"dst_node":11,"dst_port":0,"is_recurrent":false},
+    {"src_node":10,"src_port":0,"dst_node":11,"dst_port":1,"is_recurrent":false},
+    {"src_node":11,"src_port":0,"dst_node":12,"dst_port":0,"is_recurrent":false},
+    {"src_node":10,"src_port":0,"dst_node":12,"dst_port":1,"is_recurrent":false},
+    {"src_node":12,"src_port":0,"dst_node":2,"dst_port":0,"is_recurrent":false}
+  ]
+}

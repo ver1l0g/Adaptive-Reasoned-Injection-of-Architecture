@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "next_id": 33,
+  "nodes": [
+    {"id":1,"type":"INPUT","name":"input_0"},
+    {"id":2,"type":"OUTPUT","name":"output_0","scale":5.544785,"bias":-0.021541},
+    {"id":25,"type":"IFELSE","name":"preserve_ifelse"},
+    {"id":26,"type":"NEURON","name":"preserve_gate0","weights":[1.000000],"bias":0.000000},
+    {"id":27,"type":"NEURON","name":"preserve_gate1","weights":[1.000000],"bias":0.000000},
+    {"id":28,"type":"ADD","name":"preserve_out_add"},
+    {"id":30,"type":"IFELSE","name":"preserve_ifelse"},
+    {"id":31,"type":"ADD","name":"preserve_add"},
+    {"id":32,"type":"ADD","name":"preserve_end_add"}
+  ],
+  "connections": [
+    {"src_node":1,"src_port":0,"dst_node":25,"dst_port":0,"is_recurrent":false},
+    {"src_node":25,"src_port":0,"dst_node":26,"dst_port":0,"is_recurrent":false},
+    {"src_node":25,"src_port":1,"dst_node":27,"dst_port":0,"is_recurrent":false},
+    {"src_node":26,"src_port":0,"dst_node":28,"dst_port":0,"is_recurrent":false},
+    {"src_node":27,"src_port":0,"dst_node":28,"dst_port":1,"is_recurrent":false},
+    {"src_node":25,"src_port":0,"dst_node":25,"dst_port":1,"is_recurrent":true},
+    {"src_node":1,"src_port":0,"dst_node":30,"dst_port":0,"is_recurrent":false},
+    {"src_node":25,"src_port":0,"dst_node":30,"dst_port":1,"is_recurrent":false},
+    {"src_node":28,"src_port":0,"dst_node":31,"dst_port":0,"is_recurrent":false},
+    {"src_node":30,"src_port":0,"dst_node":31,"dst_port":1,"is_recurrent":false},
+    {"src_node":31,"src_port":0,"dst_node":32,"dst_port":0,"is_recurrent":false},
+    {"src_node":30,"src_port":0,"dst_node":32,"dst_port":1,"is_recurrent":false},
+    {"src_node":32,"src_port":0,"dst_node":2,"dst_port":0,"is_recurrent":false}
+  ]
+}
