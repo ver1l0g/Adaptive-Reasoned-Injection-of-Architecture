@@ -369,6 +369,15 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   zero-crossing rate; it fails validation and dedup blocks retries.
   Fix direction: multi-peak freq-init (autocorrelation or sign-change
   scale decomposition) emitting COMPOUND_TWO_SINE(f1, f2).
+  [TWO-PEAK DECOMPOSITION IMPLEMENTED 2026-08-28 (aria15): median-split
+  of inter-crossing gaps → w_lo/w_hi, gated on ratio ∈ [1.8, 8] +
+  per-cluster CV < 0.8 + component clamp 120. On d3's RESIDUAL the
+  gaps are distorted (ratios 60.7/10.5 = tangent-touch noise; the
+  blend's own crossings dominate) so it never fires — trajectory
+  bit-identical, provably inert. The clean signal exists in the RAW
+  LABELS (gap ratio 2.12, w 43.9/93.3). v2 NAMED: label-space two-peak
+  (same lesson as the zero-plateau detector — target structure lives
+  in the labels, not the post-fit residual).]
 - **t22_windowed_sine (0.95)**: needs IFELSE_BOUNDARY_SPLIT at the
   window edges (x=0, 2pi) wrapping a sine. [ZERO-PLATEAU DETECTOR
   IMPLEMENTED 2026-08-27 in aria13: detection VERIFIED — flat-run scan

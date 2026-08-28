@@ -3332,15 +3332,81 @@ if (profile.bounded
             // d2 (x mod 3 over normalized [0,12]): 8 sign changes, 4 periods,
             // range ~3.46 鈫?w 鈮?7.26 鈥?exactly the frequency SGD was too slow
             // to reach from zero-init.
+            //
+            // M5.7 TWO-PEAK decomposition (d3_two_sines): a single-frequency
+            // residual has UNIFORM inter-crossing gaps; a sum of two sines
+            // has BIMODAL gaps (short = high component, long = low). When
+            // bimodal, emit BOTH component frequencies instead of one blend
+            // (the blend fits neither component and fails validation).
             double freq_est = 0.0;
-            if (sorted_xt.size() >= 2) {
-                double x_lo = sorted_xt.front().first, x_hi = sorted_xt.back().first;
-                double x_range = x_hi - x_lo;
-                if (x_range > 1e-6) {
-                    double periods = static_cast<double>(sign_changes) / 2.0;
+            double freq2_est = 0.0;
+            bool two_peak = false;
+            double two_peak_gap_ratio_ = 0.0;   // diagnostics
+            {
+                std::vector<double> gaps;
+                for (size_t i = 1; i < sorted_xt.size(); ++i) {
+                    if ((sorted_xt[i].second > 0) != (sorted_xt[i-1].second > 0)) {
+                        double g = sorted_xt[i].first - sorted_xt[i-1].first;
+                        if (g > 1e-9) gaps.push_back(g);
+                    }
+                }
+                if (sorted_xt.size() >= 2) {
+                    double x_lo = sorted_xt.front().first, x_hi = sorted_xt.back().first;
+                    double x_range = x_hi - x_lo;
                     constexpr double kTwoPi = 6.28318530717958647692;
-                    freq_est = kTwoPi * periods / x_range;
-                    if (freq_est < 0.5 || freq_est > 60.0) freq_est = 0.0;  // sanity clamp
+                    if (x_range > 1e-6 && !gaps.empty()) {
+                        double periods = static_cast<double>(sign_changes) / 2.0;
+                        freq_est = kTwoPi * periods / x_range;
+                        if (freq_est < 0.5 || freq_est > 60.0) freq_est = 0.0;
+                        // Two-peak: median-split the gaps; require clear
+                        // bimodality (cluster mean ratio > 1.8, both sides
+                        // populated) so single-frequency tasks keep the
+                        // uniform-gap estimate.
+                        if (gaps.size() >= 6) {
+                            std::vector<double> gs = gaps;
+                            std::sort(gs.begin(), gs.end());
+                            std::vector<double> lo(gs.begin(), gs.begin() + gs.size() / 2);
+                            std::vector<double> hi(gs.begin() + gs.size() / 2, gs.end());
+                            auto mean = [](const std::vector<double>& v) {
+                                double s = 0; for (double x : v) s += x;
+                                return v.empty() ? 0.0 : s / v.size();
+                            };
+                            auto cv = [&mean](const std::vector<double>& v) {
+                                if (v.size() < 2) return 1e9;
+                                double m = mean(v), s = 0;
+                                for (double x : v) s += (x - m) * (x - m);
+                                return std::sqrt(s / v.size()) / std::max(m, 1e-12);
+                            };
+                            double m_lo = mean(lo), m_hi = mean(hi);
+                            if (m_lo > 1e-9 && m_hi > 1e-9) {
+                                two_peak_gap_ratio_ = m_hi / m_lo;
+                            }
+                            // Genuine two-frequency sums: component ratio in
+                            // [1.8, 8] with TIGHT clusters (CV < 0.8 each).
+                            // Ratios far above 8 with a tiny-gap cluster are
+                            // tangent-touch noise (adjacent crossings from a
+                            // zero-grazing residual), not a second component.
+                            if (m_lo > 1e-9 && m_hi > 1e-9
+                                && m_hi / m_lo > 1.8 && m_hi / m_lo < 8.0
+                                && cv(lo) < 0.8 && cv(hi) < 0.8
+                                && lo.size() >= 3 && hi.size() >= 3) {
+                                // w = pi / mean_halfperiod_gap
+                                constexpr double kPi = 3.14159265358979323846;
+                                double w_hi = kPi / m_lo;   // short gaps
+                                double w_lo = kPi / m_hi;   // long gaps
+                                // Component clamp is looser than the blend
+                                // clamp: a MEASURED high-frequency
+                                // component is legitimate (d3: w_hi ~93
+                                // from 13 samples/period — resolvable);
+                                // only the statistical blend is noise-prone.
+                                if (w_lo >= 0.5 && w_hi <= 120.0) {
+                                    freq_est = w_lo;
+                                    freq2_est = w_hi;
+                                    two_peak = true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
             uint64_t src_id = graph_input_ids[std::min(axis, graph_input_ids.size()-1)];
@@ -3356,7 +3422,19 @@ if (profile.bounded
                 candidates.push_back({std::move(sinj_f), piecewise_signature ? 0.45 : (config::SCORE_COMPOUND_TANH_SERIES + 0.01)});
                 Logger::info("Candidate emitted: SIN_INJECTION freq-init (w="
                             + std::to_string(freq_est) + ", " + std::to_string(sign_changes)
-                            + " sign changes)");
+                            + " sign changes, gap-ratio "
+                            + std::to_string(two_peak_gap_ratio_)  // set below
+                            + (two_peak ? ", two-peak LOW" : "") + ")");
+            }
+            // M5.7: the second component of a two-frequency residual.
+            if (two_peak && freq2_est > 0.0) {
+                Hypothesis sinj_f2;
+                sinj_f2.type = Hypothesis::SIN_INJECTION;
+                sinj_f2.multiply_source_a = src_id;
+                sinj_f2.sin_freq_init = freq2_est;
+                candidates.push_back({std::move(sinj_f2), piecewise_signature ? 0.45 : (config::SCORE_COMPOUND_TANH_SERIES + 0.005)});
+                Logger::info("Candidate emitted: SIN_INJECTION freq-init (w="
+                            + std::to_string(freq2_est) + ", two-peak HIGH)");
             }
             // Zero-init variant (proven fallback; identity start).
             Hypothesis sinj;

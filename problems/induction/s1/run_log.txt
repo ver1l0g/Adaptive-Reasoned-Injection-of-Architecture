@@ -7,17 +7,26 @@ Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\induct
   Train: 6399  Validation: 1600
 
 Starting evolution...
-2026-08-28 22:46:08.931 [INFO] New best overall loss: 3.565589
-  [   1]   eval  loss=13.335549  |====================|  [   1]    sgd  loss=3.565589  |====================|2026-08-28 22:46:23.382 [INFO] New best overall loss: 3.562925
-  [   2]   eval  loss=3.565589  |====================|  [   2]    sgd  loss=3.562925  |====================|2026-08-28 22:46:29.641 [INFO] New best overall loss: 3.561588
-  [   3]   eval  loss=3.562925  |====================|  [   3]    sgd  loss=3.561588  |====================|  [   4]   eval  loss=3.561588  |====================|  [   4]    sgd  loss=3.563990  |====================|  [   5]   eval  loss=3.563990  |====================|  [   5]    sgd  loss=3.564301  |====================|  [   6]   eval  loss=3.564301  |====================|  [   6]    sgd  loss=3.564923  |====================|  [   7]   eval  loss=3.564923  |====================|  [   7]    sgd  loss=3.564357  |====================|  [   8]   eval  loss=3.564357  |====================|  [   8]    sgd  loss=3.563933  |====================|2026-08-28 22:47:51.072 [INFO] Plateau triggered at epoch 8 (counter=5, loss=3.563933)
-2026-08-28 22:47:55.180 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-28 22:47:55.181 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
-2026-08-28 22:47:55.181 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
-2026-08-28 22:47:55.271 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-28 22:59:07.305 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.648069 train_loss=3.487035 new train_loss=3.512353
-2026-08-28 22:59:07.307 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-28 22:59:07.308 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
-2026-08-28 23:08:53.991 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.654982 train_loss=3.482094 new train_loss=3.508809
-2026-08-28 23:08:53.996 [INFO] [PROFILE] F=32 N=207 var_r=0.0713 bound_ratio=3.7445 poly_r2=0.0000 sobol_pair(18,22)=0.1943 quad=[0.077,0.077,0.077,0.077] L_max=4.072 | flags: BOUNDED
-2026-08-28 23:08:53.997 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-28 23:29:58.110 [INFO] New best overall loss: 3.565589
+  [   1]   eval  loss=13.335549  |====================|  [   1]    sgd  loss=3.565589  |====================|2026-08-28 23:30:11.410 [INFO] New best overall loss: 3.562925
+  [   2]   eval  loss=3.565589  |====================|  [   2]    sgd  loss=3.562925  |====================|2026-08-28 23:30:16.832 [INFO] New best overall loss: 3.561588
+  [   3]   eval  loss=3.562925  |====================|  [   3]    sgd  loss=3.561588  |====================|  [   4]   eval  loss=3.561588  |====================|  [   4]    sgd  loss=3.563990  |====================|  [   5]   eval  loss=3.563990  |====================|  [   5]    sgd  loss=3.564301  |====================|  [   6]   eval  loss=3.564301  |====================|  [   6]    sgd  loss=3.564923  |====================|  [   7]   eval  loss=3.564923  |====================|  [   7]    sgd  loss=3.564357  |====================|  [   8]   eval  loss=3.564357  |====================|  [   8]    sgd  loss=3.563933  |====================|2026-08-28 23:31:17.844 [INFO] Plateau triggered at epoch 8 (counter=5, loss=3.563933)
+2026-08-28 23:31:20.812 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-28 23:31:20.813 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-28 23:31:20.813 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
+2026-08-28 23:31:20.896 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-28 23:38:02.873 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.648069 train_loss=3.487035 new train_loss=3.512353
+2026-08-28 23:38:02.874 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-28 23:38:02.875 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-28 23:46:39.382 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.654982 train_loss=3.482094 new train_loss=3.508809
+2026-08-28 23:46:39.393 [INFO] [PROFILE] F=32 N=207 var_r=0.0713 bound_ratio=3.7445 poly_r2=0.0000 sobol_pair(18,22)=0.1943 quad=[0.077,0.077,0.077,0.077] L_max=4.072 | flags: BOUNDED
+2026-08-28 23:46:39.399 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-28 23:54:58.065 [INFO]   COMMIT rank=0 type=IFELSE_BOUNDARY_SPLIT val_loss=3.651017 train_loss=3.512425 new train_loss=3.545684
+2026-08-28 23:54:58.065 [INFO] Plateau state reset 鈥?best_phase2=3.545684
+2026-08-28 23:54:58.065 [INFO] Plateau state reset — best_phase2=3.545684
+  [   9]   eval  loss=3.545684  |====================|  [   9]    sgd  loss=3.549428  |====================|  [  10]   eval  loss=3.549428  |====================|  [  10]    sgd  loss=3.551355  |====================|2026-08-28 23:55:32.867 [INFO] New best overall loss: 3.542297
+  [  11]   eval  loss=3.551355  |====================|  [  11]    sgd  loss=3.542297  |====================|  [  12]   eval  loss=3.542297  |====================|  [  12]    sgd  loss=3.545670  |====================|  [  13]   eval  loss=3.545670  |====================|  [  13]    sgd  loss=3.543682  |====================|  [  14]   eval  loss=3.543682  |====================|  [  14]    sgd  loss=3.544970  |====================|  [  15]   eval  loss=3.544970  |====================|  [  15]    sgd  loss=3.543573  |====================|  [  16]   eval  loss=3.543573  |====================|  [  16]    sgd  loss=3.543103  |====================|2026-08-28 23:56:18.204 [INFO] Plateau triggered at epoch 16 (counter=5, loss=3.543103)
+2026-08-28 23:56:30.111 [INFO] [PROFILE] F=32 N=3312 var_r=0.0586 bound_ratio=4.1312 poly_r2=-0.0000 a12=0.0000 max_coef[i=254]=-0.1222 sobol_pair(6,7)=0.0000 quad=[0.062,0.062,0.062,0.062] L_max=4.072 | flags: none
+2026-08-28 23:56:30.113 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-28 23:56:30.113 [INFO] MULTIPLY sources from poly fit: input=7*input=26 (max_coef_idx=254)
+2026-08-28 23:56:30.113 [INFO] Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input=7*input=26, poly_r2=-0.000000)
