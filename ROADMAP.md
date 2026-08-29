@@ -92,15 +92,25 @@ Emission: LM-signature tasks (many one-hot inputs + many outputs) inject
 EMBED(per slot) → NEURON trunk → outputs. Standard bigram-model shape.
 - Target: w1 ≤ 3.54 bits/char (bigram floor) — measured, crisp.
 
-### 2.2 Window scaling test [S]
-With 2.1: rerun the w1→w32 ladder. Success = **monotone improvement
-with context width** (currently flat — the defining language failure).
-- w8 target ~3.0 (trigram-ish); w32 approaching ~2.5.
+### 2.2 Window scaling test [VERDICT 2026-08-29 (aria12 ladder, EMBED trunk)]
+w1 4.4296 → w8 4.2271 → w16 4.1712 bits/char: **MONOTONE IMPROVEMENT
+WITH CONTEXT through w16** — the defining language failure ("flat with
+width") is broken by the EMBED trunk up to 16 context chars (0.26 bpc
+gained w1→w16; accuracy 14.8→22.0%). w32: this run's window collapsed
+(6.96 bpc, 0 commits — heaviest shadows watchdog-killed under 5-way
+CPU contention; SOLO RERUN PENDING). Historical w32+EMBED (8/26): 4.231
+≈ the w8-linear point — no gain at 32. Verdict: monotone scaling
+CONFIRMED through w16, ceiling at w32 confirmed by the historical run.
 
 ### 2.3 (Deferred) Attention-class mixing [L]
 Only if 2.2 stalls: dot-product mixing across positions. Big build,
 tensor-shaped nodes — genuinely a different node data model. The
 induction/copy task is its smoke test. Decision point, not a commitment.
+[GO PER M2.4 CRITERIA — see 2.4: the induction probe failed at chance
+(8.01% vs 6.25%) and w32+EMBED stalls at 4.23 > 3.8. Dense fixed
+mixing cannot do in-context retrieval; attention is the justified
+build. Scope honestly: new node data model (tensor positions),
+dot-product mixing, induction/copy as the smoke test.]
 
 ---
 
@@ -468,11 +478,18 @@ from v1/v2 runs penalize the v3 multi-split candidates before
 validation (-0.16). Fix: version the family ids in failure records, or
 bump penalty decay by record age.
 
-### 2.4 Attention decision criteria [S, gates 2.3]
+### 2.4 Attention decision criteria [MEASURED 2026-08-29: ATTENTION JUSTIFIED]
 Concrete trigger for the M2.3 go/no-go: run the induction/copy probe
 (with EMBED trunk at w32). If bits/char at w32+EMBED stalls above ~3.8
 AND the probe fails, attention is justified; if EMBED keeps scaling,
 defer again. Defines the measurement, not just "decision point."
+[RESULT: probe (harness/run_induction.py, V=16/W=32, 8k train,
+EMBED trunk): accuracy 8.01% vs 6.25% chance — FAIL (dense mixing
+cannot retrieve the previous occurrence of the queried token from
+context; eval 3.813 bpc). w32+EMBED historical 4.231 > 3.8 stall
+threshold (this run's w32 collapsed on watchdog kills — solo rerun
+pending, but the 8/26 number stands as the valid measurement). BOTH
+criteria met → M2.3 attention build is GO.]
 ---
 
 ## Sequencing recommendation (refreshed 2026-08-29)
