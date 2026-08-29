@@ -1068,6 +1068,7 @@ void register_builtin_node_types() {
 
     reg.register_type(NodeType::NEURON,   [](uint64_t id, const std::string& name) { return std::make_unique<NeuronNode>(id, name); });
     reg.register_type(NodeType::LINEAR,   [](uint64_t id, const std::string& name) { return std::make_unique<LinearNode>(id, name); });
+    reg.register_type(NodeType::ONEHOT,   [](uint64_t id, const std::string& name) { return std::make_unique<OneHotNode>(id, name); });
     reg.register_type(NodeType::RELU,     [](uint64_t id, const std::string& name) { return std::make_unique<ReLUNode>(id, name); });
     reg.register_type(NodeType::SIGMOID,  [](uint64_t id, const std::string& name) { return std::make_unique<SigmoidNode>(id, name); });
     reg.register_type(NodeType::TANH,     [](uint64_t id, const std::string& name) { return std::make_unique<TanhNode>(id, name); });

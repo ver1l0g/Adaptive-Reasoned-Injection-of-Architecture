@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "C:\Users\banny\Documents\algorithm project\problems\harness\run_induction.py", line 90, in <module>
+    run_one(s)
+  File "C:\Users\banny\Documents\algorithm project\problems\harness\run_induction.py", line 78, in run_one
+    subprocess.run(args, stdout=lf, stderr=subprocess.STDOUT, cwd=wd,
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1228, in communicate
+    sts = self.wait(timeout=self._remaining_time(endtime))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1593, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['C:\\Users\\banny\\Documents\\algorithm project\\aria17.exe', '--csv', 'C:\\Users\\banny\\Documents\\algorithm project\\problems\\induction\\s1\\train.csv', '--input-cols', '32', '--output-cols', '16', '--loss', 'bce', '--max-epochs', '30', '--seed', '1', '--save-graph', 'none', '--eval-csv', 'C:\\Users\\banny\\Documents\\algorithm project\\problems\\induction\\s1\\test.csv']' timed out after 14400.000000000007 seconds
