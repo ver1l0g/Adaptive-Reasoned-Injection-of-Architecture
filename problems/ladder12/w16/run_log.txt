@@ -19,3 +19,252 @@ Starting evolution...
 2026-08-28 23:58:13.558 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.995115 train_loss=4.091156 new train_loss=3.969538
 2026-08-28 23:58:13.569 [INFO] [PROFILE] F=16 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 a12=0.0000 max_coef[i=0]=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
 2026-08-28 23:58:13.576 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.301873 a=node=2 b=node=3)
+2026-08-29 00:09:24.844 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.958503 train_loss=4.051917 new train_loss=3.935635
+2026-08-29 00:09:24.854 [INFO] [PROFILE] F=16 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 a12=0.0000 max_coef[i=0]=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 00:09:24.860 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.301873 a=node=2 b=node=3)
+2026-08-29 00:18:53.589 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.958697 train_loss=4.058570 new train_loss=3.933558
+2026-08-29 00:18:53.589 [INFO] Plateau state reset 鈥?best_phase2=3.933558
+2026-08-29 00:18:53.589 [INFO] Plateau state reset — best_phase2=3.933558
+2026-08-29 00:19:47.610 [INFO] New best overall loss: 3.909710
+  [   5]   eval  loss=3.933558  |====================|  [   5]    sgd  loss=3.909710  |====================|2026-08-29 00:20:40.109 [INFO] New best overall loss: 3.905870
+  [   6]   eval  loss=3.909710  |====================|  [   6]    sgd  loss=3.905870  |====================|2026-08-29 00:21:27.814 [INFO] New best overall loss: 3.904690
+  [   7]   eval  loss=3.905870  |====================|  [   7]    sgd  loss=3.904690  |====================|2026-08-29 00:22:14.832 [INFO] New best overall loss: 3.902949
+  [   8]   eval  loss=3.904690  |====================|  [   8]    sgd  loss=3.902949  |====================|2026-08-29 00:23:10.133 [INFO] New best overall loss: 3.902487
+  [   9]   eval  loss=3.902949  |====================|  [   9]    sgd  loss=3.902487  |====================|2026-08-29 00:23:56.398 [INFO] New best overall loss: 3.902084
+  [  10]   eval  loss=3.902487  |====================|  [  10]    sgd  loss=3.902084  |====================|2026-08-29 00:24:46.916 [INFO] New best overall loss: 3.899892
+  [  11]   eval  loss=3.902084  |====================|  [  11]    sgd  loss=3.899892  |====================|  [  12]   eval  loss=3.899892  |====================|  [  12]    sgd  loss=3.902195  |====================|  [  13]   eval  loss=3.902195  |====================|  [  13]    sgd  loss=3.901558  |====================|  [  14]   eval  loss=3.901558  |====================|  [  14]    sgd  loss=3.901107  |====================|2026-08-29 00:27:15.467 [INFO] Plateau triggered at epoch 14 (counter=3, loss=3.901107)
+2026-08-29 00:30:01.755 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 00:30:01.760 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-29 00:30:01.760 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-29 00:30:01.762 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
+2026-08-29 00:30:01.765 [INFO] Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input=7*input=15, poly_r2=-0.000000)
+2026-08-29 00:30:30.579 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-29 00:45:38.179 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:45:38.480 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:45:40.727 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:45:43.669 [INFO]   COMMIT rank=2 type=COMPOUND_SIN_PRODUCT val_loss=3.945266 train_loss=4.040870 new train_loss=3.918349
+2026-08-29 00:45:44.287 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 00:45:44.293 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-29 00:45:44.294 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-29 00:45:44.296 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
+2026-08-29 00:46:15.359 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-29 01:01:21.682 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 01:01:25.288 [INFO]   COMMIT rank=4 type=MULTI_LAYER_STACK val_loss=3.953539 train_loss=4.076027 new train_loss=3.923518
+2026-08-29 01:01:25.292 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-29 01:01:25.293 [INFO] Plateau state reset 鈥?best_phase2=3.923518
+2026-08-29 01:01:25.293 [INFO] Plateau state reset — best_phase2=3.923518
+2026-08-29 01:04:00.353 [INFO] New best overall loss: 3.875380
+  [  15]   eval  loss=3.923518  |====================|  [  15]    sgd  loss=3.875380  |====================|2026-08-29 01:07:27.765 [INFO] New best overall loss: 3.875309
+  [  16]   eval  loss=3.875380  |====================|  [  16]    sgd  loss=3.875309  |====================|2026-08-29 01:10:08.226 [INFO] New best overall loss: 3.873726
+  [  17]   eval  loss=3.875309  |====================|  [  17]    sgd  loss=3.873726  |====================|  [  18]   eval  loss=3.873726  |====================|  [  18]    sgd  loss=3.874640  |====================|2026-08-29 01:15:18.968 [INFO] New best overall loss: 3.873709
+  [  19]   eval  loss=3.874640  |====================|  [  19]    sgd  loss=3.873709  |====================|2026-08-29 01:19:27.228 [INFO] New best overall loss: 3.873389
+  [  20]   eval  loss=3.873709  |====================|  [  20]    sgd  loss=3.873389  |====================|2026-08-29 01:19:27.229 [INFO] Plateau triggered at epoch 20 (counter=3, loss=3.873389)
+2026-08-29 01:22:32.263 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 01:22:32.270 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-29 01:23:05.271 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-29 01:26:06.010 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 01:26:06.013 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-29 01:26:06.016 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
+2026-08-29 01:26:36.325 [INFO] Library INJECT (dist=0.834 src=I.14.3.csv) -> IFELSE [gate-bypass]
+2026-08-29 01:41:43.084 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 01:41:46.563 [INFO]   COMMIT rank=3 type=MULTI_LAYER_STACK val_loss=3.952777 train_loss=4.045719 new train_loss=3.921365
+2026-08-29 01:41:47.052 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 01:41:47.059 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-29 01:41:47.059 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-29 01:41:47.061 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
+2026-08-29 01:42:15.250 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-29 01:49:50.862 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-29 01:49:50.862 [INFO] Plateau state reset 鈥?best_phase2=3.921365
+2026-08-29 01:49:50.862 [INFO] Plateau state reset — best_phase2=3.921365
+  [  21]   eval  loss=3.921365  |====================|  [  21]    sgd  loss=3.876311  |====================|  [  22]   eval  loss=3.876311  |====================|  [  22]    sgd  loss=3.874394  |====================|  [  23]   eval  loss=3.874394  |====================|  [  23]    sgd  loss=3.874181  |====================|  [  24]   eval  loss=3.874181  |====================|  [  24]    sgd  loss=3.874342  |====================|  [  25]   eval  loss=3.874342  |====================|  [  25]    sgd  loss=3.874004  |====================|2026-08-29 02:01:17.988 [INFO] Plateau triggered at epoch 25 (counter=3, loss=3.874004)
+2026-08-29 02:03:48.823 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 02:03:48.829 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-29 02:03:48.829 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-29 02:03:48.831 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
+2026-08-29 02:04:11.055 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-29 02:19:15.618 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 02:19:18.419 [INFO]   COMMIT rank=4 type=MULTI_LAYER_STACK val_loss=3.951527 train_loss=4.050623 new train_loss=3.918210
+2026-08-29 02:19:18.770 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 02:19:18.773 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-29 02:19:18.775 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
+2026-08-29 02:19:39.595 [INFO] Library INJECT (dist=0.834 src=I.14.3.csv) -> IFELSE [gate-bypass]
+2026-08-29 02:34:43.995 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 02:34:47.674 [INFO]   COMMIT rank=3 type=MULTI_LAYER_STACK val_loss=3.951720 train_loss=4.050682 new train_loss=3.918351
+2026-08-29 02:34:48.166 [INFO] [PROFILE] F=16 N=13065 var_r=0.0151 bound_ratio=8.1250 poly_r2=-0.0000 a12=0.0000 max_coef[i=26]=-0.0000 sobol_pair(0,1)=0.0000 quad=[0.015,0.015,0.015,0.015] L_max=21.458 | flags: SHARP
+2026-08-29 02:34:48.172 [INFO] IFELSE set-guided split: thr=-1.638748 (SSE reduction 0.000000 over 13065 paired samples)
+2026-08-29 02:34:48.172 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.457958 var_r=0.015148)
+2026-08-29 02:34:48.174 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-1.638748 a=node=2 b=node=3)
+2026-08-29 02:35:15.315 [INFO] Library prior (dist=0.834 src=I.14.3.csv pattern=tanh_stack) boosts IFELSE by 0.200000
+2026-08-29 02:36:18.287 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-29 02:36:18.287 [INFO] Plateau state reset 鈥?best_phase2=3.918351
+2026-08-29 02:36:18.287 [INFO] Plateau state reset — best_phase2=3.918351
+2026-08-29 02:36:18.287 [INFO] Suppressing hypothesis type 14 (3 consecutive commits without meaningful improvement)
+  [  26]   eval  loss=3.918351  |====================|  [  26]    sgd  loss=3.873857  |====================|2026-08-29 02:40:35.861 [INFO] New best overall loss: 3.872819
+  [  27]   eval  loss=3.873857  |====================|  [  27]    sgd  loss=3.872819  |====================|2026-08-29 02:42:40.470 [INFO] New best overall loss: 3.871156
+  [  28]   eval  loss=3.872819  |====================|  [  28]    sgd  loss=3.871156  |====================|  [  29]   eval  loss=3.871156  |====================|  [  29]    sgd  loss=3.873400  |====================|  [  30]   eval  loss=3.873400  |====================|  [  30]    sgd  loss=3.873255  |====================|2026-08-29 02:47:35.955 [INFO] Restored best-val graph snapshot (val=3.887006, train=3.871156)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         30
+  SGD epochs run:       1500
+  Structural changes:   8
+  Failed commits:       46
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         53.5382
+  Final loss:           3.87116
+  Best loss:            3.87116
+  Wall time:            11873319 ms
+
+  [Expression] 2.680*((-0.036*x0-0.005*x1+0.030*x2+0.013*x3+0.000*x4-0.019*x5-0.000*x6-0.034*x7-0.018*x8-0.020*x9+0.041*x10+0.069*x11+0.009*x12+0.125*x13+0.070*x14-0.783*x15-0.911)+(tanh(0.489*tanh(-0.051*x0+0.15...
+
+  [Library] Behavioral fingerprint: k=16 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=3.2
+  [Library] Closest existing entries:
+    bench_d3_two_sines.csv (dist=0.535)
+    bench_d2_mod3.csv (dist=0.536)
+    bench_d3_two_sines.csv (dist=0.543)
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 1063 entries)
+  [Library] Extracted 11 sub-expression block(s) (library now has 1074 entries)
+  [FailureLib] Appended 46 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (59999 samples)
+================================================
+  Eval R2[out0]:   -1064.772191
+  Eval MSE[out0]:  36.195228   MAE: 5.453456
+  Eval R2[out1]:   -93.299847
+  Eval MSE[out1]:  12.010190   MAE: 2.893660
+  Eval R2[out2]:   -31292.378969
+  Eval MSE[out2]:  61.423631   MAE: 7.534149
+  Eval R2[out3]:   0.000000
+  Eval MSE[out3]:  169.802507   MAE: 12.821189
+  Eval R2[out4]:   0.000000
+  Eval MSE[out4]:  170.277647   MAE: 12.862060
+  Eval R2[out5]:   -5376.703572
+  Eval MSE[out5]:  30.478694   MAE: 5.449944
+  Eval R2[out6]:   -1822.037451
+  Eval MSE[out6]:  30.964105   MAE: 5.280710
+  Eval R2[out7]:   -29483.312577
+  Eval MSE[out7]:  47.590037   MAE: 6.800122
+  Eval R2[out8]:   -6111.721014
+  Eval MSE[out8]:  41.987914   MAE: 6.202060
+  Eval R2[out9]:   -3754989.186445
+  Eval MSE[out9]:  187.743251   MAE: 13.411094
+  Eval R2[out10]:   -4853.777248
+  Eval MSE[out10]:  42.744203   MAE: 6.290855
+  Eval R2[out11]:   -16507.913258
+  Eval MSE[out11]:  49.105473   MAE: 6.829725
+  Eval R2[out12]:   -31766.635382
+  Eval MSE[out12]:  58.134857   MAE: 7.442994
+  Eval R2[out13]:   -8622.641395
+  Eval MSE[out13]:  60.085638   MAE: 7.416871
+  Eval R2[out14]:   -41667.386453
+  Eval MSE[out14]:  85.938124   MAE: 8.944813
+  Eval R2[out15]:   -16331.728834
+  Eval MSE[out15]:  58.046593   MAE: 7.407322
+  Eval R2[out16]:   -45139.653429
+  Eval MSE[out16]:  86.355193   MAE: 9.005159
+  Eval R2[out17]:   -11034.592447
+  Eval MSE[out17]:  58.543562   MAE: 7.386675
+  Eval R2[out18]:   -66014.291874
+  Eval MSE[out18]:  95.584967   MAE: 9.438609
+  Eval R2[out19]:   -37831.891037
+  Eval MSE[out19]:  67.977756   MAE: 8.038913
+  Eval R2[out20]:   -27001.665744
+  Eval MSE[out20]:  68.682355   MAE: 8.016140
+  Eval R2[out21]:   -3286.897379
+  Eval MSE[out21]:  36.412617   MAE: 5.825131
+  Eval R2[out22]:   -521953.410783
+  Eval MSE[out22]:  130.458154   MAE: 11.117784
+  Eval R2[out23]:   -56571.578602
+  Eval MSE[out23]:  78.151777   MAE: 8.607496
+  Eval R2[out24]:   -22009.687703
+  Eval MSE[out24]:  67.658157   MAE: 7.975896
+  Eval R2[out25]:   -27479.259349
+  Eval MSE[out25]:  68.530036   MAE: 8.021797
+  Eval R2[out26]:   -17379.202379
+  Eval MSE[out26]:  72.404223   MAE: 8.141206
+  Eval R2[out27]:   -10534.307811
+  Eval MSE[out27]:  56.063279   MAE: 7.261610
+  Eval R2[out28]:   -57500.818783
+  Eval MSE[out28]:  81.346861   MAE: 8.756659
+  Eval R2[out29]:   -1182965.244381
+  Eval MSE[out29]:  216.840997   MAE: 14.205669
+  Eval R2[out30]:   -13575.264446
+  Eval MSE[out30]:  65.974766   MAE: 7.759920
+  Eval R2[out31]:   -15056.505591
+  Eval MSE[out31]:  61.234768   MAE: 7.573546
+  Eval R2[out32]:   -8317.804226
+  Eval MSE[out32]:  52.900485   MAE: 6.972915
+  Eval R2[out33]:   -30257.090239
+  Eval MSE[out33]:  88.498181   MAE: 9.134122
+  Eval R2[out34]:   -197097.120846
+  Eval MSE[out34]:  131.313335   MAE: 11.093951
+  Eval R2[out35]:   -29556.577009
+  Eval MSE[out35]:  94.283143   MAE: 9.250396
+  Eval R2[out36]:   -3809247.000953
+  Eval MSE[out36]:  190.456051   MAE: 13.497004
+  Eval R2[out37]:   -51289.820045
+  Eval MSE[out37]:  87.047612   MAE: 9.007982
+  Eval R2[out38]:   -1645735.474485
+  Eval MSE[out38]:  274.248268   MAE: 15.955444
+  Eval R2[out39]:   -198.368802
+  Eval MSE[out39]:  9.497078   MAE: 3.064802
+  Eval R2[out40]:   -2698.985409
+  Eval MSE[out40]:  27.303476   MAE: 5.129000
+  Eval R2[out41]:   -1405.457794
+  Eval MSE[out41]:  19.460631   MAE: 4.387176
+  Eval R2[out42]:   -498.582510
+  Eval MSE[out42]:  13.997368   MAE: 3.668956
+  Eval R2[out43]:   -101.080027
+  Eval MSE[out43]:  7.978911   MAE: 2.681893
+  Eval R2[out44]:   -1414.945352
+  Eval MSE[out44]:  19.844167   MAE: 4.421723
+  Eval R2[out45]:   -1689.612577
+  Eval MSE[out45]:  21.006195   MAE: 4.538870
+  Eval R2[out46]:   -244.787949
+  Eval MSE[out46]:  10.697019   MAE: 3.217221
+  Eval R2[out47]:   -269.451656
+  Eval MSE[out47]:  10.468419   MAE: 3.214379
+  Eval R2[out48]:   -107986.416109
+  Eval MSE[out48]:  73.742205   MAE: 8.416109
+  Eval R2[out49]:   -4599.652198
+  Eval MSE[out49]:  28.650556   MAE: 5.304638
+  Eval R2[out50]:   -435.422140
+  Eval MSE[out50]:  12.672738   MAE: 3.542450
+  Eval R2[out51]:   -963.480306
+  Eval MSE[out51]:  18.965846   MAE: 4.268277
+  Eval R2[out52]:   -235.681268
+  Eval MSE[out52]:  9.779478   MAE: 3.112238
+  Eval R2[out53]:   -199.319397
+  Eval MSE[out53]:  11.301128   MAE: 3.235210
+  Eval R2[out54]:   -2238.083300
+  Eval MSE[out54]:  22.167290   MAE: 4.670237
+  Eval R2[out55]:   -102597.906821
+  Eval MSE[out55]:  73.477744   MAE: 8.413397
+  Eval R2[out56]:   -262.148277
+  Eval MSE[out56]:  10.905126   MAE: 3.252963
+  Eval R2[out57]:   -233.523196
+  Eval MSE[out57]:  10.064565   MAE: 3.144229
+  Eval R2[out58]:   -149.707844
+  Eval MSE[out58]:  8.557497   MAE: 2.897409
+  Eval R2[out59]:   -657.063351
+  Eval MSE[out59]:  15.717374   MAE: 3.920297
+  Eval R2[out60]:   -3692.937316
+  Eval MSE[out60]:  26.708667   MAE: 5.126565
+  Eval R2[out61]:   -1315.800536
+  Eval MSE[out61]:  20.221963   MAE: 4.453383
+  Eval R2[out62]:   -110293.169123
+  Eval MSE[out62]:  60.629439   MAE: 7.738417
+  Eval R2[out63]:   -890.018637
+  Eval MSE[out63]:  16.565107   MAE: 4.038769
+  Eval R2[out64]:   -125684.623349
+  Eval MSE[out64]:  69.090224   MAE: 8.188929
+  Eval SoftmaxCE:   2.891264   (4.171213 bits/unit)
+  Eval Accuracy:    21.952033%

@@ -378,6 +378,16 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   LABELS (gap ratio 2.12, w 43.9/93.3). v2 NAMED: label-space two-peak
   (same lesson as the zero-plateau detector — target structure lives
   in the labels, not the post-fit residual).]
+  [v2 LABEL-SPACE IMPLEMENTED 2026-08-29 (aria16): the residual
+  analysis stays first; on failure the same gap decomposition runs on
+  RAW LABELS (single-output). d3: fires perfectly every cycle —
+  w_lo=38.3, w_hi=85.8, ratio 2.24, both components emitted. BUT the
+  second component never commits (same 2-commit trajectory as the
+  blend — the first SIN lands, the w~86 candidate is emitted every
+  cycle and never validated). Detection SOLVED; the last mile is the
+  same commit-economics wall (high-freq shadow needs longer training
+  or SIN re-emission after a SIN commit is being outranked). Next
+  lead: SIN-after-SIN grace (mirrors d2's harmonic-grace direction).]
 - **t22_windowed_sine (0.95)**: needs IFELSE_BOUNDARY_SPLIT at the
   window edges (x=0, 2pi) wrapping a sine. [ZERO-PLATEAU DETECTOR
   IMPLEMENTED 2026-08-27 in aria13: detection VERIFIED — flat-run scan

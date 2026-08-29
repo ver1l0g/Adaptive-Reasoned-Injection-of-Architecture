@@ -15,3 +15,324 @@ Starting evolution...
 2026-08-28 23:48:07.914 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
 2026-08-28 23:48:07.914 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
 2026-08-28 23:48:08.202 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 00:03:14.335 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:03:14.381 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:03:19.001 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 00:03:19.025 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 00:03:19.025 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 00:03:19.250 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 00:18:24.163 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:18:25.782 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:18:30.484 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 00:18:30.491 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 00:18:30.491 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 00:18:30.733 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [   7]   eval  loss=3.957290  |====================|  [   7]    sgd  loss=3.957290  |====================|2026-08-29 00:32:09.173 [INFO] Plateau triggered at epoch 7 (counter=6, loss=3.957290)
+2026-08-29 00:33:59.514 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 00:33:59.521 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 00:33:59.521 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 00:33:59.807 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 00:49:06.087 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:49:06.850 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 00:49:11.413 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 00:49:11.419 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 00:49:11.420 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 00:49:11.692 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 01:03:37.352 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 01:03:37.358 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 01:03:37.358 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 01:03:37.569 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [   8]   eval  loss=3.957290  |====================|  [   8]    sgd  loss=3.957290  |====================|2026-08-29 01:15:12.799 [INFO] Plateau triggered at epoch 8 (counter=7, loss=3.957290)
+2026-08-29 01:16:55.768 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 01:16:55.775 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 01:16:55.775 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 01:16:56.025 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 01:32:01.383 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 01:32:02.315 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-29 01:32:07.415 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 01:32:07.422 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 01:32:07.423 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 01:32:07.699 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 01:46:07.703 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 01:46:07.709 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 01:46:07.709 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 01:46:07.925 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [   9]   eval  loss=3.957290  |====================|  [   9]    sgd  loss=3.957291  |====================|2026-08-29 01:54:10.778 [INFO] Plateau triggered at epoch 9 (counter=8, loss=3.957291)
+2026-08-29 01:55:37.078 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 01:55:37.082 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 01:55:37.082 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 01:55:37.215 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 02:09:14.062 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 02:09:14.069 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 02:09:14.069 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 02:09:14.221 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 02:21:08.813 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 02:21:08.818 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 02:21:08.818 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 02:21:09.051 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [  10]   eval  loss=3.957291  |====================|  [  10]    sgd  loss=3.957291  |====================|2026-08-29 02:29:43.359 [INFO] Plateau triggered at epoch 10 (counter=9, loss=3.957291)
+2026-08-29 02:31:10.573 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 02:31:10.578 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 02:31:10.578 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 02:31:10.716 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 02:42:30.249 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 02:42:30.253 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 02:42:30.253 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 02:42:30.392 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 02:52:56.593 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 02:52:56.596 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 02:52:56.596 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 02:52:56.701 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 02:59:37.206 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  11]   eval  loss=3.957291  |====================|  [  11]    sgd  loss=3.957292  |====================|2026-08-29 03:00:13.697 [INFO] Structural search in cooldown (9 epochs left) at epoch 11 鈥?letting SGD settle
+  [  12]   eval  loss=3.957292  |====================|  [  12]    sgd  loss=3.957292  |====================|2026-08-29 03:00:50.366 [INFO] Structural search in cooldown (8 epochs left) at epoch 12 鈥?letting SGD settle
+  [  13]   eval  loss=3.957292  |====================|  [  13]    sgd  loss=3.957293  |====================|2026-08-29 03:01:25.662 [INFO] Structural search in cooldown (7 epochs left) at epoch 13 鈥?letting SGD settle
+  [  14]   eval  loss=3.957293  |====================|  [  14]    sgd  loss=3.957293  |====================|2026-08-29 03:02:01.029 [INFO] Structural search in cooldown (6 epochs left) at epoch 14 鈥?letting SGD settle
+  [  15]   eval  loss=3.957293  |====================|  [  15]    sgd  loss=3.957293  |====================|2026-08-29 03:02:39.126 [INFO] Structural search in cooldown (5 epochs left) at epoch 15 鈥?letting SGD settle
+  [  16]   eval  loss=3.957293  |====================|  [  16]    sgd  loss=3.957293  |====================|2026-08-29 03:03:17.531 [INFO] Structural search in cooldown (4 epochs left) at epoch 16 鈥?letting SGD settle
+  [  17]   eval  loss=3.957293  |====================|  [  17]    sgd  loss=3.957293  |====================|2026-08-29 03:03:54.371 [INFO] Structural search in cooldown (3 epochs left) at epoch 17 鈥?letting SGD settle
+  [  18]   eval  loss=3.957293  |====================|  [  18]    sgd  loss=3.957293  |====================|2026-08-29 03:04:31.690 [INFO] Structural search in cooldown (2 epochs left) at epoch 18 鈥?letting SGD settle
+  [  19]   eval  loss=3.957293  |====================|  [  19]    sgd  loss=3.957293  |====================|2026-08-29 03:05:08.464 [INFO] Structural search in cooldown (1 epochs left) at epoch 19 鈥?letting SGD settle
+  [  20]   eval  loss=3.957293  |====================|  [  20]    sgd  loss=3.957293  |====================|2026-08-29 03:05:43.855 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-08-29 03:05:43.855 [INFO] Plateau triggered at epoch 20 (counter=19, loss=3.957293)
+2026-08-29 03:07:06.736 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 03:07:06.740 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 03:07:06.740 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 03:07:06.852 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 03:17:25.516 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 03:17:25.519 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 03:17:25.519 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 03:17:25.625 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 03:27:40.204 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 03:27:40.208 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 03:27:40.208 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 03:27:40.312 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [  21]   eval  loss=3.957293  |====================|  [  21]    sgd  loss=3.957293  |====================|2026-08-29 03:34:47.627 [INFO] Forced structural trigger at epoch 21 (epochs since last structural: 21)
+2026-08-29 03:34:47.627 [INFO] Plateau triggered at epoch 21 (counter=20, loss=3.957293)
+2026-08-29 03:36:10.707 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 03:36:10.711 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 03:36:10.711 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 03:36:10.816 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 03:46:29.479 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 03:46:29.483 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 03:46:29.483 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 03:46:29.597 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 03:56:51.036 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 03:56:51.039 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 03:56:51.039 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 03:56:51.144 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [  22]   eval  loss=3.957293  |====================|  [  22]    sgd  loss=3.957293  |====================|2026-08-29 04:04:00.248 [INFO] Forced structural trigger at epoch 22 (epochs since last structural: 22)
+2026-08-29 04:04:00.248 [INFO] Plateau triggered at epoch 22 (counter=21, loss=3.957293)
+2026-08-29 04:05:23.932 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 04:05:23.936 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 04:05:23.936 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 04:05:24.043 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 04:15:48.039 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 04:15:48.043 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 04:15:48.043 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 04:15:48.152 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 04:26:12.491 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 04:26:12.495 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 04:26:12.495 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 04:26:12.612 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [  23]   eval  loss=3.957293  |====================|  [  23]    sgd  loss=3.957293  |====================|2026-08-29 04:33:19.622 [INFO] Forced structural trigger at epoch 23 (epochs since last structural: 23)
+2026-08-29 04:33:19.622 [INFO] Plateau triggered at epoch 23 (counter=22, loss=3.957293)
+2026-08-29 04:34:44.327 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 04:34:44.331 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 04:34:44.331 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 04:34:44.438 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 04:45:02.338 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 04:45:02.342 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 04:45:02.342 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 04:45:02.443 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 04:55:10.032 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 04:55:10.036 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 04:55:10.036 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 04:55:10.135 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+  [  24]   eval  loss=3.957293  |====================|  [  24]    sgd  loss=3.957293  |====================|2026-08-29 05:00:32.709 [INFO] Forced structural trigger at epoch 24 (epochs since last structural: 24)
+2026-08-29 05:00:32.709 [INFO] Plateau triggered at epoch 24 (counter=23, loss=3.957293)
+2026-08-29 05:01:54.791 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 05:01:54.795 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 05:01:54.795 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 05:01:54.900 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 05:11:45.763 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 05:11:45.767 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 05:11:45.767 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 05:11:45.874 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 05:21:33.470 [INFO] [PROFILE] F=32 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-29 05:21:33.475 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.293140 a=node=2 b=node=3)
+2026-08-29 05:21:33.475 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
+2026-08-29 05:21:33.579 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-29 05:26:32.393 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  25]   eval  loss=3.957293  |====================|  [  25]    sgd  loss=3.957293  |====================|2026-08-29 05:27:02.014 [INFO] Structural search in cooldown (9 epochs left) at epoch 25 鈥?letting SGD settle
+  [  26]   eval  loss=3.957293  |====================|  [  26]    sgd  loss=3.957293  |====================|2026-08-29 05:27:31.781 [INFO] Structural search in cooldown (8 epochs left) at epoch 26 鈥?letting SGD settle
+  [  27]   eval  loss=3.957293  |====================|  [  27]    sgd  loss=3.957293  |====================|2026-08-29 05:28:01.648 [INFO] Structural search in cooldown (7 epochs left) at epoch 27 鈥?letting SGD settle
+  [  28]   eval  loss=3.957293  |====================|  [  28]    sgd  loss=3.957293  |====================|2026-08-29 05:28:31.182 [INFO] Structural search in cooldown (6 epochs left) at epoch 28 鈥?letting SGD settle
+  [  29]   eval  loss=3.957293  |====================|  [  29]    sgd  loss=3.957293  |====================|2026-08-29 05:29:00.939 [INFO] Structural search in cooldown (5 epochs left) at epoch 29 鈥?letting SGD settle
+  [  30]   eval  loss=3.957293  |====================|  [  30]    sgd  loss=3.957293  |====================|2026-08-29 05:29:30.526 [INFO] Structural search in cooldown (4 epochs left) at epoch 30 鈥?letting SGD settle
+2026-08-29 05:29:30.526 [INFO] Restored best graph snapshot (loss=3.957231)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         30
+  SGD epochs run:       1500
+  Structural changes:   0
+  Failed commits:       150
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         54.7864
+  Final loss:           3.95723
+  Best loss:            3.95723
+  Wall time:            21585333 ms
+
+  [Expression] (-0.997*x0+0.090*x1-0.354*x2+0.309*x3+0.076*x4-0.016*x5-0.113*x6+0.280*x7+0.215*x8+0.156*x9-0.197*x10+0.207*x11+0.117*x12+0.007*x13-0.101*x14-0.243*x15-0.198*x16-0.064*x17-0.162*x18-0.149*x19+0.213...
+
+  [Library] Behavioral fingerprint: k=32 bounded=0 interact=0 sign_sym=0 sharp=0 lipsch=3.9
+  [Library] Closest existing entries:
+    bench_d2_mod3.csv (dist=0.255)
+    bench_t21_three_region.csv (dist=0.310)
+    bench_t21_three_region.csv (dist=0.313)
+  [Library] Pattern: linear
+  [Library] Saved (library now has 1063 entries)
+  [FailureLib] Appended 150 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (59999 samples)
+================================================
+  Eval R2[out0]:   -50.646488
+  Eval MSE[out0]:  1.789173   MAE: 1.090735
+  Eval R2[out1]:   -8.211268
+  Eval MSE[out1]:  1.204449   MAE: 0.876662
+  Eval R2[out2]:   -905.224755
+  Eval MSE[out2]:  1.793811   MAE: 1.075491
+  Eval R2[out3]:   0.000000
+  Eval MSE[out3]:  1.251933   MAE: 0.900806
+  Eval R2[out4]:   0.000000
+  Eval MSE[out4]:  1.500596   MAE: 0.990617
+  Eval R2[out5]:   -204.809981
+  Eval MSE[out5]:  1.074848   MAE: 0.829161
+  Eval R2[out6]:   -58.986004
+  Eval MSE[out6]:  1.063221   MAE: 0.828279
+  Eval R2[out7]:   -487.630041
+  Eval MSE[out7]:  0.813040   MAE: 0.725815
+  Eval R2[out8]:   -213.104685
+  Eval MSE[out8]:  1.498821   MAE: 0.987321
+  Eval R2[out9]:   -80126.959150
+  Eval MSE[out9]:  1.335466   MAE: 0.930673
+  Eval R2[out10]:   -100.633411
+  Eval MSE[out10]:  0.893174   MAE: 0.762505
+  Eval R2[out11]:   -500.212741
+  Eval MSE[out11]:  1.524062   MAE: 1.009869
+  Eval R2[out12]:   -591.287386
+  Eval MSE[out12]:  1.388628   MAE: 0.949129
+  Eval R2[out13]:   -164.730061
+  Eval MSE[out13]:  1.154732   MAE: 0.870655
+  Eval R2[out14]:   -752.817522
+  Eval MSE[out14]:  1.767338   MAE: 1.077759
+  Eval R2[out15]:   -460.394537
+  Eval MSE[out15]:  1.456480   MAE: 0.970840
+  Eval R2[out16]:   -684.220726
+  Eval MSE[out16]:  1.356348   MAE: 0.956034
+  Eval R2[out17]:   -216.254702
+  Eval MSE[out17]:  1.206253   MAE: 0.884133
+  Eval R2[out18]:   -779.422572
+  Eval MSE[out18]:  1.324485   MAE: 0.930231
+  Eval R2[out19]:   -982.839367
+  Eval MSE[out19]:  1.898444   MAE: 1.103377
+  Eval R2[out20]:   -503.644932
+  Eval MSE[out20]:  1.392345   MAE: 0.944633
+  Eval R2[out21]:   -132.134140
+  Eval MSE[out21]:  1.357180   MAE: 0.940560
+  Eval R2[out22]:   -3886.550136
+  Eval MSE[out22]:  1.036421   MAE: 0.816861
+  Eval R2[out23]:   -591.438388
+  Eval MSE[out23]:  0.779030   MAE: 0.709869
+  Eval R2[out24]:   -413.138814
+  Eval MSE[out24]:  1.506114   MAE: 0.992782
+  Eval R2[out25]:   -506.661597
+  Eval MSE[out25]:  1.392253   MAE: 0.948804
+  Eval R2[out26]:   -217.818016
+  Eval MSE[out26]:  1.131956   MAE: 0.851478
+  Eval R2[out27]:   -209.804642
+  Eval MSE[out27]:  1.007022   MAE: 0.818229
+  Eval R2[out28]:   -1151.578076
+  Eval MSE[out28]:  1.822056   MAE: 1.095526
+  Eval R2[out29]:   -8678.024355
+  Eval MSE[out29]:  1.880079   MAE: 1.099214
+  Eval R2[out30]:   -285.862944
+  Eval MSE[out30]:  1.223487   MAE: 0.886090
+  Eval R2[out31]:   -507.469877
+  Eval MSE[out31]:  2.084619   MAE: 1.148670
+  Eval R2[out32]:   -215.552314
+  Eval MSE[out32]:  1.419836   MAE: 0.948896
+  Eval R2[out33]:   -334.288918
+  Eval MSE[out33]:  1.119474   MAE: 0.854751
+  Eval R2[out34]:   -2196.418364
+  Eval MSE[out34]:  1.098178   MAE: 0.837475
+  Eval R2[out35]:   -237.146783
+  Eval MSE[out35]:  0.700472   MAE: 0.671285
+  Eval R2[out36]:   -9419.913770
+  Eval MSE[out36]:  1.255975   MAE: 0.903895
+  Eval R2[out37]:   -1192.359011
+  Eval MSE[out37]:  2.223482   MAE: 1.208487
+  Eval R2[out38]:   -13130.722906
+  Eval MSE[out38]:  1.969496   MAE: 1.135227
+  Eval R2[out39]:   -32.298901
+  Eval MSE[out39]:  1.602685   MAE: 1.016662
+  Eval R2[out40]:   -137.305864
+  Eval MSE[out40]:  1.427960   MAE: 0.962503
+  Eval R2[out41]:   -78.917622
+  Eval MSE[out41]:  1.138141   MAE: 0.858448
+  Eval R2[out42]:   -75.207096
+  Eval MSE[out42]:  2.080080   MAE: 1.169418
+  Eval R2[out43]:   -20.580960
+  Eval MSE[out43]:  1.665636   MAE: 1.039562
+  Eval R2[out44]:   -124.715347
+  Eval MSE[out44]:  1.717071   MAE: 1.064270
+  Eval R2[out45]:   -148.311639
+  Eval MSE[out45]:  1.767839   MAE: 1.073044
+  Eval R2[out46]:   -21.390819
+  Eval MSE[out46]:  0.961921   MAE: 0.785761
+  Eval R2[out47]:   -36.190990
+  Eval MSE[out47]:  1.488489   MAE: 0.979364
+  Eval R2[out48]:   -1642.699890
+  Eval MSE[out48]:  1.286578   MAE: 0.913622
+  Eval R2[out49]:   -169.439988
+  Eval MSE[out49]:  1.142723   MAE: 0.857347
+  Eval R2[out50]:   -78.605323
+  Eval MSE[out50]:  2.197872   MAE: 1.218510
+  Eval R2[out51]:   -82.232658
+  Eval MSE[out51]:  1.635382   MAE: 1.024215
+  Eval R2[out52]:   -34.330441
+  Eval MSE[out52]:  1.422657   MAE: 0.955698
+  Eval R2[out53]:   -21.760146
+  Eval MSE[out53]:  1.272335   MAE: 0.911354
+  Eval R2[out54]:   -92.017086
+  Eval MSE[out54]:  0.902649   MAE: 0.765887
+  Eval R2[out55]:   -3713.716385
+  Eval MSE[out55]:  1.732754   MAE: 1.055233
+  Eval R2[out56]:   -17.602182
+  Eval MSE[out56]:  0.796337   MAE: 0.712933
+  Eval R2[out57]:   -24.747852
+  Eval MSE[out57]:  1.106922   MAE: 0.847778
+  Eval R2[out58]:   -14.398887
+  Eval MSE[out58]:  0.834536   MAE: 0.730510
+  Eval R2[out59]:   -35.235986
+  Eval MSE[out59]:  0.852255   MAE: 0.742168
+  Eval R2[out60]:   -151.901666
+  Eval MSE[out60]:  0.987417   MAE: 0.799658
+  Eval R2[out61]:   -68.473939
+  Eval MSE[out61]:  1.068026   MAE: 0.832207
+  Eval R2[out62]:   -3047.155179
+  Eval MSE[out62]:  1.523341   MAE: 0.998731
+  Eval R2[out63]:   -117.833045
+  Eval MSE[out63]:  2.081431   MAE: 1.154681
+  Eval R2[out64]:   -3417.265589
+  Eval MSE[out64]:  1.366782   MAE: 0.955453
+  Eval SoftmaxCE:   4.821509   (6.955967 bits/unit)
+  Eval Accuracy:    1.320022%

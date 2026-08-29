@@ -2223,6 +2223,9 @@ std::vector<std::pair<Value, bool>> EvolutionEngine::detect_zero_plateau_edges(
         }
         if (!near_committed) {
             result.push_back(e);
+            // Cap 3: measured optimum — cap 6 builds deeper chains (K=6)
+            // but settles worse (stripes20 0.207 vs 0.225 at cap 3; the
+            // M5.4 settling-cadence limit punishes chain depth).
             if (result.size() >= 3) break;
         }
     }
@@ -3342,74 +3345,122 @@ if (profile.bounded
             double freq2_est = 0.0;
             bool two_peak = false;
             double two_peak_gap_ratio_ = 0.0;   // diagnostics
-            {
+            // Gap-decomposition helper shared by residual- and label-space
+            // analyses: returns (ok, w_lo, w_hi, ratio).
+            auto gap_two_peak = [](const std::vector<std::pair<Value, Value>>& sxt,
+                                   double& w_lo, double& w_hi, double& ratio) -> bool {
                 std::vector<double> gaps;
-                for (size_t i = 1; i < sorted_xt.size(); ++i) {
-                    if ((sorted_xt[i].second > 0) != (sorted_xt[i-1].second > 0)) {
-                        double g = sorted_xt[i].first - sorted_xt[i-1].first;
+                for (size_t i = 1; i < sxt.size(); ++i) {
+                    if ((sxt[i].second > 0) != (sxt[i-1].second > 0)) {
+                        double g = sxt[i].first - sxt[i-1].first;
                         if (g > 1e-9) gaps.push_back(g);
                     }
                 }
+                if (gaps.size() < 6) return false;
+                std::sort(gaps.begin(), gaps.end());
+                std::vector<double> lo(gaps.begin(), gaps.begin() + gaps.size() / 2);
+                std::vector<double> hi(gaps.begin() + gaps.size() / 2, gaps.end());
+                auto mean = [](const std::vector<double>& v) {
+                    double s = 0; for (double x : v) s += x;
+                    return v.empty() ? 0.0 : s / v.size();
+                };
+                auto cv = [&mean](const std::vector<double>& v) {
+                    if (v.size() < 2) return 1e9;
+                    double m = mean(v), s = 0;
+                    for (double x : v) s += (x - m) * (x - m);
+                    return std::sqrt(s / v.size()) / std::max(m, 1e-12);
+                };
+                double m_lo = mean(lo), m_hi = mean(hi);
+                if (m_lo <= 1e-9 || m_hi <= 1e-9) return false;
+                ratio = m_hi / m_lo;
+                // Genuine two-frequency sums: component ratio in [1.8, 8]
+                // with TIGHT clusters (CV < 0.8 each). Ratios far above 8
+                // with a tiny-gap cluster are tangent-touch noise.
+                if (!(ratio > 1.8 && ratio < 8.0
+                      && cv(lo) < 0.8 && cv(hi) < 0.8
+                      && lo.size() >= 3 && hi.size() >= 3)) return false;
+                constexpr double kPi = 3.14159265358979323846;
+                w_lo = kPi / m_hi;
+                w_hi = kPi / m_lo;
+                return w_lo >= 0.5 && w_hi <= 120.0;
+            };
+            {
                 if (sorted_xt.size() >= 2) {
                     double x_lo = sorted_xt.front().first, x_hi = sorted_xt.back().first;
                     double x_range = x_hi - x_lo;
                     constexpr double kTwoPi = 6.28318530717958647692;
-                    if (x_range > 1e-6 && !gaps.empty()) {
+                    if (x_range > 1e-6) {
                         double periods = static_cast<double>(sign_changes) / 2.0;
                         freq_est = kTwoPi * periods / x_range;
                         if (freq_est < 0.5 || freq_est > 60.0) freq_est = 0.0;
-                        // Two-peak: median-split the gaps; require clear
-                        // bimodality (cluster mean ratio > 1.8, both sides
-                        // populated) so single-frequency tasks keep the
-                        // uniform-gap estimate.
-                        if (gaps.size() >= 6) {
-                            std::vector<double> gs = gaps;
-                            std::sort(gs.begin(), gs.end());
-                            std::vector<double> lo(gs.begin(), gs.begin() + gs.size() / 2);
-                            std::vector<double> hi(gs.begin() + gs.size() / 2, gs.end());
-                            auto mean = [](const std::vector<double>& v) {
-                                double s = 0; for (double x : v) s += x;
-                                return v.empty() ? 0.0 : s / v.size();
-                            };
-                            auto cv = [&mean](const std::vector<double>& v) {
-                                if (v.size() < 2) return 1e9;
-                                double m = mean(v), s = 0;
-                                for (double x : v) s += (x - m) * (x - m);
-                                return std::sqrt(s / v.size()) / std::max(m, 1e-12);
-                            };
-                            double m_lo = mean(lo), m_hi = mean(hi);
-                            if (m_lo > 1e-9 && m_hi > 1e-9) {
-                                two_peak_gap_ratio_ = m_hi / m_lo;
-                            }
-                            // Genuine two-frequency sums: component ratio in
-                            // [1.8, 8] with TIGHT clusters (CV < 0.8 each).
-                            // Ratios far above 8 with a tiny-gap cluster are
-                            // tangent-touch noise (adjacent crossings from a
-                            // zero-grazing residual), not a second component.
-                            if (m_lo > 1e-9 && m_hi > 1e-9
-                                && m_hi / m_lo > 1.8 && m_hi / m_lo < 8.0
-                                && cv(lo) < 0.8 && cv(hi) < 0.8
-                                && lo.size() >= 3 && hi.size() >= 3) {
-                                // w = pi / mean_halfperiod_gap
-                                constexpr double kPi = 3.14159265358979323846;
-                                double w_hi = kPi / m_lo;   // short gaps
-                                double w_lo = kPi / m_hi;   // long gaps
-                                // Component clamp is looser than the blend
-                                // clamp: a MEASURED high-frequency
-                                // component is legitimate (d3: w_hi ~93
-                                // from 13 samples/period — resolvable);
-                                // only the statistical blend is noise-prone.
-                                if (w_lo >= 0.5 && w_hi <= 120.0) {
-                                    freq_est = w_lo;
-                                    freq2_est = w_hi;
-                                    two_peak = true;
-                                }
-                            }
+                        // Residual-space two-peak (helper does the gating).
+                        double w_lo = 0.0, w_hi = 0.0, ratio = 0.0;
+                        if (gap_two_peak(sorted_xt, w_lo, w_hi, ratio)) {
+                            freq_est = w_lo;
+                            freq2_est = w_hi;
+                            two_peak = true;
+                            two_peak_gap_ratio_ = ratio;
+                        } else if (ratio > 0.0) {
+                            two_peak_gap_ratio_ = ratio;
                         }
                     }
                 }
             }
             uint64_t src_id = graph_input_ids[std::min(axis, graph_input_ids.size()-1)];
+
+            // M5.7 v2: LABEL-SPACE two-peak fallback. Post-fit residuals
+            // distort the crossing structure (tangent touches, the blend's
+            // own crossings — measured ratios 60.7/10.5 on d3) while the
+            // target's true components live in the RAW LABELS (ratio 2.12).
+            // Same lesson as the zero-plateau detector: target structure
+            // is label-space evidence. Single-output graphs (v1).
+            if (!two_peak) {
+                size_t out_count = 0;
+                uint64_t out_gid = 0;
+                for (const auto& n : graph_->get_nodes()) {
+                    if (n->get_type() == NodeType::OUTPUT) {
+                        ++out_count;
+                        out_gid = n->get_id();
+                    }
+                }
+                uint64_t src_key = 0; bool have_sk = false;
+                for (const auto& kv : input_data_to_graph_) {
+                    if (kv.second == src_id) { src_key = kv.first; have_sk = true; break; }
+                }
+                uint64_t out_key = 0; bool have_ok = false;
+                for (const auto& kv : output_data_to_graph_) {
+                    if (kv.second == out_gid) { out_key = kv.first; have_ok = true; break; }
+                }
+                if (out_count == 1 && have_sk && have_ok
+                    && !training_data_.samples.empty()) {
+                    std::vector<std::pair<Value, Value>> lxy;
+                    for (const auto& s : training_data_.samples) {
+                        auto xi = s.inputs.find(src_key);
+                        auto yi = s.targets.find(out_key);
+                        if (xi != s.inputs.end() && yi != s.targets.end()) {
+                            lxy.emplace_back(xi->second, yi->second);
+                        }
+                    }
+                    if (lxy.size() >= 16) {
+                        std::sort(lxy.begin(), lxy.end(),
+                                  [](const std::pair<Value, Value>& a,
+                                     const std::pair<Value, Value>& b) {
+                                      return a.first < b.first;
+                                  });
+                        double w_lo = 0.0, w_hi = 0.0, ratio = 0.0;
+                        if (gap_two_peak(lxy, w_lo, w_hi, ratio)) {
+                            freq_est = w_lo;
+                            freq2_est = w_hi;
+                            two_peak = true;
+                            two_peak_gap_ratio_ = ratio;
+                            Logger::info("Label-space two-peak: w_lo="
+                                        + std::to_string(w_lo) + " w_hi="
+                                        + std::to_string(w_hi) + " (ratio "
+                                        + std::to_string(ratio) + ")");
+                        }
+                    }
+                }
+            }
 
             // Freq-init variant: starts at the estimated frequency; SGD only
             // refines amplitude/phase. Ranked slightly above the zero-init
