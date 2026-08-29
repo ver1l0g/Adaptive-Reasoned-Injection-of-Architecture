@@ -26,6 +26,7 @@ const char* node_type_to_string(NodeType type) {
         case NodeType::TANH:     return "TANH";
     case NodeType::SIN:      return "SIN";
     case NodeType::LINEAR:   return "LINEAR";
+case NodeType::ONEHOT:   return "ONEHOT";
         case NodeType::IF:           return "IF";
         case NodeType::IFELSE:       return "IFELSE";
         case NodeType::MUX:        return "MUX";
@@ -60,6 +61,7 @@ NodeType node_type_from_string(const std::string& str) {
     if (str == "TANH")     return NodeType::TANH;
     if (str == "SIN")      return NodeType::SIN;
     if (str == "LINEAR")   return NodeType::LINEAR;
+if (str == "ONEHOT")   return NodeType::ONEHOT;
     if (str == "IF")           return NodeType::IF;
     if (str == "IFELSE")       return NodeType::IFELSE;
     if (str == "MUX")        return NodeType::MUX;
@@ -596,6 +598,46 @@ std::unique_ptr<Node> SinNode::clone() const {
 // ============================================================================
 // LinearNode 鈥?identity activation (w路x + b, no tanh)
 // ============================================================================
+// ============================================================================
+// OneHotNode
+// ============================================================================
+OneHotNode::OneHotNode(uint64_t id, const std::string& name)
+    : Node(id, NodeType::ONEHOT, name, 1, 0) {
+    // outputs_ resized by set_vocab() at routing time
+}
+
+void OneHotNode::set_vocab(size_t v) {
+    outputs_.assign(v, 0.0);
+}
+
+void OneHotNode::execute() {
+    // round the incoming code (float-safe) and clamp to vocab
+    long c = 0;
+    if (!inputs_.empty()) c = std::lround(inputs_[0]);
+    const size_t v = outputs_.size();
+    if (v == 0) return;
+    for (size_t j = 0; j < v; ++j) outputs_[j] = 0.0;
+    if (c < 0) c = 0;
+    if (c >= static_cast<long>(v)) c = static_cast<long>(v) - 1;
+    outputs_[static_cast<size_t>(c)] = 1.0;
+}
+
+std::vector<Value> OneHotNode::backward_input_grads(Value) {
+    // Categorical codes carry no gradient through a one-hot.
+    return std::vector<Value>(inputs_.size(), 0.0);
+}
+
+std::unique_ptr<Node> OneHotNode::clone() const {
+    auto n = std::make_unique<OneHotNode>(id_, name_);
+    n->set_vocab(outputs_.size());
+    return n;
+}
+
+void OneHotNode::copy_state_to(Node* target) const {
+    if (auto* t = dynamic_cast<OneHotNode*>(target)) {
+        t->set_vocab(outputs_.size());
+    }
+}
 LinearNode::LinearNode(uint64_t id, const std::string& name)
     : NeuronNode(id, name, NodeType::LINEAR) {}
 

@@ -4960,6 +4960,69 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
 
         int K = (hyp.compound_K > 0) ? hyp.compound_K : config::EMBED_TRUNK_K;
 
+        // M2.3 step 1: ONE-HOT expansion per input slot. The raw char
+        // codes fed to NEURONs give tanh(w*code) — every symbol on a LINE
+        // in embedding space (the linear-embedding limitation measured by
+        // the induction probe: 8.01% vs 6.25% chance). Expanding each
+        // code to a V-dim one-hot makes the trunk NEURONs TRUE per-symbol
+        // embeddings. V = OUTPUT count (input codes share the output
+        // alphabet: 0..V-1). Gated: only when the input values look like
+        // categorical codes (all in [0, V]) — continuous inputs keep the
+        // direct path.
+        size_t V_embed = 0;
+        for (const auto& n : shadow->get_nodes()) {
+            if (n->get_type() == NodeType::OUTPUT) ++V_embed;
+        }
+        std::vector<uint64_t> trunk_sources;   // what hidden NEURONs read
+        std::vector<size_t> src_ports;         // output port on each source
+        bool use_onehot = false;
+        if (V_embed >= 8 && in_ids.size() >= 4) {
+            // Verify code-likeness on the training data.
+            bool codes_ok = true;
+            uint64_t probe_key = 0; bool have_pk = false;
+            for (const auto& kv : input_data_to_graph_) {
+                if (kv.second == in_ids[0]) { probe_key = kv.first; have_pk = true; break; }
+            }
+            if (have_pk && !training_data_.samples.empty()) {
+                size_t checked = 0;
+                for (const auto& s : training_data_.samples) {
+                    auto it = s.inputs.find(probe_key);
+                    if (it == s.inputs.end()) continue;
+                    Value cv = it->second;
+                    if (cv < -0.5 || cv > static_cast<Value>(V_embed) - 0.5
+                        || std::abs(cv - std::round(cv)) > 1e-3) {
+                        codes_ok = false;
+                        break;
+                    }
+                    if (++checked >= 500) break;
+                }
+            } else {
+                codes_ok = false;
+            }
+            use_onehot = codes_ok;
+        }
+        if (use_onehot) {
+            for (size_t i = 0; i < in_ids.size(); ++i) {
+                uint64_t oh_id = shadow->add_node(NodeType::ONEHOT,
+                                                  "embed_onehot_" + std::to_string(i));
+                Node* oh = shadow->get_node(oh_id);
+                if (auto* ohn = dynamic_cast<OneHotNode*>(oh)) {
+                    ohn->set_vocab(V_embed);
+                }
+                shadow->add_connection(in_ids[i], 0, oh_id, 0);
+                for (size_t d = 0; d < V_embed; ++d) {
+                    trunk_sources.push_back(oh_id);
+                    src_ports.push_back(d);
+                }
+            }
+            Logger::info("  [EMBED_TRUNK] one-hot expansion: "
+                        + std::to_string(in_ids.size()) + " slots x V="
+                        + std::to_string(V_embed));
+        } else {
+            trunk_sources = in_ids;
+            src_ports.assign(in_ids.size(), 0);
+        }
+
         // K hidden neurons over ALL inputs
         std::vector<uint64_t> hidden;
         for (int k = 0; k < K; ++k) {
@@ -4967,10 +5030,10 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                                             "embed_trunk_h" + std::to_string(k));
             Node* nn = shadow->get_node(nid);
             if (nn && nn->get_type() == NodeType::NEURON) {
-                static_cast<NeuronNode*>(nn)->set_input_count(in_ids.size());
+                static_cast<NeuronNode*>(nn)->set_input_count(trunk_sources.size());
             }
-            for (size_t j = 0; j < in_ids.size(); ++j) {
-                shadow->add_connection(in_ids[j], 0, nid, j);
+            for (size_t j = 0; j < trunk_sources.size(); ++j) {
+                shadow->add_connection(trunk_sources[j], src_ports[j], nid, j);
             }
             hidden.push_back(nid);
         }

@@ -40,7 +40,12 @@ enum class NodeType : uint32_t {
 
     SIN,     // 1 input, 1 output 鈥?sin(x) activation
 
-    LINEAR,  // N inputs, 1 output 鈥?identity: w路x + b (no activation, for BCE)
+    LINEAR,  // N inputs, 1 output — identity: w·x + b (no activation, for BCE)
+
+    ONEHOT,  // 1 scalar input (categorical code 0..V-1), V outputs (one-hot).
+             // Turns integer char codes into true embedding inputs — tanh(w·code)
+             // places all symbols on a LINE in embedding space, which is why the
+             // code-based EMBED trunk failed the induction probe at chance.
 
     // Control flow
     IF,      // 2 inputs (condition, value), 1 output 鈥?false 鈫?output 0 (sink-like)
@@ -312,6 +317,30 @@ protected:
 // The tanh in NEURON creates double-saturation (tanh + sigmoid) that kills
 // gradients on high-dimensional classification; LINEAR avoids this.
 // ============================================================================
+// ============================================================================
+// OneHotNode — categorical code -> one-hot vector
+// 1 input (scalar code c), V outputs (out_j = 1 if round(c)==j else 0).
+// Zero backward to the input (categorical codes carry no gradient); no
+// internal parameters. Consumers (NEURONs over the V outputs) become TRUE
+// per-symbol embeddings — the fix for the linear-embedding limitation
+// measured by the induction probe (8.01% vs 6.25% chance).
+// ============================================================================
+class OneHotNode : public Node {
+public:
+    OneHotNode(uint64_t id, const std::string& name);
+    size_t get_min_inputs() const override { return 1; }
+
+    void execute() override;
+    std::unique_ptr<Node> clone() const override;
+    std::vector<Value> backward_input_grads(Value output_grad) override;
+
+    // Vocabulary size = number of output ports. The Node base stores
+    // outputs_ as a vector; V is its size (set at construction/routing).
+    void set_vocab(size_t v);
+    size_t get_vocab() const { return outputs_.size(); }
+
+    void copy_state_to(Node* target) const override;
+};
 class LinearNode : public NeuronNode {
 public:
     LinearNode(uint64_t id, const std::string& name);
