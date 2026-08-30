@@ -256,9 +256,30 @@ int main(int argc, char* argv[]) {
             feat_std[kv.first] = (var > 1e-12) ? std::sqrt(var) : 1.0;
             kv.second = m;
         }
+        // Categorical-code detection (M2.3): features whose values are all
+        // non-negative integers within a plausible vocab range are char
+        // codes — z-scoring them breaks the ONEHOT expansion (observed:
+        // wujue codes 0..500, std ~145 -> standardized -> gate rejected
+        // at value 6.54; same for the induction probe's 0..15 codes).
+        // Codes must reach the graph RAW.
+        std::unordered_map<uint64_t, bool> feat_codelike;
+        {
+            for (const auto& s : full_data.samples) {
+                for (const auto& kv : s.inputs) {
+                    bool& cl = feat_codelike.try_emplace(kv.first, true).first->second;
+                    if (!cl) continue;
+                    Value v = kv.second;
+                    if (v < -0.5 || v > 4096.5
+                        || std::abs(v - std::round(v)) > 1e-3) {
+                        cl = false;
+                    }
+                }
+            }
+        }
         for (auto& s : full_data.samples) {
             for (auto& kv : s.inputs) {
                 if (feat_binary[kv.first]) continue;  // keep raw 0/1 values
+                if (feat_codelike[kv.first]) continue;  // keep raw char codes
                 if (feat_std[kv.first] < 2.0) continue;  // already well-scaled
                 kv.second = (kv.second - feat_mean[kv.first]) / feat_std[kv.first];
             }
