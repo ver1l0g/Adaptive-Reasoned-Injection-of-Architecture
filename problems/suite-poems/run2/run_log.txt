@@ -1,0 +1,9 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\bench_wujue_train.csv
+  Loaded 11999 samples
+  Train: 9599  Validation: 2400
+
+Starting evolution...

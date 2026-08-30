@@ -7,3 +7,37 @@ Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-
   Train: 47593  Validation: 11898
 
 Starting evolution...
+2026-08-30 01:31:05.276 [INFO] New best overall loss: 6.685673
+  [   1]   eval  loss=802.417567  |====================|  [   1]    sgd  loss=6.685673  |====================|  [   2]   eval  loss=6.685673  |====================|  [   2]    sgd  loss=6.688675  |====================|  [   3]   eval  loss=6.688675  |====================|  [   3]    sgd  loss=6.689511  |====================|  [   4]   eval  loss=6.689511  |====================|  [   4]    sgd  loss=6.690161  |====================|2026-08-30 02:11:32.879 [INFO] Plateau triggered at epoch 4 (counter=3, loss=6.690161)
+2026-08-30 06:02:52.005 [INFO] [PROFILE] F=19 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 06:02:52.029 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-0.166493 a=node=1054 b=node=2)
+2026-08-30 06:02:52.030 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 1001 outputs)
+2026-08-30 06:02:59.720 [INFO]   [EMBED_TRUNK] built K=8 trunk over 19 inputs
+2026-08-30 06:18:18.720 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:18:19.298 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:18:19.998 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:18:21.529 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:18:33.048 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:18:33.101 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:18:33.796 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:20:49.564 [INFO] [PROFILE] F=19 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 06:20:49.584 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-0.166493 a=node=1054 b=node=2)
+2026-08-30 06:20:49.584 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 1001 outputs)
+2026-08-30 06:20:57.381 [INFO]   [EMBED_TRUNK] built K=8 trunk over 19 inputs
+2026-08-30 06:36:18.974 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:36:36.911 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:36:37.139 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:36:37.550 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:36:38.641 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:36:38.841 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:36:39.416 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 06:38:34.216 [INFO] [PROFILE] F=19 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 06:38:34.237 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-0.166493 a=node=1054 b=node=2)
+2026-08-30 06:38:34.238 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 1001 outputs)
+2026-08-30 06:38:42.032 [INFO]   [EMBED_TRUNK] built K=8 trunk over 19 inputs
+2026-08-30 06:53:59.103 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+  [   5]   eval  loss=6.690161  |====================|  [   5]    sgd  loss=6.691233  |====================|2026-08-30 07:00:15.459 [INFO] Plateau triggered at epoch 5 (counter=4, loss=6.691233)
+2026-08-30 10:47:03.979 [INFO] [PROFILE] F=19 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 10:47:04.004 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-0.166493 a=node=1054 b=node=2)
+2026-08-30 10:47:04.004 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 1001 outputs)
+2026-08-30 10:47:11.902 [INFO]   [EMBED_TRUNK] built K=8 trunk over 19 inputs

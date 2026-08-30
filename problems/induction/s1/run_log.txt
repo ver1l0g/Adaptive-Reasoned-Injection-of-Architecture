@@ -48,3 +48,48 @@ Starting evolution...
 2026-08-30 00:36:53.309 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
 2026-08-30 00:36:56.385 [INFO]   COMMIT rank=0 type=COMPOUND_SIN_PRODUCT val_loss=3.616005 train_loss=3.529081 new train_loss=3.550266
 2026-08-30 00:36:56.386 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 00:46:18.987 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 00:46:18.988 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 00:55:58.484 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 00:56:00.607 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 00:56:01.248 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 00:56:05.382 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 01:01:27.143 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 01:01:31.283 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.616732 train_loss=3.530637 new train_loss=3.549636
+2026-08-30 01:01:31.283 [INFO] Plateau state reset 鈥?best_phase2=3.549636
+2026-08-30 01:01:31.283 [INFO] Plateau state reset — best_phase2=3.549636
+  [  14]   eval  loss=3.549636  |====================|  [  14]    sgd  loss=3.559176  |====================|  [  15]   eval  loss=3.559176  |====================|  [  15]    sgd  loss=3.560897  |====================|  [  16]   eval  loss=3.560897  |====================|  [  16]    sgd  loss=3.562473  |====================|  [  17]   eval  loss=3.562473  |====================|  [  17]    sgd  loss=3.561725  |====================|  [  18]   eval  loss=3.561725  |====================|  [  18]    sgd  loss=3.562835  |====================|2026-08-30 01:07:58.715 [INFO] Plateau triggered at epoch 18 (counter=5, loss=3.562835)
+2026-08-30 01:10:01.488 [INFO] [PROFILE] F=32 N=3312 var_r=0.0586 bound_ratio=4.1312 poly_r2=-0.0000 a12=0.0000 max_coef[i=254]=-0.1222 sobol_pair(6,7)=0.0000 quad=[0.062,0.062,0.062,0.062] L_max=4.072 | flags: none
+2026-08-30 01:10:01.489 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 01:10:01.489 [INFO] MULTIPLY sources from poly fit: input=7*input=26 (max_coef_idx=254)
+2026-08-30 01:10:01.489 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-08-30 01:24:56.577 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 01:24:56.611 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 01:24:59.526 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 01:25:03.464 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 01:30:19.590 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 01:30:22.681 [INFO]   COMMIT rank=0 type=NEURON_TANH_INJECTION val_loss=3.615274 train_loss=3.532257 new train_loss=3.562191
+2026-08-30 01:30:24.138 [INFO] [PROFILE] F=32 N=3312 var_r=0.0586 bound_ratio=4.1312 poly_r2=-0.0000 a12=0.0000 max_coef[i=254]=-0.1222 sobol_pair(6,7)=0.0000 quad=[0.062,0.062,0.062,0.062] L_max=4.072 | flags: none
+2026-08-30 01:30:24.138 [INFO] MULTIPLY sources from poly fit: input=7*input=26 (max_coef_idx=254)
+2026-08-30 01:30:24.138 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-08-30 01:42:41.143 [INFO] [PROFILE] F=32 N=3312 var_r=0.0586 bound_ratio=4.1312 poly_r2=-0.0000 a12=0.0000 max_coef[i=254]=-0.1222 sobol_pair(6,7)=0.0000 quad=[0.062,0.062,0.062,0.062] L_max=4.072 | flags: none
+2026-08-30 01:42:41.144 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 01:42:41.144 [INFO] MULTIPLY sources from poly fit: input=7*input=26 (max_coef_idx=254)
+2026-08-30 01:42:41.144 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-08-30 01:56:00.819 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 01:56:01.823 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 01:56:05.860 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 02:01:24.499 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 02:01:28.323 [INFO]   COMMIT rank=1 type=DEEP_INSERTION val_loss=3.604724 train_loss=3.598445 new train_loss=3.600892
+2026-08-30 02:01:28.324 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 02:01:28.325 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 02:01:28.325 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
+2026-08-30 02:01:28.341 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
+2026-08-30 02:01:30.447 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-30 02:16:40.937 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 02:17:01.060 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 02:17:17.612 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.604709 train_loss=3.598429 new train_loss=3.600876
+2026-08-30 02:17:17.613 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-08-30 02:17:17.613 [INFO] Plateau state reset 鈥?best_phase2=3.600876
+2026-08-30 02:17:17.613 [INFO] Plateau state reset — best_phase2=3.600876
+  [  19]   eval  loss=3.600876  |====================|  [  19]    sgd  loss=3.600876  |====================|  [  20]   eval  loss=3.600876  |====================|  [  20]    sgd  loss=3.600876  |====================|  [  21]   eval  loss=3.600876  |====================|  [  21]    sgd  loss=3.600876  |====================|  [  22]   eval  loss=3.600876  |====================|  [  22]    sgd  loss=3.600876  |====================|

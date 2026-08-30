@@ -1,0 +1,18 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\induction\s1\train.csv
+  Loaded 7999 samples
+  Train: 6399  Validation: 1600
+
+Starting evolution...
+2026-08-30 11:09:30.792 [INFO] New best overall loss: 3.565589
+  [   1]   eval  loss=13.335549  |====================|  [   1]    sgd  loss=3.565589  |====================|2026-08-30 11:09:37.468 [INFO] New best overall loss: 3.562925
+  [   2]   eval  loss=3.565589  |====================|  [   2]    sgd  loss=3.562925  |====================|2026-08-30 11:09:40.201 [INFO] New best overall loss: 3.561588
+  [   3]   eval  loss=3.562925  |====================|  [   3]    sgd  loss=3.561588  |====================|  [   4]   eval  loss=3.561588  |====================|  [   4]    sgd  loss=3.563990  |====================|  [   5]   eval  loss=3.563990  |====================|  [   5]    sgd  loss=3.564301  |====================|  [   6]   eval  loss=3.564301  |====================|  [   6]    sgd  loss=3.564923  |====================|  [   7]   eval  loss=3.564923  |====================|  [   7]    sgd  loss=3.564357  |====================|  [   8]   eval  loss=3.564357  |====================|  [   8]    sgd  loss=3.563933  |====================|2026-08-30 11:10:13.082 [INFO] Plateau triggered at epoch 8 (counter=5, loss=3.563933)
+2026-08-30 11:10:14.633 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 11:10:14.634 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 11:10:14.634 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
+2026-08-30 11:10:14.640 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
+2026-08-30 11:10:15.703 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs

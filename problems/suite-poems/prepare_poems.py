@@ -13,6 +13,7 @@ Usage: python prepare_poems.py   (from suite-poems/)
 """
 import glob
 import json
+import math
 import os
 import random
 import sys
@@ -23,10 +24,10 @@ sys.stdout.reconfigure(encoding="utf-8")
 RAW = os.path.join("raw", "cprepo")
 TANG = "\u5168\u5510\u8bd7"          # 全唐诗
 PUNCT = "\uff0c\u3002\uff01\uff1f\u3001\uff1b\uff1a\u201c\u201d\u300a\u300b\uff08\uff09\u2014\u2026\u3000"
-PAD, UNK = 0, 1000
-V = 1001
+PAD = 0
+V = 501          # top-500 hanzi + UNK(500); PAD=0 -> 501 output cols
 W = 19
-NORM = {"\u3000": None}
+MAX_ROWS = 15000
 
 
 def clean(s):
@@ -77,7 +78,8 @@ def main():
     for p in poems:
         cnt.update(p)
     top = [ch for ch, _ in cnt.most_common(V - 1)]
-    vocab = {ch: i + 1 for i, ch in enumerate(top)}   # 1..1000; 0=PAD, 1000=UNK
+    vocab = {ch: i + 1 for i, ch in enumerate(top)}   # 1..500; 0=PAD, 500=UNK
+    unk = V - 1
     unk_rate = 1.0 - sum(c for ch, c in cnt.items() if ch in vocab) / max(1, sum(cnt.values()))
     print(f"vocab: {len(vocab)} + PAD/UNK | UNK rate: {unk_rate:.4f}")
     with open("vocab.txt", "w", encoding="utf-8") as f:
@@ -85,7 +87,7 @@ def main():
             f.write(f"{i}\t{ch}\n")
 
     def code(ch):
-        return vocab.get(ch, UNK)
+        return vocab.get(ch, unk)
 
     # rows: for t in 1..19: window = codes of chars[0..t-1] right-aligned,
     # left-padded with PAD; target = char t. (Position identity is implicit
@@ -99,6 +101,9 @@ def main():
             target = cs[t]
             rows.append((ctx, t, target))
     random.Random(42).shuffle(rows)
+    if len(rows) > MAX_ROWS:
+        rows = rows[:MAX_ROWS]     # overnight-viable: the 1001-col config
+                                    # cost ~2h/epoch (59k rows x 19k weights)
     n_train = int(len(rows) * 0.8)
 
     def write_csv(path, subset):

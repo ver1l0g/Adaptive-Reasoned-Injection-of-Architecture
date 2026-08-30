@@ -4992,12 +4992,19 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
                     if (cv < -0.5 || cv > static_cast<Value>(V_embed) - 0.5
                         || std::abs(cv - std::round(cv)) > 1e-3) {
                         codes_ok = false;
+                        Logger::info("  [ONEHOT-GATE] rejected: value "
+                                    + std::to_string(cv) + " at V="
+                                    + std::to_string(V_embed));
                         break;
                     }
                     if (++checked >= 500) break;
                 }
             } else {
                 codes_ok = false;
+                Logger::info("  [ONEHOT-GATE] rejected: probe key "
+                            + std::string(have_pk ? "found" : "MISSING")
+                            + ", samples "
+                            + std::to_string(training_data_.samples.size()));
             }
             use_onehot = codes_ok;
         }
