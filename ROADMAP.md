@@ -447,6 +447,21 @@ forensics on aria11 runs pin three DISTINCT engine gaps:
   same commit-economics wall (high-freq shadow needs longer training
   or SIN re-emission after a SIN commit is being outranked). Next
   lead: SIN-after-SIN grace (mirrors d2's harmonic-grace direction).]
+  [SIN-AFTER-SIN GRACE: NEGATIVE RESULT 2026-08-30, both forms reverted
+  — the THIRD appearance of the investment-arc wall (after M1.3 fatigue
+  and the t22 evidence gates). Gate relaxation (any-improvement accept
+  for SIN-after-SIN): provably INERT — A/B bit-identical on d2/d3; the
+  rungs are NEGATIVE-valued at default shadow budget, not merely
+  below-threshold (d3's w~86 measured worse-than-baseline within
+  validation). Budget form (3x shadow epochs for SIN-after-SIN): d3
+  0.541->0.581 with the 2nd rung committing — but REGRESSES hetero3 o2
+  0.998->0.921 (6 SIN commits over-feed the sin-output arc). Same
+  ambiguity as M1.3: rung-grace cannot distinguish d3's ladder from
+  hetero3's investment arc by val statistics alone. THE recurring
+  barrier is now formally named: investment-arc pricing. The v2 signal
+  (twice named, still unbuilt): per-output attribution concentration —
+  investment arcs concentrate their commits' blame on ONE output;
+  ladders spray. Build THAT next time this wall is hit.]
 - **t22_windowed_sine (0.95)**: needs IFELSE_BOUNDARY_SPLIT at the
   window edges (x=0, 2pi) wrapping a sine. [ZERO-PLATEAU DETECTOR
   IMPLEMENTED 2026-08-27 in aria13: detection VERIFIED — flat-run scan
