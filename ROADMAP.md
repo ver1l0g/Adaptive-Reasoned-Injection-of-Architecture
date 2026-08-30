@@ -14,12 +14,13 @@ ordered within each. Effort: S = hours, M = days, L = weeks.
 | suite-standard (17) | 13/16 + d9-NF reproducible on aria11+ (d7 fixed by M7.5/M7.6 live); t22 0.9757 (routing fixed, was never-solved); d2 0.79, d3 0.55 open — see M5.7 |
 | suite-hard (6) | all solved (spirals, checkerboard, XOR-5D) |
 | suite-temporal (4+2) | all solved (aria11: 4/4, identical to aria10) |
-| suite-feynman (25) | 23/25 ≥ 0.99 (I.32.8 0.97, I.29.16 seed-varies); aria12 re-run: s2 complete, s3-5 queued |
+| suite-feynman (25) | FREEZE: aria12 seeds 2-5, mean-of-means 0.9991, **24/25 ≥ 0.99** — I.29.16 SOLVED (0.9993±0.0001); only I.32.8 open (0.9829±0.0017, M5.2's target) |
 | suite-korns (9) | 6/9 > 0.99, 8/9 ≥ 0.93 (F8 ~0.86 needs sin∩x³∩4-product; F4 0.983) |
 | suite-limits (7) | reproducible on aria12: count8 + highdim15 solo (contended runs time out — see M6.7); hetero3 out3 marginal 0.99; narma30 0.005, stripes20 0.2248 on aria15 (region-leaf chains; was 0.01) |
 | suite-realworld (5) | 97–100% |
 | suite-vision | digits 99.5%; CIFAR at linear ceiling (~28%) |
-| suite-language | w1 4.4296 bpc on aria12 (beats 4.535); EMBED ladder w8-w32 in flight (M2.2 verdict pending) |
+| suite-language | FREEZE ladder (aria12, EMBED trunk): w1 4.4296 / w8 4.2271 / w16 4.1712 / w32 4.4625-solo — MONOTONE through w16 (M2.2), stall at 32; M2.4 attention GO |
+| suite-poems (NEW) | Tang 五言绝句 structure-induction suite: 3,914 quatrains, V=501/12k rows; position-entropy baselines measured (line-final 8.7-9.1 bits vs mid-line 9.3); first run in flight |
 
 Engine: 25 hypothesis types (EMBED_TRUNK, MUX_INJECTION, DELAY_LINE +
 22 legacy), softmax-CE loss, val-based selection, checkpointing, shadow
@@ -102,15 +103,36 @@ CPU contention; SOLO RERUN PENDING). Historical w32+EMBED (8/26): 4.231
 ≈ the w8-linear point — no gain at 32. Verdict: monotone scaling
 CONFIRMED through w16, ceiling at w32 confirmed by the historical run.
 
-### 2.3 (Deferred) Attention-class mixing [L]
+### 2.3 Attention-class mixing [L] — GO (M2.4 criteria met); BUILD SPEC v1
 Only if 2.2 stalls: dot-product mixing across positions. Big build,
 tensor-shaped nodes — genuinely a different node data model. The
 induction/copy task is its smoke test. Decision point, not a commitment.
 [GO PER M2.4 CRITERIA — see 2.4: the induction probe failed at chance
 (8.01% vs 6.25%) and w32+EMBED stalls at 4.23 > 3.8. Dense fixed
 mixing cannot do in-context retrieval; attention is the justified
-build. Scope honestly: new node data model (tensor positions),
-dot-product mixing, induction/copy as the smoke test.]
+build.]
+
+BUILD SPEC (investigated 2026-08-30, code-level):
+- STEP 1 DONE (aria17/18): ONEHOT node — the code-based EMBED trunk fed
+  raw integer char codes to NEURONs, i.e. tanh(w·code): every symbol on
+  a LINE in embedding space (the measured root of the induction
+  failure). EMBED_TRUNK routing now one-hot expands code inputs
+  (gated on code-likeness; V×W expansion; ONEHOT-GATE diagnostics
+  live). Registry integration: node.cpp factory + to/from-string done.
+- STEP 2 (the attention mechanism itself) — the hard part is WEIGHT
+  SHARING across positions (32 independent lookups ≠ one shared table;
+  induction needs exact key/query matching). Two viable shapes:
+  (a) AttentionNode with internal V×d table + softmax over positions
+      (trainer integration: extend the acc_dw/acc_db NeuronNode-keyed
+      containers at graph.cpp:1127 switch + apply at :1244 — medium-
+      invasive, clean semantics);
+  (b) shared-name NEURONs (a share-group mechanism where same-named
+      neurons update together) — ALSO unlocks M3.1 vision weight
+      sharing; softmax still needs a node.
+- Smoke test ready: harness/run_induction.py (chance 6.25%, code-EMBED
+  8.01%); one-hot-EMBED probe result pending (aria18 run in flight).
+- PERF LESSON: V=1001 output graphs cost ~2h/epoch at 59k rows (146
+  CPU-h overnight, killed); keep V≤501 and rows≤15k for probe loops.
 
 ---
 
@@ -344,6 +366,31 @@ parallel-validation reduction order.
 - [ ] archive binaries WITH their batteries (aria10 freeze-v1 tag
       exists; aria12/15 tags pending the 6.5 decision)
 
+### 6.10 suite-poems: structure induction at the character scale (NEW 2026-08-30)
+The strict poetic form (Tang 五言绝句: 4 lines × 5 chars, rhyme at even
+lines, couplet parallelism) is DISCRETE, DISCOVERABLE structure — the
+ARIA thesis test at the language scale: does the engine find line-
+position regularity nobody told it about?
+- [x] Corpus acquired: chinese-poetry sparse clone (318 JSONs, 145MB);
+      3,914 Tang 五绝 extracted (suite-poems/prepare_poems.py)
+- [x] Position-entropy baselines MEASURED (position_stats.txt): line-
+      final (4/9/14/19) and line-initial (10/15) positions 8.66-9.06
+      bits vs 9.2-9.3 mid-line — the structure is real in unigram stats
+- [x] v1 config (V=1001, 59k rows) measured UNVIABLE: ~2h/epoch (146
+      CPU-h overnight); v2 (V=501, 12k rows) = 40x faster; UNK 27.5%
+- [~] run2 (aria18, 30ep): plateau at epoch 20; first structural cycle
+      in flight — the ONEHOT expansion's first real workload
+- [ ] Verdict readout: does one-hot EMBED discover position structure
+      (per-position accuracy vs the entropy baselines)?
+- [ ] Follow-ups: Song 五绝 (sparse-checkout 全宋诗 for the full 17.5k),
+      词 (ci) meters as meter-INFERENCE tier, fill-the-blank couplet
+      (对仗) probe, position-probe eval set
+- Baselines to beat: unigram 9.0-9.3 bits/char (position-dependent);
+      the model should at minimum capture the position-conditional
+      unigram — anything beyond = discovered interaction structure.
+
+### 6.11 (placeholder — reserved for future additions)
+
 ---
 
 
@@ -494,22 +541,23 @@ pending, but the 8/26 number stands as the valid measurement). BOTH
 criteria met → M2.3 attention build is GO.]
 ---
 
-## Sequencing recommendation (refreshed 2026-08-29)
+## Sequencing recommendation (refreshed 2026-08-30)
 
 ```
-Now ──► M6.5 freeze completion: ladder + feynman s3-5 + highdim solo
-        rerun; make the aria12-vs-aria15 binary decision; compile the
-        freeze card; tag.
-    ──► M2.2/M2.4 verdicts from the ladder + induction probe (the
-        attention go/no-go — decides M2.3's fate)
-    ──► d2/d3 fixes (M5.7: harmonic-grace gate; multi-peak freq-init)
-    ──► stripes20 completion (bigger K per chain or higher edge cap;
-        0.22 -> 0.95 target)
-    ──► M6.6 README refresh (after freeze)
-    ──► M6.4 Writing (paper track; freeze numbers are the tables)
-    ──► M5.2 commit composition (I.32.8 0.97->0.99) / M4.2 taps
-    ──► M3.1 shared-weight pooling (vision track)
-    ──► M7.4 promised-vs-delivered (post-freeze; mind the M1.3 lesson)
+Now ──► Readouts: wujue run2 + one-hot induction probe (aria18) —
+        the ONEHOT verdict decides M2.3 step-2 scope; hd15/aria16
+        spot-check closes the freeze card's last anomaly
+    ──► M6.7 closeout: freeze-v2 tag + binary-lineage note
+    ──► M2.3 step 2: attention build (spec in 2.3 — AttentionNode or
+        shared-name neurons; induction probe is the smoke test)
+    ──► M6.6 README refresh (freeze card is the source) — then M6.4
+        writing (paper track; freeze tables ready)
+    ──► suite-poems verdict + Song/ci tiers (6.10)
+    ──► d2/d3: SIN-after-SIN grace (shared named fix)
+    ──► stripes20 completion (0.22 -> 0.95: more cycles vs K-depth
+        tradeoff measured; M7.2 settling if gates need training)
+    ──► M5.2 commit composition (I.32.8 0.983 -> 0.99, last feynman
+        open item) / M4.2 taps / M3.1 shared pooling
 ```
 
 Principles (unchanged all project):
