@@ -308,18 +308,20 @@ ONE tagged binary requirement (M6.5). Batteries ran on aria12 (= aria10
 (t21/d1/t22/stripes20 — standard suite delta). DECISION NEEDED: freeze
 on aria12 (all suites consistent, evidence work = post-freeze v2) vs
 re-run everything on aria15 (~1-2 days battery).
-- [x] standard (aria11: 13/16; aria15 spot-checks: t22 0.9757 t21 0.9937 d1 0.9936)
+- [x] standard (aria11: 13/16; aria15/16 spot-checks: t22 0.9757 t21 0.9937 d1 0.9936)
 - [x] korns (aria11: 6/9) — [x] temporal (aria11: 4/4)
-- [x] limits (aria12: 7/7 lines but highdim15/20 no-eval under
-      contention — SOLO RERUN REQUIRED, harness timeout 30min too
-      tight when 4-5 processes share the machine)
-- [~] feynman (aria10 5-seed archived in results/aria10_multiseed/;
-      aria12: s2 done, s3 running, s4/s5 queued)
-- [~] language ladder (aria12: w1 4.4296 done; w8/w16/w32 in flight)
-- [ ] freeze card compilation + git tag once complete
-- [ ] M2.2 monotonicity verdict (needs ladder) + M2.4 attention
-      decision (needs ladder w32 + induction probe — probe launched
-      on aria14, result pending)
+- [x] limits (aria12 card + highdim20 solo 0.9953 PASS; highdim15 solo
+      0.9056 vs aria10 0.9982 — build/trajectory-sensitive, M6.8)
+- [x] feynman (aria12 seeds 2-5: mean-of-means 0.9991, **24/25 solved** —
+      I.29.16 now solid 0.9993±0.0001; only I.32.8 open at 0.9829±0.0017;
+      aria10 archive in results/aria10_multiseed/)
+- [x] language ladder (aria12: w1 4.4296 / w8 4.2271 / w16 4.1712 /
+      w32 4.4625-solo — monotone through w16, stall at 32 confirmed)
+- [x] M2.2 verdict recorded (monotone through w16) + M2.4 (attention GO)
+- [x] FREEZE CARD COMPILED: results/FREEZE_CARD.md
+      (harness/compile_freeze_card.py — rerunnable aggregator)
+- [ ] remaining: git tag freeze-v2 + the aria12-vs-aria16 note for the
+      paper's binary statement; s1 on aria12 optional (n=3-4 currently)
 
 ### 6.8 Marginal-task build sensitivity (added 2026-08-29, from session evidence)
 hetero3 out2/out3 (0.99-bubble tasks) flip between ~0.15 and ~0.999

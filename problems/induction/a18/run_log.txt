@@ -16,3 +16,15 @@ Starting evolution...
 2026-08-30 11:10:14.634 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
 2026-08-30 11:10:14.640 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
 2026-08-30 11:10:15.703 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-08-30 11:26:00.808 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 11:26:17.922 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.613161 train_loss=3.529093 new train_loss=3.550159
+2026-08-30 11:26:17.928 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 11:26:17.928 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 11:36:29.123 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 11:36:34.771 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 11:36:39.742 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 11:36:48.515 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 11:41:54.944 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 11:42:12.914 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.613223 train_loss=3.529090 new train_loss=3.550159
+2026-08-30 11:42:12.929 [INFO] [PROFILE] F=32 N=207 var_r=0.0713 bound_ratio=3.7445 poly_r2=0.0000 sobol_pair(18,22)=0.1943 quad=[0.077,0.077,0.077,0.077] L_max=4.072 | flags: BOUNDED
+2026-08-30 11:42:12.937 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
