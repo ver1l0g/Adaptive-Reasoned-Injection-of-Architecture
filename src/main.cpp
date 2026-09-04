@@ -320,6 +320,88 @@ int main(int argc, char* argv[]) {
     cfg.sequence_mode = no_shuffle;  // sequence/recurrence candidates gated on this
     cfg.snapshot_interval = save_interval;
 
+    // ---------- --config <file>.json (self-contained runs) ----------
+    // Flat key:value JSON; applied BEFORE CLI-derived values above so an
+    // explicit CLI flag still wins (CLI > JSON > compiled defaults).
+    // Every tunable the engine exposes is settable here — see
+    // configs/default.json for the full documented list.
+    {
+        std::string cfg_path;
+        for (int i = 1; i < argc - 1; ++i) {
+            if (std::string(argv[i]) == "--config") cfg_path = argv[i + 1];
+        }
+        if (!cfg_path.empty()) {
+            std::ifstream inf(cfg_path);
+            if (!inf) {
+                std::cerr << "Error: cannot open config " << cfg_path << "\n";
+                return 1;
+            }
+            std::stringstream ss;
+            ss << inf.rdbuf();
+            std::string txt = ss.str();
+            // minimal flat parser: "key": value pairs (number | "str" | bool)
+            auto trim = [](std::string& s) {
+                size_t a = s.find_first_not_of(" \t\r\n");
+                size_t b = s.find_last_not_of(" \t\r\n");
+                s = (a == std::string::npos) ? "" : s.substr(a, b - a + 1);
+            };
+            size_t pos = 0;
+            int applied = 0;
+            while (true) {
+                size_t k1 = txt.find('"', pos);
+                if (k1 == std::string::npos) break;
+                size_t k2 = txt.find('"', k1 + 1);
+                if (k2 == std::string::npos) break;
+                std::string key = txt.substr(k1 + 1, k2 - k1 - 1);
+                size_t colon = txt.find(':', k2);
+                if (colon == std::string::npos) break;
+                size_t vstart = txt.find_first_not_of(" \t\r\n", colon + 1);
+                if (vstart == std::string::npos) break;
+                std::string val;
+                if (txt[vstart] == '"') {
+                    size_t v2 = txt.find('"', vstart + 1);
+                    val = txt.substr(vstart + 1, v2 - vstart - 1);
+                    pos = v2 + 1;
+                } else {
+                    size_t vend = txt.find_first_of(",}\n\r", vstart);
+                    val = txt.substr(vstart, vend - vstart);
+                    pos = vend;
+                }
+                trim(val);
+                auto num = [&](double dflt) { try { return std::stod(val); } catch (...) { return dflt; } };
+                if (key == "max_epochs") cfg.max_epochs = (int)num(cfg.max_epochs);
+                else if (key == "sgd_epochs_per_phase") cfg.sgd_epochs_per_phase = (int)num(cfg.sgd_epochs_per_phase);
+                else if (key == "learning_rate") cfg.sgd_learning_rate = num(cfg.sgd_learning_rate);
+                else if (key == "gradient_clip") cfg.sgd_gradient_clip = num(cfg.sgd_gradient_clip);
+                else if (key == "momentum") cfg.sgd_momentum = num(cfg.sgd_momentum);
+                else if (key == "weight_decay") cfg.sgd_weight_decay = num(cfg.sgd_weight_decay);
+                else if (key == "plateau_patience") cfg.plateau_patience = (int)num(cfg.plateau_patience);
+                else if (key == "plateau_min_improvement") cfg.plateau_min_improvement = num(cfg.plateau_min_improvement);
+                else if (key == "force_structural_every") cfg.force_structural_every = (int)num(cfg.force_structural_every);
+                else if (key == "attribution_epsilon") cfg.attribution_epsilon = num(cfg.attribution_epsilon);
+                else if (key == "max_failures_to_fix") cfg.max_failures_to_fix = (int)num(cfg.max_failures_to_fix);
+                else if (key == "blackboard_max_candidates") cfg.blackboard_max_candidates = (int)num(cfg.blackboard_max_candidates);
+                else if (key == "validation_threshold") cfg.validation_threshold = num(cfg.validation_threshold);
+                else if (key == "early_stop_patience") cfg.early_stop_patience = (int)num(cfg.early_stop_patience);
+                else if (key == "structural_failure_threshold") cfg.structural_failure_threshold = (int)num(cfg.structural_failure_threshold);
+                else if (key == "structural_cooldown") cfg.structural_cooldown = (int)num(cfg.structural_cooldown);
+                else if (key == "compile_interval") cfg.compile_interval = (int)num(cfg.compile_interval);
+                else if (key == "compile_enabled") cfg.compile_enabled = (val == "true" || val == "1");
+                else if (key == "seed") cfg.seed = (unsigned)num(cfg.seed);
+                else if (key == "loss") {
+                    if (val == "bce") cfg.loss_type = Graph::LossType::BCE;
+                    else if (val == "sce") cfg.loss_type = Graph::LossType::SOFTMAX_CE;
+                    else cfg.loss_type = Graph::LossType::MSE;
+                }
+                else if (key == "snapshot_interval") cfg.snapshot_interval = (int)num(cfg.snapshot_interval);
+                else { continue; }   // unknown key: ignore (forward compat)
+                ++applied;
+            }
+            std::cout << "  [CONFIG] " << cfg_path << ": " << applied
+                      << " settings applied\n";
+        }
+    }
+
     // Checkpoint path: problem-specific folder derived from the CSV name 鈥?    // checkpoints/<csv-stem>/graph.json (e.g. checkpoints/bench_digits/graph.json).
     // Explicit --save-graph overrides (uses the path verbatim as the FILE
     // path); "none" disables. Folder is created if missing.

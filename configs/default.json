@@ -1,0 +1,30 @@
+{
+  "_doc": "ARIA run configuration. Usage: aria.exe --csv data.csv --input-cols 3 --config configs/default.json — explicit CLI flags override JSON, JSON overrides compiled defaults. Unknown keys are ignored (forward compatible). Delete keys you don't want to change.",
+
+  "max_epochs": 100,
+  "sgd_epochs_per_phase": 50,
+  "learning_rate": 0.05,
+  "gradient_clip": 5.0,
+  "momentum": 0.9,
+  "weight_decay": 0.0,
+
+  "plateau_patience": 3,
+  "plateau_min_improvement": 0.001,
+  "force_structural_every": 20,
+  "early_stop_patience": 0,
+
+  "structural_failure_threshold": 3,
+  "structural_cooldown": 10,
+
+  "attribution_epsilon": 0.01,
+  "max_failures_to_fix": 15,
+  "blackboard_max_candidates": 20,
+  "validation_threshold": 0.001,
+
+  "compile_enabled": true,
+  "compile_interval": 5,
+  "snapshot_interval": 25,
+
+  "loss": "mse",
+  "seed": 1
+}

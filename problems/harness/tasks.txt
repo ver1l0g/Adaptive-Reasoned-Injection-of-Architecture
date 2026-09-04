@@ -1,0 +1,21 @@
+# tasks.txt — example job list for run_pool.ps1 (one command per line).
+# Edit exes/epochs per battery. Redirection per task keeps logs separate.
+
+# --- full suite battery (aria12 = freeze lineage) ---
+# python harness\run_standard.py ..\aria12.exe 100 > frz_standard_out.txt 2>&1
+# python harness\run_korns.py ..\aria12.exe 100 > frz_korns_out.txt 2>&1
+# python harness\run_temporal.py ..\aria12.exe 100 > frz_temporal_out.txt 2>&1
+
+# --- feynman multiseed (seeds in parallel; ~1h each at 5 slots) ---
+# python harness\run_feynman.py ..\aria12.exe 50 1 > frz_feyn_s1_out.txt 2>&1
+# python harness\run_feynman.py ..\aria12.exe 50 2 > frz_feyn_s2_out.txt 2>&1
+# python harness\run_feynman.py ..\aria12.exe 50 3 > frz_feyn_s3_out.txt 2>&1
+# python harness\run_feynman.py ..\aria12.exe 50 4 > frz_feyn_s4_out.txt 2>&1
+# python harness\run_feynman.py ..\aria12.exe 50 5 > frz_feyn_s5_out.txt 2>&1
+
+# --- language ladder (HEAVY: keep to 3-4 slots; watchdog starvation at 5) ---
+# cmd /c suite-poems\run_wujue.bat
+# cmd /c harness\run_induction.bat
+
+# --- limits with solo reruns for timing-sensitive tasks ---
+# python harness\run_limits.py ..\aria12.exe 150 > frz_limits_out.txt 2>&1

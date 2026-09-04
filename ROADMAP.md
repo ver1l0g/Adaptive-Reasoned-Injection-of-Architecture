@@ -182,9 +182,33 @@ unrolling — the honest limit before attention-style recurrence.
 
 ## Milestone 5 — Engine Mechanics (parallel track, any time)
 
-### 5.1 Parallel backward pass [M]
+### 5.1 Parallel backward pass [M — plan concretized 2026-09-04]
 The batched backward loop is serial over rev_order; parallelize across
 samples like the forward pass. Matters for large-batch runs (CIFAR).
+PLAN (from the trainer's structure): samples are independent in
+backward EXCEPT gradient accumulation into the shared acc_dw/acc_db
+maps — a naive sample-parallel loop races on them. The fix: per-thread
+LOCAL accumulators (thread_local or a vector indexed by thread id),
+reduced into the global maps after the batch (deterministic if the
+reduce order is fixed by thread id). AttentionNode's self-accumulated
+table grads need the same treatment. Expected win: backward ≈ half of
+train() wall time on large batches → up to ~2x per-run; NOTE the
+process-level counter-argument: a single aria process uses <20% CPU
+(the measured basis for running 5 in parallel) — faster single runs
+mean FEWER parallel processes needed for the same throughput, so this
+matters most for the BIG single runs (wujue V=501, CIFAR, ladder).
+Process-level parallelism is now first-class: harness/run_pool.ps1
+(slot-capped job runner over a task file — see harness/tasks.txt).
+
+### 5.8 Self-contained runs: --config JSON [DONE 2026-09-04 in aria21]
+aria.exe --config configs/default.json — flat key:value JSON; 21
+tunables settable (epochs, LR, patience, gates, structural thresholds,
+loss, seed, compile/snapshot controls); precedence CLI > JSON >
+compiled defaults; unknown keys ignored (forward compatible);
+configs/default.json is the documented reference. Verified: 21
+settings applied, run trajectories shift as configured. Full batteries
+are now reproducible from (exe, data, config-file) triples with no
+recompiles.
 
 ### 5.2 Hypothesis composition at commit [M]
 Allow one commit to instantiate a *chain* of templates (e.g.
