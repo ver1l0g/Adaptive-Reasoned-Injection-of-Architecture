@@ -18,3 +18,24 @@ Starting evolution...
 2026-09-04 21:43:27.117 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
 2026-09-04 21:43:31.063 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
 2026-09-04 21:43:31.067 [INFO]   [ATTENTION] built head over 32 slots (V=16)
+2026-09-04 21:58:35.629 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 21:58:41.191 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.614571 train_loss=3.540841 new train_loss=3.554293
+2026-09-04 21:58:41.192 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-04 21:58:41.193 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-04 21:58:41.193 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-04 21:58:41.198 [INFO]   [ATTENTION] built head over 32 slots (V=16)
+2026-09-04 22:08:21.483 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:08:32.848 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:08:32.894 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:08:33.438 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:08:34.936 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:08:35.912 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:14:27.122 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 22:14:43.286 [INFO]   COMMIT rank=1 type=DEEP_INSERTION val_loss=3.615726 train_loss=3.536467 new train_loss=3.553781
+2026-09-04 22:14:43.287 [INFO] Plateau state reset 鈥?best_phase2=3.553781
+2026-09-04 22:14:43.287 [INFO] Plateau state reset — best_phase2=3.553781
+  [  14]   eval  loss=3.553781  |====================|  [  14]    sgd  loss=3.592766  |====================|  [  15]   eval  loss=3.592766  |====================|  [  15]    sgd  loss=3.589427  |====================|  [  16]   eval  loss=3.589427  |====================|  [  16]    sgd  loss=3.587262  |====================|  [  17]   eval  loss=3.587262  |====================|  [  17]    sgd  loss=3.592919  |====================|  [  18]   eval  loss=3.592919  |====================|  [  18]    sgd  loss=3.594549  |====================|2026-09-04 22:31:25.039 [INFO] Plateau triggered at epoch 18 (counter=5, loss=3.594549)
+2026-09-04 22:36:56.948 [INFO] [PROFILE] F=32 N=3312 var_r=0.0586 bound_ratio=4.1312 poly_r2=0.0000 a12=0.0000 max_coef[i=11]=0.0055 sobol_pair(6,7)=0.0000 quad=[0.062,0.062,0.062,0.062] L_max=1.000 | flags: none
+2026-09-04 22:36:56.952 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-04 22:36:56.952 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-04 22:36:57.082 [INFO]   [ATTENTION] built head over 32 slots (V=16)

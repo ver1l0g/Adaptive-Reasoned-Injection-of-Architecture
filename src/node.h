@@ -348,23 +348,26 @@ public:
     std::unique_ptr<Node> clone() const override;
     std::vector<Value> backward_input_grads(Value output_grad) override;
 
-    // Table management (routing sets vocab after construction; D is fixed
-    // by config::ATTENTION_DIM). Init: small uniform (Xavier-ish).
+    // V-port: one scalar output per class (out_c = attention-weighted
+    // readout of class c's projection row). V = vocab; D fixed by
+    // config::ATTENTION_DIM. The trainer feeds EXACT per-port grads via
+    // set_output_grads (its per-node aggregation cannot decompose ports;
+    // backward falls back to broadcasting the aggregate if not set).
     void set_vocab(size_t v);
     size_t get_vocab() const { return vocab_; }
     size_t get_dim() const { return dim_; }
     Value get_table(size_t v, size_t d) const;
     void set_table(size_t v, size_t d, Value x);
-    Value get_proj(size_t d) const;
-    void set_proj(size_t d, Value x);
+    Value get_proj(size_t c, size_t d) const;
+    void set_proj(size_t c, size_t d, Value x);
 
-    // Gradient accumulators (cleared by trainer between batches — mirrors
-    // NeuronNode's contract with acc_dw/acc_db).
     void zero_grads();
-    void acc_table_grad(size_t v, size_t d, Value g);
-    void acc_proj_grad(size_t d, Value g);
     Value get_table_grad(size_t v, size_t d) const;
-    Value get_proj_grad(size_t d) const;
+    Value get_proj_grad(size_t c, size_t d) const;
+
+    // Exact per-port output grads, set by the trainer before
+    // backward_input_grads (indexed by output port = class).
+    void set_output_grads(const std::vector<Value>& g) { out_grads_ = g; }
 
     void copy_state_to(Node* target) const override;
     void serialize_extra(std::string& json) const override;
@@ -373,16 +376,15 @@ public:
 private:
     size_t vocab_ = 0;
     size_t dim_ = 0;
-    std::vector<Value> table_;    // vocab_ * dim_
-    std::vector<Value> proj_;     // dim_
+    std::vector<Value> table_;    // vocab_ * dim_ (keys/query/values)
+    std::vector<Value> proj_;     // vocab_ * dim_ (per-class readout rows)
     std::vector<Value> tgrad_;    // table grads
     std::vector<Value> pgrad_;    // proj grads
-    // cached forward pass (for backward)
-    std::vector<Value> alpha_;    // attention weights (W-1)
-    std::vector<long> ctx_;       // context codes
+    std::vector<Value> alpha_;    // cached attention weights
+    std::vector<long> ctx_;       // cached context codes
     long query_code_ = 0;
-};
-// ============================================================================
+    std::vector<Value> out_grads_;   // exact per-port grads (trainer-fed)
+};// ============================================================================
 // OneHotNode — categorical code -> one-hot vector
 // 1 input (scalar code c), V outputs (out_j = 1 if round(c)==j else 0).
 // Zero backward to the input (categorical codes carry no gradient); no

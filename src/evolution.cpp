@@ -4965,14 +4965,21 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
     case Hypothesis::ATTENTION_MIX: {
         // M2.3 step 2: previous-token attention head. W = the graph's
         // INPUT slots in creation order (the last is the query char);
-        // vocab = OUTPUT count (inputs share the output alphabet).
-        // Wiring mirrors the MUX tail: head -> zero-init gain NEURON ->
-        // ADD alongside the failing node's output (identity start).
+        // vocab = OUTPUT count. V-port readout: one scalar per class,
+        // wired like EMBED_TRUNK — per-OUTPUT ADD (each output keeps its
+        // trained path and ADDS its attention logit; identity start).
+        // (v1's single-failing-node wiring could not carry V classes —
+        // the probe showed the head losing with a structurally
+        // insufficient readout.)
         std::vector<uint64_t> in_ids;
+        std::vector<uint64_t> output_ids;
         size_t out_count = 0;
         for (const auto& n : shadow->get_nodes()) {
             if (n->get_type() == NodeType::INPUT) in_ids.push_back(n->get_id());
-            else if (n->get_type() == NodeType::OUTPUT) ++out_count;
+            else if (n->get_type() == NodeType::OUTPUT) {
+                ++out_count;
+                output_ids.push_back(n->get_id());
+            }
         }
         if (in_ids.size() < 4 || out_count < 8) break;
         uint64_t att_id = shadow->add_node(NodeType::ATTENTION, "attention_head");
@@ -4982,31 +4989,29 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         for (size_t i = 0; i < in_ids.size(); ++i) {
             shadow->add_connection(in_ids[i], 0, att_id, i);
         }
-        // gain NEURON (zero-init identity start) then ADD with the
-        // failing node's output — same combine structure as MUX.
-        uint64_t gain_id = shadow->add_node(NodeType::NEURON, "attention_gain");
-        Node* gn = shadow->get_node(gain_id);
-        if (gn && gn->get_type() == NodeType::NEURON) {
-            static_cast<NeuronNode*>(gn)->set_input_count(1);
-            static_cast<NeuronNode*>(gn)->set_weight(0, 0.0);
-            static_cast<NeuronNode*>(gn)->set_bias(0.0);
+        // Per-OUTPUT ADDs: output ordinal c reads head port c. Collect
+        // ids FIRST (add_node invalidates refs — the EMBED lesson).
+        for (size_t c = 0; c < output_ids.size(); ++c) {
+            uint64_t oid = output_ids[c];
+            std::vector<Connection> outs_in;
+            for (const auto& conn : shadow->get_connections()) {
+                if (conn.dst_node == oid) outs_in.push_back(conn);
+            }
+            for (const auto& conn : outs_in) {
+                shadow->remove_connection(conn.src_node, conn.src_port,
+                                          conn.dst_node, conn.dst_port);
+            }
+            uint64_t add_id = shadow->add_node(
+                NodeType::ADD, "attention_add" + std::to_string(oid));
+            for (const auto& conn : outs_in) {
+                shadow->add_connection(conn.src_node, conn.src_port, add_id, 0);
+            }
+            shadow->add_connection(att_id, c, add_id, 1);
+            shadow->add_connection(add_id, 0, oid, 0);
         }
-        shadow->add_connection(att_id, 0, gain_id, 0);
-        std::vector<Connection> outgoing;
-        for (const auto& c : shadow->get_connections()) {
-            if (c.src_node == failing_id) outgoing.push_back(c);
-        }
-        for (const auto& c : outgoing) {
-            shadow->remove_connection(c.src_node, c.src_port, c.dst_node, c.dst_port);
-        }
-        uint64_t add_id = shadow->add_node(NodeType::ADD, "attention_combine");
-        shadow->add_connection(failing_id, 0, add_id, 0);
-        shadow->add_connection(gain_id, 0, add_id, 1);
-        for (const auto& c : outgoing) {
-            shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
-        }
-        Logger::info("  [ATTENTION] built head over " + std::to_string(in_ids.size())
-                    + " slots (V=" + std::to_string(out_count) + ")");
+        Logger::info("  [ATTENTION] built V-port head over "
+                    + std::to_string(in_ids.size()) + " slots (V="
+                    + std::to_string(out_count) + ")");
         break;
     }
 

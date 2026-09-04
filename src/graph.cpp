@@ -905,6 +905,10 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
         }
 
         // ---- Batched forward pass: execute batch samples, capture outputs ----
+        // M2.3: per-port grad side-channel for multi-output ATTENTION
+        // nodes (cleared per batch; consumed by the ATTENTION backward
+        // case within this batch's backward loop).
+        std::unordered_map<Node*, std::vector<std::vector<Value>>> att_port_grads;
         // Force sequential for recurrent graphs — parallel threads break
         // temporal state continuity (each thread clone starts with delay_buffer=0).
         int num_threads = (max_threads > 1)
@@ -1111,6 +1115,16 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                         auto pi_it = node_idx_.find(pred->get_id());
                         if (pi_it != node_idx_.end())
                             node_grads[pi_it->second][si] += g;
+                        // M2.3: exact per-port grads for multi-output
+                        // ATTENTION sources (the per-node aggregation above
+                        // cannot decompose ports; the head's V-port
+                        // backward needs per-class grads).
+                        if (pred->get_type() == NodeType::ATTENTION) {
+                            auto& pg = att_port_grads[pred];
+                            if (pg.size() <= i) pg.resize(i + 1);
+                            if (pg[i].size() <= static_cast<size_t>(si)) pg[i].resize(si + 1, 0.0);
+                            pg[i][si] += g;
+                        }
                     }
                 };
                 auto pred_output = [&](size_t port) -> Value {
@@ -1157,9 +1171,23 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                     break;
                 }
                 case NodeType::ATTENTION: {
-                    // M2.3: the head self-accumulates table/proj grads in
-                    // backward_input_grads; input codes are categorical
-                    // (zero input grads by construction).
+                    // M2.3: feed exact per-port grads when available
+                    // (consumers recorded them in att_port_grads), then
+                    // self-accumulate table/proj grads.
+                    auto* an = static_cast<AttentionNode*>(v);
+                    auto apg = att_port_grads.find(v);
+                    if (apg != att_port_grads.end()
+                        && apg->second.size() == an->get_vocab()) {
+                        std::vector<Value> og(an->get_vocab(), 0.0);
+                        bool any = false;
+                        for (size_t p = 0; p < og.size(); ++p) {
+                            if (si < static_cast<int>(apg->second[p].size())) {
+                                og[p] = apg->second[p][si];
+                                any = true;
+                            }
+                        }
+                        if (any) an->set_output_grads(og);
+                    }
                     v->backward_input_grads(vgrad);
                     break;
                 }
@@ -1305,11 +1333,10 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                             an->set_table(idx, d,
                                 an->get_table(idx, d)
                                     - lr * nscale * an->get_table_grad(idx, d));
+                            an->set_proj(idx, d,
+                                an->get_proj(idx, d)
+                                    - lr * nscale * an->get_proj_grad(idx, d));
                         }
-                    }
-                    for (size_t d = 0; d < an->get_dim(); ++d) {
-                        an->set_proj(d, an->get_proj(d)
-                                          - lr * nscale * an->get_proj_grad(d));
                     }
                     an->zero_grads();
                 } else {
@@ -1354,11 +1381,10 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                             an->set_table(idx, d,
                                 an->get_table(idx, d)
                                     - lr * nscale * an->get_table_grad(idx, d));
+                            an->set_proj(idx, d,
+                                an->get_proj(idx, d)
+                                    - lr * nscale * an->get_proj_grad(idx, d));
                         }
-                    }
-                    for (size_t d = 0; d < an->get_dim(); ++d) {
-                        an->set_proj(d, an->get_proj(d)
-                                          - lr * nscale * an->get_proj_grad(d));
                     }
                     an->zero_grads();
                 } else {

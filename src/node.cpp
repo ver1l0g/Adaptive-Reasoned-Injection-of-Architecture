@@ -611,18 +611,18 @@ void AttentionNode::set_vocab(size_t v) {
     vocab_ = v;
     dim_ = config::ATTENTION_DIM;
     table_.assign(vocab_ * dim_, 0.0);
-    proj_.assign(dim_, 0.0);
+    proj_.assign(vocab_ * dim_, 0.0);
     tgrad_.assign(vocab_ * dim_, 0.0);
-    pgrad_.assign(dim_, 0.0);
-    // Xavier-ish init: table ~ U(-1/sqrt(D), 1/sqrt(D)); proj small
-    // positive start so the output is not identically zero at commit
-    // (identity-start safety comes from the routing's zero-gain combiner
-    // instead — proj init 1/sqrt(D)).
+    pgrad_.assign(vocab_ * dim_, 0.0);
+    outputs_.assign(vocab_, 0.0);
+    // Xavier-ish: near-orthogonal random embeddings make same-code
+    // dot products dominate (e . e ~ |e|^2 vs e . e' ~ 0) — attention
+    // starts already matching previous occurrences.
     std::uniform_real_distribution<Value> dist(-1.0 / std::sqrt(static_cast<Value>(dim_)),
                                                 1.0 / std::sqrt(static_cast<Value>(dim_)));
-    static std::mt19937 rng(12345);   // deterministic init (seeded runs)
+    static std::mt19937 rng(12345);
     for (auto& x : table_) x = dist(rng);
-    for (size_t d = 0; d < dim_; ++d) proj_[d] = 1.0 / std::sqrt(static_cast<Value>(dim_));
+    for (auto& x : proj_) x = dist(rng);
 }
 
 Value AttentionNode::get_table(size_t v, size_t d) const {
@@ -631,28 +631,29 @@ Value AttentionNode::get_table(size_t v, size_t d) const {
 void AttentionNode::set_table(size_t v, size_t d, Value x) {
     if (v < vocab_ && d < dim_) table_[v * dim_ + d] = x;
 }
-Value AttentionNode::get_proj(size_t d) const { return (d < dim_) ? proj_[d] : 0.0; }
-void AttentionNode::set_proj(size_t d, Value x) { if (d < dim_) proj_[d] = x; }
+Value AttentionNode::get_proj(size_t c, size_t d) const {
+    return (c < vocab_ && d < dim_) ? proj_[c * dim_ + d] : 0.0;
+}
+void AttentionNode::set_proj(size_t c, size_t d, Value x) {
+    if (c < vocab_ && d < dim_) proj_[c * dim_ + d] = x;
+}
 void AttentionNode::zero_grads() {
     std::fill(tgrad_.begin(), tgrad_.end(), 0.0);
     std::fill(pgrad_.begin(), pgrad_.end(), 0.0);
 }
-void AttentionNode::acc_table_grad(size_t v, size_t d, Value g) {
-    if (v < vocab_ && d < dim_) tgrad_[v * dim_ + d] += g;
-}
-void AttentionNode::acc_proj_grad(size_t d, Value g) {
-    if (d < dim_) pgrad_[d] += g;
-}
 Value AttentionNode::get_table_grad(size_t v, size_t d) const {
     return (v < vocab_ && d < dim_) ? tgrad_[v * dim_ + d] : 0.0;
 }
-Value AttentionNode::get_proj_grad(size_t d) const {
-    return (d < dim_) ? pgrad_[d] : 0.0;
+Value AttentionNode::get_proj_grad(size_t c, size_t d) const {
+    return (c < vocab_ && d < dim_) ? pgrad_[c * dim_ + d] : 0.0;
 }
 
 void AttentionNode::execute() {
     const size_t W = inputs_.size();
-    if (W < 2 || vocab_ == 0) { outputs_[0] = 0.0; return; }
+    if (W < 2 || vocab_ == 0) {
+        std::fill(outputs_.begin(), outputs_.end(), 0.0);
+        return;
+    }
     ctx_.clear();
     for (size_t i = 0; i + 1 < W; ++i) {
         long c = std::lround(inputs_[i]);
@@ -665,10 +666,8 @@ void AttentionNode::execute() {
     if (query_code_ >= static_cast<long>(vocab_)) query_code_ = static_cast<long>(vocab_) - 1;
 
     const Value scale = 1.0 / std::sqrt(static_cast<Value>(dim_));
-    // scores
-    alpha_.assign(ctx_.size(), 0.0);
-    Value mx = -1e30;
     std::vector<Value> s(ctx_.size(), 0.0);
+    Value mx = -1e30;
     for (size_t i = 0; i < ctx_.size(); ++i) {
         Value dot = 0;
         for (size_t d = 0; d < dim_; ++d) {
@@ -678,7 +677,7 @@ void AttentionNode::execute() {
         s[i] = dot * scale;
         mx = std::max(mx, s[i]);
     }
-    // softmax (stable)
+    alpha_.assign(ctx_.size(), 0.0);
     Value zsum = 0;
     for (size_t i = 0; i < ctx_.size(); ++i) {
         alpha_[i] = std::exp(s[i] - mx);
@@ -686,55 +685,57 @@ void AttentionNode::execute() {
     }
     if (zsum < 1e-30) zsum = 1e-30;
     for (auto& a : alpha_) a /= zsum;
-    // output: sum_i alpha_i * (w . E[c_{i+1}])  — value = the NEXT char's
-    // embedding (the char after each attended position)
-    Value out = 0;
-    for (size_t i = 0; i < ctx_.size(); ++i) {
-        size_t next_code = (i + 1 < ctx_.size())
-            ? static_cast<size_t>(ctx_[i + 1])
-            : static_cast<size_t>(query_code_);   // last key's next = query
-        Value dot = 0;
-        for (size_t d = 0; d < dim_; ++d) dot += proj_[d] * table_[next_code * dim_ + d];
-        out += alpha_[i] * dot;
+    // V-port readout: out_c = sum_i alpha_i * (proj_c . E[c_{i+1}])
+    for (size_t c = 0; c < vocab_; ++c) {
+        Value out = 0;
+        for (size_t i = 0; i < ctx_.size(); ++i) {
+            size_t next_code = (i + 1 < ctx_.size())
+                ? static_cast<size_t>(ctx_[i + 1])
+                : static_cast<size_t>(query_code_);
+            Value dot = 0;
+            for (size_t d = 0; d < dim_; ++d) {
+                dot += proj_[c * dim_ + d] * table_[next_code * dim_ + d];
+            }
+            out += alpha_[i] * dot;
+        }
+        outputs_[c] = out;
     }
-    outputs_[0] = out;
 }
 
 std::vector<Value> AttentionNode::backward_input_grads(Value output_grad) {
-    // Categorical codes carry no gradient; all learning is in the table
-    // and projection, accumulated via acc_*_grad (the trainer's param
-    // update path reads them). This computes those accumulations.
-    const Value g = output_grad;
-    if (ctx_.empty() || g == 0.0) return std::vector<Value>(inputs_.size(), 0.0);
-    const Value scale = 1.0 / std::sqrt(static_cast<Value>(dim_));
-    // value-side grads + beta_i
-    std::vector<Value> beta(ctx_.size(), 0.0);
+    // Per-port grads if the trainer fed them (exact); otherwise broadcast
+    // the per-node aggregate to every port (approximation, IFELSE-style).
+    std::vector<Value> og(vocab_, output_grad);
+    if (out_grads_.size() == vocab_) og = out_grads_;
+    // softmax grads are shared across ports (alpha is common):
+    //   g_alpha_i = sum_c og_c * beta_ic,  beta_ic = proj_c . E[next_i]
+    std::vector<Value> g_alpha(ctx_.size(), 0.0);
     for (size_t i = 0; i < ctx_.size(); ++i) {
         size_t next_code = (i + 1 < ctx_.size())
             ? static_cast<size_t>(ctx_[i + 1])
             : static_cast<size_t>(query_code_);
-        Value dot = 0;
-        for (size_t d = 0; d < dim_; ++d) {
-            dot += proj_[d] * table_[next_code * dim_ + d];
-            tgrad_[next_code * dim_ + d] += g * alpha_[i] * proj_[d];
-            pgrad_[d] += g * alpha_[i] * table_[next_code * dim_ + d];
+        for (size_t c = 0; c < vocab_; ++c) {
+            Value beta = 0;
+            for (size_t d = 0; d < dim_; ++d) {
+                beta += proj_[c * dim_ + d] * table_[next_code * dim_ + d];
+                // value-side grads
+                tgrad_[next_code * dim_ + d] += og[c] * alpha_[i] * proj_[c * dim_ + d];
+                pgrad_[c * dim_ + d] += og[c] * alpha_[i] * table_[next_code * dim_ + d];
+            }
+            g_alpha[i] += og[c] * beta;
         }
-        beta[i] = dot;
     }
-    // softmax grads -> score grads
+    // softmax: g_s_i = alpha_i (g_alpha_i - sum_j g_alpha_j alpha_j)
     Value gsum = 0;
-    for (size_t i = 0; i < ctx_.size(); ++i) gsum += g * beta[i] * alpha_[i];
-    std::vector<Value> gs(ctx_.size(), 0.0);
+    for (size_t i = 0; i < ctx_.size(); ++i) gsum += g_alpha[i] * alpha_[i];
+    const Value scale = 1.0 / std::sqrt(static_cast<Value>(dim_));
     for (size_t i = 0; i < ctx_.size(); ++i) {
-        gs[i] = alpha_[i] * (g * beta[i] - gsum);
-    }
-    // score grads -> query/key table grads
-    for (size_t i = 0; i < ctx_.size(); ++i) {
+        Value gs = alpha_[i] * (g_alpha[i] - gsum);
         for (size_t d = 0; d < dim_; ++d) {
             Value e_id = table_[static_cast<size_t>(ctx_[i]) * dim_ + d];
             Value q_d  = table_[static_cast<size_t>(query_code_) * dim_ + d];
-            tgrad_[static_cast<size_t>(ctx_[i]) * dim_ + d] += gs[i] * q_d * scale;
-            tgrad_[static_cast<size_t>(query_code_) * dim_ + d] += gs[i] * e_id * scale;
+            tgrad_[static_cast<size_t>(ctx_[i]) * dim_ + d] += gs * q_d * scale;
+            tgrad_[static_cast<size_t>(query_code_) * dim_ + d] += gs * e_id * scale;
         }
     }
     return std::vector<Value>(inputs_.size(), 0.0);
@@ -746,6 +747,7 @@ std::unique_ptr<Node> AttentionNode::clone() const {
     n->table_ = table_; n->proj_ = proj_;
     n->tgrad_.assign(tgrad_.size(), 0.0);
     n->pgrad_.assign(pgrad_.size(), 0.0);
+    n->outputs_.assign(vocab_, 0.0);
     return n;
 }
 
@@ -753,13 +755,14 @@ void AttentionNode::copy_state_to(Node* target) const {
     if (auto* t = dynamic_cast<AttentionNode*>(target)) {
         t->vocab_ = vocab_; t->dim_ = dim_;
         t->table_ = table_; t->proj_ = proj_;
+        t->outputs_.assign(vocab_, 0.0);
     }
 }
 
 void AttentionNode::serialize_extra(std::string& json) const {
     json += ",\"att_vocab\":" + std::to_string(vocab_) + ",\"att_dim\":" + std::to_string(dim_);
     json += ",\"att_proj\":[";
-    for (size_t d = 0; d < dim_; ++d) json += (d ? "," : "") + std::to_string(proj_[d]);
+    for (size_t i = 0; i < proj_.size(); ++i) json += (i ? "," : "") + std::to_string(proj_[i]);
     json += "],\"att_table\":[";
     for (size_t i = 0; i < table_.size(); ++i) json += (i ? "," : "") + std::to_string(table_[i]);
     json += "]";
@@ -768,11 +771,9 @@ void AttentionNode::serialize_extra(std::string& json) const {
 void AttentionNode::deserialize_extra(const std::string& key, const std::string& value) {
     if (key == "att_vocab") vocab_ = static_cast<size_t>(std::stoull(value));
     else if (key == "att_dim") dim_ = static_cast<size_t>(std::stoull(value));
-    // att_proj / att_table handled as arrays by the serializer layer
 }
-// ============================================================================
-// OneHotNode
-// ============================================================================
+
+
 OneHotNode::OneHotNode(uint64_t id, const std::string& name)
     : Node(id, NodeType::ONEHOT, name, 1, 0) {
     // outputs_ resized by set_vocab() at routing time
