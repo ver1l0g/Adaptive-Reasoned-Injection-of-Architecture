@@ -675,8 +675,9 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
         Node* node;
         bool is_neuron;   // NEURON type
         bool is_output;   // OUTPUT type (has scale + bias)
-        Trainable(Node* n, bool neuron, bool output)
-            : node(n), is_neuron(neuron), is_output(output) {}
+        bool is_attention; // ATTENTION type (self-accumulated table grads)
+        Trainable(Node* n, bool neuron, bool output, bool attention = false)
+            : node(n), is_neuron(neuron), is_output(output), is_attention(attention) {}
     };
     std::vector<Trainable> trainables;
     for (auto& n : nodes_) {
@@ -687,6 +688,8 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
             trainables.emplace_back(n.get(), false, true);
         } else if (t == NodeType::CONSTANT) {
             trainables.emplace_back(n.get(), false, false);
+        } else if (t == NodeType::ATTENTION) {
+            trainables.emplace_back(n.get(), false, false, true);
         }
     }
     if (trainables.empty()) return;
@@ -1153,6 +1156,13 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                     }
                     break;
                 }
+                case NodeType::ATTENTION: {
+                    // M2.3: the head self-accumulates table/proj grads in
+                    // backward_input_grads; input codes are categorical
+                    // (zero input grads by construction).
+                    v->backward_input_grads(vgrad);
+                    break;
+                }
                 case NodeType::CONSTANT:
                     acc_dv[v] += vgrad;
                     break;
@@ -1285,6 +1295,23 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                     m_b = b1 * m_b + (1.0 - b1) * gb;
                     v_b = b2 * v_b + (1.0 - b2) * gb * gb;
                     on->set_bias(on->get_bias() - lr * (m_b / bc1) / (std::sqrt(v_b / bc2) + eps));
+                } else if (tb.is_attention) {
+                    // M2.3: plain SGD on the self-accumulated grads (Adam
+                    // state for the table is future work; SGD proved enough
+                    // for the EMBED trunk's tables).
+                    auto* an = static_cast<AttentionNode*>(tb.node);
+                    for (size_t idx = 0; idx < an->get_vocab(); ++idx) {
+                        for (size_t d = 0; d < an->get_dim(); ++d) {
+                            an->set_table(idx, d,
+                                an->get_table(idx, d)
+                                    - lr * nscale * an->get_table_grad(idx, d));
+                        }
+                    }
+                    for (size_t d = 0; d < an->get_dim(); ++d) {
+                        an->set_proj(d, an->get_proj(d)
+                                          - lr * nscale * an->get_proj_grad(d));
+                    }
+                    an->zero_grads();
                 } else {
                     auto* cn = static_cast<ConstantNode*>(tb.node);
                     auto& m_c = vel_c[tb.node];
@@ -1320,6 +1347,20 @@ void Graph::train(const std::vector<SampleIODesc>& samples,
                     double avg_db = nscale * acc_db[tb.node];
                     vel_b[tb.node] = mu * vel_b[tb.node] + avg_db + wd * on->get_bias();
                     on->set_bias(on->get_bias() - lr * vel_b[tb.node]);
+                } else if (tb.is_attention) {
+                    auto* an = static_cast<AttentionNode*>(tb.node);
+                    for (size_t idx = 0; idx < an->get_vocab(); ++idx) {
+                        for (size_t d = 0; d < an->get_dim(); ++d) {
+                            an->set_table(idx, d,
+                                an->get_table(idx, d)
+                                    - lr * nscale * an->get_table_grad(idx, d));
+                        }
+                    }
+                    for (size_t d = 0; d < an->get_dim(); ++d) {
+                        an->set_proj(d, an->get_proj(d)
+                                          - lr * nscale * an->get_proj_grad(d));
+                    }
+                    an->zero_grads();
                 } else {
                     auto* cn = static_cast<ConstantNode*>(tb.node);
                     double avg_dv = nscale * acc_dv[tb.node];

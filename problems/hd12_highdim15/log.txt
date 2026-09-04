@@ -1,518 +1,0 @@
-================================================
-  ARIA — Adaptive Reasoned Injection of Architecture
-================================================
-
-Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-limits\bench_highdim15.csv
-  Loaded 1199 samples
-  Train: 959  Validation: 240
-
-Starting evolution...
-2026-08-29 12:10:52.722 [INFO] New best overall loss: 3.169879
-  [   1]   eval  loss=9.504612  |====================|  [   1]    sgd  loss=3.169879  |====================|2026-08-29 12:10:53.331 [INFO] New best overall loss: 3.149443
-  [   2]   eval  loss=3.169879  |====================|  [   2]    sgd  loss=3.149443  |====================|2026-08-29 12:10:53.448 [INFO] New best overall loss: 3.149016
-  [   3]   eval  loss=3.149443  |====================|  [   3]    sgd  loss=3.149016  |====================|2026-08-29 12:10:53.553 [INFO] New best overall loss: 3.148698
-  [   4]   eval  loss=3.149016  |====================|  [   4]    sgd  loss=3.148698  |====================|2026-08-29 12:10:53.666 [INFO] New best overall loss: 3.148475
-  [   5]   eval  loss=3.148698  |====================|  [   5]    sgd  loss=3.148475  |====================|2026-08-29 12:10:53.674 [INFO] Plateau triggered at epoch 5 (counter=3, loss=3.148475)
-2026-08-29 12:10:53.700 [INFO] Structural inability detected 鈥?surfacing bottleneck node 17 (blame=0.063994)
-2026-08-29 12:10:53.711 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:10:53.712 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 12:10:53.713 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:10:53.714 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:10:53.715 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:12:19.313 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.692793 train_loss=0.336954 new train_loss=0.354404
-2026-08-29 12:12:19.317 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-29 12:12:19.318 [INFO] Plateau state reset 鈥?best_phase2=0.354404
-2026-08-29 12:12:19.319 [INFO] Plateau state reset — best_phase2=0.354404
-  [   6]   eval  loss=0.354404  |===|  [   6]    sgd  loss=0.397719  |===|  [   7]   eval  loss=0.397719  |===|  [   7]    sgd  loss=0.391600  |===|  [   8]   eval  loss=0.391600  |===|  [   8]    sgd  loss=0.389998  |===|  [   9]   eval  loss=0.389998  |===|  [   9]    sgd  loss=0.388273  |===|  [  10]   eval  loss=0.388273  |===|  [  10]    sgd  loss=0.386438  |===|  [  11]   eval  loss=0.386438  |===|  [  11]    sgd  loss=0.384514  |===|  [  12]   eval  loss=0.384514  |===|  [  12]    sgd  loss=0.382687  |===|  [  13]   eval  loss=0.382687  |===|  [  13]    sgd  loss=0.380998  |===|  [  14]   eval  loss=0.380998  |===|  [  14]    sgd  loss=0.379468  |===|  [  15]   eval  loss=0.379468  |===|  [  15]    sgd  loss=0.378106  |===|  [  16]   eval  loss=0.378106  |===|  [  16]    sgd  loss=0.376844  |===|  [  17]   eval  loss=0.376844  |===|  [  17]    sgd  loss=0.375712  |===|  [  18]   eval  loss=0.375712  |===|  [  18]    sgd  loss=0.374676  |===|  [  19]   eval  loss=0.374676  |===|  [  19]    sgd  loss=0.373665  |===|  [  20]   eval  loss=0.373665  |===|  [  20]    sgd  loss=0.371395  |===|  [  21]   eval  loss=0.371395  |===|  [  21]    sgd  loss=0.369839  |===|  [  22]   eval  loss=0.369839  |===|  [  22]    sgd  loss=0.369325  |===|  [  23]   eval  loss=0.369325  |===|  [  23]    sgd  loss=0.368819  |===|  [  24]   eval  loss=0.368819  |===|  [  24]    sgd  loss=0.368376  |===|  [  25]   eval  loss=0.368376  |===|  [  25]    sgd  loss=0.368062  |===|  [  26]   eval  loss=0.368062  |===|  [  26]    sgd  loss=0.367833  |===|  [  27]   eval  loss=0.367833  |===|  [  27]    sgd  loss=0.367549  |===|2026-08-29 12:12:51.427 [INFO] Plateau triggered at epoch 27 (counter=3, loss=0.367549)
-2026-08-29 12:12:51.577 [INFO] Structural inability detected 鈥?surfacing bottleneck node 26 (blame=0.444809)
-2026-08-29 12:12:51.599 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:12:51.600 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 12:12:51.601 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:12:51.602 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:12:51.603 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:15:52.347 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.614847 train_loss=0.300026 new train_loss=0.300179
-2026-08-29 12:15:52.351 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-29 12:15:52.352 [INFO] Plateau state reset 鈥?best_phase2=0.300179
-2026-08-29 12:15:52.353 [INFO] Plateau state reset — best_phase2=0.300179
-  [  28]   eval  loss=0.300179  |===|  [  28]    sgd  loss=0.322999  |===|  [  29]   eval  loss=0.322999  |===|  [  29]    sgd  loss=0.318940  |===|  [  30]   eval  loss=0.318940  |===|  [  30]    sgd  loss=0.316940  |===|  [  31]   eval  loss=0.316940  |===|  [  31]    sgd  loss=0.315590  |===|  [  32]   eval  loss=0.315590  |===|  [  32]    sgd  loss=0.315489  |===|  [  33]   eval  loss=0.315489  |===|  [  33]    sgd  loss=0.315185  |===|  [  34]   eval  loss=0.315185  |===|  [  34]    sgd  loss=0.315065  |===|2026-08-29 12:16:13.929 [INFO] Plateau triggered at epoch 34 (counter=3, loss=0.315065)
-2026-08-29 12:16:14.227 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:16:14.231 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:16:14.232 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:16:14.233 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:20:05.300 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.677013 train_loss=0.284543 new train_loss=0.286808
-2026-08-29 12:20:05.319 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:20:05.320 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 12:20:05.321 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:20:05.322 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:20:05.323 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:24:50.704 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-29 12:24:50.705 [INFO] Plateau state reset 鈥?best_phase2=0.286808
-2026-08-29 12:24:50.706 [INFO] Plateau state reset — best_phase2=0.286808
-  [  35]   eval  loss=0.286808  |==|  [  35]    sgd  loss=0.312455  |===|  [  36]   eval  loss=0.312455  |===|  [  36]    sgd  loss=0.313631  |===|  [  37]   eval  loss=0.313631  |===|  [  37]    sgd  loss=0.315649  |===|  [  38]   eval  loss=0.315649  |===|  [  38]    sgd  loss=0.317328  |===|  [  39]   eval  loss=0.317328  |===|  [  39]    sgd  loss=0.319333  |===|  [  40]   eval  loss=0.319333  |===|  [  40]    sgd  loss=0.320559  |===|  [  41]   eval  loss=0.320559  |===|  [  41]    sgd  loss=0.319818  |===|  [  42]   eval  loss=0.319818  |===|  [  42]    sgd  loss=0.321794  |===|  [  43]   eval  loss=0.321794  |===|  [  43]    sgd  loss=0.322638  |===|  [  44]   eval  loss=0.322638  |===|  [  44]    sgd  loss=0.322663  |===|2026-08-29 12:25:22.806 [INFO] Plateau triggered at epoch 44 (counter=3, loss=0.322663)
-2026-08-29 12:25:23.344 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:25:23.345 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 12:25:23.346 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:25:23.347 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:25:23.348 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:28:59.624 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.697212 train_loss=0.274484 new train_loss=0.284902
-2026-08-29 12:28:59.641 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:28:59.642 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:28:59.643 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:28:59.643 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:35:25.079 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.709063 train_loss=0.266718 new train_loss=0.281885
-2026-08-29 12:35:25.099 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:35:25.100 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 12:35:25.101 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:35:25.102 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:35:25.103 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:43:18.373 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-29 12:43:18.377 [INFO] Plateau state reset 鈥?best_phase2=0.281885
-2026-08-29 12:43:18.378 [INFO] Plateau state reset — best_phase2=0.281885
-  [  45]   eval  loss=0.281885  |==|  [  45]    sgd  loss=0.307122  |===|  [  46]   eval  loss=0.307122  |===|  [  46]    sgd  loss=0.308991  |===|  [  47]   eval  loss=0.308991  |===|  [  47]    sgd  loss=0.309812  |===|  [  48]   eval  loss=0.309812  |===|  [  48]    sgd  loss=0.309379  |===|  [  49]   eval  loss=0.309379  |===|  [  49]    sgd  loss=0.308457  |===|  [  50]   eval  loss=0.308457  |===|  [  50]    sgd  loss=0.307667  |===|  [  51]   eval  loss=0.307667  |===|  [  51]    sgd  loss=0.306708  |===|  [  52]   eval  loss=0.306708  |===|  [  52]    sgd  loss=0.306338  |===|  [  53]   eval  loss=0.306338  |===|  [  53]    sgd  loss=0.305888  |===|  [  54]   eval  loss=0.305888  |===|  [  54]    sgd  loss=0.305094  |===|  [  55]   eval  loss=0.305094  |===|  [  55]    sgd  loss=0.304719  |===|  [  56]   eval  loss=0.304719  |===|  [  56]    sgd  loss=0.304417  |===|  [  57]   eval  loss=0.304417  |===|  [  57]    sgd  loss=0.303942  |===|  [  58]   eval  loss=0.303942  |===|  [  58]    sgd  loss=0.303831  |===|  [  59]   eval  loss=0.303831  |===|  [  59]    sgd  loss=0.303408  |===|  [  60]   eval  loss=0.303408  |===|  [  60]    sgd  loss=0.302775  |===|  [  61]   eval  loss=0.302775  |===|  [  61]    sgd  loss=0.302614  |===|  [  62]   eval  loss=0.302614  |===|  [  62]    sgd  loss=0.302199  |===|  [  63]   eval  loss=0.302199  |===|  [  63]    sgd  loss=0.302062  |===|  [  64]   eval  loss=0.302062  |===|  [  64]    sgd  loss=0.301720  |===|  [  65]   eval  loss=0.301720  |===|  [  65]    sgd  loss=0.301485  |===|  [  66]   eval  loss=0.301485  |===|  [  66]    sgd  loss=0.301373  |===|  [  67]   eval  loss=0.301373  |===|  [  67]    sgd  loss=0.301085  |===|2026-08-29 12:46:09.309 [INFO] Plateau triggered at epoch 67 (counter=3, loss=0.301085)
-2026-08-29 12:46:10.733 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:46:10.734 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 12:46:10.735 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:46:10.736 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:46:10.737 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 12:53:56.449 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 12:53:56.453 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 12:53:56.454 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 12:53:56.455 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 12:53:56.456 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:02:49.390 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:02:49.392 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:02:49.393 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:02:49.394 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:02:49.395 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  68]   eval  loss=0.301085  |===|  [  68]    sgd  loss=0.300920  |===|2026-08-29 13:12:02.049 [INFO] Plateau triggered at epoch 68 (counter=4, loss=0.300920)
-2026-08-29 13:12:03.754 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:12:03.758 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:12:03.759 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:12:03.760 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:17:59.668 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:17:59.669 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:17:59.670 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:17:59.671 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:17:59.672 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:22:18.745 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:22:18.749 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:22:18.750 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:22:18.755 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  69]   eval  loss=0.300920  |===|  [  69]    sgd  loss=0.300730  |===|2026-08-29 13:26:55.498 [INFO] Plateau triggered at epoch 69 (counter=5, loss=0.300730)
-2026-08-29 13:26:56.866 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:26:56.870 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:26:56.870 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:26:56.871 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:31:36.771 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:31:36.773 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:31:36.773 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:31:36.774 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:36:42.436 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:36:42.440 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:36:42.441 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:36:42.441 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  70]   eval  loss=0.300730  |===|  [  70]    sgd  loss=0.300505  |===|2026-08-29 13:40:27.000 [INFO] Plateau triggered at epoch 70 (counter=6, loss=0.300505)
-2026-08-29 13:40:28.077 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:40:28.080 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:40:28.080 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:40:28.081 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:40:28.081 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:43:57.796 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:43:57.799 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:43:57.800 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:43:57.800 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:43:57.800 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:45:34.595 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:45:34.597 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:45:34.598 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:45:34.598 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  71]   eval  loss=0.300505  |===|  [  71]    sgd  loss=0.300380  |===|2026-08-29 13:46:58.854 [INFO] Plateau triggered at epoch 71 (counter=7, loss=0.300380)
-2026-08-29 13:46:59.158 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:46:59.160 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:46:59.161 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:46:59.161 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:48:21.908 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:48:21.909 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:48:21.909 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:48:21.910 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:48:21.910 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:49:47.810 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:49:47.813 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:49:47.813 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:49:47.813 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:51:13.325 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [  72]   eval  loss=0.300380  |===|  [  72]    sgd  loss=0.300184  |===|2026-08-29 13:51:14.677 [INFO] Structural search in cooldown (9 epochs left) at epoch 72 鈥?letting SGD settle
-  [  73]   eval  loss=0.300184  |===|  [  73]    sgd  loss=0.299983  |==|2026-08-29 13:51:17.297 [INFO] Structural search in cooldown (8 epochs left) at epoch 73 鈥?letting SGD settle
-  [  74]   eval  loss=0.299983  |==|  [  74]    sgd  loss=0.299917  |==|2026-08-29 13:51:19.201 [INFO] Structural search in cooldown (7 epochs left) at epoch 74 鈥?letting SGD settle
-  [  75]   eval  loss=0.299917  |==|  [  75]    sgd  loss=0.299642  |==|2026-08-29 13:51:21.274 [INFO] Structural search in cooldown (6 epochs left) at epoch 75 鈥?letting SGD settle
-  [  76]   eval  loss=0.299642  |==|  [  76]    sgd  loss=0.299503  |==|2026-08-29 13:51:23.184 [INFO] Structural search in cooldown (5 epochs left) at epoch 76 鈥?letting SGD settle
-  [  77]   eval  loss=0.299503  |==|  [  77]    sgd  loss=0.299442  |==|2026-08-29 13:51:25.448 [INFO] Structural search in cooldown (4 epochs left) at epoch 77 鈥?letting SGD settle
-  [  78]   eval  loss=0.299442  |==|  [  78]    sgd  loss=0.299218  |==|2026-08-29 13:51:26.915 [INFO] Structural search in cooldown (3 epochs left) at epoch 78 鈥?letting SGD settle
-  [  79]   eval  loss=0.299218  |==|  [  79]    sgd  loss=0.299146  |==|2026-08-29 13:51:29.432 [INFO] Structural search in cooldown (2 epochs left) at epoch 79 鈥?letting SGD settle
-  [  80]   eval  loss=0.299146  |==|  [  80]    sgd  loss=0.298980  |==|2026-08-29 13:51:31.992 [INFO] Structural search in cooldown (1 epochs left) at epoch 80 鈥?letting SGD settle
-  [  81]   eval  loss=0.298980  |==|  [  81]    sgd  loss=0.298896  |==|2026-08-29 13:51:32.879 [INFO] Plateau triggered at epoch 81 (counter=17, loss=0.298896)
-2026-08-29 13:51:33.193 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:51:33.196 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:51:33.196 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:51:33.196 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:52:54.499 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:52:54.502 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:52:54.502 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:52:54.502 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:52:54.502 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:53:59.916 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:53:59.919 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:53:59.919 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:53:59.920 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:53:59.920 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  82]   eval  loss=0.298896  |==|  [  82]    sgd  loss=0.298681  |==|2026-08-29 13:55:13.478 [INFO] Plateau triggered at epoch 82 (counter=18, loss=0.298681)
-2026-08-29 13:55:13.709 [INFO] Structural inability detected 鈥?surfacing bottleneck node 35 (blame=0.533240)
-2026-08-29 13:55:13.718 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:55:13.719 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:55:13.719 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:55:13.720 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:55:13.720 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  83]   eval  loss=0.298681  |==|  [  83]    sgd  loss=0.298659  |==|2026-08-29 13:56:35.066 [INFO] Plateau triggered at epoch 83 (counter=19, loss=0.298659)
-2026-08-29 13:56:35.489 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:56:35.490 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:56:35.490 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:56:35.490 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:58:08.388 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:58:08.391 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:58:08.392 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:58:08.392 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:58:08.392 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 13:59:41.032 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 13:59:41.035 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 13:59:41.036 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 13:59:41.036 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 13:59:41.036 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  84]   eval  loss=0.298659  |==|  [  84]    sgd  loss=0.298516  |==|2026-08-29 14:00:54.137 [INFO] Plateau triggered at epoch 84 (counter=20, loss=0.298516)
-2026-08-29 14:00:54.432 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:00:54.434 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:00:54.435 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 14:00:54.435 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:02:12.904 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:02:12.907 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:02:12.908 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 14:02:12.908 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:05:58.098 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:05:58.101 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 14:05:58.101 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:05:58.102 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 14:05:58.102 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [  85]   eval  loss=0.298516  |==|  [  85]    sgd  loss=0.298378  |==|2026-08-29 14:10:28.034 [INFO] Plateau triggered at epoch 85 (counter=21, loss=0.298378)
-2026-08-29 14:10:28.722 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:10:28.725 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:10:28.726 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 14:10:28.726 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:15:26.045 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:15:26.049 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:15:26.049 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 14:15:26.050 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:20:16.550 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [  86]   eval  loss=0.298378  |==|  [  86]    sgd  loss=0.298218  |==|2026-08-29 14:20:20.601 [INFO] Structural search in cooldown (9 epochs left) at epoch 86 鈥?letting SGD settle
-  [  87]   eval  loss=0.298218  |==|  [  87]    sgd  loss=0.298096  |==|2026-08-29 14:20:23.922 [INFO] Structural search in cooldown (8 epochs left) at epoch 87 鈥?letting SGD settle
-  [  88]   eval  loss=0.298096  |==|  [  88]    sgd  loss=0.297992  |==|2026-08-29 14:20:27.326 [INFO] Structural search in cooldown (7 epochs left) at epoch 88 鈥?letting SGD settle
-  [  89]   eval  loss=0.297992  |==|  [  89]    sgd  loss=0.297965  |==|2026-08-29 14:20:30.729 [INFO] Structural search in cooldown (6 epochs left) at epoch 89 鈥?letting SGD settle
-  [  90]   eval  loss=0.297965  |==|  [  90]    sgd  loss=0.297968  |==|2026-08-29 14:20:34.723 [INFO] Structural search in cooldown (5 epochs left) at epoch 90 鈥?letting SGD settle
-  [  91]   eval  loss=0.297968  |==|  [  91]    sgd  loss=0.297864  |==|2026-08-29 14:20:38.327 [INFO] Structural search in cooldown (4 epochs left) at epoch 91 鈥?letting SGD settle
-  [  92]   eval  loss=0.297864  |==|  [  92]    sgd  loss=0.297743  |==|2026-08-29 14:20:42.021 [INFO] Structural search in cooldown (3 epochs left) at epoch 92 鈥?letting SGD settle
-  [  93]   eval  loss=0.297743  |==|  [  93]    sgd  loss=0.297485  |==|2026-08-29 14:20:44.983 [INFO] Structural search in cooldown (2 epochs left) at epoch 93 鈥?letting SGD settle
-  [  94]   eval  loss=0.297485  |==|  [  94]    sgd  loss=0.353709  |===|2026-08-29 14:20:46.162 [INFO] Structural search in cooldown (1 epochs left) at epoch 94 鈥?letting SGD settle
-  [  95]   eval  loss=0.353709  |===|  [  95]    sgd  loss=0.357127  |===|2026-08-29 14:20:47.315 [INFO] Plateau triggered at epoch 95 (counter=31, loss=0.357127)
-2026-08-29 14:20:48.091 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:20:48.092 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 14:20:48.093 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:20:48.093 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
-2026-08-29 14:20:48.094 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:24:23.012 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.718465 train_loss=0.259721 new train_loss=0.286227
-2026-08-29 14:24:23.020 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:24:23.021 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 14:24:23.021 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:24:23.021 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=2)
-2026-08-29 14:24:23.021 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:28:56.966 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.720027 train_loss=0.258648 new train_loss=0.285190
-2026-08-29 14:28:56.978 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:28:56.978 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 14:28:56.979 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:28:56.979 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 14:28:56.980 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:34:04.906 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.720669 train_loss=0.257979 new train_loss=0.284249
-2026-08-29 14:34:04.909 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-08-29 14:34:04.909 [INFO] Plateau state reset 鈥?best_phase2=0.284249
-2026-08-29 14:34:04.910 [INFO] Plateau state reset — best_phase2=0.284249
-  [  96]   eval  loss=0.284249  |==|  [  96]    sgd  loss=0.297100  |==|  [  97]   eval  loss=0.297100  |==|  [  97]    sgd  loss=0.296820  |==|  [  98]   eval  loss=0.296820  |==|  [  98]    sgd  loss=0.296216  |==|  [  99]   eval  loss=0.296216  |==|  [  99]    sgd  loss=0.295700  |==|  [ 100]   eval  loss=0.295700  |==|  [ 100]    sgd  loss=0.295283  |==|  [ 101]   eval  loss=0.295283  |==|  [ 101]    sgd  loss=0.295099  |==|  [ 102]   eval  loss=0.295099  |==|  [ 102]    sgd  loss=0.294916  |==|  [ 103]   eval  loss=0.294916  |==|  [ 103]    sgd  loss=0.294548  |==|  [ 104]   eval  loss=0.294548  |==|  [ 104]    sgd  loss=0.294735  |==|  [ 105]   eval  loss=0.294735  |==|  [ 105]    sgd  loss=0.294304  |==|  [ 106]   eval  loss=0.294304  |==|  [ 106]    sgd  loss=0.294250  |==|  [ 107]   eval  loss=0.294250  |==|  [ 107]    sgd  loss=0.294164  |==|  [ 108]   eval  loss=0.294164  |==|  [ 108]    sgd  loss=0.294071  |==|2026-08-29 14:35:09.177 [INFO] Plateau triggered at epoch 108 (counter=3, loss=0.294071)
-2026-08-29 14:35:11.183 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:35:11.184 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:35:11.184 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 14:35:11.185 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:40:28.144 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:40:28.147 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:40:28.148 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 14:40:28.148 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:45:02.273 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:45:02.276 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:45:02.277 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 14:45:02.277 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 109]   eval  loss=0.294071  |==|  [ 109]    sgd  loss=0.294007  |==|2026-08-29 14:49:39.868 [INFO] Plateau triggered at epoch 109 (counter=4, loss=0.294007)
-2026-08-29 14:49:41.312 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:49:41.315 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:49:41.316 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 14:49:41.316 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 14:55:20.261 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 14:55:20.264 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 14:55:20.265 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 14:55:20.265 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 15:01:24.919 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:01:24.920 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 15:01:24.921 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:01:24.921 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:01:24.922 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 110]   eval  loss=0.294007  |==|  [ 110]    sgd  loss=0.293990  |==|2026-08-29 15:07:16.125 [INFO] Plateau triggered at epoch 110 (counter=5, loss=0.293990)
-2026-08-29 15:07:17.653 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:07:17.654 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:07:17.654 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:07:17.655 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 15:17:27.396 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:17:27.399 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:17:27.400 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:17:27.400 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 15:23:58.615 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:23:58.619 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:23:58.620 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:23:58.620 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 111]   eval  loss=0.293990  |==|  [ 111]    sgd  loss=0.293886  |==|2026-08-29 15:30:52.647 [INFO] Plateau triggered at epoch 111 (counter=6, loss=0.293886)
-2026-08-29 15:30:55.028 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:30:55.031 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:30:55.032 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:30:55.033 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 15:37:55.549 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:37:55.552 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 15:37:55.552 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:37:55.553 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:37:55.553 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 15:45:53.547 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:45:53.551 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:45:53.551 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:45:53.552 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 112]   eval  loss=0.293886  |==|  [ 112]    sgd  loss=0.293789  |==|2026-08-29 15:52:09.892 [INFO] Plateau triggered at epoch 112 (counter=7, loss=0.293789)
-2026-08-29 15:52:11.687 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:52:11.688 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:52:11.688 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:52:11.689 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 15:59:29.295 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 15:59:29.297 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 15:59:29.298 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 15:59:29.299 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 15:59:29.299 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 16:08:51.461 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:08:51.466 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 16:08:51.467 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:08:51.467 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:08:51.468 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 16:16:28.565 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [ 113]   eval  loss=0.293789  |==|  [ 113]    sgd  loss=0.293759  |==|2026-08-29 16:16:33.706 [INFO] Structural search in cooldown (9 epochs left) at epoch 113 鈥?letting SGD settle
-  [ 114]   eval  loss=0.293759  |==|  [ 114]    sgd  loss=0.293724  |==|2026-08-29 16:16:39.544 [INFO] Structural search in cooldown (8 epochs left) at epoch 114 鈥?letting SGD settle
-  [ 115]   eval  loss=0.293724  |==|  [ 115]    sgd  loss=0.293828  |==|2026-08-29 16:16:45.410 [INFO] Structural search in cooldown (7 epochs left) at epoch 115 鈥?letting SGD settle
-  [ 116]   eval  loss=0.293828  |==|  [ 116]    sgd  loss=0.293701  |==|2026-08-29 16:16:51.449 [INFO] Structural search in cooldown (6 epochs left) at epoch 116 鈥?letting SGD settle
-  [ 117]   eval  loss=0.293701  |==|  [ 117]    sgd  loss=0.293698  |==|2026-08-29 16:16:57.310 [INFO] Structural search in cooldown (5 epochs left) at epoch 117 鈥?letting SGD settle
-  [ 118]   eval  loss=0.293698  |==|  [ 118]    sgd  loss=0.293672  |==|2026-08-29 16:17:04.104 [INFO] Structural search in cooldown (4 epochs left) at epoch 118 鈥?letting SGD settle
-  [ 119]   eval  loss=0.293672  |==|  [ 119]    sgd  loss=0.293613  |==|2026-08-29 16:17:10.818 [INFO] Structural search in cooldown (3 epochs left) at epoch 119 鈥?letting SGD settle
-  [ 120]   eval  loss=0.293613  |==|  [ 120]    sgd  loss=0.293583  |==|2026-08-29 16:17:17.018 [INFO] Structural search in cooldown (2 epochs left) at epoch 120 鈥?letting SGD settle
-  [ 121]   eval  loss=0.293583  |==|  [ 121]    sgd  loss=0.293581  |==|2026-08-29 16:17:23.967 [INFO] Structural search in cooldown (1 epochs left) at epoch 121 鈥?letting SGD settle
-  [ 122]   eval  loss=0.293581  |==|  [ 122]    sgd  loss=0.293731  |==|2026-08-29 16:17:30.279 [INFO] Plateau triggered at epoch 122 (counter=17, loss=0.293731)
-2026-08-29 16:17:32.782 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:17:32.785 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:17:32.786 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:17:32.787 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 16:25:23.594 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:25:23.598 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 16:25:23.598 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:25:23.599 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:25:23.599 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 16:33:04.113 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:33:04.117 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 16:33:04.117 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:33:04.118 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:33:04.119 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 123]   eval  loss=0.293731  |==|  [ 123]    sgd  loss=0.293572  |==|2026-08-29 16:41:09.088 [INFO] Plateau triggered at epoch 123 (counter=18, loss=0.293572)
-2026-08-29 16:41:11.525 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:41:11.528 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:41:11.529 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:41:11.530 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 16:48:58.991 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:48:58.994 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 16:48:58.995 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:48:58.995 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:48:58.996 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 16:54:50.842 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:54:50.845 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:54:50.846 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:54:50.847 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 124]   eval  loss=0.293572  |==|  [ 124]    sgd  loss=0.293579  |==|2026-08-29 16:59:08.667 [INFO] Plateau triggered at epoch 124 (counter=19, loss=0.293579)
-2026-08-29 16:59:09.680 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 16:59:09.683 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 16:59:09.684 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 16:59:09.685 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:02:40.921 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:02:40.924 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 17:02:40.924 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:02:40.925 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:02:40.926 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:05:56.310 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:05:56.311 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 17:05:56.312 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:05:56.312 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:05:56.312 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 125]   eval  loss=0.293579  |==|  [ 125]    sgd  loss=0.293576  |==|2026-08-29 17:09:10.222 [INFO] Plateau triggered at epoch 125 (counter=20, loss=0.293576)
-2026-08-29 17:09:11.003 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:09:11.004 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:09:11.005 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:09:11.005 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:13:13.262 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:13:13.265 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:13:13.266 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:13:13.266 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:15:44.958 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:15:44.961 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 17:15:44.962 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:15:44.962 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:15:44.963 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 126]   eval  loss=0.293576  |==|  [ 126]    sgd  loss=0.293866  |==|2026-08-29 17:21:28.927 [INFO] Plateau triggered at epoch 126 (counter=21, loss=0.293866)
-2026-08-29 17:21:30.687 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:21:30.690 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:21:30.690 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:21:30.690 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:26:47.707 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:26:47.710 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:26:47.710 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:26:47.710 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:31:46.536 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:31:46.539 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:31:46.539 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:31:46.539 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:37:01.539 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [ 127]   eval  loss=0.293866  |==|  [ 127]    sgd  loss=0.293601  |==|2026-08-29 17:37:05.873 [INFO] Structural search in cooldown (9 epochs left) at epoch 127 鈥?letting SGD settle
-  [ 128]   eval  loss=0.293601  |==|  [ 128]    sgd  loss=0.293630  |==|2026-08-29 17:37:10.100 [INFO] Structural search in cooldown (8 epochs left) at epoch 128 鈥?letting SGD settle
-  [ 129]   eval  loss=0.293630  |==|  [ 129]    sgd  loss=0.293593  |==|2026-08-29 17:37:14.285 [INFO] Structural search in cooldown (7 epochs left) at epoch 129 鈥?letting SGD settle
-  [ 130]   eval  loss=0.293593  |==|  [ 130]    sgd  loss=0.293606  |==|2026-08-29 17:37:18.462 [INFO] Structural search in cooldown (6 epochs left) at epoch 130 鈥?letting SGD settle
-  [ 131]   eval  loss=0.293606  |==|  [ 131]    sgd  loss=0.293619  |==|2026-08-29 17:37:22.634 [INFO] Structural search in cooldown (5 epochs left) at epoch 131 鈥?letting SGD settle
-  [ 132]   eval  loss=0.293619  |==|  [ 132]    sgd  loss=0.293646  |==|2026-08-29 17:37:26.820 [INFO] Structural search in cooldown (4 epochs left) at epoch 132 鈥?letting SGD settle
-  [ 133]   eval  loss=0.293646  |==|  [ 133]    sgd  loss=0.293777  |==|2026-08-29 17:37:31.107 [INFO] Structural search in cooldown (3 epochs left) at epoch 133 鈥?letting SGD settle
-  [ 134]   eval  loss=0.293777  |==|  [ 134]    sgd  loss=0.293685  |==|2026-08-29 17:37:35.216 [INFO] Structural search in cooldown (2 epochs left) at epoch 134 鈥?letting SGD settle
-  [ 135]   eval  loss=0.293685  |==|  [ 135]    sgd  loss=0.293719  |==|2026-08-29 17:37:39.530 [INFO] Structural search in cooldown (1 epochs left) at epoch 135 鈥?letting SGD settle
-  [ 136]   eval  loss=0.293719  |==|  [ 136]    sgd  loss=0.293763  |==|2026-08-29 17:37:43.720 [INFO] Plateau triggered at epoch 136 (counter=31, loss=0.293763)
-2026-08-29 17:37:45.410 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:37:45.413 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 17:37:45.414 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:37:45.415 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:37:45.415 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:42:44.241 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:42:44.244 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 17:42:44.245 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:42:44.245 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:42:44.245 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 17:48:58.133 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:48:58.136 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:48:58.137 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:48:58.137 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 137]   eval  loss=0.293763  |==|  [ 137]    sgd  loss=0.293798  |==|2026-08-29 17:56:31.921 [INFO] Plateau triggered at epoch 137 (counter=32, loss=0.293798)
-2026-08-29 17:56:33.601 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 17:56:33.604 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 17:56:33.604 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 17:56:33.605 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 18:01:54.560 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:01:54.563 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:01:54.564 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:01:54.564 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 18:07:08.809 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:07:08.812 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 18:07:08.813 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:07:08.813 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:07:08.814 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 138]   eval  loss=0.293798  |==|  [ 138]    sgd  loss=0.293915  |==|2026-08-29 18:13:10.152 [INFO] Plateau triggered at epoch 138 (counter=33, loss=0.293915)
-2026-08-29 18:13:11.964 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:13:11.968 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:13:11.968 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:13:11.969 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 18:18:24.194 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:18:24.197 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:18:24.198 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:18:24.198 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 18:23:50.129 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:23:50.132 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 18:23:50.132 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:23:50.133 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:23:50.133 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 139]   eval  loss=0.293915  |==|  [ 139]    sgd  loss=0.293890  |==|2026-08-29 18:29:21.389 [INFO] Plateau triggered at epoch 139 (counter=34, loss=0.293890)
-2026-08-29 18:29:22.834 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:29:22.837 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 18:29:22.837 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:29:22.837 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:29:22.837 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 18:35:35.748 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:35:35.751 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 18:35:35.752 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:35:35.753 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:35:35.753 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 18:42:15.381 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:42:15.385 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:42:15.385 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:42:15.386 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-  [ 140]   eval  loss=0.293890  |==|  [ 140]    sgd  loss=0.293911  |==|2026-08-29 18:50:58.740 [INFO] Plateau triggered at epoch 140 (counter=35, loss=0.293911)
-2026-08-29 18:51:02.047 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:51:02.050 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:51:02.051 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:51:02.051 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 18:57:50.683 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 18:57:50.687 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 18:57:50.688 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 18:57:50.688 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 19:04:12.897 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
-2026-08-29 19:04:12.900 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
-2026-08-29 19:04:12.900 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
-2026-08-29 19:04:12.900 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=65 b=node=66)
-2026-08-29 19:04:12.901 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)
-2026-08-29 19:08:52.351 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
-  [ 141]   eval  loss=0.293911  |==|  [ 141]    sgd  loss=0.293933  |==|2026-08-29 19:08:57.440 [INFO] Structural search in cooldown (9 epochs left) at epoch 141 鈥?letting SGD settle
-  [ 142]   eval  loss=0.293933  |==|  [ 142]    sgd  loss=0.293922  |==|2026-08-29 19:09:01.692 [INFO] Structural search in cooldown (8 epochs left) at epoch 142 鈥?letting SGD settle
-  [ 143]   eval  loss=0.293922  |==|  [ 143]    sgd  loss=0.293929  |==|2026-08-29 19:09:05.948 [INFO] Structural search in cooldown (7 epochs left) at epoch 143 鈥?letting SGD settle
-  [ 144]   eval  loss=0.293929  |==|  [ 144]    sgd  loss=0.293950  |==|2026-08-29 19:09:10.901 [INFO] Structural search in cooldown (6 epochs left) at epoch 144 鈥?letting SGD settle
-  [ 145]   eval  loss=0.293950  |==|  [ 145]    sgd  loss=0.356831  |===|2026-08-29 19:09:14.580 [INFO] Structural search in cooldown (5 epochs left) at epoch 145 鈥?letting SGD settle
-  [ 146]   eval  loss=0.356831  |===|  [ 146]    sgd  loss=0.360551  |===|2026-08-29 19:09:16.513 [INFO] Structural search in cooldown (4 epochs left) at epoch 146 鈥?letting SGD settle
-  [ 147]   eval  loss=0.360551  |===|  [ 147]    sgd  loss=0.360794  |===|2026-08-29 19:09:18.426 [INFO] Structural search in cooldown (3 epochs left) at epoch 147 鈥?letting SGD settle
-  [ 148]   eval  loss=0.360794  |===|  [ 148]    sgd  loss=0.364149  |===|2026-08-29 19:09:20.416 [INFO] Structural search in cooldown (2 epochs left) at epoch 148 鈥?letting SGD settle
-  [ 149]   eval  loss=0.364149  |===|  [ 149]    sgd  loss=0.364837  |===|2026-08-29 19:09:22.661 [INFO] Structural search in cooldown (1 epochs left) at epoch 149 鈥?letting SGD settle
-  [ 150]   eval  loss=0.364837  |===|  [ 150]    sgd  loss=0.362691  |===|2026-08-29 19:09:24.571 [INFO] Restored best-val graph snapshot (val=0.614847, train=0.300179)
-
-
-================================================
-  Evolution Complete
-================================================
-
-  Total epochs:         150
-  SGD epochs run:       7500
-  Structural changes:   8
-  Failed commits:       409
-  Compiles performed:   0
-  Dead nodes removed:   0
-  Constants folded:     0
-  Neurons compressed:   0
-  Initial loss:         9.50461
-  Final loss:           0.300179
-  Best loss:            0.281885
-  Wall time:            25111815 ms
-
-  [Expression] 8.747*tanh(-0.454*tanh(0.030*tanh(-0.377*x0+0.666*x1-0.060*x2+0.190*x3-0.117*x4-0.104*x5+0.017*x6+0.056*x7+0.002*x8+0.029*x9-0.011*x10-0.023*x11+0.022*x12-0.023*x13-0.023*x14-1.435)+0.060*tanh(-0.6...
-
-  [Library] Behavioral fingerprint: k=15 bounded=1 interact=0 sign_sym=1 sharp=0 lipsch=4.5
-  [Library] Pattern: tanh_stack
-  [Library] Saved (library now has 1 entries)
-  [Library] Extracted 8 sub-expression block(s) (library now has 9 entries)
-
-================================================
-  Held-out Evaluation  (1199 samples)
-================================================
-  Eval R2[out0]:   0.905612
-  Eval MSE[out0]:  0.363165   MAE: 0.495791

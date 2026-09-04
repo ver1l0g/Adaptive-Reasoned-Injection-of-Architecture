@@ -1,1 +1,0 @@
-seed 1: acc=8.01% (chance 6.2%)  eval=3.813 nats->bpc (60min)

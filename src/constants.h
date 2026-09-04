@@ -155,6 +155,10 @@ constexpr double ZERO_PLATEAU_MIN_FRACTION        = 0.15;  // min fraction of sa
 constexpr double SCORE_IFELSE_PLATEAU_BOOST       = 0.97;  // top of the boundary family: label-space plateau edges are near-exact boundaries
 constexpr int    SHADOW_BOUNDARY_SGD_MULTIPLIER   = 3;     // measured-evidence boundary shadows train 3x (payoff needs post-commit retraining)
 
+// M2.3 step 2: attention head. D=8 keeps the shared table small
+// (V x D params; V=501 -> 4008) while giving richer matching than 1-dim.
+constexpr int    ATTENTION_DIM                    = 8;
+
 // Below this training loss, plateau-triggered structural search is skipped
 // (nothing can pass the scaled commit gate; force-structural still probes).
 // Feynman-style tasks converge to 1e-6..1e-8; d9-style noise floors sit at

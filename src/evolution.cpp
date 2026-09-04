@@ -666,7 +666,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // shadow and commit it. This collapses the wall-clock cost
                 // of failed candidates 鈥?previously N rejected candidates
                 // each cost ~50 SGD epochs sequentially; now they overlap.
-                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION", "DELAY_LINE", "IFELSE_PRESERVE", "EMBED_TRUNK"};
+                const char* hyp_names[] = {"NONE", "IFELSE_BOUNDARY_SPLIT", "NEURON_TANH_INJECTION", "CONTEXT_WIRE", "MULTIPLY_INJECTION", "BOOLEAN_COMPOSE", "COMPOUND_MULTIPLY_NEURON", "COMPOUND_TANH_SERIES", "COMPOUND_MULTIPLY3_NEURON", "COMPOUND_MULTIPLY_ABS", "RECURRENT_SELF_WIRE", "SIN_INJECTION", "DEEP_INSERTION", "RECURRENT_XOR", "MULTI_LAYER_STACK", "PATCH_POOLING", "PARITY_TREE", "DIVIDE_INJECTION", "COMPOUND_SIN_PRODUCT", "COMPOUND_DIVIDE_PRODUCT", "RECURRENT_MULTI_TAP", "MUX_INJECTION", "DELAY_LINE", "IFELSE_PRESERVE", "EMBED_TRUNK", "ATTENTION_MIX"};
 
                 struct ShadowSpec {
                     int         rank;
@@ -2734,6 +2734,29 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 Logger::info("Candidate emitted: EMBED_TRUNK (K="
                             + std::to_string(config::EMBED_TRUNK_K)
                             + ", " + std::to_string(out_count) + " outputs)");
+                // M2.3 step 2: the attention head as a SIBLING candidate —
+                // dense mixing (EMBED) and retrieval (ATTENTION) compete in
+                // validation; the induction probe measured dense mixing at
+                // chance (7-8% vs 6.25%), so tasks needing retrieval should
+                // pick this one. Emitted regardless of has_trunk state: a
+                // graph can carry both a dense trunk and a retrieval head.
+            }
+            // Attention head emission (dedup: one per graph by name).
+            {
+                bool has_attn = false;
+                size_t in_count = 0;
+                for (const auto& n : graph_->get_nodes()) {
+                    if (n->get_type() == NodeType::ATTENTION) has_attn = true;
+                    else if (n->get_type() == NodeType::INPUT) ++in_count;
+                }
+                if (out_count >= 8 && in_count >= 4 && !has_attn) {
+                    Hypothesis at;
+                    at.type = Hypothesis::ATTENTION_MIX;
+                    candidates.push_back({std::move(at), config::SCORE_EMBED_TRUNK - 0.01});
+                    Logger::info("Candidate emitted: ATTENTION_MIX ("
+                                + std::to_string(in_count) + " slots, V="
+                                + std::to_string(out_count) + ")");
+                }
             }
         }
 
@@ -4936,6 +4959,54 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         // Self-recurrent: own output[0] -> new input port. add_connection
         // detects the cycle (node is its own ancestor) and sets is_recurrent.
         shadow->add_connection(failing_id, 0, failing_id, new_port);
+        break;
+    }
+
+    case Hypothesis::ATTENTION_MIX: {
+        // M2.3 step 2: previous-token attention head. W = the graph's
+        // INPUT slots in creation order (the last is the query char);
+        // vocab = OUTPUT count (inputs share the output alphabet).
+        // Wiring mirrors the MUX tail: head -> zero-init gain NEURON ->
+        // ADD alongside the failing node's output (identity start).
+        std::vector<uint64_t> in_ids;
+        size_t out_count = 0;
+        for (const auto& n : shadow->get_nodes()) {
+            if (n->get_type() == NodeType::INPUT) in_ids.push_back(n->get_id());
+            else if (n->get_type() == NodeType::OUTPUT) ++out_count;
+        }
+        if (in_ids.size() < 4 || out_count < 8) break;
+        uint64_t att_id = shadow->add_node(NodeType::ATTENTION, "attention_head");
+        if (auto* an = dynamic_cast<AttentionNode*>(shadow->get_node(att_id))) {
+            an->set_vocab(out_count);
+        }
+        for (size_t i = 0; i < in_ids.size(); ++i) {
+            shadow->add_connection(in_ids[i], 0, att_id, i);
+        }
+        // gain NEURON (zero-init identity start) then ADD with the
+        // failing node's output — same combine structure as MUX.
+        uint64_t gain_id = shadow->add_node(NodeType::NEURON, "attention_gain");
+        Node* gn = shadow->get_node(gain_id);
+        if (gn && gn->get_type() == NodeType::NEURON) {
+            static_cast<NeuronNode*>(gn)->set_input_count(1);
+            static_cast<NeuronNode*>(gn)->set_weight(0, 0.0);
+            static_cast<NeuronNode*>(gn)->set_bias(0.0);
+        }
+        shadow->add_connection(att_id, 0, gain_id, 0);
+        std::vector<Connection> outgoing;
+        for (const auto& c : shadow->get_connections()) {
+            if (c.src_node == failing_id) outgoing.push_back(c);
+        }
+        for (const auto& c : outgoing) {
+            shadow->remove_connection(c.src_node, c.src_port, c.dst_node, c.dst_port);
+        }
+        uint64_t add_id = shadow->add_node(NodeType::ADD, "attention_combine");
+        shadow->add_connection(failing_id, 0, add_id, 0);
+        shadow->add_connection(gain_id, 0, add_id, 1);
+        for (const auto& c : outgoing) {
+            shadow->add_connection(add_id, 0, c.dst_node, c.dst_port);
+        }
+        Logger::info("  [ATTENTION] built head over " + std::to_string(in_ids.size())
+                    + " slots (V=" + std::to_string(out_count) + ")");
         break;
     }
 

@@ -1,6 +1,0 @@
-[1/5] d2_mod3            R2=0.2094 [FAIL] (5.1s)
-[2/5] d3_two_sines       R2=0.1080 [FAIL] (2.8s)
-[3/5] d7_multiout        R2=-0.0001 [FAIL] (4.3s)
-[4/5] t21_three_region   R2=0.9902 [PASS] (19.1s)
-[5/5] t22_windowed_sine  R2=0.9696 [FAIL] (1.7s)
-bisect a10clean done

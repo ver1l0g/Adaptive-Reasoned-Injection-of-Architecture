@@ -7,3 +7,20 @@ Loading dataset from: ..\bench_wujue_train.csv
   Train: 9599  Validation: 2400
 
 Starting evolution...
+2026-09-04 20:13:54.729 [INFO] New best overall loss: 6.625392
+  [   1]   eval  loss=4991.042605  |====================|  [   1]    sgd  loss=6.625392  |====================|2026-09-04 20:14:52.352 [INFO] New best overall loss: 6.321872
+  [   2]   eval  loss=6.625392  |====================|  [   2]    sgd  loss=6.321872  |====================|2026-09-04 20:15:56.356 [INFO] New best overall loss: 6.239424
+  [   3]   eval  loss=6.321872  |====================|  [   3]    sgd  loss=6.239424  |====================|  [   4]   eval  loss=6.239424  |====================|  [   4]    sgd  loss=6.437946  |====================|  [   5]   eval  loss=6.437946  |====================|  [   5]    sgd  loss=6.438797  |====================|  [   6]   eval  loss=6.438797  |====================|  [   6]    sgd  loss=6.266437  |====================|  [   7]   eval  loss=6.266437  |====================|  [   7]    sgd  loss=6.459710  |====================|  [   8]   eval  loss=6.459710  |====================|  [   8]    sgd  loss=6.563838  |====================|  [   9]   eval  loss=6.563838  |====================|  [   9]    sgd  loss=6.453398  |====================|  [  10]   eval  loss=6.453398  |====================|  [  10]    sgd  loss=6.383588  |====================|  [  11]   eval  loss=6.383588  |====================|  [  11]    sgd  loss=6.412828  |====================|  [  12]   eval  loss=6.412828  |====================|  [  12]    sgd  loss=6.856472  |====================|  [  13]   eval  loss=6.856472  |====================|  [  13]    sgd  loss=6.482126  |====================|  [  14]   eval  loss=6.482126  |====================|  [  14]    sgd  loss=6.701700  |====================|  [  15]   eval  loss=6.701700  |====================|  [  15]    sgd  loss=6.617026  |====================|  [  16]   eval  loss=6.617026  |====================|  [  16]    sgd  loss=6.271957  |====================|  [  17]   eval  loss=6.271957  |====================|  [  17]    sgd  loss=6.659691  |====================|  [  18]   eval  loss=6.659691  |====================|  [  18]    sgd  loss=6.278190  |====================|  [  19]   eval  loss=6.278190  |====================|  [  19]    sgd  loss=6.604412  |====================|  [  20]   eval  loss=6.604412  |====================|  [  20]    sgd  loss=6.253694  |====================|2026-09-04 20:32:46.547 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-09-04 20:32:46.547 [INFO] Plateau triggered at epoch 20 (counter=0, loss=6.253694)
+2026-09-04 21:14:43.726 [INFO] [PROFILE] F=19 N=205 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-04 21:14:43.730 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=944 b=node=2)
+2026-09-04 21:14:43.730 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 501 outputs)
+2026-09-04 21:14:43.824 [INFO]   [EMBED_TRUNK] one-hot expansion: 19 slots x V=501
+2026-09-04 21:23:13.528 [INFO]   [EMBED_TRUNK] built K=8 trunk over 19 inputs
+2026-09-04 21:38:39.724 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 21:38:40.191 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-04 21:38:40.196 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-04 21:38:40.469 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-04 21:38:40.548 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-04 21:38:40.607 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-04 21:43:36.926 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)

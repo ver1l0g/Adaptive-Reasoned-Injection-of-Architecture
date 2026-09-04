@@ -1,8 +1,0 @@
-copied subgraph_library.txt (1421054B)
-copied failure_library.txt (875838B)
-[1/5] d2_mod3            R2=0.2094 [FAIL] (5.5s)
-[2/5] d3_two_sines       R2=0.1080 [FAIL] (3.7s)
-[3/5] d7_multiout        R2=-0.0001 [FAIL] (4.9s)
-[4/5] t21_three_region   R2=0.9902 [PASS] (20.5s)
-[5/5] t22_windowed_sine  R2=0.9696 [FAIL] (2.0s)
-bisect a10lib done

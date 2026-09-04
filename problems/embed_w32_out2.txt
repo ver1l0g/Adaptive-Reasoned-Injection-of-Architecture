@@ -1,281 +1,0 @@
-================================================
-  ARIA — Adaptive Reasoned Injection of Architecture
-================================================
-
-Loading dataset from: problems\suite-language\bench_shakespeare_w32_10k.csv
-  Loaded 9999 samples
-  Train: 7999  Validation: 2000
-
-  Loaded subgraph library: 114 entries
-  Loaded failure library: 388 records
-Starting evolution...
-2026-08-26 13:12:09.585 [INFO] New best overall loss: 2.871586
-  [   1]   eval  loss=4.776270  |====================|  [   1]    sgd  loss=2.871586  |====================|2026-08-26 13:13:32.032 [INFO] New best overall loss: 2.870069
-  [   2]   eval  loss=2.871586  |====================|  [   2]    sgd  loss=2.870069  |====================|  [   3]   eval  loss=2.870069  |====================|  [   3]    sgd  loss=2.871516  |====================|2026-08-26 13:14:16.323 [INFO] New best overall loss: 2.869297
-  [   4]   eval  loss=2.871516  |====================|  [   4]    sgd  loss=2.869297  |====================|  [   5]   eval  loss=2.869297  |====================|  [   5]    sgd  loss=2.871129  |====================|  [   6]   eval  loss=2.871129  |====================|  [   6]    sgd  loss=2.869458  |====================|  [   7]   eval  loss=2.869458  |====================|  [   7]    sgd  loss=2.869695  |====================|2026-08-26 13:15:16.013 [INFO] Plateau triggered at epoch 7 (counter=5, loss=2.869695)
-2026-08-26 13:15:30.164 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
-2026-08-26 13:15:30.168 [INFO] IFELSE set-guided split: thr=0.832560 (SSE reduction 0.013664 over 206 paired samples)
-2026-08-26 13:15:30.169 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.573649 var_r=0.004831)
-2026-08-26 13:15:30.170 [INFO] Candidate emitted: MUX_INJECTION (cond=node=31 thr=0.832560 a=node=137 b=node=136)
-2026-08-26 13:15:30.171 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 13:15:30.172 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
-2026-08-26 13:15:30.174 [INFO] Candidate emitted: COMPOUND_SIN_PRODUCT unbounded (input=6*input=17, poly_r2=0.000000)
-2026-08-26 13:15:30.187 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
-2026-08-26 13:15:30.489 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 13:30:30.932 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 13:30:31.452 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 13:30:31.808 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 13:30:31.890 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 13:30:32.159 [INFO]   COMMIT rank=1 type=COMPOUND_SIN_PRODUCT val_loss=3.202467 train_loss=2.907913 new train_loss=2.847053
-2026-08-26 13:30:32.164 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(10,19)=0.9302 quad=[0.000,0.032,0.000,0.000] L_max=21.492 | flags: PAIRWISE SHARP
-2026-08-26 13:30:32.165 [INFO] IFELSE set-guided split: thr=-1.196278 (SSE reduction 0.019536 over 206 paired samples)
-2026-08-26 13:30:32.165 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.491807 var_r=0.004831)
-2026-08-26 13:30:32.165 [INFO] Candidate emitted: MUX_INJECTION (cond=node=32 thr=-1.196278 a=node=130 b=node=142)
-2026-08-26 13:30:32.165 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 13:30:32.166 [INFO] MULTIPLY sources from Sobol pair: input=11*input=20 (sobol_pairwise=0.930203)
-2026-08-26 13:30:32.172 [INFO] Library prior (dist=0.956 src=bench_stripes20.csv) boosts IFELSE by 0.200000
-2026-08-26 13:45:32.802 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 13:45:33.046 [INFO]   COMMIT rank=0 type=IFELSE_BOUNDARY_SPLIT val_loss=3.179898 train_loss=2.956580 new train_loss=2.871777
-2026-08-26 13:45:33.048 [INFO] Plateau state reset 鈥?best_phase2=2.871777
-2026-08-26 13:45:33.048 [INFO] Plateau state reset — best_phase2=2.871777
-  [   8]   eval  loss=2.871777  |====================|  [   8]    sgd  loss=2.871908  |====================|  [   9]   eval  loss=2.871908  |====================|  [   9]    sgd  loss=2.872086  |====================|  [  10]   eval  loss=2.872086  |====================|  [  10]    sgd  loss=2.872037  |====================|  [  11]   eval  loss=2.872037  |====================|  [  11]    sgd  loss=2.872098  |====================|  [  12]   eval  loss=2.872098  |====================|  [  12]    sgd  loss=2.872111  |====================|2026-08-26 13:46:20.320 [INFO] Plateau triggered at epoch 12 (counter=5, loss=2.872111)
-2026-08-26 13:46:26.186 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
-2026-08-26 13:46:26.186 [INFO] IFELSE set-guided split: thr=1.012751 (SSE reduction 0.072069 over 206 paired samples)
-2026-08-26 13:46:26.187 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 13:46:26.187 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
-2026-08-26 13:46:26.187 [INFO] MULTIPLY dedup: switching to input=1^2
-2026-08-26 13:46:26.192 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
-2026-08-26 13:46:26.268 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 13:54:30.817 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
-2026-08-26 13:54:30.817 [INFO] IFELSE set-guided split: thr=1.012751 (SSE reduction 0.072069 over 206 paired samples)
-2026-08-26 13:54:30.818 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.573649 var_r=0.004831)
-2026-08-26 13:54:30.818 [INFO] Candidate emitted: MUX_INJECTION (cond=node=32 thr=1.012751 a=node=131 b=node=144)
-2026-08-26 13:54:30.819 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 13:54:30.819 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
-2026-08-26 13:54:30.819 [INFO] MULTIPLY dedup: switching to input=1^2
-2026-08-26 13:54:30.825 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
-2026-08-26 13:54:30.986 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 14:09:31.368 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 14:09:31.483 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 14:09:32.591 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 14:09:33.017 [INFO]   COMMIT rank=4 type=DEEP_INSERTION val_loss=3.207221 train_loss=2.938794 new train_loss=2.849913
-2026-08-26 14:09:33.025 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
-2026-08-26 14:09:33.026 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.573649 var_r=0.004831)
-2026-08-26 14:09:33.027 [INFO] Candidate emitted: MUX_INJECTION (cond=node=32 thr=1.012751 a=node=132 b=node=145)
-2026-08-26 14:09:33.028 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 14:09:33.028 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
-2026-08-26 14:09:33.029 [INFO] MULTIPLY dedup: switching to input=1^2
-2026-08-26 14:09:33.039 [INFO] Library INJECT (dist=0.903 src=bench_stripes20.csv) -> IFELSE [gate-bypass]
-2026-08-26 14:11:04.069 [INFO]   COMMIT rank=0 type=MUX_INJECTION val_loss=3.178331 train_loss=2.955221 new train_loss=2.871306
-2026-08-26 14:11:04.073 [INFO] Plateau state reset 鈥?best_phase2=2.871306
-2026-08-26 14:11:04.074 [INFO] Plateau state reset — best_phase2=2.871306
-  [  13]   eval  loss=2.871306  |====================|  [  13]    sgd  loss=2.872055  |====================|  [  14]   eval  loss=2.872055  |====================|  [  14]    sgd  loss=2.871726  |====================|  [  15]   eval  loss=2.871726  |====================|  [  15]    sgd  loss=2.871850  |====================|  [  16]   eval  loss=2.871850  |====================|  [  16]    sgd  loss=2.871842  |====================|  [  17]   eval  loss=2.871842  |====================|  [  17]    sgd  loss=2.871927  |====================|2026-08-26 14:12:39.048 [INFO] Plateau triggered at epoch 17 (counter=5, loss=2.871927)
-2026-08-26 14:12:53.896 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
-2026-08-26 14:12:53.900 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.573649 var_r=0.004831)
-2026-08-26 14:12:53.902 [INFO] Candidate emitted: MUX_INJECTION (cond=node=136 thr=-0.309970 a=node=149 b=node=148)
-2026-08-26 14:12:53.902 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 14:12:53.903 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
-2026-08-26 14:12:53.904 [INFO] MULTIPLY dedup: switching to input=1^2
-2026-08-26 14:12:53.915 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
-2026-08-26 14:12:54.138 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 14:27:55.326 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
-2026-08-26 14:27:55.578 [INFO]   COMMIT rank=3 type=DEEP_INSERTION val_loss=3.212717 train_loss=2.980824 new train_loss=2.854684
-2026-08-26 14:27:55.583 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
-2026-08-26 14:27:55.584 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 14:27:55.584 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
-2026-08-26 14:27:55.584 [INFO] MULTIPLY dedup: switching to input=1^2
-2026-08-26 14:27:55.589 [INFO] Library prior (dist=0.903 src=bench_stripes20.csv) boosts IFELSE by 0.200000
-2026-08-26 14:27:55.674 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 14:33:20.145 [INFO]   COMMIT rank=0 type=IFELSE_BOUNDARY_SPLIT val_loss=3.184298 train_loss=2.996383 new train_loss=2.876361
-2026-08-26 14:33:20.148 [INFO] [PROFILE] F=32 N=206 var_r=0.0048 bound_ratio=14.3877 poly_r2=0.0000 sobol_pair(5,16)=0.7961 quad=[0.010,0.000,0.000,0.000] L_max=21.574 | flags: PAIRWISE SHARP
-2026-08-26 14:33:20.148 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=21.573649 var_r=0.004831)
-2026-08-26 14:33:20.149 [INFO] Candidate emitted: MUX_INJECTION (cond=node=139 thr=-8.917627 a=node=153 b=node=152)
-2026-08-26 14:33:20.149 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 14:33:20.149 [INFO] MULTIPLY sources from Sobol pair: input=6*input=17 (sobol_pairwise=0.796061)
-2026-08-26 14:33:20.149 [INFO] MULTIPLY dedup: switching to input=1^2
-2026-08-26 14:33:20.154 [INFO] Library INJECT (dist=0.903 src=bench_stripes20.csv) -> IFELSE [gate-bypass]
-2026-08-26 14:34:17.524 [INFO] Plateau state reset 鈥?best_phase2=2.876361
-2026-08-26 14:34:17.527 [INFO] Plateau state reset — best_phase2=2.876361
-  [  18]   eval  loss=2.876361  |====================|  [  18]    sgd  loss=2.876325  |====================|  [  19]   eval  loss=2.876325  |====================|  [  19]    sgd  loss=2.876533  |====================|  [  20]   eval  loss=2.876533  |====================|  [  20]    sgd  loss=2.876542  |====================|  [  21]   eval  loss=2.876542  |====================|  [  21]    sgd  loss=2.876857  |====================|  [  22]   eval  loss=2.876857  |====================|  [  22]    sgd  loss=2.877302  |====================|2026-08-26 14:34:56.740 [INFO] Plateau triggered at epoch 22 (counter=5, loss=2.877302)
-2026-08-26 14:35:03.890 [INFO] [PROFILE] F=32 N=206 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-26 14:35:03.892 [INFO] Candidate emitted: MUX_INJECTION (cond=node=140 thr=-4.467725 a=node=154 b=node=153)
-2026-08-26 14:35:03.892 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 14:35:03.972 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 14:42:26.373 [INFO]   COMMIT rank=1 type=DEEP_INSERTION val_loss=3.205811 train_loss=2.981136 new train_loss=2.855146
-2026-08-26 14:42:26.374 [INFO] [PROFILE] F=32 N=206 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-26 14:42:26.375 [INFO] Candidate emitted: MUX_INJECTION (cond=node=142 thr=-4.704215 a=node=156 b=node=155)
-2026-08-26 14:42:26.375 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 14:42:26.458 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 14:49:41.733 [INFO]   COMMIT rank=1 type=DEEP_INSERTION val_loss=3.204968 train_loss=2.980682 new train_loss=2.855170
-2026-08-26 14:49:41.735 [INFO] [PROFILE] F=32 N=206 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-26 14:49:41.735 [INFO] Candidate emitted: MUX_INJECTION (cond=node=143 thr=-4.079571 a=node=158 b=node=157)
-2026-08-26 14:49:41.736 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-26 14:49:41.821 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
-2026-08-26 14:53:35.994 [INFO] Plateau state reset 鈥?best_phase2=2.855170
-2026-08-26 14:53:35.996 [INFO] Plateau state reset — best_phase2=2.855170
-  [  23]   eval  loss=2.855170  |====================|  [  23]    sgd  loss=2.879946  |====================|  [  24]   eval  loss=2.879946  |====================|  [  24]    sgd  loss=2.877281  |====================|  [  25]   eval  loss=2.877281  |====================|  [  25]    sgd  loss=2.877013  |====================|2026-08-26 14:54:17.195 [INFO] Restored best-val graph snapshot (val=3.178331, train=2.871306)
-
-
-================================================
-  Evolution Complete
-================================================
-
-  Total epochs:         25
-  SGD epochs run:       1250
-  Structural changes:   8
-  Failed commits:       31
-  Compiles performed:   0
-  Dead nodes removed:   0
-  Constants folded:     0
-  Neurons compressed:   0
-  Initial loss:         4.77627
-  Final loss:           2.87131
-  Best loss:            2.85517
-  Wall time:            6212762 ms
-
-  [Expression] 0.162*(-0.491*x0+1.139*x1+1.114*x2-0.429*x3-0.642*x4+0.477*x5-0.078*x6-0.187*x7-0.377*x8-0.023*x9-0.968*x10+1.001*x11-0.127*x12-0.266*x13+2.390*x14+0.394*x15-0.773*x16-1.362*x17+0.354*x18+0.034*x19...
-
-  [Library] Behavioral fingerprint: k=32 bounded=0 interact=0 sign_sym=1 sharp=0 lipsch=1.0
-  [Library] Closest existing entries:
-    bench_shakespeare_w16_10k.csv (dist=0.155)
-    bench_narma30.csv (dist=0.238)
-    bench_narma30.csv (dist=0.245)
-  [Library] Pattern: linear
-  [Library] Saved (library now has 115 entries)
-  [FailureLib] Appended 31 failure records to failure_library.txt
-
-================================================
-  Held-out Evaluation  (9999 samples)
-================================================
-  Eval R2[out0]:   -25.994151
-  Eval MSE[out0]:  0.981903   MAE: 0.766215
-  Eval R2[out1]:   -31.417329
-  Eval MSE[out1]:  4.158473   MAE: 1.881348
-  Eval R2[out2]:   -26581.012831
-  Eval MSE[out2]:  39.817185   MAE: 5.382800
-  Eval R2[out3]:   0.000000
-  Eval MSE[out3]:  54.971995   MAE: 7.409322
-  Eval R2[out4]:   0.000000
-  Eval MSE[out4]:  54.971995   MAE: 7.409322
-  Eval R2[out5]:   -946.955696
-  Eval MSE[out5]:  4.622682   MAE: 1.833964
-  Eval R2[out6]:   -192.393510
-  Eval MSE[out6]:  2.988903   MAE: 1.364719
-  Eval R2[out7]:   -4300.097173
-  Eval MSE[out7]:  9.014236   MAE: 2.744731
-  Eval R2[out8]:   -1250.507559
-  Eval MSE[out8]:  7.712005   MAE: 2.234638
-  Eval R2[out9]:   0.000000
-  Eval MSE[out9]:  54.971995   MAE: 7.409322
-  Eval R2[out10]:   -241.320856
-  Eval MSE[out10]:  2.589057   MAE: 1.368654
-  Eval R2[out11]:   -6206.327848
-  Eval MSE[out11]:  19.801860   MAE: 3.785333
-  Eval R2[out12]:   -26860.315577
-  Eval MSE[out12]:  40.235553   MAE: 5.758924
-  Eval R2[out13]:   -2092.903912
-  Eval MSE[out13]:  14.556171   MAE: 3.309425
-  Eval R2[out14]:   -12020.448283
-  Eval MSE[out14]:  28.785104   MAE: 4.771903
-  Eval R2[out15]:   -5024.128125
-  Eval MSE[out15]:  15.031657   MAE: 3.490886
-  Eval R2[out16]:   -18770.291325
-  Eval MSE[out16]:  43.078968   MAE: 5.948859
-  Eval R2[out17]:   -4343.435442
-  Eval MSE[out17]:  24.624580   MAE: 4.432001
-  Eval R2[out18]:   -23197.617507
-  Eval MSE[out18]:  39.374537   MAE: 5.644902
-  Eval R2[out19]:   -29967.574672
-  Eval MSE[out19]:  47.877780   MAE: 6.185449
-  Eval R2[out20]:   -9665.822352
-  Eval MSE[out20]:  22.184767   MAE: 4.189780
-  Eval R2[out21]:   -942.107576
-  Eval MSE[out21]:  10.629911   MAE: 2.787208
-  Eval R2[out22]:   -44181.210581
-  Eval MSE[out22]:  13.252012   MAE: 3.640290
-  Eval R2[out23]:   -61681.928799
-  Eval MSE[out23]:  73.938076   MAE: 7.858478
-  Eval R2[out24]:   -8338.089611
-  Eval MSE[out24]:  31.571269   MAE: 4.996984
-  Eval R2[out25]:   -8860.547102
-  Eval MSE[out25]:  30.029813   MAE: 4.814415
-  Eval R2[out26]:   -5900.478384
-  Eval MSE[out26]:  24.684565   MAE: 4.451173
-  Eval R2[out27]:   -2836.088234
-  Eval MSE[out27]:  13.554006   MAE: 3.248770
-  Eval R2[out28]:   -31748.830373
-  Eval MSE[out28]:  57.052520   MAE: 6.840189
-  Eval R2[out29]:   -1255141.106973
-  Eval MSE[out29]:  627.319969   MAE: 23.314945
-  Eval R2[out30]:   -5565.045322
-  Eval MSE[out30]:  21.072698   MAE: 4.052940
-  Eval R2[out31]:   -5035.916730
-  Eval MSE[out31]:  21.068297   MAE: 4.058003
-  Eval R2[out32]:   -2234.450182
-  Eval MSE[out32]:  14.437413   MAE: 3.272724
-  Eval R2[out33]:   -7991.725614
-  Eval MSE[out33]:  26.291574   MAE: 4.590366
-  Eval R2[out34]:   -953061.627839
-  Eval MSE[out34]:  571.551595   MAE: 22.102429
-  Eval R2[out35]:   -18784.860469
-  Eval MSE[out35]:  52.458359   MAE: 6.339584
-  Eval R2[out36]:   -549734.866820
-  Eval MSE[out36]:  54.973586   MAE: 7.409422
-  Eval R2[out37]:   -23213.150428
-  Eval MSE[out37]:  37.086915   MAE: 5.479063
-  Eval R2[out38]:   -549735.361005
-  Eval MSE[out38]:  54.973636   MAE: 7.409422
-  Eval R2[out39]:   -29.789572
-  Eval MSE[out39]:  1.493090   MAE: 1.151510
-  Eval R2[out40]:   -231.448890
-  Eval MSE[out40]:  2.483581   MAE: 1.352916
-  Eval R2[out41]:   -57.004343
-  Eval MSE[out41]:  0.834581   MAE: 0.729546
-  Eval R2[out42]:   -20.855262
-  Eval MSE[out42]:  0.605182   MAE: 0.630185
-  Eval R2[out43]:   -33.666238
-  Eval MSE[out43]:  2.728022   MAE: 1.427622
-  Eval R2[out44]:   -54.472445
-  Eval MSE[out44]:  0.851954   MAE: 0.745593
-  Eval R2[out45]:   -148.701450
-  Eval MSE[out45]:  1.599473   MAE: 1.010463
-  Eval R2[out46]:   -32.515810
-  Eval MSE[out46]:  1.477033   MAE: 0.925804
-  Eval R2[out47]:   -26.958046
-  Eval MSE[out47]:  1.165935   MAE: 0.979421
-  Eval R2[out48]:   -34977.102234
-  Eval MSE[out48]:  31.455102   MAE: 5.146759
-  Eval R2[out49]:   -449.577369
-  Eval MSE[out49]:  2.821034   MAE: 1.455575
-  Eval R2[out50]:   -17.586830
-  Eval MSE[out50]:  0.504153   MAE: 0.632002
-  Eval R2[out51]:   -35.264392
-  Eval MSE[out51]:  0.724773   MAE: 0.690822
-  Eval R2[out52]:   -28.829709
-  Eval MSE[out52]:  1.301043   MAE: 1.100101
-  Eval R2[out53]:   -27.299766
-  Eval MSE[out53]:  1.506228   MAE: 1.034279
-  Eval R2[out54]:   -79.211599
-  Eval MSE[out54]:  0.809893   MAE: 0.724010
-  Eval R2[out55]:   -1101907.821525
-  Eval MSE[out55]:  330.506515   MAE: 17.146831
-  Eval R2[out56]:   -24.627490
-  Eval MSE[out56]:  0.998328   MAE: 0.880517
-  Eval R2[out57]:   -23.733141
-  Eval MSE[out57]:  1.042730   MAE: 0.949540
-  Eval R2[out58]:   -27.878301
-  Eval MSE[out58]:  1.682133   MAE: 1.130428
-  Eval R2[out59]:   -13.837456
-  Eval MSE[out59]:  0.346174   MAE: 0.500466
-  Eval R2[out60]:   -735.506514
-  Eval MSE[out60]:  4.247384   MAE: 1.743129
-  Eval R2[out61]:   -81.957556
-  Eval MSE[out61]:  1.330298   MAE: 0.978845
-  Eval R2[out62]:   -1522484.110100
-  Eval MSE[out62]:  608.811303   MAE: 22.879473
-  Eval R2[out63]:   -0.368554
-  Eval MSE[out63]:  0.021284   MAE: 0.070875
-  Eval R2[out64]:   -935668.574027
-  Eval MSE[out64]:  280.644718   MAE: 15.968429
-  Eval SoftmaxCE:   2.932717   (4.231017 bits/unit)
-  Eval Accuracy:    19.251925%

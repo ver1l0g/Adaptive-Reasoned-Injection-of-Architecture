@@ -42,6 +42,7 @@ enum class NodeType : uint32_t {
 
     LINEAR,  // N inputs, 1 output — identity: w·x + b (no activation, for BCE)
 
+    ATTENTION, // W scalar codes -> 1 output (previous-token attention head; M2.3)
     ONEHOT,  // 1 scalar input (categorical code 0..V-1), V outputs (one-hot).
              // Turns integer char codes into true embedding inputs — tanh(w·code)
              // places all symbols on a LINE in embedding space, which is why the
@@ -317,6 +318,70 @@ protected:
 // The tanh in NEURON creates double-saturation (tanh + sigmoid) that kills
 // gradients on high-dimensional classification; LINEAR avoids this.
 // ============================================================================
+// ============================================================================
+// AttentionNode — single-head previous-token attention (M2.3 step 2)
+//
+// Inputs: W scalar categorical codes c_0..c_{W-1}; the LAST input is the
+// QUERY char. Internal params: embedding table E[V x D] (keys, query and
+// values share it) + a D-dim output projection w. Single scalar output —
+// exact gradients through the whole softmax chain under the graph's
+// per-node gradient aggregation (multi-port outputs would need per-port
+// grads; IFELSE documents the same limitation).
+//
+//   e_i = E[c_i]                (i = 0..W-2, context positions)
+//   q   = E[c_{W-1}]            (query = last position)
+//   s_i = (q . e_i) / sqrt(D)
+//   a_i = softmax(s_i)
+//   out = sum_i a_i * (w . E[c_{i+1}])     (the char FOLLOWING each key)
+//
+// For the induction task the answer IS "the char after the previous
+// occurrence of the query" — a perfect head. The probe measured: chance
+// 6.25%, code-linear 8.01%, one-hot-EMBED 7.01% — dense mixing cannot
+// retrieve; this node is the mechanism the M2.4 criteria demanded.
+// ============================================================================
+class AttentionNode : public Node {
+public:
+    AttentionNode(uint64_t id, const std::string& name);
+    size_t get_min_inputs() const override { return 2; }
+
+    void execute() override;
+    std::unique_ptr<Node> clone() const override;
+    std::vector<Value> backward_input_grads(Value output_grad) override;
+
+    // Table management (routing sets vocab after construction; D is fixed
+    // by config::ATTENTION_DIM). Init: small uniform (Xavier-ish).
+    void set_vocab(size_t v);
+    size_t get_vocab() const { return vocab_; }
+    size_t get_dim() const { return dim_; }
+    Value get_table(size_t v, size_t d) const;
+    void set_table(size_t v, size_t d, Value x);
+    Value get_proj(size_t d) const;
+    void set_proj(size_t d, Value x);
+
+    // Gradient accumulators (cleared by trainer between batches — mirrors
+    // NeuronNode's contract with acc_dw/acc_db).
+    void zero_grads();
+    void acc_table_grad(size_t v, size_t d, Value g);
+    void acc_proj_grad(size_t d, Value g);
+    Value get_table_grad(size_t v, size_t d) const;
+    Value get_proj_grad(size_t d) const;
+
+    void copy_state_to(Node* target) const override;
+    void serialize_extra(std::string& json) const override;
+    void deserialize_extra(const std::string& key, const std::string& value) override;
+
+private:
+    size_t vocab_ = 0;
+    size_t dim_ = 0;
+    std::vector<Value> table_;    // vocab_ * dim_
+    std::vector<Value> proj_;     // dim_
+    std::vector<Value> tgrad_;    // table grads
+    std::vector<Value> pgrad_;    // proj grads
+    // cached forward pass (for backward)
+    std::vector<Value> alpha_;    // attention weights (W-1)
+    std::vector<long> ctx_;       // context codes
+    long query_code_ = 0;
+};
 // ============================================================================
 // OneHotNode — categorical code -> one-hot vector
 // 1 input (scalar code c), V outputs (out_j = 1 if round(c)==j else 0).

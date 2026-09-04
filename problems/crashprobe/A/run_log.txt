@@ -1,30 +1,0 @@
-================================================
-  ARIA — Adaptive Reasoned Injection of Architecture
-================================================
-
-Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-language\bench_shakespeare_w8.csv
-  Loaded 59999 samples
-  Train: 47999  Validation: 12000
-
-Starting evolution...
-2026-08-27 16:04:10.329 [INFO] New best overall loss: 3.977723
-  [   1]   eval  loss=51.693815  |====================|  [   1]    sgd  loss=3.977723  |====================|2026-08-27 16:04:49.119 [INFO] New best overall loss: 3.977630
-  [   2]   eval  loss=3.977723  |====================|  [   2]    sgd  loss=3.977630  |====================|2026-08-27 16:05:28.671 [INFO] New best overall loss: 3.977529
-  [   3]   eval  loss=3.977630  |====================|  [   3]    sgd  loss=3.977529  |====================|2026-08-27 16:06:06.853 [INFO] New best overall loss: 3.977450
-  [   4]   eval  loss=3.977529  |====================|  [   4]    sgd  loss=3.977450  |====================|2026-08-27 16:06:06.853 [INFO] Plateau triggered at epoch 4 (counter=3, loss=3.977450)
-2026-08-27 16:07:11.007 [INFO] [PROFILE] F=8 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 a12=0.0000 max_coef[i=0]=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-27 16:07:11.018 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.298207 a=node=2 b=node=3)
-2026-08-27 16:07:11.018 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 65 outputs)
-2026-08-27 16:07:11.122 [INFO]   [EMBED_TRUNK] built K=8 trunk over 8 inputs
-2026-08-27 16:14:14.401 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.985716 train_loss=3.865124 new train_loss=3.955050
-2026-08-27 16:14:14.403 [INFO] [PROFILE] F=8 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 a12=0.0000 max_coef[i=0]=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-27 16:14:14.407 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.298207 a=node=2 b=node=3)
-2026-08-27 16:22:56.780 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.982036 train_loss=3.857576 new train_loss=3.952123
-2026-08-27 16:22:56.782 [INFO] [PROFILE] F=8 N=201 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 a12=0.0000 max_coef[i=0]=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
-2026-08-27 16:22:56.786 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.298207 a=node=2 b=node=3)
-2026-08-27 16:29:48.903 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.975867 train_loss=3.848424 new train_loss=3.946522
-2026-08-27 16:29:48.904 [INFO] Plateau state reset 鈥?best_phase2=3.946522
-2026-08-27 16:29:48.904 [INFO] Plateau state reset — best_phase2=3.946522
-2026-08-27 16:30:32.963 [INFO] New best overall loss: 3.944136
-  [   5]   eval  loss=3.946522  |====================|  [   5]    sgd  loss=3.944136  |====================|2026-08-27 16:31:15.693 [INFO] New best overall loss: 3.942311
-  [   6]   eval  loss=3.944136  |====================|  [   6]    sgd  loss=3.942311  |====================|

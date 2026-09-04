@@ -1,4 +1,0 @@
-t22_windowed_sine    R2=0.9518 [FAIL] plateau_thrs=['-1.077', '-1.077', '-1.077', '-1.077', '-1.077', '-1.077', '-1.077', '-1.077', '-1.077'] (3s)
-t21_three_region     R2=0.9921 [PASS] plateau_thrs=['-0.605', '-0.605', '-0.605'] (31s)
-d1_step              R2=0.9977 [PASS] plateau_thrs=['-0.026'] (23s)
-d9_noise             R2=0.8027 [FAIL] plateau_thrs=none (69s)

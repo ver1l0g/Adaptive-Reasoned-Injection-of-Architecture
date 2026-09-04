@@ -1,5 +1,0 @@
-ladder=34628
-standard=3952
-korns=29012
-temporal=19108
-limits=29272

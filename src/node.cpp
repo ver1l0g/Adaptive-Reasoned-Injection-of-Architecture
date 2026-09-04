@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <cmath>
 #include <cstdlib>
+#include <random>
 
 namespace aria {
 
@@ -27,6 +28,7 @@ const char* node_type_to_string(NodeType type) {
     case NodeType::SIN:      return "SIN";
     case NodeType::LINEAR:   return "LINEAR";
 case NodeType::ONEHOT:   return "ONEHOT";
+case NodeType::ATTENTION: return "ATTENTION";
         case NodeType::IF:           return "IF";
         case NodeType::IFELSE:       return "IFELSE";
         case NodeType::MUX:        return "MUX";
@@ -62,6 +64,7 @@ NodeType node_type_from_string(const std::string& str) {
     if (str == "SIN")      return NodeType::SIN;
     if (str == "LINEAR")   return NodeType::LINEAR;
 if (str == "ONEHOT")   return NodeType::ONEHOT;
+if (str == "ATTENTION") return NodeType::ATTENTION;
     if (str == "IF")           return NodeType::IF;
     if (str == "IFELSE")       return NodeType::IFELSE;
     if (str == "MUX")        return NodeType::MUX;
@@ -599,6 +602,175 @@ std::unique_ptr<Node> SinNode::clone() const {
 // LinearNode 鈥?identity activation (w路x + b, no tanh)
 // ============================================================================
 // ============================================================================
+// AttentionNode — see node.h for the math
+// ============================================================================
+AttentionNode::AttentionNode(uint64_t id, const std::string& name)
+    : Node(id, NodeType::ATTENTION, name, 2, 1) {}
+
+void AttentionNode::set_vocab(size_t v) {
+    vocab_ = v;
+    dim_ = config::ATTENTION_DIM;
+    table_.assign(vocab_ * dim_, 0.0);
+    proj_.assign(dim_, 0.0);
+    tgrad_.assign(vocab_ * dim_, 0.0);
+    pgrad_.assign(dim_, 0.0);
+    // Xavier-ish init: table ~ U(-1/sqrt(D), 1/sqrt(D)); proj small
+    // positive start so the output is not identically zero at commit
+    // (identity-start safety comes from the routing's zero-gain combiner
+    // instead — proj init 1/sqrt(D)).
+    std::uniform_real_distribution<Value> dist(-1.0 / std::sqrt(static_cast<Value>(dim_)),
+                                                1.0 / std::sqrt(static_cast<Value>(dim_)));
+    static std::mt19937 rng(12345);   // deterministic init (seeded runs)
+    for (auto& x : table_) x = dist(rng);
+    for (size_t d = 0; d < dim_; ++d) proj_[d] = 1.0 / std::sqrt(static_cast<Value>(dim_));
+}
+
+Value AttentionNode::get_table(size_t v, size_t d) const {
+    return (v < vocab_ && d < dim_) ? table_[v * dim_ + d] : 0.0;
+}
+void AttentionNode::set_table(size_t v, size_t d, Value x) {
+    if (v < vocab_ && d < dim_) table_[v * dim_ + d] = x;
+}
+Value AttentionNode::get_proj(size_t d) const { return (d < dim_) ? proj_[d] : 0.0; }
+void AttentionNode::set_proj(size_t d, Value x) { if (d < dim_) proj_[d] = x; }
+void AttentionNode::zero_grads() {
+    std::fill(tgrad_.begin(), tgrad_.end(), 0.0);
+    std::fill(pgrad_.begin(), pgrad_.end(), 0.0);
+}
+void AttentionNode::acc_table_grad(size_t v, size_t d, Value g) {
+    if (v < vocab_ && d < dim_) tgrad_[v * dim_ + d] += g;
+}
+void AttentionNode::acc_proj_grad(size_t d, Value g) {
+    if (d < dim_) pgrad_[d] += g;
+}
+Value AttentionNode::get_table_grad(size_t v, size_t d) const {
+    return (v < vocab_ && d < dim_) ? tgrad_[v * dim_ + d] : 0.0;
+}
+Value AttentionNode::get_proj_grad(size_t d) const {
+    return (d < dim_) ? pgrad_[d] : 0.0;
+}
+
+void AttentionNode::execute() {
+    const size_t W = inputs_.size();
+    if (W < 2 || vocab_ == 0) { outputs_[0] = 0.0; return; }
+    ctx_.clear();
+    for (size_t i = 0; i + 1 < W; ++i) {
+        long c = std::lround(inputs_[i]);
+        if (c < 0) c = 0;
+        if (c >= static_cast<long>(vocab_)) c = static_cast<long>(vocab_) - 1;
+        ctx_.push_back(c);
+    }
+    query_code_ = std::lround(inputs_[W - 1]);
+    if (query_code_ < 0) query_code_ = 0;
+    if (query_code_ >= static_cast<long>(vocab_)) query_code_ = static_cast<long>(vocab_) - 1;
+
+    const Value scale = 1.0 / std::sqrt(static_cast<Value>(dim_));
+    // scores
+    alpha_.assign(ctx_.size(), 0.0);
+    Value mx = -1e30;
+    std::vector<Value> s(ctx_.size(), 0.0);
+    for (size_t i = 0; i < ctx_.size(); ++i) {
+        Value dot = 0;
+        for (size_t d = 0; d < dim_; ++d) {
+            dot += table_[static_cast<size_t>(query_code_) * dim_ + d]
+                 * table_[static_cast<size_t>(ctx_[i]) * dim_ + d];
+        }
+        s[i] = dot * scale;
+        mx = std::max(mx, s[i]);
+    }
+    // softmax (stable)
+    Value zsum = 0;
+    for (size_t i = 0; i < ctx_.size(); ++i) {
+        alpha_[i] = std::exp(s[i] - mx);
+        zsum += alpha_[i];
+    }
+    if (zsum < 1e-30) zsum = 1e-30;
+    for (auto& a : alpha_) a /= zsum;
+    // output: sum_i alpha_i * (w . E[c_{i+1}])  — value = the NEXT char's
+    // embedding (the char after each attended position)
+    Value out = 0;
+    for (size_t i = 0; i < ctx_.size(); ++i) {
+        size_t next_code = (i + 1 < ctx_.size())
+            ? static_cast<size_t>(ctx_[i + 1])
+            : static_cast<size_t>(query_code_);   // last key's next = query
+        Value dot = 0;
+        for (size_t d = 0; d < dim_; ++d) dot += proj_[d] * table_[next_code * dim_ + d];
+        out += alpha_[i] * dot;
+    }
+    outputs_[0] = out;
+}
+
+std::vector<Value> AttentionNode::backward_input_grads(Value output_grad) {
+    // Categorical codes carry no gradient; all learning is in the table
+    // and projection, accumulated via acc_*_grad (the trainer's param
+    // update path reads them). This computes those accumulations.
+    const Value g = output_grad;
+    if (ctx_.empty() || g == 0.0) return std::vector<Value>(inputs_.size(), 0.0);
+    const Value scale = 1.0 / std::sqrt(static_cast<Value>(dim_));
+    // value-side grads + beta_i
+    std::vector<Value> beta(ctx_.size(), 0.0);
+    for (size_t i = 0; i < ctx_.size(); ++i) {
+        size_t next_code = (i + 1 < ctx_.size())
+            ? static_cast<size_t>(ctx_[i + 1])
+            : static_cast<size_t>(query_code_);
+        Value dot = 0;
+        for (size_t d = 0; d < dim_; ++d) {
+            dot += proj_[d] * table_[next_code * dim_ + d];
+            tgrad_[next_code * dim_ + d] += g * alpha_[i] * proj_[d];
+            pgrad_[d] += g * alpha_[i] * table_[next_code * dim_ + d];
+        }
+        beta[i] = dot;
+    }
+    // softmax grads -> score grads
+    Value gsum = 0;
+    for (size_t i = 0; i < ctx_.size(); ++i) gsum += g * beta[i] * alpha_[i];
+    std::vector<Value> gs(ctx_.size(), 0.0);
+    for (size_t i = 0; i < ctx_.size(); ++i) {
+        gs[i] = alpha_[i] * (g * beta[i] - gsum);
+    }
+    // score grads -> query/key table grads
+    for (size_t i = 0; i < ctx_.size(); ++i) {
+        for (size_t d = 0; d < dim_; ++d) {
+            Value e_id = table_[static_cast<size_t>(ctx_[i]) * dim_ + d];
+            Value q_d  = table_[static_cast<size_t>(query_code_) * dim_ + d];
+            tgrad_[static_cast<size_t>(ctx_[i]) * dim_ + d] += gs[i] * q_d * scale;
+            tgrad_[static_cast<size_t>(query_code_) * dim_ + d] += gs[i] * e_id * scale;
+        }
+    }
+    return std::vector<Value>(inputs_.size(), 0.0);
+}
+
+std::unique_ptr<Node> AttentionNode::clone() const {
+    auto n = std::make_unique<AttentionNode>(id_, name_);
+    n->vocab_ = vocab_; n->dim_ = dim_;
+    n->table_ = table_; n->proj_ = proj_;
+    n->tgrad_.assign(tgrad_.size(), 0.0);
+    n->pgrad_.assign(pgrad_.size(), 0.0);
+    return n;
+}
+
+void AttentionNode::copy_state_to(Node* target) const {
+    if (auto* t = dynamic_cast<AttentionNode*>(target)) {
+        t->vocab_ = vocab_; t->dim_ = dim_;
+        t->table_ = table_; t->proj_ = proj_;
+    }
+}
+
+void AttentionNode::serialize_extra(std::string& json) const {
+    json += ",\"att_vocab\":" + std::to_string(vocab_) + ",\"att_dim\":" + std::to_string(dim_);
+    json += ",\"att_proj\":[";
+    for (size_t d = 0; d < dim_; ++d) json += (d ? "," : "") + std::to_string(proj_[d]);
+    json += "],\"att_table\":[";
+    for (size_t i = 0; i < table_.size(); ++i) json += (i ? "," : "") + std::to_string(table_[i]);
+    json += "]";
+}
+
+void AttentionNode::deserialize_extra(const std::string& key, const std::string& value) {
+    if (key == "att_vocab") vocab_ = static_cast<size_t>(std::stoull(value));
+    else if (key == "att_dim") dim_ = static_cast<size_t>(std::stoull(value));
+    // att_proj / att_table handled as arrays by the serializer layer
+}
+// ============================================================================
 // OneHotNode
 // ============================================================================
 OneHotNode::OneHotNode(uint64_t id, const std::string& name)
@@ -1069,6 +1241,7 @@ void register_builtin_node_types() {
     reg.register_type(NodeType::NEURON,   [](uint64_t id, const std::string& name) { return std::make_unique<NeuronNode>(id, name); });
     reg.register_type(NodeType::LINEAR,   [](uint64_t id, const std::string& name) { return std::make_unique<LinearNode>(id, name); });
     reg.register_type(NodeType::ONEHOT,   [](uint64_t id, const std::string& name) { return std::make_unique<OneHotNode>(id, name); });
+reg.register_type(NodeType::ATTENTION, [](uint64_t id, const std::string& name) { return std::make_unique<AttentionNode>(id, name); });
     reg.register_type(NodeType::RELU,     [](uint64_t id, const std::string& name) { return std::make_unique<ReLUNode>(id, name); });
     reg.register_type(NodeType::SIGMOID,  [](uint64_t id, const std::string& name) { return std::make_unique<SigmoidNode>(id, name); });
     reg.register_type(NodeType::TANH,     [](uint64_t id, const std::string& name) { return std::make_unique<TanhNode>(id, name); });

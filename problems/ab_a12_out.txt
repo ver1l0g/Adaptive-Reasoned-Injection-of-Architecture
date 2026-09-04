@@ -1,5 +1,0 @@
-d7_multiout     o1=0.9999 o2=0.9981 o3=1.0000  fatigue=[none]  (5s)
-hetero3         o1=1.0000 o2=0.1502 o3=0.9898  fatigue=[SIN_INJECTION,MULTIPLY_INJECTION,COMPOUND_TANH_SERIES,CONTEXT_WIRE]  (168s)
-stripes20       o1=0.1589  fatigue=[NEURON_TANH_INJECTION,BOOLEAN_COMPOSE]  (219s)
-t23_quadratic   o1=0.9969  fatigue=[none]  (7s)
-t31_threeway    o1=0.9949  fatigue=[none]  (5s)
