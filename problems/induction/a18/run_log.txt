@@ -55,3 +55,90 @@ Starting evolution...
 2026-08-30 13:54:19.904 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
 2026-08-30 13:54:22.124 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
 2026-08-30 13:54:27.336 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 13:59:32.220 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 13:59:43.589 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 13:59:49.979 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.604709 train_loss=3.598429 new train_loss=3.600876
+2026-08-30 13:59:49.980 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-08-30 13:59:49.980 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 14:09:51.920 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 14:09:52.005 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 14:15:02.474 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 14:15:12.626 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=3.604709 train_loss=3.598429 new train_loss=3.600876
+2026-08-30 14:15:12.627 [INFO] Plateau state reset 鈥?best_phase2=3.600876
+2026-08-30 14:15:12.627 [INFO] Plateau state reset — best_phase2=3.600876
+  [  24]   eval  loss=3.600876  |====================|  [  24]    sgd  loss=3.601686  |====================|  [  25]   eval  loss=3.601686  |====================|  [  25]    sgd  loss=3.601686  |====================|  [  26]   eval  loss=3.601686  |====================|  [  26]    sgd  loss=3.601686  |====================|  [  27]   eval  loss=3.601686  |====================|  [  27]    sgd  loss=3.601686  |====================|  [  28]   eval  loss=3.601686  |====================|  [  28]    sgd  loss=3.601686  |====================|2026-08-30 14:31:18.183 [INFO] Plateau triggered at epoch 28 (counter=5, loss=3.601686)
+2026-08-30 14:41:47.675 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 49
+2026-08-30 14:41:50.243 [INFO] [PROFILE] F=32 N=3312 var_r=0.0586 bound_ratio=4.1312 poly_r2=0.0000 a12=0.0000 max_coef[i=11]=0.0055 sobol_pair(6,7)=0.0000 quad=[0.062,0.062,0.062,0.062] L_max=1.000 | flags: none
+2026-08-30 14:41:50.244 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-08-30 14:51:47.618 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 14:51:49.930 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 14:51:50.168 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 14:51:50.168 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 14:51:50.341 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-08-30 14:57:08.958 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-08-30 14:57:16.635 [INFO]   COMMIT rank=0 type=IFELSE_BOUNDARY_SPLIT val_loss=3.606842 train_loss=3.601337 new train_loss=3.601686
+2026-08-30 14:57:16.636 [INFO] Plateau state reset 鈥?best_phase2=3.601686
+2026-08-30 14:57:16.637 [INFO] Plateau state reset — best_phase2=3.601686
+  [  29]   eval  loss=3.601686  |====================|  [  29]    sgd  loss=3.601686  |====================|  [  30]   eval  loss=3.601686  |====================|  [  30]    sgd  loss=3.601686  |====================|2026-08-30 14:58:30.974 [INFO] Restored best-val graph snapshot (val=3.604709, train=3.600876)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         30
+  SGD epochs run:       1500
+  Structural changes:   7
+  Failed commits:       17
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         31.5742
+  Final loss:           3.60088
+  Best loss:            3.59017
+  Wall time:            10483863 ms
+
+  [Expression] 6.219*(((-1.204*x6-1.077*x7-1.586*x8-5.061*x9-1.425*x10-5.461*x11-5.089*x12-5.754*x13-3.457*x14-3.978*x15-4.287*x16-3.582*x17-8.248*x18-5.047*x19-5.244*x20+0.567*x21-4.088*x22-3.806*x23-2.155*x24-5...
+
+  [Library] Behavioral fingerprint: k=32 bounded=0 interact=0 sign_sym=1 sharp=0 lipsch=0.0
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 1 entries)
+
+================================================
+  Held-out Evaluation  (999 samples)
+================================================
+  Eval R2[out0]:   -109.145735
+  Eval MSE[out0]:  6.604323   MAE: 2.558195
+  Eval R2[out1]:   -102.597703
+  Eval MSE[out1]:  7.718748   MAE: 2.764822
+  Eval R2[out2]:   -97.611770
+  Eval MSE[out2]:  7.429866   MAE: 2.711922
+  Eval R2[out3]:   -107.861308
+  Eval MSE[out3]:  6.811351   MAE: 2.597842
+  Eval R2[out4]:   -109.320298
+  Eval MSE[out4]:  6.806910   MAE: 2.597154
+  Eval R2[out5]:   -113.687620
+  Eval MSE[out5]:  6.876654   MAE: 2.610880
+  Eval R2[out6]:   -98.023039
+  Eval MSE[out6]:  6.452366   MAE: 2.527292
+  Eval R2[out7]:   -101.673499
+  Eval MSE[out7]:  6.601755   MAE: 2.556845
+  Eval R2[out8]:   -93.125274
+  Eval MSE[out8]:  7.405332   MAE: 2.706780
+  Eval R2[out9]:   -99.446136
+  Eval MSE[out9]:  6.974860   MAE: 2.627817
+  Eval R2[out10]:   -120.497380
+  Eval MSE[out10]:  6.965762   MAE: 2.628389
+  Eval R2[out11]:   -119.238314
+  Eval MSE[out11]:  7.104415   MAE: 2.654304
+  Eval R2[out12]:   -108.603533
+  Eval MSE[out12]:  7.517389   MAE: 2.729249
+  Eval R2[out13]:   -98.979578
+  Eval MSE[out13]:  7.112167   MAE: 2.653494
+  Eval R2[out14]:   0.000000
+  Eval MSE[out14]:  86.201710   MAE: 9.284488
+  Eval R2[out15]:   0.000000
+  Eval MSE[out15]:  86.201710   MAE: 9.284488
+  Eval SoftmaxCE:   2.645197   (3.816213 bits/unit)
+  Eval Accuracy:    7.007007%

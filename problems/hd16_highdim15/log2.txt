@@ -1,0 +1,21 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-limits\bench_highdim15.csv
+  Loaded 1199 samples
+  Train: 959  Validation: 240
+
+Starting evolution...
+2026-09-04 09:15:53.095 [INFO] New best overall loss: 3.169879
+  [   1]   eval  loss=9.504612  |====================|  [   1]    sgd  loss=3.169879  |====================|2026-09-04 09:15:53.375 [INFO] New best overall loss: 3.149443
+  [   2]   eval  loss=3.169879  |====================|  [   2]    sgd  loss=3.149443  |====================|2026-09-04 09:15:53.430 [INFO] New best overall loss: 3.149016
+  [   3]   eval  loss=3.149443  |====================|  [   3]    sgd  loss=3.149016  |====================|2026-09-04 09:15:53.478 [INFO] New best overall loss: 3.148698
+  [   4]   eval  loss=3.149016  |====================|  [   4]    sgd  loss=3.148698  |====================|2026-09-04 09:15:53.525 [INFO] New best overall loss: 3.148475
+  [   5]   eval  loss=3.148698  |====================|  [   5]    sgd  loss=3.148475  |====================|2026-09-04 09:15:53.527 [INFO] Plateau triggered at epoch 5 (counter=3, loss=3.148475)
+2026-09-04 09:15:53.539 [INFO] Structural inability detected 鈥?surfacing bottleneck node 17 (blame=0.063994)
+2026-09-04 09:15:53.545 [INFO] [PROFILE] F=15 N=240 var_r=4.1735 bound_ratio=5.8378 poly_r2=0.9618 a12=0.9464 max_coef[i=19]=0.9805 sobol_pair(0,1)=0.5094 quad=[3.790,1.333,1.204,3.318] L_max=690130.000 | flags: PAIRWISE SHARP
+2026-09-04 09:15:53.546 [INFO] IFELSE set-guided split: thr=1.697827 (SSE reduction 51.884313 over 240 paired samples)
+2026-09-04 09:15:53.546 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=690129.999980 var_r=4.173477)
+2026-09-04 09:15:53.546 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.697827 a=node=2 b=node=3)
+2026-09-04 09:15:53.546 [INFO] MULTIPLY sources from poly fit: input=4^2 (max_coef_idx=19)

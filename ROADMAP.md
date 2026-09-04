@@ -133,6 +133,14 @@ BUILD SPEC (investigated 2026-08-30, code-level):
   8.01%); one-hot-EMBED probe result pending (aria18 run in flight).
 - PERF LESSON: V=1001 output graphs cost ~2h/epoch at 59k rows (146
   CPU-h overnight, killed); keep V≤501 and rows≤15k for probe loops.
+[ONE-HOT VERDICT 2026-09-04 (run completed before the restart): TRUE
+one-hot EMBED = 7.01% accuracy vs 6.25% chance (code-linear was
+8.01%). One-hot embeddings ALONE do NOT crack in-context retrieval —
+necessary substrate, insufficient mechanism. STEP 2 (attention proper)
+is confirmed as the required build. Also: the first one-hot EMBED_TRUNK
+COMMITTED on wujue (rank=0) seconds before the restart killed the run
+— gate → code-guard → expansion → shadow → commit works end-to-end;
+relaunch pending.]
 
 ---
 
