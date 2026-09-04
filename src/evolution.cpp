@@ -6832,6 +6832,16 @@ EvolutionEngine::ShadowValidationResult EvolutionEngine::validate_shadow_only(
             && hyp_type == static_cast<int>(Hypothesis::IFELSE_BOUNDARY_SPLIT)) {
             train_cfg.epochs *= config::SHADOW_BOUNDARY_SGD_MULTIPLIER;
         }
+        // M2.3: the attention head's table starts random — its retrieval
+        // value only shows after the embeddings/readout train TOGETHER.
+        // Both scalar (v1) and V-port (v2) heads measured losing every
+        // validation cycle to micro-gain EMBED/DEEP commits at default
+        // budget (induction probes: val flat at 3.61-3.62). Extended
+        // budget so the head's value materializes within validation —
+        // same class of fix as the boundary shadows.
+        if (hyp_type == static_cast<int>(Hypothesis::ATTENTION_MIX)) {
+            train_cfg.epochs *= config::SHADOW_BOUNDARY_SGD_MULTIPLIER;
+        }
         train_cfg.learning_rate = cfg_.sgd_learning_rate;
         // Compound shadow: reduce LR so zero-init chains grow without
         // disrupting the well-trained existing graph. Without this, the

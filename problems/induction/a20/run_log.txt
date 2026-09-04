@@ -39,3 +39,33 @@ Starting evolution...
 2026-09-04 22:36:56.952 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
 2026-09-04 22:36:56.952 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
 2026-09-04 22:36:57.082 [INFO]   [ATTENTION] built head over 32 slots (V=16)
+2026-09-04 22:47:16.406 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:47:39.847 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:47:41.149 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:47:43.036 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:47:46.862 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 22:52:32.277 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 22:52:41.091 [INFO]   COMMIT rank=1 type=DEEP_INSERTION val_loss=3.627438 train_loss=3.621159 new train_loss=3.623606
+2026-09-04 22:52:41.093 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-04 22:52:41.093 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-04 22:52:41.093 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
+2026-09-04 22:52:41.093 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-04 22:52:41.129 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
+2026-09-04 22:52:45.670 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-09-04 22:52:45.679 [INFO]   [ATTENTION] built head over 32 slots (V=16)
+2026-09-04 23:03:15.883 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:03:16.194 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:03:16.443 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:03:16.809 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:03:17.807 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:03:19.073 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:08:02.459 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 23:08:10.466 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 23:08:25.522 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.605435 train_loss=3.599156 new train_loss=3.601602
+2026-09-04 23:08:25.527 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-04 23:08:25.528 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-04 23:08:25.551 [INFO]   [ATTENTION] built head over 32 slots (V=16)
+2026-09-04 23:18:38.916 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:18:56.880 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-04 23:18:56.880 [INFO] Plateau state reset 鈥?best_phase2=3.601602
+2026-09-04 23:18:56.880 [INFO] Plateau state reset — best_phase2=3.601602

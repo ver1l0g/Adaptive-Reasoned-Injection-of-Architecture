@@ -8,4 +8,31 @@ Loading dataset from: ..\..\induction\s1\train.csv
 
 Starting evolution...
 2026-09-04 22:42:07.845 [INFO] New best overall loss: 3.596542
-  [   1]   eval  loss=31.574220  |====================|  [   1]    sgd  loss=3.596542  |====================|  [   2]   eval  loss=3.596542  |====================|  [   2]    sgd  loss=3.597417  |====================|
+  [   1]   eval  loss=31.574220  |====================|  [   1]    sgd  loss=3.596542  |====================|  [   2]   eval  loss=3.596542  |====================|  [   2]    sgd  loss=3.597417  |====================|2026-09-04 22:42:25.191 [INFO] New best overall loss: 3.593339
+  [   3]   eval  loss=3.597417  |====================|  [   3]    sgd  loss=3.593339  |====================|  [   4]   eval  loss=3.593339  |====================|  [   4]    sgd  loss=3.593713  |====================|  [   5]   eval  loss=3.593713  |====================|  [   5]    sgd  loss=3.596346  |====================|  [   6]   eval  loss=3.596346  |====================|  [   6]    sgd  loss=3.598990  |====================|  [   7]   eval  loss=3.598990  |====================|  [   7]    sgd  loss=3.595785  |====================|2026-09-04 22:43:14.709 [INFO] New best overall loss: 3.592191
+  [   8]   eval  loss=3.595785  |====================|  [   8]    sgd  loss=3.592191  |====================|  [   9]   eval  loss=3.592191  |====================|  [   9]    sgd  loss=3.594498  |====================|  [  10]   eval  loss=3.594498  |====================|  [  10]    sgd  loss=3.595477  |====================|  [  11]   eval  loss=3.595477  |====================|  [  11]    sgd  loss=3.593044  |====================|  [  12]   eval  loss=3.593044  |====================|  [  12]    sgd  loss=3.593694  |====================|  [  13]   eval  loss=3.593694  |====================|  [  13]    sgd  loss=3.592649  |====================|2026-09-04 22:43:57.188 [INFO] Plateau triggered at epoch 13 (counter=5, loss=3.592649)
+2026-09-04 22:44:01.450 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-04 22:44:01.450 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-04 22:44:01.450 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
+2026-09-04 22:44:01.450 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-04 22:44:01.462 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
+2026-09-04 22:44:03.872 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-09-04 22:44:03.891 [INFO]   [ATTENTION] built V-port head over 32 slots (V=16)
+2026-09-04 22:59:07.955 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 22:59:31.444 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 23:00:00.408 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.616519 train_loss=3.549365 new train_loss=3.560181
+2026-09-04 23:00:00.412 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-04 23:00:00.417 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-04 23:00:00.417 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-04 23:00:00.640 [INFO]   [ATTENTION] built V-port head over 32 slots (V=16)
+2026-09-04 23:10:01.519 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:10:03.550 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:10:04.222 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:10:04.831 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:10:06.861 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:10:06.903 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-04 23:16:01.401 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-04 23:16:19.444 [INFO]   COMMIT rank=1 type=DEEP_INSERTION val_loss=3.615365 train_loss=3.547034 new train_loss=3.556197
+2026-09-04 23:16:19.453 [INFO] Plateau state reset 鈥?best_phase2=3.556197
+2026-09-04 23:16:19.453 [INFO] Plateau state reset — best_phase2=3.556197
+  [  14]   eval  loss=3.556197  |====================|  [  14]    sgd  loss=3.589988  |====================|  [  15]   eval  loss=3.589988  |====================|  [  15]    sgd  loss=3.591721  |====================|  [  16]   eval  loss=3.591721  |====================|  [  16]    sgd  loss=3.591586  |====================|
