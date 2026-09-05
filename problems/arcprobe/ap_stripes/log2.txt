@@ -544,3 +544,102 @@ Starting evolution...
 2026-09-05 23:49:32.893 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
 2026-09-05 23:49:32.895 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=30.158096, 19 sign changes, gap-ratio 2.947393)
 2026-09-05 23:49:32.896 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-09-05 23:50:01.003 [INFO]   [ARC-DBG] pre-block enter
+2026-09-05 23:50:01.014 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-05 23:50:01.015 [INFO]   [ARC-DBG] fingerprint done
+2026-09-05 23:50:01.072 [INFO]   COMMIT rank=3 type=SIN_INJECTION val_loss=0.220039 train_loss=0.227967 new train_loss=0.220360
+2026-09-05 23:50:01.083 [INFO]   [ARC-PRICE] family=SIN_INJECTION fingerprint_move=0.313956 (val_delta=0.006838)
+2026-09-05 23:50:01.084 [INFO] Plateau state reset 鈥?best_phase2=0.220360
+2026-09-05 23:50:01.085 [INFO] Plateau state reset — best_phase2=0.220360
+  [ 144]   eval  loss=0.220360  |==|  [ 144]    sgd  loss=0.217332  |==|2026-09-05 23:50:04.952 [INFO] New best overall loss: 0.211833
+  [ 145]   eval  loss=0.217332  |==|  [ 145]    sgd  loss=0.211833  |==|2026-09-05 23:50:08.232 [INFO] New best overall loss: 0.204257
+  [ 146]   eval  loss=0.211833  |==|  [ 146]    sgd  loss=0.204257  |==|2026-09-05 23:50:10.655 [INFO] New best overall loss: 0.201421
+  [ 147]   eval  loss=0.204257  |==|  [ 147]    sgd  loss=0.201421  |==|  [ 148]   eval  loss=0.201421  |==|  [ 148]    sgd  loss=0.201464  |==|2026-09-05 23:50:12.074 [INFO] New best overall loss: 0.201279
+  [ 149]   eval  loss=0.201464  |==|  [ 149]    sgd  loss=0.201279  |==|2026-09-05 23:50:12.701 [INFO] New best overall loss: 0.201217
+  [ 150]   eval  loss=0.201279  |==|  [ 150]    sgd  loss=0.201217  |==|2026-09-05 23:50:12.712 [INFO] Plateau triggered at epoch 150 (counter=3, loss=0.201217)
+2026-09-05 23:50:13.843 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-09-05 23:50:13.844 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-09-05 23:50:13.846 [INFO] Zero-plateau edges: 3 (flat fraction 0.595412)
+2026-09-05 23:50:13.847 [INFO] Zero-plateau boundary: thr=-0.800119 mask_below (3 edges)
+2026-09-05 23:50:13.848 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=3 (first thr=-0.800119)
+2026-09-05 23:50:13.849 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-0.800119)
+2026-09-05 23:50:13.850 [INFO] Zero-plateau sibling boundary: thr=-0.599488 mask_above
+2026-09-05 23:50:13.851 [INFO] Zero-plateau sibling boundary: thr=-0.298393 mask_below
+2026-09-05 23:50:13.853 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=24.424834, 19 sign changes, gap-ratio 2.947393)
+2026-09-05 23:50:13.854 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-09-05 23:50:13.855 [INFO] Zero-plateau edges: 3 (flat fraction 0.595412)
+2026-09-05 23:50:13.906 [INFO]   [EVIDENCE-CHAIN] K=3 region leaves (closed-form init), bands n=4
+2026-09-05 23:50:13.908 [INFO] Zero-plateau edges: 3 (flat fraction 0.595412)
+2026-09-05 23:50:13.912 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=93 thr=-0.800119 mask_below
+2026-09-05 23:50:13.915 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=93 thr=-0.599488 mask_above
+2026-09-05 23:50:13.918 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=93 thr=-0.298393 mask_below
+2026-09-05 23:50:14.002 [INFO]   [EVIDENCE-PRE] pre-train loss=0.291889
+2026-09-05 23:50:14.002 [INFO]   [EVIDENCE-PRE] pre-train loss=0.207949
+2026-09-05 23:50:14.004 [INFO]   [EVIDENCE-PRE] pre-train loss=0.240749
+2026-09-05 23:50:14.005 [INFO]   [EVIDENCE-PRE] pre-train loss=0.209605
+2026-09-05 23:50:14.005 [INFO]   [EVIDENCE-PRE] pre-train loss=0.208864
+2026-09-05 23:50:46.678 [INFO]   [EVIDENCE-REJECT] rank=3 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss drifted up (shadow_train=0.250101 vs baseline_loss=0.201217, delta=0.048884, max_allowed=0.020122)
+2026-09-05 23:50:46.679 [INFO]   [ARC-DBG] pre-block enter
+2026-09-05 23:50:46.691 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-05 23:50:46.692 [INFO]   [ARC-DBG] fingerprint done
+2026-09-05 23:50:46.767 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.207631 train_loss=0.192982 new train_loss=0.194261
+2026-09-05 23:50:46.783 [INFO]   [ARC-PRICE] family=IFELSE_PRESERVE fingerprint_move=0.630579 (val_delta=0.006776)
+2026-09-05 23:50:46.786 [INFO] [PROFILE] F=1 N=240 var_r=0.2489 bound_ratio=2.0045 poly_r2=0.0176 max_coef[i=1]=0.1201 L_max=460.1933 | flags: BOUNDED SHARP
+2026-09-05 23:50:46.788 [INFO] Piecewise signature detected (1-input) — boundary family prioritized
+2026-09-05 23:50:46.789 [INFO] Zero-plateau edges: 3 (flat fraction 0.595412)
+2026-09-05 23:50:46.790 [INFO] Zero-plateau boundary: thr=-0.800119 mask_below (3 edges)
+2026-09-05 23:50:46.791 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=3 (first thr=-0.800119)
+2026-09-05 23:50:46.793 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-0.800119)
+2026-09-05 23:50:46.794 [INFO] Zero-plateau sibling boundary: thr=-0.500096 mask_below
+2026-09-05 23:50:46.795 [INFO] Zero-plateau sibling boundary: thr=-0.500096 mask_above
+2026-09-05 23:50:46.796 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=460.193281 var_r=0.248889)
+2026-09-05 23:50:46.797 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.901021 a=node=4 b=node=5)
+2026-09-05 23:50:46.798 [INFO] Candidate emitted: SIN_INJECTION freq-init (w=31.482223, 19 sign changes, gap-ratio 1386.393719)
+2026-09-05 23:50:46.799 [INFO] Candidate emitted: SIN_INJECTION (bounded oscillating residual)
+2026-09-05 23:50:46.801 [INFO] Zero-plateau edges: 3 (flat fraction 0.595412)
+2026-09-05 23:50:46.869 [INFO]   [EVIDENCE-CHAIN] K=3 region leaves (closed-form init), bands n=4
+2026-09-05 23:50:46.870 [INFO] Zero-plateau edges: 3 (flat fraction 0.595412)
+2026-09-05 23:50:46.895 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=138 thr=-0.800119 mask_below
+2026-09-05 23:50:46.957 [INFO]   [EVIDENCE-PRE] pre-train loss=0.347680
+2026-09-05 23:50:46.958 [INFO]   [EVIDENCE-PRE] pre-train loss=0.234929
+2026-09-05 23:50:46.959 [INFO]   [EVIDENCE-PRE] pre-train loss=0.202400
+2026-09-05 23:51:23.684 [INFO]   [EVIDENCE-REJECT] rank=1 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss drifted up (shadow_train=0.222676 vs baseline_loss=0.194261, delta=0.028414, max_allowed=0.019426)
+2026-09-05 23:51:23.685 [INFO]   [ARC-DBG] pre-block enter
+2026-09-05 23:51:23.698 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-05 23:51:23.699 [INFO]   [ARC-DBG] fingerprint done
+2026-09-05 23:51:23.772 [INFO]   COMMIT rank=0 type=IFELSE_PRESERVE val_loss=0.206076 train_loss=0.188347 new train_loss=0.190627
+2026-09-05 23:51:23.789 [INFO]   [ARC-PRICE] family=IFELSE_PRESERVE fingerprint_move=0.972821 (val_delta=0.001555)
+2026-09-05 23:51:23.791 [INFO] Plateau state reset 鈥?best_phase2=0.190627
+2026-09-05 23:51:23.792 [INFO] Plateau state reset — best_phase2=0.190627
+2026-09-05 23:51:23.812 [INFO] Restored best-val graph snapshot (val=0.206076, train=0.190627)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         150
+  SGD epochs run:       7500
+  Structural changes:   28
+  Failed commits:       61
+  Compiles performed:   3
+  Dead nodes removed:   4
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         0.534069
+  Final loss:           0.190627
+  Best loss:            0.190627
+  Wall time:            542821 ms
+
+  [Expression] 0.371*(((tanh(1.284*((x0>-1.4531?1:0)?(((tanh(2.520*((x0>-1.3689?1:0)?(((tanh(7.736*(((x0>-1.4014?1:0)+tanh(-0.591*((x0>-0.0354?1:0)!=1.2535?1:0)+1.806))?(((tanh(2.622*(((x0>-1.8942?1:0)+tanh(-2.60...
+
+  [Library] Behavioral fingerprint: k=1 bounded=0 interact=0 sign_sym=1 sharp=0 lipsch=9.4
+  [Library] Pattern: sin_chain
+  [Library] Saved (library now has 1 entries)
+  [Library] Extracted 12 sub-expression block(s) (library now has 13 entries)
+
+================================================
+  Held-out Evaluation  (1199 samples)
+================================================
+  Eval R2[out0]:   0.224785
+  Eval MSE[out0]:  0.193719   MAE: 0.394098
