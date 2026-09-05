@@ -1,0 +1,57 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-limits\bench_hetero3.csv
+  Loaded 1199 samples
+  Train: 959  Validation: 240
+
+Starting evolution...
+2026-09-05 17:44:29.959 [INFO] New best overall loss: 0.649205
+  [   1]   eval  loss=17.392938  |====================|  [   1]    sgd  loss=0.649205  |======|2026-09-05 17:44:30.058 [INFO] New best overall loss: 0.514947
+  [   2]   eval  loss=0.649205  |======|  [   2]    sgd  loss=0.514947  |=====|2026-09-05 17:44:30.154 [INFO] New best overall loss: 0.505035
+  [   3]   eval  loss=0.514947  |=====|  [   3]    sgd  loss=0.505035  |=====|2026-09-05 17:44:30.187 [INFO] New best overall loss: 0.504210
+  [   4]   eval  loss=0.505035  |=====|  [   4]    sgd  loss=0.504210  |=====|2026-09-05 17:44:30.212 [INFO] New best overall loss: 0.504010
+  [   5]   eval  loss=0.504210  |=====|  [   5]    sgd  loss=0.504010  |=====|2026-09-05 17:44:30.236 [INFO] New best overall loss: 0.503855
+  [   6]   eval  loss=0.504010  |=====|  [   6]    sgd  loss=0.503855  |=====|2026-09-05 17:44:30.262 [INFO] New best overall loss: 0.503755
+  [   7]   eval  loss=0.503855  |=====|  [   7]    sgd  loss=0.503755  |=====|2026-09-05 17:44:30.283 [INFO] New best overall loss: 0.503074
+  [   8]   eval  loss=0.503755  |=====|  [   8]    sgd  loss=0.503074  |=====|  [   9]   eval  loss=0.503074  |=====|  [   9]    sgd  loss=0.503474  |=====|2026-09-05 17:44:30.324 [INFO] New best overall loss: 0.502998
+  [  10]   eval  loss=0.503474  |=====|  [  10]    sgd  loss=0.502998  |=====|  [  11]   eval  loss=0.502998  |=====|  [  11]    sgd  loss=0.503119  |=====|2026-09-05 17:44:30.365 [INFO] New best overall loss: 0.502463
+  [  12]   eval  loss=0.503119  |=====|  [  12]    sgd  loss=0.502463  |=====|2026-09-05 17:44:30.391 [INFO] New best overall loss: 0.502392
+  [  13]   eval  loss=0.502463  |=====|  [  13]    sgd  loss=0.502392  |=====|2026-09-05 17:44:30.412 [INFO] New best overall loss: 0.501755
+  [  14]   eval  loss=0.502392  |=====|  [  14]    sgd  loss=0.501755  |=====|2026-09-05 17:44:30.458 [INFO] New best overall loss: 0.499475
+  [  15]   eval  loss=0.501755  |=====|  [  15]    sgd  loss=0.499475  |====|
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         15
+  SGD epochs run:       750
+  Structural changes:   0
+  Failed commits:       0
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         17.3929
+  Final loss:           0.499475
+  Best loss:            0.499475
+  Wall time:            598 ms
+
+  [Expression] 13.825*tanh(0.151*x0-0.002)+1.024
+
+  [Library] Behavioral fingerprint: k=1 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=2.1
+  [Library] Pattern: single_tanh
+  [Library] Saved (library now has 1 entries)
+  [Library] Extracted 1 sub-expression block(s) (library now has 2 entries)
+
+================================================
+  Held-out Evaluation  (1199 samples)
+================================================
+  Eval R2[out0]:   0.999699
+  Eval MSE[out0]:  0.003606   MAE: 0.052101
+  Eval R2[out1]:   0.053063
+  Eval MSE[out1]:  0.495861   MAE: 0.625750
+  Eval R2[out2]:   0.989665
+  Eval MSE[out2]:  0.002582   MAE: 0.020015

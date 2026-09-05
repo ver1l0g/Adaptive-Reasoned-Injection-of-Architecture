@@ -1,0 +1,45 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-standard\bench_t23_quadratic.csv
+  Loaded 200 samples
+  Train: 160  Validation: 40
+
+Starting evolution...
+2026-09-05 17:22:36.143 [INFO] New best overall loss: 3.924793
+  [   1]   eval  loss=8.192445  |====================|  [   1]    sgd  loss=3.924793  |====================|2026-09-05 17:22:36.175 [INFO] New best overall loss: 2.390126
+  [   2]   eval  loss=3.924793  |====================|  [   2]    sgd  loss=2.390126  |====================|2026-09-05 17:22:36.195 [INFO] New best overall loss: 2.366396
+  [   3]   eval  loss=2.390126  |====================|  [   3]    sgd  loss=2.366396  |====================|2026-09-05 17:22:36.220 [INFO] New best overall loss: 2.350393
+  [   4]   eval  loss=2.366396  |====================|  [   4]    sgd  loss=2.350393  |====================|2026-09-05 17:22:36.240 [INFO] New best overall loss: 2.332023
+  [   5]   eval  loss=2.350393  |====================|  [   5]    sgd  loss=2.332023  |====================|
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         5
+  SGD epochs run:       250
+  Structural changes:   0
+  Failed commits:       0
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         8.19244
+  Final loss:           2.33202
+  Best loss:            2.33202
+  Wall time:            122 ms
+
+  [Expression] 2.751*tanh(-0.069*x0-0.046*x1+0.308)+1.579
+
+  [Library] Behavioral fingerprint: k=2 bounded=0 interact=0 sign_sym=1 sharp=1 lipsch=108.3
+  [Library] Pattern: single_tanh
+  [Library] Saved (library now has 1 entries)
+  [Library] Extracted 1 sub-expression block(s) (library now has 2 entries)
+
+================================================
+  Held-out Evaluation  (200 samples)
+================================================
+  Eval R2[out0]:   -0.014656
+  Eval MSE[out0]:  2.639404   MAE: 1.328984

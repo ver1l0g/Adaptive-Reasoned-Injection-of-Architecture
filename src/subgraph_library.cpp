@@ -420,16 +420,16 @@ bool SubgraphLibrary::load(const std::string& filepath) {
         SubgraphLibraryEntry e;
         f >> std::quoted(e.source_task) >> std::quoted(e.description)
           >> std::quoted(e.canonical_expression) >> std::quoted(e.pattern);
-        // M7.5(c): optional trailing params field (writer emits it after
-        // pattern; legacy lines have none). Peek the next non-space char:
-        // '"' = params present; anything else = legacy/G/next fingerprint.
-        {
-            int pc;
-            do { pc = f.peek(); } while (pc == ' ' || pc == '\t');
-            if (pc == '"') {
-                f >> std::quoted(e.params);
-            }
-        }
+        // M7.5(c) NOTE: params are WRITE-ONLY for now. The peek-based
+        // optional read below hung deterministically on legacy libraries
+        // (library-present dirs never finished loading on aria28; fresh
+        // dirs fine — reverted pending a line-based rewrite). The freq-hint
+        // only fires for entries created within the current run.
+        // {
+        //     int pc;
+        //     do { pc = f.peek(); } while (pc == ' ' || pc == '\t');
+        //     if (pc == '"') { f >> std::quoted(e.params); }
+        // }
         auto& fp = e.fingerprint;
         f >> fp.num_inputs >> fp.num_outputs
           >> fp.mean >> fp.var >> fp.min_val >> fp.max_val

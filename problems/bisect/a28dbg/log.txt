@@ -1,0 +1,49 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-limits\bench_hetero3.csv
+  Loaded 1199 samples
+  Train: 959  Validation: 240
+
+Starting evolution...
+2026-09-05 17:40:18.883 [INFO] New best overall loss: 0.649205
+  [   1]   eval  loss=17.392938  |====================|  [   1]    sgd  loss=0.649205  |======|2026-09-05 17:40:18.979 [INFO] New best overall loss: 0.514947
+  [   2]   eval  loss=0.649205  |======|  [   2]    sgd  loss=0.514947  |=====|2026-09-05 17:40:19.075 [INFO] New best overall loss: 0.505035
+  [   3]   eval  loss=0.514947  |=====|  [   3]    sgd  loss=0.505035  |=====|2026-09-05 17:40:19.107 [INFO] New best overall loss: 0.504210
+  [   4]   eval  loss=0.505035  |=====|  [   4]    sgd  loss=0.504210  |=====|2026-09-05 17:40:19.133 [INFO] New best overall loss: 0.504010
+  [   5]   eval  loss=0.504210  |=====|  [   5]    sgd  loss=0.504010  |=====|
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         5
+  SGD epochs run:       250
+  Structural changes:   0
+  Failed commits:       0
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         17.3929
+  Final loss:           0.50401
+  Best loss:            0.50401
+  Wall time:            342 ms
+
+  [Expression] 12.418*tanh(0.168*x0-0.006)+1.021
+
+  [Library] Behavioral fingerprint: k=1 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=2.1
+  [Library] Pattern: single_tanh
+  [Library] Saved (library now has 1 entries)
+  [Library] Extracted 1 sub-expression block(s) (library now has 2 entries)
+
+================================================
+  Held-out Evaluation  (1199 samples)
+================================================
+  Eval R2[out0]:   0.999333
+  Eval MSE[out0]:  0.007982   MAE: 0.068403
+  Eval R2[out1]:   0.053044
+  Eval MSE[out1]:  0.495871   MAE: 0.625763
+  Eval R2[out2]:   0.989671
+  Eval MSE[out2]:  0.002580   MAE: 0.019306

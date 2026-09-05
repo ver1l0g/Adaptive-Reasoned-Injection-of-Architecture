@@ -893,6 +893,7 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                         BehavioralFingerprint arc_pre_fp;
                         bool arc_have_pre = false;
                         {
+                            Logger::info("  [ARC-DBG] pre-block enter");
                             try {
                                 const size_t n_total = training_data_.samples.size();
                                 const size_t stride = (n_total > 200) ? n_total / 200 : 1;
@@ -929,10 +930,14 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                                     graph_->reset_recurrent_state();
                                 }
                                 if (yr.size() >= 16) {
+                                    Logger::info("  [ARC-DBG] computing fingerprint");
                                     arc_pre_fp = compute_fingerprint(Xr, yr);
+                                    Logger::info("  [ARC-DBG] fingerprint done");
                                     arc_have_pre = true;
                                 }
-                            } catch (...) {}
+                            } catch (...) {
+                                Logger::info("  [ARC-DBG] pre-block exception");
+                            }
                         }
                         graph_ = std::move(specs[winner_idx].shadow);
                         stats_.structural_changes++;
