@@ -425,7 +425,25 @@ position regularity nobody told it about?
       the model should at minimum capture the position-conditional
       unigram — anything beyond = discovered interaction structure.
 
-### 6.11 (placeholder — reserved for future additions)
+### 6.12 Investment-arc pricing (M1.3-v2) — SIGNAL CALIBRATED 2026-09-05
+The formally-named wall (blocked M1.3 fatigue, t22 evidence gates, SIN
+grace) has its measuring stick. ARC-PRICE diagnostic (aria28d+): each
+commit's fingerprint_move = distance between pre/post output-residual
+fingerprints.
+- hetero3: TANH spray 0.0001-0.001; first SIN harmonic 0.0994 (100x)
+- d2 ladder: MULTIPLY rungs sustain move 0.38-0.50 with val_delta
+  0.012-0.026 every commit (the investment signature M1.3 would have
+  wrongly killed)
+- stripes20: early moves large for ALL families (big residuals reshape
+  easily — normalize!); the grind tail decays to move ~0.0005 with
+  val_delta ~1e-5 (the waste signature)
+PRICING RULE (v1, wireable): demote a family when its rolling window of
+(move x val_delta) stays ~0; sustained movement keeps full budget.
+Normalization needed: raw move scales with residual magnitude — use
+relative move (move / current fingerprint norm) or the product form.
+Known bugs fixed en route: M7.5(c) params writer corrupted the library
+format (bad_alloc/hangs — fully reverted, sidecar-file design if
+revived).
 
 ---
 
