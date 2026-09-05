@@ -71,3 +71,81 @@ Starting evolution...
 2026-09-05 11:43:38.451 [INFO] Plateau state reset 鈥?best_phase2=3.602420
 2026-09-05 11:43:38.451 [INFO] Plateau state reset — best_phase2=3.602420
   [  21]   eval  loss=3.602420  |====================|  [  21]    sgd  loss=3.600877  |====================|  [  22]   eval  loss=3.600877  |====================|  [  22]    sgd  loss=3.600876  |====================|  [  23]   eval  loss=3.600876  |====================|  [  23]    sgd  loss=3.600876  |====================|  [  24]   eval  loss=3.600876  |====================|  [  24]    sgd  loss=3.600876  |====================|  [  25]   eval  loss=3.600876  |====================|  [  25]    sgd  loss=3.600876  |====================|  [  26]   eval  loss=3.600876  |====================|  [  26]    sgd  loss=3.600876  |====================|2026-09-05 14:02:33.336 [INFO] Plateau triggered at epoch 26 (counter=5, loss=3.600876)
+2026-09-05 14:24:08.418 [INFO] diagnose() empty 鈥?injecting growth diagnosis for node 49
+2026-09-05 14:24:16.127 [INFO] [PROFILE] F=32 N=3312 var_r=0.0586 bound_ratio=4.1312 poly_r2=0.0000 a12=0.0000 max_coef[i=11]=0.0055 sobol_pair(6,7)=0.0000 quad=[0.062,0.062,0.062,0.062] L_max=1.000 | flags: none
+2026-09-05 14:24:16.131 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-05 14:24:16.131 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-05 14:24:16.475 [INFO]   [ATTENTION] built V-port head over 32 slots (V=16)
+2026-09-05 14:35:16.409 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-05 14:35:18.174 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-05 14:35:18.709 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-05 14:35:18.728 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-05 14:35:20.403 [INFO] Train watchdog fired: aborted after 575s wall (live-lock guard)
+2026-09-05 14:40:06.941 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 14:40:07.372 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 14:40:30.241 [INFO]   COMMIT rank=2 type=DEEP_INSERTION val_loss=3.604709 train_loss=3.598430 new train_loss=3.600876
+2026-09-05 14:40:30.244 [INFO] Plateau state reset 鈥?best_phase2=3.600876
+2026-09-05 14:40:30.244 [INFO] Plateau state reset — best_phase2=3.600876
+  [  27]   eval  loss=3.600876  |====================|  [  27]    sgd  loss=3.601686  |====================|  [  28]   eval  loss=3.601686  |====================|  [  28]    sgd  loss=3.601686  |====================|  [  29]   eval  loss=3.601686  |====================|  [  29]    sgd  loss=3.601686  |====================|  [  30]   eval  loss=3.601686  |====================|  [  30]    sgd  loss=3.601686  |====================|2026-09-05 14:50:12.123 [INFO] Restored best-val graph snapshot (val=3.604709, train=3.600876)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         30
+  SGD epochs run:       1500
+  Structural changes:   5
+  Failed commits:       23
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         31.5742
+  Final loss:           3.60088
+  Best loss:            3.55367
+  Wall time:            18389892 ms
+
+  [Expression] 3.577*(((-0.708*x6-0.567*x7-0.802*x8-2.759*x9-0.807*x10-3.064*x11-2.812*x12-3.264*x13-1.821*x14-2.205*x15-2.380*x16-1.894*x17-4.500*x18-2.733*x19-2.890*x20+0.237*x21-2.290*x22-2.006*x23-1.197*x24-3...
+
+  [Library] Behavioral fingerprint: k=32 bounded=0 interact=0 sign_sym=1 sharp=0 lipsch=0.0
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 1 entries)
+
+================================================
+  Held-out Evaluation  (999 samples)
+================================================
+  Eval R2[out0]:   -109.146443
+  Eval MSE[out0]:  6.604365   MAE: 2.558204
+  Eval R2[out1]:   -102.597985
+  Eval MSE[out1]:  7.718769   MAE: 2.764826
+  Eval R2[out2]:   -97.611767
+  Eval MSE[out2]:  7.429865   MAE: 2.711922
+  Eval R2[out3]:   -107.861543
+  Eval MSE[out3]:  6.811366   MAE: 2.597845
+  Eval R2[out4]:   -109.320785
+  Eval MSE[out4]:  6.806940   MAE: 2.597160
+  Eval R2[out5]:   -113.687365
+  Eval MSE[out5]:  6.876638   MAE: 2.610877
+  Eval R2[out6]:   -98.023268
+  Eval MSE[out6]:  6.452381   MAE: 2.527295
+  Eval R2[out7]:   -101.673530
+  Eval MSE[out7]:  6.601757   MAE: 2.556845
+  Eval R2[out8]:   -93.125389
+  Eval MSE[out8]:  7.405341   MAE: 2.706781
+  Eval R2[out9]:   -99.446621
+  Eval MSE[out9]:  6.974894   MAE: 2.627823
+  Eval R2[out10]:   -120.497403
+  Eval MSE[out10]:  6.965763   MAE: 2.628389
+  Eval R2[out11]:   -119.238476
+  Eval MSE[out11]:  7.104424   MAE: 2.654306
+  Eval R2[out12]:   -108.603504
+  Eval MSE[out12]:  7.517387   MAE: 2.729249
+  Eval R2[out13]:   -98.979728
+  Eval MSE[out13]:  7.112178   MAE: 2.653496
+  Eval R2[out14]:   0.000000
+  Eval MSE[out14]:  86.201710   MAE: 9.284488
+  Eval R2[out15]:   0.000000
+  Eval MSE[out15]:  86.201710   MAE: 9.284488
+  Eval SoftmaxCE:   2.645197   (3.816213 bits/unit)
+  Eval Accuracy:    7.007007%

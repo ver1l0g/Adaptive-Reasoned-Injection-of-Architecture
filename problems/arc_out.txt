@@ -1,0 +1,6 @@
+=== hetero3 (10min) ===
+  final R2=0.999993
+=== stripes20 (12min) ===
+  final R2=0.224785
+=== d2_mod3 (1min) ===
+  final R2=0.502407

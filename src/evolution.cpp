@@ -886,6 +886,54 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                         // received the shadow by reference and did NOT move
                         // it, so ownership remains in specs[winner_idx].shadow.
                         bool was_recall = (results[winner_idx].hyp_rank == -1);
+                        // M1.3-v2 arc-price: PRE-commit output-residual
+                        // fingerprint (computed on the OLD graph before the
+                        // move — current_cycle_fp_ is only set inside the
+                        // library-matching block, absent in isolated runs).
+                        BehavioralFingerprint arc_pre_fp;
+                        bool arc_have_pre = false;
+                        {
+                            try {
+                                const size_t n_total = training_data_.samples.size();
+                                const size_t stride = (n_total > 200) ? n_total / 200 : 1;
+                                std::vector<std::vector<double>> Xr;
+                                std::vector<double> yr;
+                                for (size_t pi = 0; pi < n_total; pi += stride) {
+                                    const auto& s = training_data_.samples[pi];
+                                    for (const auto& kv : s.inputs) {
+                                        auto git = input_data_to_graph_.find(kv.first);
+                                        if (git != input_data_to_graph_.end()) {
+                                            graph_->set_input_value(git->second, kv.second);
+                                        }
+                                    }
+                                    graph_->execute();
+                                    double rsum = 0;
+                                    int rcnt = 0;
+                                    for (const auto& kv : s.targets) {
+                                        auto oit = output_data_to_graph_.find(kv.first);
+                                        if (oit != output_data_to_graph_.end()) {
+                                            double diff = graph_->get_output_value(oit->second)
+                                                       - static_cast<double>(kv.second);
+                                            rsum += diff * diff;
+                                            ++rcnt;
+                                        }
+                                    }
+                                    if (rcnt > 0) {
+                                        yr.push_back(rsum / rcnt);
+                                        std::vector<double> xr;
+                                        for (const auto& kv : s.inputs) {
+                                            xr.push_back(kv.second);
+                                        }
+                                        Xr.push_back(std::move(xr));
+                                    }
+                                    graph_->reset_recurrent_state();
+                                }
+                                if (yr.size() >= 16) {
+                                    arc_pre_fp = compute_fingerprint(Xr, yr);
+                                    arc_have_pre = true;
+                                }
+                            } catch (...) {}
+                        }
                         graph_ = std::move(specs[winner_idx].shadow);
                         stats_.structural_changes++;
                         if (was_recall) {
@@ -921,6 +969,65 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                                     + " new train_loss=" + std::to_string(current_loss));
                         structural_commit_succeeded = true;
                         committed_hyp_type = results[winner_idx].hyp_type;
+                        // M1.3-v2 investment-arc pricing DIAGNOSTIC (post-
+                        // commit): does this commit MOVE the output
+                        // residual's fingerprint? Ladders (hetero3 sin
+                        // harmonics, d2 mod-3) do — each rung shifts the
+                        // residual's statistical character. Sprays
+                        // (stripes20 TANH x14) don't. Log-only v1; pricing
+                        // wired once the separation is verified.
+                        if (arc_have_pre) {
+                            try {
+                                const size_t n_total = training_data_.samples.size();
+                                const size_t stride = (n_total > 200) ? n_total / 200 : 1;
+                                std::vector<std::vector<double>> Xr;
+                                std::vector<double> yr;
+                                for (size_t pi = 0; pi < n_total; pi += stride) {
+                                    const auto& s = training_data_.samples[pi];
+                                    for (const auto& kv : s.inputs) {
+                                        auto git = input_data_to_graph_.find(kv.first);
+                                        if (git != input_data_to_graph_.end()) {
+                                            graph_->set_input_value(git->second, kv.second);
+                                        }
+                                    }
+                                    graph_->execute();
+                                    double rsum = 0;
+                                    int rcnt = 0;
+                                    for (const auto& kv : s.targets) {
+                                        auto oit = output_data_to_graph_.find(kv.first);
+                                        if (oit != output_data_to_graph_.end()) {
+                                            double diff = graph_->get_output_value(oit->second)
+                                                       - static_cast<double>(kv.second);
+                                            rsum += diff * diff;
+                                            ++rcnt;
+                                        }
+                                    }
+                                    if (rcnt > 0) {
+                                        yr.push_back(rsum / rcnt);
+                                        std::vector<double> xr;
+                                        for (const auto& kv : s.inputs) {
+                                            xr.push_back(kv.second);
+                                        }
+                                        Xr.push_back(std::move(xr));
+                                    }
+                                    graph_->reset_recurrent_state();
+                                }
+                                if (yr.size() >= 16) {
+                                    BehavioralFingerprint post_fp =
+                                        compute_fingerprint(Xr, yr);
+                                    double move = fingerprint_distance(arc_pre_fp, post_fp);
+                                    Logger::info(
+                                        "  [ARC-PRICE] family="
+                                        + std::string(hyp_names[committed_hyp_type])
+                                        + " fingerprint_move=" + std::to_string(move)
+                                        + " (val_delta="
+                                        + std::to_string(baseline_val - results[winner_idx].val_loss)
+                                        + ")");
+                                }
+                            } catch (...) {
+                                // diagnostic only — never block a commit
+                            }
+                        }
                     } else {
                         Logger::verbose("  all " + std::to_string(results.size()) + " candidates rejected");
                     }

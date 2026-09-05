@@ -1,0 +1,33 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\induction\s1\train.csv
+  Loaded 7999 samples
+  Train: 6399  Validation: 1600
+
+Starting evolution...
+2026-09-05 14:30:02.320 [INFO] New best overall loss: 3.596542
+  [   1]   eval  loss=31.574220  |====================|  [   1]    sgd  loss=3.596542  |====================|  [   2]   eval  loss=3.596542  |====================|  [   2]    sgd  loss=3.597417  |====================|2026-09-05 14:31:01.021 [INFO] New best overall loss: 3.593339
+  [   3]   eval  loss=3.597417  |====================|  [   3]    sgd  loss=3.593339  |====================|  [   4]   eval  loss=3.593339  |====================|  [   4]    sgd  loss=3.593713  |====================|  [   5]   eval  loss=3.593713  |====================|  [   5]    sgd  loss=3.596346  |====================|  [   6]   eval  loss=3.596346  |====================|  [   6]    sgd  loss=3.598990  |====================|  [   7]   eval  loss=3.598990  |====================|  [   7]    sgd  loss=3.595785  |====================|2026-09-05 14:33:45.824 [INFO] New best overall loss: 3.592191
+  [   8]   eval  loss=3.595785  |====================|  [   8]    sgd  loss=3.592191  |====================|  [   9]   eval  loss=3.592191  |====================|  [   9]    sgd  loss=3.594498  |====================|  [  10]   eval  loss=3.594498  |====================|  [  10]    sgd  loss=3.595477  |====================|  [  11]   eval  loss=3.595477  |====================|  [  11]    sgd  loss=3.593044  |====================|  [  12]   eval  loss=3.593044  |====================|  [  12]    sgd  loss=3.593694  |====================|  [  13]   eval  loss=3.593694  |====================|  [  13]    sgd  loss=3.592649  |====================|2026-09-05 14:36:34.892 [INFO] Plateau triggered at epoch 13 (counter=5, loss=3.592649)
+2026-09-05 14:36:48.234 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-05 14:36:48.240 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-05 14:36:48.240 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
+2026-09-05 14:36:48.240 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-05 14:36:48.293 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
+2026-09-05 14:36:58.710 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-09-05 14:36:58.756 [INFO]   [ATTENTION] built V-port head over 32 slots (V=16)
+2026-09-05 14:37:00.008 [INFO]   [EVIDENCE-PRE] pre-train loss=39.502884
+2026-09-05 14:52:28.833 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 14:52:38.203 [INFO]   COMMIT rank=1 type=ATTENTION_MIX val_loss=3.614987 train_loss=3.536733 new train_loss=3.551504
+2026-09-05 14:52:38.205 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-05 14:52:38.206 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-05 14:52:38.206 [INFO] Candidate emitted: EMBED_TRUNK (K=8, 16 outputs)
+2026-09-05 14:52:38.234 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
+2026-09-05 14:52:42.610 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
+2026-09-05 15:07:50.493 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 15:08:04.049 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.615891 train_loss=3.535892 new train_loss=3.553789
+2026-09-05 15:08:04.050 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-05 15:08:04.053 [INFO] Plateau state reset 鈥?best_phase2=3.553789
+2026-09-05 15:08:04.053 [INFO] Plateau state reset — best_phase2=3.553789
