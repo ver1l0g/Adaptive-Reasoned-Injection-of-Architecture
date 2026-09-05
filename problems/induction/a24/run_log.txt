@@ -65,3 +65,33 @@ Starting evolution...
 2026-09-05 12:17:26.678 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
 2026-09-05 12:17:26.687 [INFO]   [ATTENTION] table seeded from trunk (128 entries)
 2026-09-05 12:17:26.836 [INFO]   [ATTENTION] built V-port head over 32 slots (V=16)
+2026-09-05 12:32:44.430 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 12:33:11.774 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 12:33:33.048 [INFO]   COMMIT rank=1 type=DEEP_INSERTION val_loss=3.614691 train_loss=3.551361 new train_loss=3.558116
+2026-09-05 12:33:33.048 [INFO] Plateau state reset 鈥?best_phase2=3.558116
+2026-09-05 12:33:33.048 [INFO] Plateau state reset — best_phase2=3.558116
+  [  25]   eval  loss=3.558116  |====================|  [  25]    sgd  loss=3.594484  |====================|  [  26]   eval  loss=3.594484  |====================|  [  26]    sgd  loss=3.593108  |====================|  [  27]   eval  loss=3.593108  |====================|  [  27]    sgd  loss=3.594892  |====================|  [  28]   eval  loss=3.594892  |====================|  [  28]    sgd  loss=3.590787  |====================|  [  29]   eval  loss=3.590787  |====================|  [  29]    sgd  loss=3.593118  |====================|  [  30]   eval  loss=3.593118  |====================|  [  30]    sgd  loss=3.597475  |====================|2026-09-05 13:42:27.637 [INFO] Restored best-val graph snapshot (val=3.614691, train=3.558116)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         30
+  SGD epochs run:       1500
+  Structural changes:   4
+  Failed commits:       25
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         31.5742
+  Final loss:           3.55812
+  Best loss:            3.55408
+  Wall time:            13235723 ms
+
+  [Expression] 0.051*((-0.085*x6-0.045*x7-0.143*x8-0.370*x9-0.096*x10-0.473*x11-0.431*x12-0.550*x13-0.224*x14-0.301*x15-0.332*x16-0.225*x17-0.602*x18-0.372*x19-0.452*x20+0.041*x21-0.306*x22-0.213*x23-0.192*x24-0....
+
+  [Library] Behavioral fingerprint: k=32 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=0.4
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 1 entries)

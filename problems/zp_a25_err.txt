@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "C:\Users\banny\Documents\algorithm project\problems\harness\zp_probe.py", line 26, in <module>
+    subprocess.run(args, stdout=lf, stderr=subprocess.STDOUT, cwd=wd,
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1228, in communicate
+    sts = self.wait(timeout=self._remaining_time(endtime))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\banny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1593, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['C:\\Users\\banny\\Documents\\algorithm project\\aria25.exe', '--csv', 'C:\\Users\\banny\\Documents\\algorithm project\\problems\\suite-standard\\bench_t21_three_region.csv', '--input-cols', '1', '--max-epochs', '100', '--seed', '1', '--save-graph', 'none', '--eval-csv', 'C:\\Users\\banny\\Documents\\algorithm project\\problems\\suite-standard\\bench_t21_three_region.csv']' timed out after 1800.0 seconds

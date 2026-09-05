@@ -70,4 +70,4 @@ Starting evolution...
 2026-09-05 11:43:38.451 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
 2026-09-05 11:43:38.451 [INFO] Plateau state reset 鈥?best_phase2=3.602420
 2026-09-05 11:43:38.451 [INFO] Plateau state reset — best_phase2=3.602420
-  [  21]   eval  loss=3.602420  |====================|  [  21]    sgd  loss=3.600877  |====================|
+  [  21]   eval  loss=3.602420  |====================|  [  21]    sgd  loss=3.600877  |====================|  [  22]   eval  loss=3.600877  |====================|  [  22]    sgd  loss=3.600876  |====================|  [  23]   eval  loss=3.600876  |====================|  [  23]    sgd  loss=3.600876  |====================|  [  24]   eval  loss=3.600876  |====================|  [  24]    sgd  loss=3.600876  |====================|

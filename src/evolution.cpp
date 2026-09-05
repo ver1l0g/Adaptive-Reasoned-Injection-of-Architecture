@@ -4707,12 +4707,17 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         shadow->add_connection(num_powed, 0, div_id, 0);
         shadow->add_connection(den_powed, 0, div_id, 1);
 
-        // Gain NEURON — least-squares init (was 0.0: the quotient-of-
-        // products starts at the scale the residual wants, immediately
-        // competitive in first-cycle validation; I.32.8's blocker).
-        uint64_t gain_id = shadow->add_node(NodeType::NEURON, "divprod_gain");
+        // Gain node — LINEAR (identity), NOT NEURON: the quotient-of-
+        // products is UNBOUNDED; a tanh gain squashes exactly the scale
+        // information the ratio carries (measured on I.32.8: the exact
+        // form (x0*x1)^2/x2^3 committed but routed through
+        // tanh(0.021*form) — saturated at R2 0.976 with the structure
+        // already correct). Least-squares init keeps the first-cycle
+        // competitiveness.
+        uint64_t gain_id = shadow->add_node(NodeType::LINEAR, "divprod_gain");
         Node* gn = shadow->get_node(gain_id);
-        if (gn && gn->get_type() == NodeType::NEURON) {
+        if (gn && (gn->get_type() == NodeType::NEURON
+                   || gn->get_type() == NodeType::LINEAR)) {
             static_cast<NeuronNode*>(gn)->set_input_count(1);
             static_cast<NeuronNode*>(gn)->set_weight(0, 0.0);
             static_cast<NeuronNode*>(gn)->set_bias(0.0);
