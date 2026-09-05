@@ -8,6 +8,14 @@ residual profiling — then surgically injects a small, targeted
 sub-structure. Every candidate structure is validated on held-out data
 in a shadow copy before commit; wrong guesses cost nothing.
 
+> **Note on authorship**: this project is AI-implemented — the engine,
+> benchmarks, harnesses, and analysis were developed in collaboration
+> between the repository owner and an AI coding agent (opencode /
+> GLM), with the human directing strategy, reviewing results, and
+> making all engineering decisions. The development history (git log,
+> ROADMAP.md) records the process, including AI-caused bugs and their
+> forensics.
+
 ```
 train → plateau → diagnose → hypothesize → shadow-validate → commit/reject → repeat
 ```
