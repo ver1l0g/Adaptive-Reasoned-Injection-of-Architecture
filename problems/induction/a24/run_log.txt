@@ -95,3 +95,41 @@ Starting evolution...
   [Library] Behavioral fingerprint: k=32 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=0.4
   [Library] Pattern: tanh_stack
   [Library] Saved (library now has 1 entries)
+
+================================================
+  Held-out Evaluation  (999 samples)
+================================================
+  Eval R2[out0]:   -4.145680
+  Eval MSE[out0]:  0.308534   MAE: 0.497525
+  Eval R2[out1]:   -20.636491
+  Eval MSE[out1]:  1.612069   MAE: 1.239135
+  Eval R2[out2]:   -1.745177
+  Eval MSE[out2]:  0.206834   MAE: 0.356046
+  Eval R2[out3]:   -69.541205
+  Eval MSE[out3]:  4.413698   MAE: 2.085592
+  Eval R2[out4]:   -141.487483
+  Eval MSE[out4]:  8.791669   MAE: 2.954027
+  Eval R2[out5]:   -109.827633
+  Eval MSE[out5]:  6.645209   MAE: 2.566072
+  Eval R2[out6]:   -126.139777
+  Eval MSE[out6]:  8.284460   MAE: 2.865749
+  Eval R2[out7]:   -79.626764
+  Eval MSE[out7]:  5.184183   MAE: 2.261703
+  Eval R2[out8]:   -144.601469
+  Eval MSE[out8]:  11.455235   MAE: 3.372523
+  Eval R2[out9]:   -107.948679
+  Eval MSE[out9]:  7.565266   MAE: 2.737149
+  Eval R2[out10]:   -253.623786
+  Eval MSE[out10]:  14.598246   MAE: 3.812726
+  Eval R2[out11]:   -422.858461
+  Eval MSE[out11]:  25.044149   MAE: 4.997297
+  Eval R2[out12]:   -328.739082
+  Eval MSE[out12]:  22.615849   MAE: 4.747860
+  Eval R2[out13]:   -378.188940
+  Eval MSE[out13]:  26.974061   MAE: 5.186367
+  Eval R2[out14]:   0.000000
+  Eval MSE[out14]:  7.940217   MAE: 2.780203
+  Eval R2[out15]:   0.000000
+  Eval MSE[out15]:  8.424663   MAE: 2.864524
+  Eval SoftmaxCE:   3.625721   (5.230810 bits/unit)
+  Eval Accuracy:    8.208208%
