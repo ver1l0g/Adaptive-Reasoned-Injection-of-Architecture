@@ -27,3 +27,18 @@ Starting evolution...
 2026-09-04 22:22:19.632 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=6.511400 train_loss=5.934193 new train_loss=5.780607
 2026-09-04 22:22:19.645 [INFO] [PROFILE] F=19 N=205 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
 2026-09-04 22:22:19.651 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=944 b=node=1054)
+2026-09-05 00:28:05.089 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-05 00:28:22.309 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-05 00:28:24.343 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-05 00:28:40.703 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-05 00:28:41.582 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-05 00:28:45.334 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 01:06:57.952 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=6.566320 train_loss=6.040506 new train_loss=5.815318
+2026-09-05 01:06:57.983 [INFO] [PROFILE] F=19 N=205 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-05 01:06:57.984 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=944 b=node=1054)
+2026-09-05 01:51:33.478 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 01:51:34.470 [INFO] Train watchdog fired: aborted after 863s wall (live-lock guard)
+2026-09-05 02:13:42.866 [INFO]   COMMIT rank=0 type=DEEP_INSERTION val_loss=6.443079 train_loss=5.887036 new train_loss=5.660978
+2026-09-05 02:13:42.869 [INFO] Plateau state reset 鈥?best_phase2=5.660978
+2026-09-05 02:13:42.869 [INFO] Plateau state reset — best_phase2=5.660978
+  [  21]   eval  loss=5.660978  |====================|  [  21]    sgd  loss=6.271277  |====================|  [  22]   eval  loss=6.271277  |====================|  [  22]    sgd  loss=6.713154  |====================|  [  23]   eval  loss=6.713154  |====================|  [  23]    sgd  loss=6.620919  |====================|  [  24]   eval  loss=6.620919  |====================|  [  24]    sgd  loss=6.306715  |====================|  [  25]   eval  loss=6.306715  |====================|  [  25]    sgd  loss=6.350788  |====================|  [  26]   eval  loss=6.350788  |====================|  [  26]    sgd  loss=6.415566  |====================|  [  27]   eval  loss=6.415566  |====================|  [  27]    sgd  loss=6.688080  |====================|2026-09-05 09:10:46.823 [INFO] Plateau triggered at epoch 27 (counter=3, loss=6.688080)

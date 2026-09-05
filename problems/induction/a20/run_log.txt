@@ -69,3 +69,66 @@ Starting evolution...
 2026-09-04 23:18:56.880 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
 2026-09-04 23:18:56.880 [INFO] Plateau state reset 鈥?best_phase2=3.601602
 2026-09-04 23:18:56.880 [INFO] Plateau state reset — best_phase2=3.601602
+  [  19]   eval  loss=3.601602  |====================|  [  19]    sgd  loss=3.600876  |====================|  [  20]   eval  loss=3.600876  |====================|  [  20]    sgd  loss=3.600876  |====================|  [  21]   eval  loss=3.600876  |====================|  [  21]    sgd  loss=3.600876  |====================|  [  22]   eval  loss=3.600876  |====================|  [  22]    sgd  loss=3.600876  |====================|  [  23]   eval  loss=3.600876  |====================|  [  23]    sgd  loss=3.600876  |====================|  [  24]   eval  loss=3.600876  |====================|  [  24]    sgd  loss=3.600876  |====================|  [  25]   eval  loss=3.600876  |====================|  [  25]    sgd  loss=3.600876  |====================|  [  26]   eval  loss=3.600876  |====================|  [  26]    sgd  loss=3.600876  |====================|  [  27]   eval  loss=3.600876  |====================|  [  27]    sgd  loss=3.600876  |====================|  [  28]   eval  loss=3.600876  |====================|  [  28]    sgd  loss=3.600876  |====================|  [  29]   eval  loss=3.600876  |====================|  [  29]    sgd  loss=3.600876  |====================|  [  30]   eval  loss=3.600876  |====================|  [  30]    sgd  loss=3.600876  |====================|2026-09-05 00:53:59.293 [INFO] Restored best-val graph snapshot (val=3.604709, train=3.600876)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         30
+  SGD epochs run:       1500
+  Structural changes:   4
+  Failed commits:       16
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         31.5742
+  Final loss:           3.60088
+  Best loss:            3.55378
+  Wall time:            11682656 ms
+
+  [Expression] 3.746*(((-0.746*x6-0.603*x7-0.868*x8-2.925*x9-0.849*x10-3.241*x11-2.991*x12-3.456*x13-1.938*x14-2.339*x15-2.526*x16-2.020*x17-4.776*x18-2.905*x19-3.075*x20+0.262*x21-2.420*x22-2.133*x23-1.272*x24-3...
+
+  [Library] Behavioral fingerprint: k=32 bounded=0 interact=0 sign_sym=1 sharp=0 lipsch=0.0
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 1 entries)
+
+================================================
+  Held-out Evaluation  (999 samples)
+================================================
+  Eval R2[out0]:   -109.146443
+  Eval MSE[out0]:  6.604365   MAE: 2.558204
+  Eval R2[out1]:   -102.597985
+  Eval MSE[out1]:  7.718769   MAE: 2.764826
+  Eval R2[out2]:   -97.611767
+  Eval MSE[out2]:  7.429865   MAE: 2.711922
+  Eval R2[out3]:   -107.861543
+  Eval MSE[out3]:  6.811366   MAE: 2.597845
+  Eval R2[out4]:   -109.320785
+  Eval MSE[out4]:  6.806940   MAE: 2.597160
+  Eval R2[out5]:   -113.687365
+  Eval MSE[out5]:  6.876638   MAE: 2.610877
+  Eval R2[out6]:   -98.023268
+  Eval MSE[out6]:  6.452381   MAE: 2.527295
+  Eval R2[out7]:   -101.673530
+  Eval MSE[out7]:  6.601757   MAE: 2.556845
+  Eval R2[out8]:   -93.125389
+  Eval MSE[out8]:  7.405341   MAE: 2.706781
+  Eval R2[out9]:   -99.446621
+  Eval MSE[out9]:  6.974894   MAE: 2.627823
+  Eval R2[out10]:   -120.497403
+  Eval MSE[out10]:  6.965763   MAE: 2.628389
+  Eval R2[out11]:   -119.238476
+  Eval MSE[out11]:  7.104424   MAE: 2.654306
+  Eval R2[out12]:   -108.603504
+  Eval MSE[out12]:  7.517387   MAE: 2.729249
+  Eval R2[out13]:   -98.979728
+  Eval MSE[out13]:  7.112178   MAE: 2.653496
+  Eval R2[out14]:   0.000000
+  Eval MSE[out14]:  86.201710   MAE: 9.284488
+  Eval R2[out15]:   0.000000
+  Eval MSE[out15]:  86.201710   MAE: 9.284488
+  Eval SoftmaxCE:   2.645197   (3.816213 bits/unit)
+  Eval Accuracy:    7.007007%

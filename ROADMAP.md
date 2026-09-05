@@ -364,8 +364,12 @@ on aria12 (all suites consistent, evidence work = post-freeze v2) vs
 re-run everything on aria15 (~1-2 days battery).
 - [x] standard (aria11: 13/16; aria15/16 spot-checks: t22 0.9757 t21 0.9937 d1 0.9936)
 - [x] korns (aria11: 6/9) — [x] temporal (aria11: 4/4)
-- [x] limits (aria12 card + highdim20 solo 0.9953 PASS; highdim15 solo
-      0.9056 vs aria10 0.9982 — build/trajectory-sensitive, M6.8)
+- [x] limits (aria12 card + highdim20 solo 0.9953 PASS; highdim15:
+      DOUBLE-CONFIRMED LINEAGE REGRESSION — aria12 solo 0.9056 AND
+      aria16 solo 0.9056 (identical) vs aria10's 0.9982; the aria11+
+      M7.5/M7.6-live changes shifted highdim15's trajectory. The freeze
+      card carries both numbers honestly; bisecting the specific commit
+      is a v2 item if highdim tasks matter to the paper)
 - [x] feynman (aria12 seeds 2-5: mean-of-means 0.9991, **24/25 solved** —
       I.29.16 now solid 0.9993±0.0001; only I.32.8 open at 0.9829±0.0017;
       aria10 archive in results/aria10_multiseed/)
