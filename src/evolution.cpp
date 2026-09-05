@@ -2752,6 +2752,15 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
                 if (out_count >= 8 && in_count >= 4 && !has_attn) {
                     Hypothesis at;
                     at.type = Hypothesis::ATTENTION_MIX;
+                    // M2.3 evidence-class: once emitted, the head's table
+                    // is SEEDED from the trunk's learned embeddings (when a
+                    // one-hot trunk exists) — its structure is derived from
+                    // measurement, not sampled. The evidence flag activates
+                    // the neutral-tolerance commit gate + race advantage
+                    // (the t22 playbook: both budget and seed alone measured
+                    // insufficient — the head loses validation races to
+                    // micro-gain commits it will eventually dominate).
+                    at.structural_evidence = true;
                     candidates.push_back({std::move(at), config::SCORE_EMBED_TRUNK - 0.01});
                     Logger::info("Candidate emitted: ATTENTION_MIX ("
                                 + std::to_string(in_count) + " slots, V="
@@ -2916,6 +2925,33 @@ std::vector<EvolutionEngine::Hypothesis> EvolutionEngine::generate_candidates(
         // gets tried before another linear wire commit bloats the graph.
         if (!is_binary && ftype != FailureType::BOOLEAN_BOUNDARY && input_signal_count >= 2) {
             score = std::max(score, config::SCORE_MULTIPLY_PLATEAU_FALLBACK);
+        }
+
+        // M7.6(c): quadrant-means interaction gate. The profile computes
+        // per-quadrant target means (top-2 inputs' 4 quadrants) but the
+        // emission never read them — "means differ strongly across
+        // quadrants" is the natural 2-input interaction signal: an
+        // interaction-only target (y ~ x1*x2) has near-zero marginal
+        // structure but strongly asymmetric quadrant means. Boost the
+        // product family when the quadrant contrast is large relative to
+        // the residual's spread.
+        if (profile.quadrant_means.size() == 4 && profile.num_inputs >= 2
+            && !is_binary) {
+            Value qmin = profile.quadrant_means[0], qmax = qmin;
+            for (Value q : profile.quadrant_means) {
+                qmin = std::min(qmin, q);
+                qmax = std::max(qmax, q);
+            }
+            Value spread = std::max(profile.var_r > 1e-12
+                                        ? std::sqrt(profile.var_r) * 2.0
+                                        : static_cast<Value>(1e-6),
+                                    static_cast<Value>(1e-6));
+            Value contrast = (qmax - qmin) / spread;
+            if (contrast > static_cast<Value>(0.5)) {
+                score = std::max(score, config::SCORE_MULTIPLY_PLATEAU_FALLBACK);
+                Logger::info("Quadrant interaction gate: contrast "
+                            + std::to_string(contrast) + " boosts MULTIPLY");
+            }
         }
 
         // Dedup: if the graph already has a MULTIPLY node with the same
@@ -3431,6 +3467,15 @@ if (profile.bounded
             }
             uint64_t src_id = graph_input_ids[std::min(axis, graph_input_ids.size()-1)];
 
+            // M7.5(c): a matched sin-family library entry's LEARNED
+            // frequency beats a missing residual estimate (and is data
+            // the sign-change analysis cannot see on distorted residuals).
+            if (freq_est == 0.0 && library_freq_hint_ > 0.0) {
+                freq_est = library_freq_hint_;
+                Logger::info("SIN freq-init from library hint: w="
+                            + std::to_string(freq_est));
+            }
+
             // M5.7 v2: LABEL-SPACE two-peak fallback. Post-fit residuals
             // distort the crossing structure (tangent touches, the blend's
             // own crossings — measured ratios 60.7/10.5 on d3) while the
@@ -3879,6 +3924,27 @@ if (profile.bounded
             // current task; cross-task transfer is the entire point.
             auto matches = library_->find_matches_excluding_self(
                 needed, 1, current_task_name_);
+            // M7.5(c): a matched sin-family entry that STORES its source
+            // expression's numeric literals carries learned frequencies —
+            // freq-init's missing data source. Stash for the SIN emission
+            // block (used when the residual analysis yields no estimate,
+            // or to refine one derived from a distorted residual).
+            if (!matches.empty()
+                && matches[0].distance < config::LIBRARY_MATCH_THRESHOLD) {
+                const auto& me = library_->entry(matches[0].index);
+                if ((me.pattern == "sin_chain" || me.pattern == "sin_component")
+                    && !me.params.empty()) {
+                    try {
+                        double pf = std::stod(me.params);
+                        if (pf >= 0.5 && pf <= 60.0) {
+                            library_freq_hint_ = pf;
+                            Logger::info("Library freq hint: w="
+                                        + std::to_string(pf) + " (from "
+                                        + me.source_task + ")");
+                        }
+                    } catch (...) {}
+                }
+            }
             if (!degenerate
                 && !matches.empty()
                 && matches[0].distance < config::LIBRARY_MATCH_THRESHOLD) {

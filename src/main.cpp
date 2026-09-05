@@ -600,6 +600,33 @@ int main(int argc, char* argv[]) {
             std::string raw_expr = engine.get_graph().to_expression(first_output);
             entry.canonical_expression = canonicalize_expression(raw_expr);
             entry.pattern = recognize_pattern(entry.canonical_expression);
+            // M7.5(c): capture the RAW numeric literals of the expression —
+            // the canonical form abstracts numbers to 'c', which discards
+            // exactly the parameters (sin frequencies, product coefficients)
+            // that a matched task needs for freq-init. Order matches the
+            // literals' occurrence in the expression.
+            {
+                std::string ps;
+                bool in_num = false;
+                size_t num_start = 0;
+                for (size_t ci = 0; ci <= raw_expr.size(); ++ci) {
+                    char ch = (ci < raw_expr.size()) ? raw_expr[ci] : ',';
+                    bool digit = (ch >= '0' && ch <= '9') || ch == '.'
+                              || ((ch == '-' || ch == '+') && !in_num
+                                  && ci + 1 < raw_expr.size()
+                                  && raw_expr[ci + 1] >= '0' && raw_expr[ci + 1] <= '9');
+                    if (digit && !in_num) { in_num = true; num_start = ci; }
+                    else if (!digit && in_num) {
+                        in_num = false;
+                        try {
+                            Value v = std::stod(raw_expr.substr(num_start, ci - num_start));
+                            if (!ps.empty()) ps += ",";
+                            ps += std::to_string(v);
+                        } catch (...) {}
+                    }
+                }
+                entry.params = ps;   // "" = none (back-compat with old saves)
+            }
             std::cout << "  [Library] Pattern: " << entry.pattern << "\n";
             bool added = lib.add(entry);
             lib.save(lib_path);

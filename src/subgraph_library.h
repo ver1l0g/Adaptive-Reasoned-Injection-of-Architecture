@@ -98,6 +98,10 @@ struct SubgraphLibraryEntry {
     std::string description;          // human-readable summary
     std::string canonical_expression; // abstracted formula (variables→v, numbers→c)
     std::string pattern;              // recognized structural pattern (e.g. "abs_product", "sin_chain")
+    std::string params;               // M7.5(c): raw numeric literals of the source expression,
+                                      // comma-separated in occurrence order — the canonical form
+                                      // abstracts numbers away; these are freq-init's data source.
+                                      // "" = none / pre-field legacy entry.
     // M1.2 architecture recall: the FULL serialized graph (JSON) of the
     // solved task. On a strong exact-arity fingerprint match, a new task
     // can warm-start from this graph instead of evolving from scratch.

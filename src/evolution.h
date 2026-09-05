@@ -577,6 +577,12 @@ private:
     int    consecutive_ineffective_commits_  = 0;
     std::unordered_set<int> suppressed_hyp_types_;
 
+    // M7.5(c): learned frequency from a matched sin-family library entry
+    // (the entry's stored numeric literals) — freq-init's data source.
+    // Set in generate_candidates' library-matching block; consumed by the
+    // SIN emission when the residual analysis yields no/poor estimate.
+    double library_freq_hint_ = 0.0;
+
     // Snapshot of the graph at the moment of best_overall_loss_.
     // SGD with momentum can overshoot a good minimum; this lets evolve()
     // restore the best-known state at the end instead of returning an

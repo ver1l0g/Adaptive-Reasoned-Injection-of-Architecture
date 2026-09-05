@@ -384,6 +384,11 @@ bool SubgraphLibrary::save(const std::string& filepath) const {
         f << std::quoted(e.source_task) << "\t" << std::quoted(e.description)
           << "\t" << std::quoted(e.canonical_expression)
           << "\t" << std::quoted(e.pattern);
+        // M7.5(c): params appended when non-empty (loader's trailing
+        // optional field — legacy lines without it parse as "").
+        if (!e.params.empty()) {
+            f << "\t" << std::quoted(e.params);
+        }
         // M1.2: graph JSON on a third line (multi-line-safe: the loader
         // reads it as ONE line via quoted-string semantics — graph JSON has
         // embedded newlines, so instead store COMPACT single-line marker
@@ -415,6 +420,16 @@ bool SubgraphLibrary::load(const std::string& filepath) {
         SubgraphLibraryEntry e;
         f >> std::quoted(e.source_task) >> std::quoted(e.description)
           >> std::quoted(e.canonical_expression) >> std::quoted(e.pattern);
+        // M7.5(c): optional trailing params field (writer emits it after
+        // pattern; legacy lines have none). Peek the next non-space char:
+        // '"' = params present; anything else = legacy/G/next fingerprint.
+        {
+            int pc;
+            do { pc = f.peek(); } while (pc == ' ' || pc == '\t');
+            if (pc == '"') {
+                f >> std::quoted(e.params);
+            }
+        }
         auto& fp = e.fingerprint;
         f >> fp.num_inputs >> fp.num_outputs
           >> fp.mean >> fp.var >> fp.min_val >> fp.max_val
