@@ -1,0 +1,12 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: suite-vision\bench_digits.csv
+  Loaded 1797 samples
+  Train: 1438  Validation: 359
+
+  Loaded subgraph library: 1129 entries
+  Loaded failure library: 8711 records
+Starting evolution...
+  [   1]   eval  loss=9.582128  |====================|  [   1]    sgd  loss=0.150879  |=|  [   2]   eval  loss=0.150879  |=|  [   2]    sgd  loss=0.155262  |=|  [   3]   eval  loss=0.155262  |=|  [   3]    sgd  loss=0.161923  |=|  [   4]   eval  loss=0.161923  |=|  [   4]    sgd  loss=0.136293  |=|  [   5]   eval  loss=0.136293  |=|  [   5]    sgd  loss=0.130178  |=|  [   6]   eval  loss=0.130178  |=|  [   6]    sgd  loss=0.136791  |=|  [   7]   eval  loss=0.136791  |=|  [   7]    sgd  loss=0.135922  |=|  [   8]   eval  loss=0.135922  |=|  [   8]    sgd  loss=0.125948  |=|  [   9]   eval  loss=0.125948  |=|  [   9]    sgd  loss=0.164573  |=|  [  10]   eval  loss=0.164573  |=|  [  10]    sgd  loss=0.133796  |=|  [  11]   eval  loss=0.133796  |=|  [  11]    sgd  loss=0.131554  |=|  [  12]   eval  loss=0.131554  |=|  [  12]    sgd  loss=0.136627  |=|  [  13]   eval  loss=0.136627  |=|  [  13]    sgd  loss=0.134234  |=|  [  14]   eval  loss=0.134234  |=|  [  14]    sgd  loss=0.172070  |=|  [  15]   eval  loss=0.172070  |=|  [  15]    sgd  loss=0.127505  |=|  [  16]   eval  loss=0.127505  |=|  [  16]    sgd  loss=0.142614  |=|  [  17]   eval  loss=0.142614  |=|  [  17]    sgd  loss=0.122810  |=|  [  18]   eval  loss=0.122810  |=|  [  18]    sgd  loss=0.124649  |=|  [  19]   eval  loss=0.124649  |=|  [  19]    sgd  loss=0.110755  |=|  [  20]   eval  loss=0.110755  |=|  [  20]    sgd  loss=0.110421  |=|2026-09-06 00:23:43.015 [INFO] Plateau triggered at epoch 20 (counter=0, loss=0.110421)
