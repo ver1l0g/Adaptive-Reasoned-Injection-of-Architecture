@@ -4983,8 +4983,52 @@ std::unique_ptr<Graph> EvolutionEngine::apply_shadow_routing(
         }
         if (in_ids.size() < 4 || out_count < 8) break;
         uint64_t att_id = shadow->add_node(NodeType::ATTENTION, "attention_head");
-        if (auto* an = dynamic_cast<AttentionNode*>(shadow->get_node(att_id))) {
+        auto* an = dynamic_cast<AttentionNode*>(shadow->get_node(att_id));
+        if (an) {
             an->set_vocab(out_count);
+            // M2.3 table-init from the committed ONE-HOT trunk: its hidden
+            // neurons learned per-(slot, code) weights; the slot-AVERAGE per
+            // code is a natural embedding seed — retrieval starts from
+            // learned embeddings instead of random (the probes measured
+            // random-init heads losing every validation cycle). Only when a
+            // one-hot trunk exists (embed_onehot_* nodes); input port of
+            // trunk neuron h for (slot i, code c) is i*V + c.
+            std::vector<NeuronNode*> hnodes;
+            bool has_onehot_trunk = false;
+            for (const auto& n : shadow->get_nodes()) {
+                if (n->get_name().rfind("embed_trunk_h", 0) == 0
+                    && n->get_type() == NodeType::NEURON) {
+                    hnodes.push_back(static_cast<NeuronNode*>(n.get()));
+                } else if (n->get_name().rfind("embed_onehot_", 0) == 0) {
+                    has_onehot_trunk = true;
+                }
+            }
+            if (has_onehot_trunk && hnodes.size() >= an->get_dim()) {
+                const size_t V = out_count;
+                const size_t nslots = in_ids.size();
+                int seeded = 0;
+                for (size_t c = 0; c < V; ++c) {
+                    for (size_t d = 0; d < an->get_dim() && d < hnodes.size(); ++d) {
+                        Value sum = 0;
+                        size_t cnt = 0;
+                        for (size_t i = 0; i < nslots; ++i) {
+                            size_t port = i * V + c;
+                            if (port < hnodes[d]->get_num_weights()) {
+                                sum += hnodes[d]->get_weight(port);
+                                ++cnt;
+                            }
+                        }
+                        if (cnt > 0) {
+                            an->set_table(c, d, sum / static_cast<Value>(cnt));
+                            ++seeded;
+                        }
+                    }
+                }
+                if (seeded > 0) {
+                    Logger::info("  [ATTENTION] table seeded from trunk ("
+                                + std::to_string(seeded) + " entries)");
+                }
+            }
         }
         for (size_t i = 0; i < in_ids.size(); ++i) {
             shadow->add_connection(in_ids[i], 0, att_id, i);

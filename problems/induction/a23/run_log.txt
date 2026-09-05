@@ -18,3 +18,9 @@ Starting evolution...
 2026-09-05 09:44:28.570 [INFO]   [EMBED_TRUNK] one-hot expansion: 32 slots x V=16
 2026-09-05 09:44:29.307 [INFO]   [EMBED_TRUNK] built K=8 trunk over 32 inputs
 2026-09-05 09:44:29.312 [INFO]   [ATTENTION] built V-port head over 32 slots (V=16)
+2026-09-05 09:59:36.064 [INFO] Train watchdog fired: aborted after 900s wall (live-lock guard)
+2026-09-05 09:59:43.225 [INFO]   COMMIT rank=0 type=EMBED_TRUNK val_loss=3.615196 train_loss=3.537869 new train_loss=3.553917
+2026-09-05 09:59:43.226 [INFO] [PROFILE] F=32 N=207 var_r=0.0000 bound_ratio=0.0000 poly_r2=0.0000 sobol_pair(0,0)=0.0000 quad=[0.000,0.000,0.000,0.000] L_max=0.000 | flags: none
+2026-09-05 09:59:43.227 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=0.000000 a=node=2 b=node=3)
+2026-09-05 09:59:43.227 [INFO] Candidate emitted: ATTENTION_MIX (32 slots, V=16)
+2026-09-05 09:59:43.263 [INFO]   [ATTENTION] built V-port head over 32 slots (V=16)

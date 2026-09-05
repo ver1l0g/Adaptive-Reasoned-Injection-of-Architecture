@@ -1,0 +1,12 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\induction\s1\train.csv
+  Loaded 7999 samples
+  Train: 6399  Validation: 1600
+
+Starting evolution...
+2026-09-05 10:02:51.531 [INFO] New best overall loss: 3.596542
+  [   1]   eval  loss=31.574220  |====================|  [   1]    sgd  loss=3.596542  |====================|  [   2]   eval  loss=3.596542  |====================|  [   2]    sgd  loss=3.597417  |====================|2026-09-05 10:03:07.855 [INFO] New best overall loss: 3.593339
+  [   3]   eval  loss=3.597417  |====================|  [   3]    sgd  loss=3.593339  |====================|  [   4]   eval  loss=3.593339  |====================|  [   4]    sgd  loss=3.593713  |====================|  [   5]   eval  loss=3.593713  |====================|  [   5]    sgd  loss=3.596346  |====================|
