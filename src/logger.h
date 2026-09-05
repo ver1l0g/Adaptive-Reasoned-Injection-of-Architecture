@@ -33,6 +33,13 @@ public:
     static void init(bool verbose_mode, const std::string& log_file_path = "");
     static void close();
 
+    // QoL --quiet: INFO-level lines are filtered to the decision-critical
+    // subset (COMMIT / Plateau / ARC-PRICE / Eval / demote / parole / crash
+    // forensics); epoch progress and emission spam are suppressed.
+    // Verbose/warn/error unaffected.
+    static void set_quiet(bool q) { quiet_ = q; }
+    static bool quiet_;
+
     // ------------------------------------------------------------------------
     // Normal-level logging 鈥?always shown, describes WHAT the system does
     // ------------------------------------------------------------------------

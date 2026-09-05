@@ -159,6 +159,12 @@ constexpr int    SHADOW_BOUNDARY_SGD_MULTIPLIER   = 3;     // measured-evidence 
 // (V x D params; V=501 -> 4008) while giving richer matching than 1-dim.
 constexpr int    ATTENTION_DIM                    = 8;
 
+// QoL wedge fix: wall-clock budget for shadow validation-loss evaluation.
+// Hour-scale sequential passes on V>=500 graphs wedged runs silently
+// (wujue: 5h in one cycle). 60s bounds a candidate's val pass; the mean
+// extrapolates from the subset seen (ranking-stable).
+constexpr int    VAL_TIME_BUDGET_MS               = 60000;
+
 // M6.12 arc-pricing (investment-arc wall, third appearance — now with
 // the calibrated signal): demote families whose commits stop MOVING the
 // residual fingerprint while delivering nothing.

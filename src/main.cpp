@@ -148,6 +148,9 @@ int main(int argc, char* argv[]) {
             has_header = true;
         } else if (arg == "--verbose") {
             verbose = true;
+        } else if (arg == "--quiet") {
+            // QoL: decision-critical INFO only (see logger.h).
+            Logger::set_quiet(true);
         } else if (arg == "--log-file" && i + 1 < argc) {
             log_file = argv[++i];
         } else if (arg == "--sweep" && i + 3 < argc) {

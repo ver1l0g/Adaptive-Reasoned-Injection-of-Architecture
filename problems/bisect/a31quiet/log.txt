@@ -1,0 +1,44 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-standard\bench_t23_quadratic.csv
+  Loaded 200 samples
+  Train: 160  Validation: 40
+
+Starting evolution...
+  [   1]   eval  loss=8.192445  |====================|  [   1]    sgd  loss=3.924793  |====================|  [   2]   eval  loss=3.924793  |====================|  [   2]    sgd  loss=2.390126  |====================|  [   3]   eval  loss=2.390126  |====================|  [   3]    sgd  loss=2.366396  |====================|  [   4]   eval  loss=2.366396  |====================|  [   4]    sgd  loss=2.350393  |====================|  [   5]   eval  loss=2.350393  |====================|  [   5]    sgd  loss=2.332023  |====================|  [   6]   eval  loss=2.332023  |====================|  [   6]    sgd  loss=2.331551  |====================|  [   7]   eval  loss=2.331551  |====================|  [   7]    sgd  loss=2.325533  |====================|  [   8]   eval  loss=2.325533  |====================|  [   8]    sgd  loss=2.325796  |====================|  [   9]   eval  loss=2.325796  |====================|  [   9]    sgd  loss=2.322214  |====================|  [  10]   eval  loss=2.322214  |====================|  [  10]    sgd  loss=2.322319  |====================|  [  11]   eval  loss=2.322319  |====================|  [  11]    sgd  loss=2.319748  |====================|  [  12]   eval  loss=2.319748  |====================|  [  12]    sgd  loss=2.320367  |====================|  [  13]   eval  loss=2.320367  |====================|  [  13]    sgd  loss=2.319560  |====================|  [  14]   eval  loss=2.319560  |====================|  [  14]    sgd  loss=2.319509  |====================|2026-09-06 00:19:46.278 [INFO] Plateau triggered at epoch 14 (counter=3, loss=2.319509)
+2026-09-06 00:19:47.251 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.043067 train_loss=0.007922 new train_loss=0.007922
+2026-09-06 00:19:47.255 [INFO]   [ARC-PRICE] family=MULTI_LAYER_STACK fingerprint_move=1279.237197 (val_delta=3.873723)
+  [  15]   eval  loss=0.007922  ||  [  15]    sgd  loss=0.008294  ||  [  16]   eval  loss=0.008294  ||  [  16]    sgd  loss=0.007903  ||  [  17]   eval  loss=0.007903  ||  [  17]    sgd  loss=0.008631  ||  [  18]   eval  loss=0.008631  ||  [  18]    sgd  loss=0.007486  ||  [  19]   eval  loss=0.007486  ||  [  19]    sgd  loss=0.008958  ||  [  20]   eval  loss=0.008958  ||  [  20]    sgd  loss=0.007597  ||  [  21]   eval  loss=0.007597  ||  [  21]    sgd  loss=0.008623  ||  [  22]   eval  loss=0.008623  ||  [  22]    sgd  loss=0.007169  ||  [  23]   eval  loss=0.007169  ||  [  23]    sgd  loss=0.012716  ||  [  24]   eval  loss=0.012716  ||  [  24]    sgd  loss=0.007803  ||  [  25]   eval  loss=0.007803  ||  [  25]    sgd  loss=0.007390  ||  [  26]   eval  loss=0.007390  ||  [  26]    sgd  loss=0.007747  ||  [  27]   eval  loss=0.007747  ||  [  27]    sgd  loss=0.007387  ||  [  28]   eval  loss=0.007387  ||  [  28]    sgd  loss=0.010429  ||  [  29]   eval  loss=0.010429  ||  [  29]    sgd  loss=0.007003  ||  [  30]   eval  loss=0.007003  ||  [  30]    sgd  loss=0.008042  ||2026-09-06 00:19:47.612 [INFO] Restored best-val graph snapshot (val=0.035714, train=0.008623)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         30
+  SGD epochs run:       1500
+  Structural changes:   1
+  Failed commits:       1
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         8.19244
+  Final loss:           0.0086232
+  Best loss:            0.00700288
+  Wall time:            1531 ms
+
+  [Expression] 5.448*tanh(0.520*tanh(-0.624*x0-0.018*x1-1.077)+0.846*tanh(-0.063*x0-0.016*x1+1.215)+0.978*tanh(0.166*x0+0.649*x1-0.850)+0.817*tanh(-0.063*x0-0.016*x1+1.224)-0.046*tanh(0.744*x0+0.427*x1+0.636)+1.0...
+
+  [Library] Behavioral fingerprint: k=2 bounded=1 interact=1 sign_sym=1 sharp=1 lipsch=337.1
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 1 entries)
+  [Library] Extracted 4 sub-expression block(s) (library now has 5 entries)
+
+================================================
+  Held-out Evaluation  (200 samples)
+================================================
+  Eval R2[out0]:   0.994602
+  Eval MSE[out0]:  0.014041   MAE: 0.078062

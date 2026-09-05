@@ -6823,7 +6823,21 @@ double EvolutionEngine::compute_validation_loss(Graph& g) {
 
     double total_loss = 0.0;
     int count = 0;
+    // QoL wedge fix (M6.8-class): wall-clock budget — on huge graphs
+    // (V>=500 EMBED trunks) even the stride-capped count runs hour-scale
+    // sequentially (the wujue wedge: 5h silent). Process until the budget
+    // expires, then extrapolate the mean from the subset seen — ranking
+    // stability is the same argument as the stride subsample above.
+    const auto val_deadline = std::chrono::steady_clock::now()
+                            + std::chrono::milliseconds(config::VAL_TIME_BUDGET_MS);
+    const size_t v_min = std::min<size_t>(256, v_total);
     for (size_t v_i = 0; v_i < v_total; v_i += v_stride) {
+        if (count >= static_cast<int>(v_min)
+            && std::chrono::steady_clock::now() > val_deadline) {
+            Logger::verbose("val-loss budget hit: " + std::to_string(count)
+                          + "/" + std::to_string(v_total / v_stride) + " samples");
+            break;
+        }
         const auto& sample = validation_data_.samples[v_i];
         for (const auto& kv : sample.inputs) {
             auto map_it = input_data_to_graph_.find(kv.first);

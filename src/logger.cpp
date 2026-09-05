@@ -9,6 +9,7 @@ namespace aria {
 
 bool        Logger::verbose_     = false;
 bool        Logger::initialized_ = false;
+bool        Logger::quiet_ = false;
 std::ofstream Logger::file_;
 std::mutex  Logger::mutex_;
 bool        Logger::use_file_    = false;
@@ -96,6 +97,22 @@ void Logger::write_file(const std::string& line) {
 // ============================================================================
 
 void Logger::info(const std::string& msg) {
+    if (quiet_) {
+        // Decision-critical subset only (QoL --quiet).
+        static const char* keep[] = {
+            "COMMIT", "Plateau triggered", "ARC-PRICE", "Eval ",
+            "DEMOTE", "parole", "CRASH", "shadow exception",
+            "Structural cooldown", "Suppressing hypothesis",
+            "Restored best-val", "Evolution Complete",
+        };
+        for (const char* k : keep) {
+            if (msg.find(k) != std::string::npos) {
+                write(timestamp() + " " + config::LOG_LEVEL_INFO + " " + msg);
+                return;
+            }
+        }
+        return;
+    }
     write(timestamp() + " " + config::LOG_LEVEL_INFO + " " + msg);
 }
 
