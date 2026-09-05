@@ -10,6 +10,7 @@
 #include <functional>
 #include <random>
 #include <unordered_set>
+#include <deque>
 
 namespace aria {
 
@@ -582,6 +583,16 @@ private:
     // Set in generate_candidates' library-matching block; consumed by the
     // SIN emission when the residual analysis yields no/poor estimate.
     double library_freq_hint_ = 0.0;
+
+    // M6.12 arc-pricing: per-family rolling window of (fingerprint_move
+    // x val_delta) products — the calibrated investment signal. A family
+    // whose window is full AND every product ~ 0 is grinding (stripes20
+    // tail: move ~5e-4 x delta ~1e-5); sustained products keep full
+    // budget (d2 ladder: 0.4 x 0.02). Families are DEMOTED (score -0.3),
+    // never suppressed — parole every ARC_PAROLE epochs, mirroring the
+    // reverted M1.3's failure mode analysis.
+    std::unordered_map<int, std::deque<double>> arc_window_;
+    std::unordered_map<int, int> arc_parole_until_epoch_;
 
     // Snapshot of the graph at the moment of best_overall_loss_.
     // SGD with momentum can overshoot a good minimum; this lets evolve()

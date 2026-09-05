@@ -159,6 +159,14 @@ constexpr int    SHADOW_BOUNDARY_SGD_MULTIPLIER   = 3;     // measured-evidence 
 // (V x D params; V=501 -> 4008) while giving richer matching than 1-dim.
 constexpr int    ATTENTION_DIM                    = 8;
 
+// M6.12 arc-pricing (investment-arc wall, third appearance — now with
+// the calibrated signal): demote families whose commits stop MOVING the
+// residual fingerprint while delivering nothing.
+constexpr int    ARC_PRICE_WINDOW                 = 5;     // commits in the rolling window
+constexpr double ARC_PRICE_ZERO_PRODUCT           = 1e-4;  // move x val_delta below this = grind (calibrated: d2 rungs ~8e-3, stripes tail ~5e-9)
+constexpr double ARC_PRICE_DEMOTE                 = 0.3;   // score penalty while demoted
+constexpr int    ARC_PRICE_PAROLE                 = 25;    // epochs before re-evaluating a demoted family
+
 // Below this training loss, plateau-triggered structural search is skipped
 // (nothing can pass the scaled commit gate; force-structural still probes).
 // Feynman-style tasks converge to 1e-6..1e-8; d9-style noise floors sit at

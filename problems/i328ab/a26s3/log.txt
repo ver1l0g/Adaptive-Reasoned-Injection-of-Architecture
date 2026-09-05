@@ -1,0 +1,430 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: ..\..\suite-feynman\I.32.8.csv
+  Loaded 999 samples
+  Train: 799  Validation: 200
+
+Starting evolution...
+2026-09-05 23:13:50.955 [INFO] New best overall loss: 134.290455
+  [   1]   eval  loss=305.261442  |====================|  [   1]    sgd  loss=134.290455  |====================|2026-09-05 23:13:51.126 [INFO] New best overall loss: 70.378147
+  [   2]   eval  loss=134.290455  |====================|  [   2]    sgd  loss=70.378147  |====================|2026-09-05 23:13:51.303 [INFO] New best overall loss: 47.736781
+  [   3]   eval  loss=70.378147  |====================|  [   3]    sgd  loss=47.736781  |====================|2026-09-05 23:13:51.510 [INFO] New best overall loss: 36.532261
+  [   4]   eval  loss=47.736781  |====================|  [   4]    sgd  loss=36.532261  |====================|2026-09-05 23:13:51.708 [INFO] New best overall loss: 29.881338
+  [   5]   eval  loss=36.532261  |====================|  [   5]    sgd  loss=29.881338  |====================|2026-09-05 23:13:51.923 [INFO] New best overall loss: 25.498116
+  [   6]   eval  loss=29.881338  |====================|  [   6]    sgd  loss=25.498116  |====================|2026-09-05 23:13:52.134 [INFO] New best overall loss: 22.385917
+  [   7]   eval  loss=25.498116  |====================|  [   7]    sgd  loss=22.385917  |====================|2026-09-05 23:13:52.446 [INFO] New best overall loss: 20.049263
+  [   8]   eval  loss=22.385917  |====================|  [   8]    sgd  loss=20.049263  |====================|2026-09-05 23:13:52.739 [INFO] New best overall loss: 18.260404
+  [   9]   eval  loss=20.049263  |====================|  [   9]    sgd  loss=18.260404  |====================|2026-09-05 23:13:52.950 [INFO] New best overall loss: 16.811599
+  [  10]   eval  loss=18.260404  |====================|  [  10]    sgd  loss=16.811599  |====================|2026-09-05 23:13:53.170 [INFO] New best overall loss: 15.610171
+  [  11]   eval  loss=16.811599  |====================|  [  11]    sgd  loss=15.610171  |====================|2026-09-05 23:13:53.396 [INFO] New best overall loss: 14.598162
+  [  12]   eval  loss=15.610171  |====================|  [  12]    sgd  loss=14.598162  |====================|2026-09-05 23:13:53.607 [INFO] New best overall loss: 13.728673
+  [  13]   eval  loss=14.598162  |====================|  [  13]    sgd  loss=13.728673  |====================|2026-09-05 23:13:53.934 [INFO] New best overall loss: 12.975550
+  [  14]   eval  loss=13.728673  |====================|  [  14]    sgd  loss=12.975550  |====================|2026-09-05 23:13:53.984 [INFO] New best overall loss: 12.913753
+  [  15]   eval  loss=12.975550  |====================|  [  15]    sgd  loss=12.913753  |====================|2026-09-05 23:13:54.023 [INFO] New best overall loss: 12.838780
+  [  16]   eval  loss=12.913753  |====================|  [  16]    sgd  loss=12.838780  |====================|2026-09-05 23:13:54.065 [INFO] New best overall loss: 12.763184
+  [  17]   eval  loss=12.838780  |====================|  [  17]    sgd  loss=12.763184  |====================|2026-09-05 23:13:54.111 [INFO] New best overall loss: 12.687629
+  [  18]   eval  loss=12.763184  |====================|  [  18]    sgd  loss=12.687629  |====================|2026-09-05 23:13:54.159 [INFO] New best overall loss: 12.612520
+  [  19]   eval  loss=12.687629  |====================|  [  19]    sgd  loss=12.612520  |====================|2026-09-05 23:13:54.200 [INFO] New best overall loss: 12.538195
+  [  20]   eval  loss=12.612520  |====================|  [  20]    sgd  loss=12.538195  |====================|2026-09-05 23:13:54.200 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-09-05 23:13:54.200 [INFO] Plateau triggered at epoch 20 (counter=0, loss=12.538195)
+2026-09-05 23:13:54.222 [INFO] Structural inability detected 鈥?surfacing bottleneck node 5 (blame=23.990777)
+2026-09-05 23:13:54.224 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:13:54.225 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:13:54.225 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=742734.875020 var_r=44.690141)
+2026-09-05 23:13:54.225 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.987297 a=node=2 b=node=3)
+2026-09-05 23:13:54.225 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-05 23:13:54.225 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-05 23:13:54.225 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:13:54.225 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:13:54.226 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:14:31.574 [INFO]   COMMIT rank=1 type=COMPOUND_DIVIDE_PRODUCT val_loss=1.273346 train_loss=1.173341 new train_loss=1.237526
+2026-09-05 23:14:31.575 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-05 23:14:31.576 [INFO] Plateau state reset 鈥?best_phase2=1.237526
+2026-09-05 23:14:31.576 [INFO] Plateau state reset — best_phase2=1.237526
+2026-09-05 23:14:31.833 [INFO] New best overall loss: 0.000062
+  [  21]   eval  loss=1.237526  |============|  [  21]    sgd  loss=0.000062  ||2026-09-05 23:14:32.021 [INFO] New best overall loss: 0.000045
+  [  22]   eval  loss=0.000062  ||  [  22]    sgd  loss=0.000045  ||2026-09-05 23:14:32.259 [INFO] New best overall loss: 0.000029
+  [  23]   eval  loss=0.000045  ||  [  23]    sgd  loss=0.000029  ||  [  24]   eval  loss=0.000029  ||  [  24]    sgd  loss=0.000076  ||2026-09-05 23:14:32.660 [INFO] New best overall loss: 0.000018
+  [  25]   eval  loss=0.000076  ||  [  25]    sgd  loss=0.000018  ||  [  26]   eval  loss=0.000018  ||  [  26]    sgd  loss=0.000024  ||  [  27]   eval  loss=0.000024  ||  [  27]    sgd  loss=0.000143  ||  [  28]   eval  loss=0.000143  ||  [  28]    sgd  loss=0.000386  ||  [  29]   eval  loss=0.000386  ||  [  29]    sgd  loss=0.004773  ||2026-09-05 23:14:33.453 [INFO] Divergence safety: loss=0.004773 > 5.000000x best=0.000018 for 3 epochs; restoring best snapshot
+2026-09-05 23:14:33.459 [INFO] Divergence LR reduced to 0.500000x
+  [  30]   eval  loss=0.000018  ||  [  30]    sgd  loss=0.000092  ||  [  31]   eval  loss=0.000092  ||  [  31]    sgd  loss=0.000061  ||  [  32]   eval  loss=0.000061  ||  [  32]    sgd  loss=0.000312  ||  [  33]   eval  loss=0.000312  ||  [  33]    sgd  loss=0.003185  ||  [  34]   eval  loss=0.003185  ||  [  34]    sgd  loss=0.043943  ||2026-09-05 23:14:34.378 [INFO] Divergence safety: loss=0.043943 > 5.000000x best=0.000018 for 3 epochs; restoring best snapshot
+2026-09-05 23:14:34.384 [INFO] Divergence LR reduced to 0.319070x
+  [  35]   eval  loss=0.000018  ||  [  35]    sgd  loss=0.000093  ||  [  36]   eval  loss=0.000093  ||  [  36]    sgd  loss=0.000042  ||  [  37]   eval  loss=0.000042  ||  [  37]    sgd  loss=0.000045  ||  [  38]   eval  loss=0.000045  ||  [  38]    sgd  loss=0.000041  ||  [  39]   eval  loss=0.000041  ||  [  39]    sgd  loss=0.000038  ||  [  40]   eval  loss=0.000038  ||  [  40]    sgd  loss=0.000035  ||  [  41]   eval  loss=0.000035  ||  [  41]    sgd  loss=0.000032  ||  [  42]   eval  loss=0.000032  ||  [  42]    sgd  loss=0.000029  ||  [  43]   eval  loss=0.000029  ||  [  43]    sgd  loss=0.000027  ||  [  44]   eval  loss=0.000027  ||  [  44]    sgd  loss=0.000024  ||  [  45]   eval  loss=0.000024  ||  [  45]    sgd  loss=0.000022  ||  [  46]   eval  loss=0.000022  ||  [  46]    sgd  loss=0.490581  |====|  [  47]   eval  loss=0.490581  |====|  [  47]    sgd  loss=0.000629  ||  [  48]   eval  loss=0.000629  ||  [  48]    sgd  loss=0.657480  |======|2026-09-05 23:14:39.631 [INFO] Divergence safety: loss=0.657480 > 5.000000x best=0.000018 for 3 epochs; restoring best snapshot
+2026-09-05 23:14:39.710 [INFO] Divergence LR reduced to 0.315869x
+  [  49]   eval  loss=0.000018  ||  [  49]    sgd  loss=0.000093  ||  [  50]   eval  loss=0.000093  ||  [  50]    sgd  loss=0.000041  ||  [  51]   eval  loss=0.000041  ||  [  51]    sgd  loss=0.000045  ||  [  52]   eval  loss=0.000045  ||  [  52]    sgd  loss=0.000041  ||  [  53]   eval  loss=0.000041  ||  [  53]    sgd  loss=0.000038  ||  [  54]   eval  loss=0.000038  ||  [  54]    sgd  loss=0.000035  ||  [  55]   eval  loss=0.000035  ||  [  55]    sgd  loss=0.000032  ||  [  56]   eval  loss=0.000032  ||  [  56]    sgd  loss=0.000029  ||  [  57]   eval  loss=0.000029  ||  [  57]    sgd  loss=0.000026  ||  [  58]   eval  loss=0.000026  ||  [  58]    sgd  loss=0.000024  ||  [  59]   eval  loss=0.000024  ||  [  59]    sgd  loss=0.000022  ||  [  60]   eval  loss=0.000022  ||  [  60]    sgd  loss=0.481984  |====|  [  61]   eval  loss=0.481984  |====|  [  61]    sgd  loss=0.000128  ||  [  62]   eval  loss=0.000128  ||  [  62]    sgd  loss=0.228822  |==|2026-09-05 23:14:43.161 [INFO] Divergence safety: loss=0.228822 > 5.000000x best=0.000018 for 3 epochs; restoring best snapshot
+2026-09-05 23:14:43.167 [INFO] Divergence LR reduced to 0.312699x
+  [  63]   eval  loss=0.000018  ||  [  63]    sgd  loss=0.000093  ||  [  64]   eval  loss=0.000093  ||  [  64]    sgd  loss=0.000041  ||  [  65]   eval  loss=0.000041  ||  [  65]    sgd  loss=0.000045  ||  [  66]   eval  loss=0.000045  ||  [  66]    sgd  loss=0.000041  ||  [  67]   eval  loss=0.000041  ||  [  67]    sgd  loss=0.000038  ||  [  68]   eval  loss=0.000038  ||  [  68]    sgd  loss=0.000034  ||  [  69]   eval  loss=0.000034  ||  [  69]    sgd  loss=0.000031  ||  [  70]   eval  loss=0.000031  ||  [  70]    sgd  loss=0.021738  ||  [  71]   eval  loss=0.021738  ||  [  71]    sgd  loss=0.007468  ||  [  72]   eval  loss=0.007468  ||  [  72]    sgd  loss=0.032091  ||2026-09-05 23:14:44.898 [INFO] Divergence safety: loss=0.032091 > 5.000000x best=0.000018 for 3 epochs; restoring best snapshot
+2026-09-05 23:14:44.911 [INFO] Divergence LR reduced to 0.254677x
+  [  73]   eval  loss=0.000018  ||  [  73]    sgd  loss=0.000028  ||  [  74]   eval  loss=0.000028  ||  [  74]    sgd  loss=0.000022  ||2026-09-05 23:14:45.151 [INFO] New best overall loss: 0.000016
+  [  75]   eval  loss=0.000022  ||  [  75]    sgd  loss=0.000016  ||2026-09-05 23:14:45.238 [INFO] New best overall loss: 0.000011
+  [  76]   eval  loss=0.000016  ||  [  76]    sgd  loss=0.000011  ||2026-09-05 23:14:45.334 [INFO] New best overall loss: 0.000009
+  [  77]   eval  loss=0.000011  ||  [  77]    sgd  loss=0.000009  ||2026-09-05 23:14:45.413 [INFO] New best overall loss: 0.000007
+  [  78]   eval  loss=0.000009  ||  [  78]    sgd  loss=0.000007  ||  [  79]   eval  loss=0.000007  ||  [  79]    sgd  loss=0.000025  ||  [  80]   eval  loss=0.000025  ||  [  80]    sgd  loss=0.000016  ||  [  81]   eval  loss=0.000016  ||  [  81]    sgd  loss=0.000055  ||  [  82]   eval  loss=0.000055  ||  [  82]    sgd  loss=0.000300  ||  [  83]   eval  loss=0.000300  ||  [  83]    sgd  loss=0.003296  ||2026-09-05 23:14:45.874 [INFO] Divergence safety: loss=0.003296 > 5.000000x best=0.000007 for 3 epochs; restoring best snapshot
+2026-09-05 23:14:45.880 [INFO] Divergence LR reduced to 0.217792x
+  [  84]   eval  loss=0.000018  ||  [  84]    sgd  loss=0.000016  ||  [  85]   eval  loss=0.000016  ||  [  85]    sgd  loss=0.000023  ||  [  86]   eval  loss=0.000023  ||  [  86]    sgd  loss=0.000018  ||  [  87]   eval  loss=0.000018  ||  [  87]    sgd  loss=0.000015  ||  [  88]   eval  loss=0.000015  ||  [  88]    sgd  loss=0.000012  ||  [  89]   eval  loss=0.000012  ||  [  89]    sgd  loss=0.000009  ||  [  90]   eval  loss=0.000009  ||  [  90]    sgd  loss=0.000008  ||2026-09-05 23:14:46.519 [INFO] Forced structural trigger at epoch 90 (epochs since last structural: 20)
+2026-09-05 23:14:46.519 [INFO] Plateau triggered at epoch 90 (counter=0, loss=0.000008)
+2026-09-05 23:14:46.547 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.520248)
+2026-09-05 23:14:46.548 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:14:46.548 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:14:46.548 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:14:46.548 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:14:46.549 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:14:46.549 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:14:46.549 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:14:46.549 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:14:55.217 [INFO] New best overall loss: 0.000005
+  [  91]   eval  loss=0.000008  ||  [  91]    sgd  loss=0.000005  ||2026-09-05 23:14:55.218 [INFO] Forced structural trigger at epoch 91 (epochs since last structural: 21)
+2026-09-05 23:14:55.218 [INFO] Plateau triggered at epoch 91 (counter=0, loss=0.000005)
+2026-09-05 23:14:55.312 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.504302)
+2026-09-05 23:14:55.314 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:14:55.314 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:14:55.314 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:14:55.314 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:14:55.314 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:14:55.314 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:14:55.314 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:14:55.314 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:15:04.346 [INFO] New best overall loss: 0.000005
+  [  92]   eval  loss=0.000005  ||  [  92]    sgd  loss=0.000005  ||2026-09-05 23:15:04.346 [INFO] Forced structural trigger at epoch 92 (epochs since last structural: 22)
+2026-09-05 23:15:04.346 [INFO] Plateau triggered at epoch 92 (counter=0, loss=0.000005)
+2026-09-05 23:15:04.440 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.486913)
+2026-09-05 23:15:04.441 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:15:04.444 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:15:04.445 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:15:04.445 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:15:04.445 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:15:04.445 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:15:04.445 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:15:04.445 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [  93]   eval  loss=0.000005  ||  [  93]    sgd  loss=0.000005  ||2026-09-05 23:15:15.654 [INFO] Forced structural trigger at epoch 93 (epochs since last structural: 23)
+2026-09-05 23:15:15.654 [INFO] Plateau triggered at epoch 93 (counter=1, loss=0.000005)
+2026-09-05 23:15:15.829 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.460286)
+2026-09-05 23:15:15.830 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:15:15.831 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:15:15.831 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:15:15.831 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:15:15.831 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:15:15.831 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:15:15.831 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:15:15.831 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [  94]   eval  loss=0.000005  ||  [  94]    sgd  loss=0.000010  ||2026-09-05 23:15:23.244 [INFO] Forced structural trigger at epoch 94 (epochs since last structural: 24)
+2026-09-05 23:15:23.244 [INFO] Plateau triggered at epoch 94 (counter=2, loss=0.000010)
+2026-09-05 23:15:23.457 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.442507)
+2026-09-05 23:15:23.458 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:15:23.458 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:15:23.458 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:15:23.458 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:15:23.458 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:15:23.459 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:15:23.468 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:15:23.469 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:15:34.777 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [  95]   eval  loss=0.000010  ||  [  95]    sgd  loss=0.000027  ||2026-09-05 23:15:35.400 [INFO] Structural search in cooldown (9 epochs left) at epoch 95 鈥?letting SGD settle
+  [  96]   eval  loss=0.000027  ||  [  96]    sgd  loss=0.000181  ||2026-09-05 23:15:36.016 [INFO] Structural search in cooldown (8 epochs left) at epoch 96 鈥?letting SGD settle
+  [  97]   eval  loss=0.000181  ||  [  97]    sgd  loss=0.003348  ||2026-09-05 23:15:36.557 [INFO] Divergence safety: loss=0.003348 > 5.000000x best=0.000005 for 3 epochs; restoring best snapshot
+2026-09-05 23:15:36.686 [INFO] Divergence LR reduced to 0.215607x
+2026-09-05 23:15:36.686 [INFO] Structural search in cooldown (7 epochs left) at epoch 97 鈥?letting SGD settle
+  [  98]   eval  loss=0.000018  ||  [  98]    sgd  loss=0.000016  ||2026-09-05 23:15:37.193 [INFO] Structural search in cooldown (6 epochs left) at epoch 98 鈥?letting SGD settle
+  [  99]   eval  loss=0.000016  ||  [  99]    sgd  loss=0.013007  ||2026-09-05 23:15:37.616 [INFO] Structural search in cooldown (5 epochs left) at epoch 99 鈥?letting SGD settle
+  [ 100]   eval  loss=0.013007  ||  [ 100]    sgd  loss=0.000011  ||2026-09-05 23:15:38.145 [INFO] Structural search in cooldown (4 epochs left) at epoch 100 鈥?letting SGD settle
+  [ 101]   eval  loss=0.000011  ||  [ 101]    sgd  loss=0.000016  ||2026-09-05 23:15:38.609 [INFO] Structural search in cooldown (3 epochs left) at epoch 101 鈥?letting SGD settle
+  [ 102]   eval  loss=0.000016  ||  [ 102]    sgd  loss=0.000008  ||2026-09-05 23:15:39.144 [INFO] Structural search in cooldown (2 epochs left) at epoch 102 鈥?letting SGD settle
+  [ 103]   eval  loss=0.000008  ||  [ 103]    sgd  loss=0.000010  ||2026-09-05 23:15:39.618 [INFO] Structural search in cooldown (1 epochs left) at epoch 103 鈥?letting SGD settle
+  [ 104]   eval  loss=0.000010  ||  [ 104]    sgd  loss=0.000009  ||2026-09-05 23:15:40.095 [INFO] Forced structural trigger at epoch 104 (epochs since last structural: 34)
+2026-09-05 23:15:40.095 [INFO] Plateau triggered at epoch 104 (counter=0, loss=0.000009)
+2026-09-05 23:15:40.288 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.519663)
+2026-09-05 23:15:40.288 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:15:40.289 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:15:40.289 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:15:40.289 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:15:40.289 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:15:40.289 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:15:40.289 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:15:40.289 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 105]   eval  loss=0.000009  ||  [ 105]    sgd  loss=0.000015  ||2026-09-05 23:15:50.557 [INFO] Forced structural trigger at epoch 105 (epochs since last structural: 35)
+2026-09-05 23:15:50.557 [INFO] Plateau triggered at epoch 105 (counter=1, loss=0.000015)
+2026-09-05 23:15:50.756 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.499797)
+2026-09-05 23:15:50.757 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:15:50.758 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:15:50.758 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:15:50.758 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:15:50.758 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:15:50.764 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:15:50.764 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:15:50.764 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:16:01.417 [INFO] New best overall loss: 0.000005
+  [ 106]   eval  loss=0.000015  ||  [ 106]    sgd  loss=0.000005  ||2026-09-05 23:16:01.417 [INFO] Forced structural trigger at epoch 106 (epochs since last structural: 36)
+2026-09-05 23:16:01.417 [INFO] Plateau triggered at epoch 106 (counter=0, loss=0.000005)
+2026-09-05 23:16:01.511 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.490510)
+2026-09-05 23:16:01.512 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:16:01.512 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:16:01.512 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:16:01.512 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:16:01.512 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:16:01.512 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:16:01.512 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:16:01.512 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 107]   eval  loss=0.000005  ||  [ 107]    sgd  loss=0.000005  ||2026-09-05 23:16:10.834 [INFO] Forced structural trigger at epoch 107 (epochs since last structural: 37)
+2026-09-05 23:16:10.834 [INFO] Plateau triggered at epoch 107 (counter=1, loss=0.000005)
+2026-09-05 23:16:10.915 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.471816)
+2026-09-05 23:16:10.916 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:16:10.916 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:16:10.916 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:16:10.916 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:16:10.916 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:16:10.916 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:16:10.916 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:16:10.916 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:16:19.578 [INFO] New best overall loss: 0.000004
+  [ 108]   eval  loss=0.000005  ||  [ 108]    sgd  loss=0.000004  ||2026-09-05 23:16:19.579 [INFO] Forced structural trigger at epoch 108 (epochs since last structural: 38)
+2026-09-05 23:16:19.579 [INFO] Plateau triggered at epoch 108 (counter=0, loss=0.000004)
+2026-09-05 23:16:19.690 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.444782)
+2026-09-05 23:16:19.691 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:16:19.693 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:16:19.697 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:16:19.697 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:16:19.697 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:16:19.697 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:16:19.697 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:16:19.697 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:16:30.930 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-09-05 23:16:31.268 [INFO] New best overall loss: 0.000004
+  [ 109]   eval  loss=0.000004  ||  [ 109]    sgd  loss=0.000004  ||2026-09-05 23:16:31.269 [INFO] Structural search in cooldown (9 epochs left) at epoch 109 鈥?letting SGD settle
+  [ 110]   eval  loss=0.000004  ||  [ 110]    sgd  loss=0.000084  ||2026-09-05 23:16:31.629 [INFO] Structural search in cooldown (8 epochs left) at epoch 110 鈥?letting SGD settle
+  [ 111]   eval  loss=0.000084  ||  [ 111]    sgd  loss=0.002110  ||2026-09-05 23:16:32.099 [INFO] Structural search in cooldown (7 epochs left) at epoch 111 鈥?letting SGD settle
+  [ 112]   eval  loss=0.002110  ||  [ 112]    sgd  loss=0.006903  ||2026-09-05 23:16:32.601 [INFO] Divergence safety: loss=0.006903 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-05 23:16:32.678 [INFO] Divergence LR reduced to 0.224115x
+2026-09-05 23:16:32.678 [INFO] Structural search in cooldown (6 epochs left) at epoch 112 鈥?letting SGD settle
+  [ 113]   eval  loss=0.000018  ||  [ 113]    sgd  loss=0.000030  ||2026-09-05 23:16:33.033 [INFO] Structural search in cooldown (5 epochs left) at epoch 113 鈥?letting SGD settle
+  [ 114]   eval  loss=0.000030  ||  [ 114]    sgd  loss=0.000024  ||2026-09-05 23:16:33.328 [INFO] Structural search in cooldown (4 epochs left) at epoch 114 鈥?letting SGD settle
+  [ 115]   eval  loss=0.000024  ||  [ 115]    sgd  loss=0.000020  ||2026-09-05 23:16:33.675 [INFO] Divergence safety: loss=0.000020 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-05 23:16:33.753 [INFO] Divergence LR reduced to 0.129721x
+2026-09-05 23:16:33.754 [INFO] Structural search in cooldown (3 epochs left) at epoch 115 鈥?letting SGD settle
+  [ 116]   eval  loss=0.000018  ||  [ 116]    sgd  loss=0.002733  ||2026-09-05 23:16:34.017 [INFO] Structural search in cooldown (2 epochs left) at epoch 116 鈥?letting SGD settle
+  [ 117]   eval  loss=0.002733  ||  [ 117]    sgd  loss=0.011307  ||2026-09-05 23:16:34.314 [INFO] Structural search in cooldown (1 epochs left) at epoch 117 鈥?letting SGD settle
+  [ 118]   eval  loss=0.011307  ||  [ 118]    sgd  loss=0.002141  ||2026-09-05 23:16:34.598 [INFO] Divergence safety: loss=0.002141 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-05 23:16:34.694 [INFO] Divergence LR reduced to 0.075084x
+2026-09-05 23:16:34.694 [INFO] Forced structural trigger at epoch 118 (epochs since last structural: 48)
+2026-09-05 23:16:34.694 [INFO] Plateau triggered at epoch 118 (counter=0, loss=0.000018)
+2026-09-05 23:16:34.846 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.605580)
+2026-09-05 23:16:34.851 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:16:34.852 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:16:34.852 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:16:34.852 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:16:34.852 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:16:34.852 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:16:34.852 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:16:34.852 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 119]   eval  loss=0.000018  ||  [ 119]    sgd  loss=0.000018  ||2026-09-05 23:16:46.484 [INFO] Forced structural trigger at epoch 119 (epochs since last structural: 49)
+2026-09-05 23:16:46.485 [INFO] Plateau triggered at epoch 119 (counter=0, loss=0.000018)
+2026-09-05 23:16:46.620 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.600930)
+2026-09-05 23:16:46.621 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:16:46.625 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:16:46.625 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:16:46.625 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:16:46.625 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:16:46.625 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:16:46.627 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:16:46.627 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 120]   eval  loss=0.000018  ||  [ 120]    sgd  loss=0.000017  ||2026-09-05 23:16:57.327 [INFO] Forced structural trigger at epoch 120 (epochs since last structural: 50)
+2026-09-05 23:16:57.327 [INFO] Plateau triggered at epoch 120 (counter=0, loss=0.000017)
+2026-09-05 23:16:57.435 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.598046)
+2026-09-05 23:16:57.436 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:16:57.440 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:16:57.440 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:16:57.440 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:16:57.440 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:16:57.440 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:16:57.440 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:16:57.440 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 121]   eval  loss=0.000017  ||  [ 121]    sgd  loss=0.000016  ||2026-09-05 23:17:10.012 [INFO] Forced structural trigger at epoch 121 (epochs since last structural: 51)
+2026-09-05 23:17:10.013 [INFO] Plateau triggered at epoch 121 (counter=0, loss=0.000016)
+2026-09-05 23:17:10.124 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.594954)
+2026-09-05 23:17:10.125 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:17:10.129 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:17:10.129 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:17:10.129 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:17:10.129 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:17:10.129 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:17:10.129 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:17:10.129 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 122]   eval  loss=0.000016  ||  [ 122]    sgd  loss=0.000015  ||2026-09-05 23:17:22.570 [INFO] Forced structural trigger at epoch 122 (epochs since last structural: 52)
+2026-09-05 23:17:22.570 [INFO] Plateau triggered at epoch 122 (counter=0, loss=0.000015)
+2026-09-05 23:17:22.678 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.591731)
+2026-09-05 23:17:22.679 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:17:22.679 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:17:22.679 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:17:22.679 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:17:22.679 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:17:22.679 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:17:22.679 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:17:22.679 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:17:35.183 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [ 123]   eval  loss=0.000015  ||  [ 123]    sgd  loss=0.000014  ||2026-09-05 23:17:35.481 [INFO] Structural search in cooldown (9 epochs left) at epoch 123 鈥?letting SGD settle
+  [ 124]   eval  loss=0.000014  ||  [ 124]    sgd  loss=0.000014  ||2026-09-05 23:17:35.784 [INFO] Structural search in cooldown (8 epochs left) at epoch 124 鈥?letting SGD settle
+  [ 125]   eval  loss=0.000014  ||  [ 125]    sgd  loss=0.000013  ||2026-09-05 23:17:36.123 [INFO] Structural search in cooldown (7 epochs left) at epoch 125 鈥?letting SGD settle
+  [ 126]   eval  loss=0.000013  ||  [ 126]    sgd  loss=0.000012  ||2026-09-05 23:17:36.421 [INFO] Structural search in cooldown (6 epochs left) at epoch 126 鈥?letting SGD settle
+  [ 127]   eval  loss=0.000012  ||  [ 127]    sgd  loss=0.000013  ||2026-09-05 23:17:36.793 [INFO] Structural search in cooldown (5 epochs left) at epoch 127 鈥?letting SGD settle
+  [ 128]   eval  loss=0.000013  ||  [ 128]    sgd  loss=0.000018  ||2026-09-05 23:17:37.234 [INFO] Structural search in cooldown (4 epochs left) at epoch 128 鈥?letting SGD settle
+  [ 129]   eval  loss=0.000018  ||  [ 129]    sgd  loss=0.000013  ||2026-09-05 23:17:37.659 [INFO] Structural search in cooldown (3 epochs left) at epoch 129 鈥?letting SGD settle
+  [ 130]   eval  loss=0.000013  ||  [ 130]    sgd  loss=0.000012  ||2026-09-05 23:17:38.160 [INFO] Structural search in cooldown (2 epochs left) at epoch 130 鈥?letting SGD settle
+  [ 131]   eval  loss=0.000012  ||  [ 131]    sgd  loss=0.009959  ||2026-09-05 23:17:38.481 [INFO] Structural search in cooldown (1 epochs left) at epoch 131 鈥?letting SGD settle
+  [ 132]   eval  loss=0.009959  ||  [ 132]    sgd  loss=0.007357  ||2026-09-05 23:17:38.772 [INFO] Forced structural trigger at epoch 132 (epochs since last structural: 62)
+2026-09-05 23:17:38.772 [INFO] Plateau triggered at epoch 132 (counter=0, loss=0.007357)
+2026-09-05 23:17:38.880 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.719809)
+2026-09-05 23:17:38.887 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:17:38.887 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:17:38.887 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:17:38.887 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:17:38.887 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:17:38.887 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:17:38.887 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:17:38.887 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 133]   eval  loss=0.007357  ||  [ 133]    sgd  loss=0.007645  ||2026-09-05 23:17:51.941 [INFO] Divergence safety: loss=0.007645 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-05 23:17:51.960 [INFO] Divergence LR reduced to 0.078047x
+2026-09-05 23:17:51.960 [INFO] Forced structural trigger at epoch 133 (epochs since last structural: 63)
+2026-09-05 23:17:51.960 [INFO] Plateau triggered at epoch 133 (counter=0, loss=0.000018)
+2026-09-05 23:17:52.004 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.605580)
+2026-09-05 23:17:52.005 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:17:52.006 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:17:52.006 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:17:52.006 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:17:52.006 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:17:52.006 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:17:52.006 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:17:52.006 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 134]   eval  loss=0.000018  ||  [ 134]    sgd  loss=0.000018  ||2026-09-05 23:17:58.060 [INFO] Forced structural trigger at epoch 134 (epochs since last structural: 64)
+2026-09-05 23:17:58.060 [INFO] Plateau triggered at epoch 134 (counter=0, loss=0.000018)
+2026-09-05 23:17:58.243 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.600824)
+2026-09-05 23:17:58.244 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:17:58.244 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:17:58.244 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:17:58.244 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:17:58.249 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:17:58.249 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:17:58.249 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:17:58.249 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 135]   eval  loss=0.000018  ||  [ 135]    sgd  loss=0.000017  ||2026-09-05 23:18:10.704 [INFO] Forced structural trigger at epoch 135 (epochs since last structural: 65)
+2026-09-05 23:18:10.704 [INFO] Plateau triggered at epoch 135 (counter=0, loss=0.000017)
+2026-09-05 23:18:10.738 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.597842)
+2026-09-05 23:18:10.739 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:18:10.740 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:18:10.740 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:18:10.740 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:18:10.740 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:18:10.740 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:18:10.741 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:18:10.741 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 136]   eval  loss=0.000017  ||  [ 136]    sgd  loss=0.000016  ||2026-09-05 23:18:22.977 [INFO] Forced structural trigger at epoch 136 (epochs since last structural: 66)
+2026-09-05 23:18:22.978 [INFO] Plateau triggered at epoch 136 (counter=0, loss=0.000016)
+2026-09-05 23:18:23.013 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.594644)
+2026-09-05 23:18:23.015 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:18:23.015 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:18:23.015 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:18:23.015 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:18:23.016 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:18:23.016 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:18:23.016 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:18:23.016 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:18:34.944 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+  [ 137]   eval  loss=0.000016  ||  [ 137]    sgd  loss=0.000015  ||2026-09-05 23:18:35.032 [INFO] Structural search in cooldown (9 epochs left) at epoch 137 鈥?letting SGD settle
+  [ 138]   eval  loss=0.000015  ||  [ 138]    sgd  loss=0.000014  ||2026-09-05 23:18:35.117 [INFO] Structural search in cooldown (8 epochs left) at epoch 138 鈥?letting SGD settle
+  [ 139]   eval  loss=0.000014  ||  [ 139]    sgd  loss=0.000013  ||2026-09-05 23:18:35.383 [INFO] Structural search in cooldown (7 epochs left) at epoch 139 鈥?letting SGD settle
+  [ 140]   eval  loss=0.000013  ||  [ 140]    sgd  loss=0.000013  ||2026-09-05 23:18:35.754 [INFO] Structural search in cooldown (6 epochs left) at epoch 140 鈥?letting SGD settle
+  [ 141]   eval  loss=0.000013  ||  [ 141]    sgd  loss=0.000013  ||2026-09-05 23:18:36.175 [INFO] Structural search in cooldown (5 epochs left) at epoch 141 鈥?letting SGD settle
+  [ 142]   eval  loss=0.000013  ||  [ 142]    sgd  loss=0.000013  ||2026-09-05 23:18:36.729 [INFO] Structural search in cooldown (4 epochs left) at epoch 142 鈥?letting SGD settle
+  [ 143]   eval  loss=0.000013  ||  [ 143]    sgd  loss=0.000014  ||2026-09-05 23:18:37.240 [INFO] Structural search in cooldown (3 epochs left) at epoch 143 鈥?letting SGD settle
+  [ 144]   eval  loss=0.000014  ||  [ 144]    sgd  loss=0.000013  ||2026-09-05 23:18:37.641 [INFO] Structural search in cooldown (2 epochs left) at epoch 144 鈥?letting SGD settle
+  [ 145]   eval  loss=0.000013  ||  [ 145]    sgd  loss=0.007962  ||2026-09-05 23:18:37.912 [INFO] Structural search in cooldown (1 epochs left) at epoch 145 鈥?letting SGD settle
+  [ 146]   eval  loss=0.007962  ||  [ 146]    sgd  loss=0.007378  ||2026-09-05 23:18:38.208 [INFO] Forced structural trigger at epoch 146 (epochs since last structural: 76)
+2026-09-05 23:18:38.208 [INFO] Plateau triggered at epoch 146 (counter=0, loss=0.007378)
+2026-09-05 23:18:38.295 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.723837)
+2026-09-05 23:18:38.297 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:18:38.298 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:18:38.298 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:18:38.298 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:18:38.298 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:18:38.298 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:18:38.298 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:18:38.298 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 147]   eval  loss=0.007378  ||  [ 147]    sgd  loss=0.006918  ||2026-09-05 23:18:50.227 [INFO] Divergence safety: loss=0.006918 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-05 23:18:50.310 [INFO] Divergence LR reduced to 0.077264x
+2026-09-05 23:18:50.310 [INFO] Forced structural trigger at epoch 147 (epochs since last structural: 77)
+2026-09-05 23:18:50.310 [INFO] Plateau triggered at epoch 147 (counter=0, loss=0.000018)
+2026-09-05 23:18:50.431 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.605580)
+2026-09-05 23:18:50.435 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:18:50.436 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:18:50.436 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:18:50.436 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:18:50.436 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:18:50.436 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:18:50.436 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:18:50.436 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 148]   eval  loss=0.000018  ||  [ 148]    sgd  loss=0.000018  ||2026-09-05 23:19:00.795 [INFO] Forced structural trigger at epoch 148 (epochs since last structural: 78)
+2026-09-05 23:19:00.795 [INFO] Plateau triggered at epoch 148 (counter=0, loss=0.000018)
+2026-09-05 23:19:00.944 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.600852)
+2026-09-05 23:19:00.949 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:19:00.949 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:19:00.949 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:19:00.949 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:19:00.950 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:19:00.950 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:19:00.950 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:19:00.950 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 149]   eval  loss=0.000018  ||  [ 149]    sgd  loss=0.000017  ||2026-09-05 23:19:12.291 [INFO] Forced structural trigger at epoch 149 (epochs since last structural: 79)
+2026-09-05 23:19:12.291 [INFO] Plateau triggered at epoch 149 (counter=0, loss=0.000017)
+2026-09-05 23:19:12.319 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.597896)
+2026-09-05 23:19:12.320 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:19:12.321 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:19:12.321 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:19:12.321 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:19:12.321 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:19:12.321 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:19:12.321 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:19:12.321 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+  [ 150]   eval  loss=0.000017  ||  [ 150]    sgd  loss=0.000016  ||2026-09-05 23:19:19.673 [INFO] Forced structural trigger at epoch 150 (epochs since last structural: 80)
+2026-09-05 23:19:19.673 [INFO] Plateau triggered at epoch 150 (counter=0, loss=0.000016)
+2026-09-05 23:19:19.708 [INFO] Structural inability detected 鈥?surfacing bottleneck node 12 (blame=16.594727)
+2026-09-05 23:19:19.709 [INFO] [PROFILE] F=3 N=267 var_r=44.6901 bound_ratio=2.9836 poly_r2=0.9347 a12=0.8235 max_coef[i=3]=-8.1958 sobol_pair(0,1)=0.0686 quad=[5.726,5.726,5.726,5.726] L_max=742734.875 | flags: BOUNDED SHARP
+2026-09-05 23:19:19.709 [INFO] IFELSE set-guided split: thr=1.987297 (SSE reduction 1578.487500 over 267 paired samples)
+2026-09-05 23:19:19.710 [INFO] MULTIPLY dedup: switching to input=1*input=3
+2026-09-05 23:19:19.710 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=3)
+2026-09-05 23:19:19.710 [INFO] Candidate emitted: DIVIDE_INJECTION (input=3/input=1)
+2026-09-05 23:19:19.710 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-05 23:19:19.710 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-05 23:19:19.710 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-05 23:19:26.678 [INFO] Structural cooldown engaged: 10 epochs off after 5 consecutive failed structural cycles
+2026-09-05 23:19:26.679 [INFO] Restored best-val graph snapshot (val=0.000019, train=0.000018)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         150
+  SGD epochs run:       7500
+  Structural changes:   1
+  Failed commits:       380
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         305.261
+  Final loss:           1.81496e-05
+  Best loss:            3.60731e-06
+  Wall time:            335875 ms
+
+  [Expression] 40.746*(tanh(0.128*x0+0.053*x1-2.032*x2-2.335)+(0.025*(((x0*x1)*(x0*x1))/((x2*x2)*x2))-0.194))+48.669
+
+  [Library] Behavioral fingerprint: k=3 bounded=0 interact=1 sign_sym=1 sharp=1 lipsch=27697128.5
+  [Library] Pattern: single_tanh
+  [Library] Saved (library now has 1 entries)
+  [Library] Extracted 2 sub-expression block(s) (library now has 3 entries)
+
+================================================
+  Held-out Evaluation  (499 samples)
+================================================
+  Eval R2[out0]:   1.000000
+  Eval MSE[out0]:  0.000019   MAE: 0.002186

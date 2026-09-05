@@ -660,6 +660,24 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                 // Phase 5: Generate scored, ranked candidate hypotheses
                 std::vector<Hypothesis> candidates = generate_candidates(diag, signals, ftype, profile);
 
+                // M6.12 arc-price: parole sweep (release families whose
+                // demotion expired — investment arcs may resume; the
+                // window was cleared at demotion so they start fresh).
+                if (!arc_parole_until_epoch_.empty()) {
+                    for (auto it = arc_parole_until_epoch_.begin();
+                         it != arc_parole_until_epoch_.end(); ) {
+                        if (epoch >= it->second) {
+                            Logger::info("ARC-PRICE parole: releasing family "
+                                        + std::to_string(it->first));
+                            it = arc_parole_until_epoch_.erase(it);
+                        } else {
+                            ++it;
+                        }
+                    }
+                }
+                // (M6.12 demotion itself is applied inside
+                // generate_candidates — the family_penalty choke point.)
+
                 // === Parallel candidate evaluation ===
                 // Pre-create shadows for all viable candidates, then validate
                 // them concurrently. Pick the lowest-val_loss acceptable
@@ -1021,13 +1039,45 @@ double EvolutionEngine::evolve(std::function<void(int,double,const std::string&)
                                     BehavioralFingerprint post_fp =
                                         compute_fingerprint(Xr, yr);
                                     double move = fingerprint_distance(arc_pre_fp, post_fp);
+                                    double vd = baseline_val - results[winner_idx].val_loss;
                                     Logger::info(
                                         "  [ARC-PRICE] family="
                                         + std::string(hyp_names[committed_hyp_type])
                                         + " fingerprint_move=" + std::to_string(move)
                                         + " (val_delta="
-                                        + std::to_string(baseline_val - results[winner_idx].val_loss)
+                                        + std::to_string(vd)
                                         + ")");
+                                    // M6.12 pricing: rolling (move x val_delta)
+                                    // per family. Window full + all ~ 0 =
+                                    // grind -> demote (parole later).
+                                    double product = move * std::abs(vd);
+                                    auto& wq2 = arc_window_[committed_hyp_type];
+                                    wq2.push_back(product);
+                                    if (wq2.size() > static_cast<size_t>(config::ARC_PRICE_WINDOW)) {
+                                        wq2.pop_front();
+                                    }
+                                    if (wq2.size() == static_cast<size_t>(config::ARC_PRICE_WINDOW)
+                                        && arc_parole_until_epoch_.find(committed_hyp_type)
+                                               == arc_parole_until_epoch_.end()) {
+                                        bool all_zero = true;
+                                        for (double p2 : wq2) {
+                                            if (p2 >= config::ARC_PRICE_ZERO_PRODUCT) {
+                                                all_zero = false;
+                                                break;
+                                            }
+                                        }
+                                        if (all_zero) {
+                                            arc_parole_until_epoch_[committed_hyp_type] =
+                                                epoch + config::ARC_PRICE_PAROLE;
+                                            wq2.clear();
+                                            Logger::info(
+                                                "  [ARC-PRICE] DEMOTE "
+                                                + std::string(hyp_names[committed_hyp_type])
+                                                + " for "
+                                                + std::to_string(config::ARC_PRICE_PAROLE)
+                                                + " epochs (window of zero products)");
+                                        }
+                                    }
                                 }
                             } catch (...) {
                                 // diagnostic only — never block a commit
@@ -4189,6 +4239,22 @@ if (profile.bounded
                                + std::to_string(static_cast<int>(c.hyp.type))
                                + " score " + std::to_string(before)
                                + " -> " + std::to_string(c.score));
+            }
+        }
+    }
+    // M6.12 arc-price demotion: families whose rolling (move x val_delta)
+    // window went zero pay a score penalty until parole. Demote, never
+    // suppress — the M1.3 lesson.
+    if (!arc_parole_until_epoch_.empty()) {
+        for (auto& c : candidates) {
+            auto pit = arc_parole_until_epoch_.find(static_cast<int>(c.hyp.type));
+            if (pit != arc_parole_until_epoch_.end()) {
+                double before = c.score;
+                c.score = std::max(0.01, c.score - config::ARC_PRICE_DEMOTE);
+                Logger::info("ARC-PRICE demote: type="
+                            + std::to_string(static_cast<int>(c.hyp.type))
+                            + " score " + std::to_string(before)
+                            + " -> " + std::to_string(c.score));
             }
         }
     }
