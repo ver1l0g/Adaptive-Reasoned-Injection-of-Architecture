@@ -1,0 +1,7 @@
+# feynman26.txt — 5-seed certification battery on aria26 (linear divprod gain).
+# Usage: powershell -File harness\run_pool.ps1 -TaskFile harness\feynman26.txt -Slots 4
+python harness\run_feynman.py ..\aria26.exe 50 1 > results\f26_s1_out.txt 2>&1
+python harness\run_feynman.py ..\aria26.exe 50 2 > results\f26_s2_out.txt 2>&1
+python harness\run_feynman.py ..\aria26.exe 50 3 > results\f26_s3_out.txt 2>&1
+python harness\run_feynman.py ..\aria26.exe 50 4 > results\f26_s4_out.txt 2>&1
+python harness\run_feynman.py ..\aria26.exe 50 5 > results\f26_s5_out.txt 2>&1
