@@ -1,0 +1,9 @@
+4
+"I.6.2.csv"	"tanh(wx+b) neuron"	"tanh(c*v+c*v+c)"	"neuron_unit"
+0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+"I.6.2.csv"	"tanh(wx+b) neuron"	"tanh(c*v+c*vc)"	"neuron_unit"
+0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+"I.6.2.csv"	"tanh(wx+b) neuron"	"tanh(c*vc*v+c)"	"neuron_unit"
+0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+"I.6.2.csv"	"tanh(wx+b) neuron"	"tanh(c*vc*vc)"	"neuron_unit"
+0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0

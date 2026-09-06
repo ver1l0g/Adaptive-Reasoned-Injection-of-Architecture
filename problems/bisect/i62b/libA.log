@@ -1,0 +1,37 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-feynman\I.6.2b.csv
+  Loaded 999 samples
+  Train: 799  Validation: 200
+
+  Loaded subgraph library: 4 entries
+  Loaded failure library: 6 records
+Starting evolution...
+2026-09-06 13:52:01.073 [INFO] New best overall loss: 0.043692
+  [   1]   eval  loss=4.000214  |====================|  [   1]    sgd  loss=0.043692  ||2026-09-06 13:52:01.258 [INFO] New best overall loss: 0.028559
+  [   2]   eval  loss=0.043692  ||  [   2]    sgd  loss=0.028559  ||
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         2
+  SGD epochs run:       100
+  Structural changes:   0
+  Failed commits:       0
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         4.00021
+  Final loss:           0.0285593
+  Best loss:            0.0285593
+  Wall time:            283 ms
+
+  [Expression] 2.454*tanh(0.333*x0-0.482*x1-0.647)+2.906
+
+  [Library] Behavioral fingerprint: k=2 bounded=0 interact=0 sign_sym=1 sharp=1 lipsch=673.1
+  [Library] Pattern: single_tanh
+  [Library] Saved (library now has 5 entries)
