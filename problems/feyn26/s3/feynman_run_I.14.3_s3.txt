@@ -1,0 +1,169 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-feynman\I.14.3.csv
+  Loaded 999 samples
+  Train: 799  Validation: 200
+
+  Loaded subgraph library: 24 entries
+  Loaded failure library: 233 records
+Starting evolution...
+2026-09-06 16:26:51.041 [INFO] New best overall loss: 0.078913
+  [   1]   eval  loss=15.406562  |====================|  [   1]    sgd  loss=0.078913  ||2026-09-06 16:26:51.098 [INFO] New best overall loss: 0.057172
+  [   2]   eval  loss=0.078913  ||  [   2]    sgd  loss=0.057172  ||2026-09-06 16:26:51.109 [INFO] New best overall loss: 0.056492
+  [   3]   eval  loss=0.057172  ||  [   3]    sgd  loss=0.056492  ||2026-09-06 16:26:51.119 [INFO] New best overall loss: 0.056078
+  [   4]   eval  loss=0.056492  ||  [   4]    sgd  loss=0.056078  ||2026-09-06 16:26:51.135 [INFO] New best overall loss: 0.055542
+  [   5]   eval  loss=0.056078  ||  [   5]    sgd  loss=0.055542  ||2026-09-06 16:26:51.150 [INFO] New best overall loss: 0.055462
+  [   6]   eval  loss=0.055542  ||  [   6]    sgd  loss=0.055462  ||2026-09-06 16:26:51.166 [INFO] New best overall loss: 0.055417
+  [   7]   eval  loss=0.055462  ||  [   7]    sgd  loss=0.055417  ||2026-09-06 16:26:51.182 [INFO] New best overall loss: 0.055399
+  [   8]   eval  loss=0.055417  ||  [   8]    sgd  loss=0.055399  ||2026-09-06 16:26:51.199 [INFO] New best overall loss: 0.055372
+  [   9]   eval  loss=0.055399  ||  [   9]    sgd  loss=0.055372  ||2026-09-06 16:26:51.199 [INFO] Plateau triggered at epoch 9 (counter=3, loss=0.055372)
+2026-09-06 16:26:51.202 [INFO] Structural inability detected 鈥?surfacing bottleneck node 6 (blame=0.100316)
+2026-09-06 16:26:51.203 [INFO] [PROFILE] F=4 N=267 var_r=0.6672 bound_ratio=4.6103 poly_r2=0.9974 a12=0.0857 max_coef[i=4]=0.5113 sobol_pair(1,3)=0.0838 quad=[2.962,2.962,2.962,2.962] L_max=264893.667 | flags: SHARP
+2026-09-06 16:26:51.203 [INFO] IFELSE set-guided split: thr=1.562944 (SSE reduction 2.397307 over 267 paired samples)
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=264893.666669 var_r=0.667174)
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.562944 a=node=2 b=node=3)
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=4^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=4^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=2^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=3^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=4^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=1^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=3^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=1^m
+2026-09-06 16:26:51.203 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=2^m
+2026-09-06 16:26:57.432 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000621 train_loss=0.000630 new train_loss=0.000651
+2026-09-06 16:26:57.432 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-06 16:26:57.432 [INFO] Plateau state reset 鈥?best_phase2=0.000651
+2026-09-06 16:26:57.432 [INFO] Plateau state reset — best_phase2=0.000651
+2026-09-06 16:26:57.638 [INFO] New best overall loss: 0.000362
+  [  10]   eval  loss=0.000651  ||  [  10]    sgd  loss=0.000362  ||  [  11]   eval  loss=0.000362  ||  [  11]    sgd  loss=0.000377  ||  [  12]   eval  loss=0.000377  ||  [  12]    sgd  loss=0.000398  ||  [  13]   eval  loss=0.000398  ||  [  13]    sgd  loss=0.000414  ||2026-09-06 16:26:58.076 [INFO] Plateau triggered at epoch 13 (counter=3, loss=0.000414)
+2026-09-06 16:26:58.090 [INFO] Structural inability detected 鈥?surfacing bottleneck node 15 (blame=0.225321)
+2026-09-06 16:26:58.091 [INFO] [PROFILE] F=4 N=267 var_r=0.6672 bound_ratio=4.6103 poly_r2=0.9974 a12=0.0857 max_coef[i=4]=0.5113 sobol_pair(1,3)=0.0838 quad=[2.962,2.962,2.962,2.962] L_max=264893.667 | flags: SHARP
+2026-09-06 16:26:58.091 [INFO] IFELSE set-guided split: thr=1.562944 (SSE reduction 2.397307 over 267 paired samples)
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=264893.666669 var_r=0.667174)
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.562944 a=node=9 b=node=2)
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=4^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=4^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=2^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=3^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=4^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=1^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=3^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=1^m
+2026-09-06 16:26:58.091 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=2^m
+  [  14]   eval  loss=0.000414  ||  [  14]    sgd  loss=0.000430  ||2026-09-06 16:27:23.534 [INFO] Plateau triggered at epoch 14 (counter=4, loss=0.000430)
+2026-09-06 16:27:23.552 [INFO] Structural inability detected 鈥?surfacing bottleneck node 15 (blame=0.223077)
+2026-09-06 16:27:23.553 [INFO] [PROFILE] F=4 N=267 var_r=0.6672 bound_ratio=4.6103 poly_r2=0.9974 a12=0.0857 max_coef[i=4]=0.5113 sobol_pair(1,3)=0.0838 quad=[2.962,2.962,2.962,2.962] L_max=264893.667 | flags: SHARP
+2026-09-06 16:27:23.553 [INFO] IFELSE set-guided split: thr=1.562944 (SSE reduction 2.397307 over 267 paired samples)
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=264893.666669 var_r=0.667174)
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.562944 a=node=9 b=node=2)
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=4^m
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=4^m
+2026-09-06 16:27:23.553 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=2^m
+2026-09-06 16:27:23.554 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=3^m
+2026-09-06 16:27:23.554 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-06 16:27:23.554 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=4^m
+2026-09-06 16:27:23.554 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=1^m
+2026-09-06 16:27:23.554 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=3^m
+2026-09-06 16:27:23.554 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=1^m
+2026-09-06 16:27:23.554 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=2^m
+  [  15]   eval  loss=0.000430  ||  [  15]    sgd  loss=0.000424  ||  [  16]   eval  loss=0.000424  ||  [  16]    sgd  loss=0.000443  ||  [  17]   eval  loss=0.000443  ||  [  17]    sgd  loss=0.000457  ||  [  18]   eval  loss=0.000457  ||  [  18]    sgd  loss=0.000563  ||2026-09-06 16:27:53.765 [INFO] Plateau triggered at epoch 18 (counter=3, loss=0.000563)
+2026-09-06 16:27:53.787 [INFO] Structural inability detected 鈥?surfacing bottleneck node 15 (blame=0.218200)
+2026-09-06 16:27:53.787 [INFO] [PROFILE] F=4 N=267 var_r=0.6672 bound_ratio=4.6103 poly_r2=0.9974 a12=0.0857 max_coef[i=4]=0.5113 sobol_pair(1,3)=0.0838 quad=[2.962,2.962,2.962,2.962] L_max=264893.667 | flags: SHARP
+2026-09-06 16:27:53.787 [INFO] IFELSE set-guided split: thr=1.562944 (SSE reduction 2.397307 over 267 paired samples)
+2026-09-06 16:27:53.787 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=264893.666669 var_r=0.667174)
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.562944 a=node=9 b=node=2)
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=3^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=2)^n/input=4^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=2^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=3)^n/input=4^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=2^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=1*input=4)^n/input=3^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=1^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=3)^n/input=4^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=1^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=2*input=4)^n/input=3^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=1^m
+2026-09-06 16:27:53.788 [INFO] Candidate emitted: COMPOUND_DIVIDE_PRODUCT (input=3*input=4)^n/input=2^m
+2026-09-06 16:28:26.000 [INFO]   COMMIT rank=1 type=MULTIPLY_INJECTION val_loss=0.000477 train_loss=0.000512 new train_loss=0.000535
+2026-09-06 16:28:26.000 [INFO] Plateau state reset 鈥?best_phase2=0.000535
+2026-09-06 16:28:26.000 [INFO] Plateau state reset — best_phase2=0.000535
+  [  19]   eval  loss=0.000535  ||  [  19]    sgd  loss=0.001063  ||  [  20]   eval  loss=0.001063  ||  [  20]    sgd  loss=0.000904  ||  [  21]   eval  loss=0.000904  ||  [  21]    sgd  loss=0.001004  ||  [  22]   eval  loss=0.001004  ||  [  22]    sgd  loss=0.001047  ||  [  23]   eval  loss=0.001047  ||  [  23]    sgd  loss=0.001095  ||2026-09-06 16:28:27.241 [INFO] Plateau triggered at epoch 23 (counter=3, loss=0.001095)
+2026-09-06 16:28:27.268 [INFO] Structural inability detected 鈥?surfacing bottleneck node 15 (blame=0.153879)
+2026-09-06 16:28:27.269 [INFO] [PROFILE] F=4 N=267 var_r=0.6672 bound_ratio=4.6103 poly_r2=0.9974 a12=0.0857 max_coef[i=4]=0.5113 sobol_pair(1,3)=0.0838 quad=[2.962,2.962,2.962,2.962] L_max=264893.667 | flags: SHARP
+2026-09-06 16:28:27.269 [INFO] IFELSE set-guided split: thr=1.562944 (SSE reduction 2.397307 over 267 paired samples)
+2026-09-06 16:28:27.269 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=264893.666669 var_r=0.667174)
+2026-09-06 16:28:27.269 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.562944 a=node=9 b=node=2)
+2026-09-06 16:28:27.269 [INFO] MULTIPLY dedup: switching to input=3^2
+2026-09-06 16:29:01.623 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000213 train_loss=0.000198 new train_loss=0.000183
+2026-09-06 16:29:01.624 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-06 16:29:01.624 [INFO] Plateau state reset 鈥?best_phase2=0.000183
+2026-09-06 16:29:01.624 [INFO] Plateau state reset — best_phase2=0.000183
+2026-09-06 16:29:02.144 [INFO] New best overall loss: 0.000114
+  [  24]   eval  loss=0.000183  ||  [  24]    sgd  loss=0.000114  ||  [  25]   eval  loss=0.000114  ||  [  25]    sgd  loss=0.000125  ||  [  26]   eval  loss=0.000125  ||  [  26]    sgd  loss=0.000136  ||  [  27]   eval  loss=0.000136  ||  [  27]    sgd  loss=0.000187  ||2026-09-06 16:29:03.620 [INFO] Plateau triggered at epoch 27 (counter=3, loss=0.000187)
+2026-09-06 16:29:03.684 [INFO] Structural inability detected 鈥?surfacing bottleneck node 25 (blame=0.116946)
+2026-09-06 16:29:03.684 [INFO] [PROFILE] F=4 N=267 var_r=0.6672 bound_ratio=4.6103 poly_r2=0.9974 a12=0.0857 max_coef[i=4]=0.5113 sobol_pair(1,3)=0.0838 quad=[2.962,2.962,2.962,2.962] L_max=264893.667 | flags: SHARP
+2026-09-06 16:29:03.684 [INFO] IFELSE set-guided split: thr=1.562944 (SSE reduction 2.397307 over 267 paired samples)
+2026-09-06 16:29:03.684 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=264893.666669 var_r=0.667174)
+2026-09-06 16:29:03.684 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.562944 a=node=9 b=node=2)
+2026-09-06 16:29:03.684 [INFO] MULTIPLY dedup: switching to input=3^2
+2026-09-06 16:29:42.031 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000128 train_loss=0.000131 new train_loss=0.000125
+2026-09-06 16:29:42.032 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-06 16:29:42.032 [INFO] Plateau state reset 鈥?best_phase2=0.000125
+2026-09-06 16:29:42.032 [INFO] Plateau state reset — best_phase2=0.000125
+2026-09-06 16:29:42.909 [INFO] New best overall loss: 0.000092
+  [  28]   eval  loss=0.000125  ||  [  28]    sgd  loss=0.000092  ||  [  29]   eval  loss=0.000092  ||  [  29]    sgd  loss=0.000254  ||  [  30]   eval  loss=0.000254  ||  [  30]    sgd  loss=0.000120  ||  [  31]   eval  loss=0.000120  ||  [  31]    sgd  loss=0.000205  ||  [  32]   eval  loss=0.000205  ||  [  32]    sgd  loss=0.000262  ||  [  33]   eval  loss=0.000262  ||  [  33]    sgd  loss=0.000178  ||  [  34]   eval  loss=0.000178  ||  [  34]    sgd  loss=0.000171  ||  [  35]   eval  loss=0.000171  ||  [  35]    sgd  loss=0.000185  ||  [  36]   eval  loss=0.000185  ||  [  36]    sgd  loss=0.000195  ||  [  37]   eval  loss=0.000195  ||  [  37]    sgd  loss=0.000216  ||  [  38]   eval  loss=0.000216  ||  [  38]    sgd  loss=0.000190  ||  [  39]   eval  loss=0.000190  ||  [  39]    sgd  loss=0.000196  ||  [  40]   eval  loss=0.000196  ||  [  40]    sgd  loss=0.000200  ||  [  41]   eval  loss=0.000200  ||  [  41]    sgd  loss=0.000199  ||  [  42]   eval  loss=0.000199  ||  [  42]    sgd  loss=0.000202  ||  [  43]   eval  loss=0.000202  ||  [  43]    sgd  loss=0.000208  ||  [  44]   eval  loss=0.000208  ||  [  44]    sgd  loss=0.000245  ||  [  45]   eval  loss=0.000245  ||  [  45]    sgd  loss=0.000236  ||  [  46]   eval  loss=0.000236  ||  [  46]    sgd  loss=0.000243  ||  [  47]   eval  loss=0.000243  ||  [  47]    sgd  loss=0.000240  ||  [  48]   eval  loss=0.000240  ||  [  48]    sgd  loss=0.000251  ||  [  49]   eval  loss=0.000251  ||  [  49]    sgd  loss=0.000246  ||  [  50]   eval  loss=0.000246  ||  [  50]    sgd  loss=0.000255  ||2026-09-06 16:30:00.279 [INFO] Restored best-val graph snapshot (val=0.000085, train=0.000092)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         50
+  SGD epochs run:       2500
+  Structural changes:   4
+  Failed commits:       54
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         15.4066
+  Final loss:           9.24627e-05
+  Best loss:            9.24627e-05
+  Wall time:            189297 ms
+
+  [Expression] 3.039*tanh(-0.284*tanh(-0.106*tanh(0.006*tanh(-0.146*x0+0.367*x1+0.195*x2-0.181*x3-0.515)-0.224*tanh(0.070*x0-0.286*x1+0.195*x2+0.158*x3+0.143)+0.236*tanh(-0.204*x0-0.112*x1+0.167*x2+0.238*x3-0.758...
+
+  [Library] Behavioral fingerprint: k=4 bounded=1 interact=0 sign_sym=1 sharp=1 lipsch=11.5
+  [Library] Closest existing entries:
+    I.10.7.csv (dist=9.336)
+    I.8.4.csv (dist=16.596)
+    I.6.2.csv (dist=18.677)
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 25 entries)
+  [Library] Extracted 6 sub-expression block(s) (library now has 31 entries)
+  [FailureLib] Appended 54 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (499 samples)
+================================================
+  Eval R2[out0]:   0.999876
+  Eval MSE[out0]:  0.000094   MAE: 0.007186

@@ -1,0 +1,94 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-feynman\III.10.19.csv
+  Loaded 999 samples
+  Train: 799  Validation: 200
+
+  Loaded subgraph library: 49 entries
+  Loaded failure library: 416 records
+Starting evolution...
+2026-09-06 16:35:35.907 [INFO] New best overall loss: 0.061841
+  [   1]   eval  loss=27.411579  |====================|  [   1]    sgd  loss=0.061841  ||2026-09-06 16:35:35.951 [INFO] New best overall loss: 0.027044
+  [   2]   eval  loss=0.061841  ||  [   2]    sgd  loss=0.027044  ||  [   3]   eval  loss=0.027044  ||  [   3]    sgd  loss=0.028539  ||  [   4]   eval  loss=0.028539  ||  [   4]    sgd  loss=0.028110  ||  [   5]   eval  loss=0.028110  ||  [   5]    sgd  loss=0.028134  ||  [   6]   eval  loss=0.028134  ||  [   6]    sgd  loss=0.028097  ||  [   7]   eval  loss=0.028097  ||  [   7]    sgd  loss=0.028083  ||  [   8]   eval  loss=0.028083  ||  [   8]    sgd  loss=0.028071  ||  [   9]   eval  loss=0.028071  ||  [   9]    sgd  loss=0.028064  ||2026-09-06 16:35:36.035 [INFO] Plateau triggered at epoch 9 (counter=3, loss=0.028064)
+2026-09-06 16:35:36.039 [INFO] Structural inability detected 鈥?surfacing bottleneck node 4 (blame=0.226598)
+2026-09-06 16:35:36.039 [INFO] [PROFILE] F=2 N=267 var_r=1.2952 bound_ratio=4.7822 poly_r2=0.9995 a12=-0.1121 max_coef[i=1]=0.7059 sobol_pair(0,1)=-0.0114 quad=[4.426,4.426,4.426,4.426] L_max=33711.289 | flags: SHARP
+2026-09-06 16:35:36.039 [INFO] IFELSE set-guided split: thr=3.488098 (SSE reduction 125.388770 over 267 paired samples)
+2026-09-06 16:35:36.039 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=33711.288889 var_r=1.295244)
+2026-09-06 16:35:36.039 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:35:36.039 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:35:42.611 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000414 train_loss=0.000456 new train_loss=0.000410
+2026-09-06 16:35:42.611 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-06 16:35:42.611 [INFO] Plateau state reset 鈥?best_phase2=0.000410
+2026-09-06 16:35:42.611 [INFO] Plateau state reset — best_phase2=0.000410
+  [  10]   eval  loss=0.000410  ||  [  10]    sgd  loss=0.001151  ||  [  11]   eval  loss=0.001151  ||  [  11]    sgd  loss=0.001283  ||  [  12]   eval  loss=0.001283  ||  [  12]    sgd  loss=0.001388  ||  [  13]   eval  loss=0.001388  ||  [  13]    sgd  loss=0.001485  ||  [  14]   eval  loss=0.001485  ||  [  14]    sgd  loss=0.001534  ||  [  15]   eval  loss=0.001534  ||  [  15]    sgd  loss=0.001523  ||  [  16]   eval  loss=0.001523  ||  [  16]    sgd  loss=0.001491  ||  [  17]   eval  loss=0.001491  ||  [  17]    sgd  loss=0.001489  ||  [  18]   eval  loss=0.001489  ||  [  18]    sgd  loss=0.001507  ||  [  19]   eval  loss=0.001507  ||  [  19]    sgd  loss=0.001524  ||  [  20]   eval  loss=0.001524  ||  [  20]    sgd  loss=0.001528  ||2026-09-06 16:35:43.420 [INFO] Plateau triggered at epoch 20 (counter=3, loss=0.001528)
+2026-09-06 16:35:43.434 [INFO] [PROFILE] F=2 N=267 var_r=1.2952 bound_ratio=4.7822 poly_r2=0.9995 a12=-0.1121 max_coef[i=1]=0.7059 sobol_pair(0,1)=-0.0114 quad=[4.426,4.426,4.426,4.426] L_max=33711.289 | flags: SHARP
+2026-09-06 16:35:43.434 [INFO] IFELSE set-guided split: thr=3.488098 (SSE reduction 125.388770 over 267 paired samples)
+2026-09-06 16:35:43.435 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=33711.288889 var_r=1.295244)
+2026-09-06 16:35:43.435 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=3.488098 a=node=9 b=node=2)
+2026-09-06 16:35:43.435 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:35:43.435 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:35:53.603 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000387 train_loss=0.000422 new train_loss=0.000386
+2026-09-06 16:35:53.604 [INFO] [PROFILE] F=2 N=267 var_r=1.2952 bound_ratio=4.7822 poly_r2=0.9995 a12=-0.1121 max_coef[i=1]=0.7059 sobol_pair(0,1)=-0.0114 quad=[4.426,4.426,4.426,4.426] L_max=33711.289 | flags: SHARP
+2026-09-06 16:35:53.604 [INFO] IFELSE set-guided split: thr=3.488098 (SSE reduction 125.388770 over 267 paired samples)
+2026-09-06 16:35:53.604 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=33711.288889 var_r=1.295244)
+2026-09-06 16:35:53.604 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=3.488098 a=node=9 b=node=2)
+2026-09-06 16:35:53.604 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:35:53.604 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:36:25.648 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000371 train_loss=0.000416 new train_loss=0.000378
+2026-09-06 16:36:25.649 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-06 16:36:25.649 [INFO] Plateau state reset 鈥?best_phase2=0.000378
+2026-09-06 16:36:25.649 [INFO] Plateau state reset — best_phase2=0.000378
+  [  21]   eval  loss=0.000378  ||  [  21]    sgd  loss=0.001155  ||  [  22]   eval  loss=0.001155  ||  [  22]    sgd  loss=0.001306  ||  [  23]   eval  loss=0.001306  ||  [  23]    sgd  loss=0.001343  ||  [  24]   eval  loss=0.001343  ||  [  24]    sgd  loss=0.001356  ||  [  25]   eval  loss=0.001356  ||  [  25]    sgd  loss=0.001359  ||  [  26]   eval  loss=0.001359  ||  [  26]    sgd  loss=0.001346  ||  [  27]   eval  loss=0.001346  ||  [  27]    sgd  loss=0.001317  ||  [  28]   eval  loss=0.001317  ||  [  28]    sgd  loss=0.001453  ||  [  29]   eval  loss=0.001453  ||  [  29]    sgd  loss=0.001418  ||  [  30]   eval  loss=0.001418  ||  [  30]    sgd  loss=0.001403  ||  [  31]   eval  loss=0.001403  ||  [  31]    sgd  loss=0.001419  ||  [  32]   eval  loss=0.001419  ||  [  32]    sgd  loss=0.001409  ||  [  33]   eval  loss=0.001409  ||  [  33]    sgd  loss=0.001397  ||  [  34]   eval  loss=0.001397  ||  [  34]    sgd  loss=0.001384  ||  [  35]   eval  loss=0.001384  ||  [  35]    sgd  loss=0.001369  ||  [  36]   eval  loss=0.001369  ||  [  36]    sgd  loss=0.001355  ||  [  37]   eval  loss=0.001355  ||  [  37]    sgd  loss=0.001339  ||  [  38]   eval  loss=0.001339  ||  [  38]    sgd  loss=0.001324  ||  [  39]   eval  loss=0.001324  ||  [  39]    sgd  loss=0.000997  ||  [  40]   eval  loss=0.000997  ||  [  40]    sgd  loss=0.000897  ||  [  41]   eval  loss=0.000897  ||  [  41]    sgd  loss=0.000859  ||  [  42]   eval  loss=0.000859  ||  [  42]    sgd  loss=0.000841  ||  [  43]   eval  loss=0.000841  ||  [  43]    sgd  loss=0.000832  ||  [  44]   eval  loss=0.000832  ||  [  44]    sgd  loss=0.000827  ||  [  45]   eval  loss=0.000827  ||  [  45]    sgd  loss=0.000825  ||  [  46]   eval  loss=0.000825  ||  [  46]    sgd  loss=0.000825  ||  [  47]   eval  loss=0.000825  ||  [  47]    sgd  loss=0.000827  ||  [  48]   eval  loss=0.000827  ||  [  48]    sgd  loss=0.000833  ||2026-09-06 16:36:32.115 [INFO] Plateau triggered at epoch 48 (counter=3, loss=0.000833)
+2026-09-06 16:36:32.166 [INFO] [PROFILE] F=2 N=267 var_r=1.2952 bound_ratio=4.7822 poly_r2=0.9995 a12=-0.1121 max_coef[i=1]=0.7059 sobol_pair(0,1)=-0.0114 quad=[4.426,4.426,4.426,4.426] L_max=33711.289 | flags: SHARP
+2026-09-06 16:36:32.167 [INFO] IFELSE set-guided split: thr=3.488098 (SSE reduction 125.388770 over 267 paired samples)
+2026-09-06 16:36:32.167 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=33711.288889 var_r=1.295244)
+2026-09-06 16:36:32.167 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=3.488098 a=node=9 b=node=2)
+2026-09-06 16:36:32.167 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:36:32.167 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:36:52.501 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000125 train_loss=0.000132 new train_loss=0.000122
+2026-09-06 16:36:52.501 [INFO] [PROFILE] F=2 N=267 var_r=1.2952 bound_ratio=4.7822 poly_r2=0.9995 a12=-0.1121 max_coef[i=1]=0.7059 sobol_pair(0,1)=-0.0114 quad=[4.426,4.426,4.426,4.426] L_max=33711.289 | flags: SHARP
+2026-09-06 16:36:52.502 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=33711.288889 var_r=1.295244)
+2026-09-06 16:36:52.502 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=3.488098 a=node=9 b=node=10)
+2026-09-06 16:36:52.502 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 16:36:52.502 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 16:37:18.305 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-06 16:37:18.305 [INFO] Plateau state reset 鈥?best_phase2=0.000122
+2026-09-06 16:37:18.305 [INFO] Plateau state reset — best_phase2=0.000122
+  [  49]   eval  loss=0.000122  ||  [  49]    sgd  loss=0.000135  ||  [  50]   eval  loss=0.000135  ||  [  50]    sgd  loss=0.000141  ||2026-09-06 16:37:18.805 [INFO] Restored best-val graph snapshot (val=0.000125, train=0.000122)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         50
+  SGD epochs run:       2500
+  Structural changes:   4
+  Failed commits:       19
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         27.4116
+  Final loss:           0.000122169
+  Best loss:            0.000122169
+  Wall time:            102947 ms
+
+  [Expression] 5.484*tanh(-0.772*tanh(0.058*x0-0.249*x1+0.976)+0.000*tanh(-0.003*x0+0.003*x1-0.001)+0.001*tanh(0.005*x0-0.001*x1-0.009)+0.284*tanh(0.457*x0+0.467*x1-0.411)-0.764*tanh(-0.251*x0+0.059*x1+0.975)+0.3...
+
+  [Library] Behavioral fingerprint: k=2 bounded=0 interact=0 sign_sym=0 sharp=1 lipsch=349.0
+  [Library] Closest existing entries:
+    II.34.29a.csv (dist=3.032)
+    I.8.4.csv (dist=4.037)
+    I.18.14.csv (dist=5.092)
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 50 entries)
+  [FailureLib] Appended 19 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (499 samples)
+================================================
+  Eval R2[out0]:   0.999899
+  Eval MSE[out0]:  0.000133   MAE: 0.008608

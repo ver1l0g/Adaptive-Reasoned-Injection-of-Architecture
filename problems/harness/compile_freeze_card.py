@@ -71,8 +71,9 @@ def limits_card():
 
 def feynman_card():
     seeds = {}
-    for s in (2, 3, 4, 5):
-        p = f"{R}/feynman_results_seed{s}.csv"
+    paths = {s: f"{R}/feynman_results_seed{s}.csv" for s in (2, 3, 4, 5)}
+    paths[1] = f"{R}/feynman_results.csv"   # seed 1 convention
+    for s, p in paths.items():
         if os.path.exists(p):
             for r in csv.DictReader(open(p)):
                 if r.get("test_r2"):
