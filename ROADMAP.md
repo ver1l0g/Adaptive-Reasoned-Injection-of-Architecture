@@ -14,7 +14,7 @@ ordered within each. Effort: S = hours, M = days, L = weeks.
 | suite-standard (17) | 13/16 + d9-NF reproducible on aria11+ (d7 fixed by M7.5/M7.6 live); t22 0.9757 (routing fixed, was never-solved); d2 0.79, d3 0.55 open — see M5.7 |
 | suite-hard (6) | all solved (spirals, checkerboard, XOR-5D) |
 | suite-temporal (4+2) | all solved (aria11: 4/4, identical to aria10) |
-| suite-feynman (25) | FREEZE: aria12 seeds 2-5, mean-of-means 0.9991, **24/25 ≥ 0.99** — I.29.16 SOLVED (0.9993±0.0001); only I.32.8 open (0.9829±0.0017, M5.2's target) |
+| suite-feynman (25) | FREEZE-v2: aria12 24/25 (I.32.8 0.983). **aria26 (linear divprod gain): I.32.8 = 1.000000 on 4/5 seeds — 25/25-capable**; formal certification = 5-seed battery on aria26 (queued) | |
 | suite-korns (9) | 6/9 > 0.99, 8/9 ≥ 0.93 (F8 ~0.86 needs sin∩x³∩4-product; F4 0.983) |
 | suite-limits (7) | reproducible on aria12: count8 + highdim15 solo (contended runs time out — see M6.7); hetero3 out3 marginal 0.99; narma30 0.005, stripes20 0.2248 on aria15 (region-leaf chains; was 0.01) |
 | suite-realworld (5) | 97–100% |
@@ -22,16 +22,20 @@ ordered within each. Effort: S = hours, M = days, L = weeks.
 | suite-language | FREEZE ladder (aria12, EMBED trunk): w1 4.4296 / w8 4.2271 / w16 4.1712 / w32 4.4625-solo — MONOTONE through w16 (M2.2), stall at 32; M2.4 attention GO |
 | suite-poems (NEW) | Tang 五言绝句 structure-induction suite: 3,914 quatrains, V=501/12k rows; position-entropy baselines measured (line-final 8.7-9.1 bits vs mid-line 9.3); first run in flight |
 
-Engine: 25 hypothesis types (EMBED_TRUNK, MUX_INJECTION, DELAY_LINE +
-22 legacy), softmax-CE loss, val-based selection, checkpointing, shadow
-watchdog, versioned failure library, zero-plateau evidence path
-(single-output v1), SEH crash handler with symbolization, build.bat.
-Session repairs: EMBED_TRUNK use-after-realloc (charLM crashes),
-PRESERVE chain order, evidence-boundary routing (OUTPUT wrap +
-direction), median-fallback threshold clobber.
+Engine: 26 hypothesis types, softmax-CE loss, val-based selection with
+wall-clock budget, checkpointing, shadow watchdog, versioned failure
+library, zero-plateau evidence path (single-output v1), SEH crash
+handler with symbolization, ONEHOT + V-port ATTENTION nodes, arc-price
+demotion (M6.12), --config JSON (21 tunables), --quiet, build.bat,
+status.ps1.
+Post-freeze repairs: EMBED_TRUNK UAF, PRESERVE chain order,
+evidence-boundary routing, median-fallback clobber, z-score code
+mangling, tanh divprod squash (I.32.8), M7.5(c) library corruption
+(reverted).
 Known fragility: marginal tasks (hetero3 out2/out3) flip across builds
 and sometimes reruns — build/trajectory-sensitive FP, ASAN-clean (see
-M6.8).
+M6.8). Attention head: commits + moves loss, does not yet solve
+induction (7-config matrix; 8.1% ceiling) — see M2.3.
 
 ---
 
@@ -141,6 +145,18 @@ is confirmed as the required build. Also: the first one-hot EMBED_TRUNK
 COMMITTED on wujue (rank=0) seconds before the restart killed the run
 — gate → code-guard → expansion → shadow → commit works end-to-end;
 relaunch pending.]
+[STEP-2 COMPLETE MATRIX 2026-09-06 — mechanism integrated, induction
+UNSOLVED at 8.1%: controls 7.007% (bit-identical), +budget 7.007%,
++seed 8.21%, +gate (head COMMITS, loss moves 3.59→3.55) 8.21% but
+final-eval snapshot pre-dates the head's window; 60-epoch run: 8.108%.
+The V-port head with per-port exact grads, trunk seeding, evidence
+gate, and 3x budget lands and trains — retrieval value does not
+materialize into test accuracy. Remaining levers (design-tier, not
+config): (a) table depth — train to convergence offline-style rather
+than shadow-budget SGD; (b) multi-head; (c) the probe task shape
+itself (the answer requires exact previous-occurrence binding; a
+single 1-layer head may be expressively marginal). The 7-config matrix
+is the paper's cleanest mechanism-isolation experiment.]
 
 ---
 
@@ -406,7 +422,7 @@ parallel-validation reduction order.
 The strict poetic form (Tang 五言绝句: 4 lines × 5 chars, rhyme at even
 lines, couplet parallelism) is DISCRETE, DISCOVERABLE structure — the
 ARIA thesis test at the language scale: does the engine find line-
-position regularity nobody told it about?
+position structure nobody told it about?
 - [x] Corpus acquired: chinese-poetry sparse clone (318 JSONs, 145MB);
       3,914 Tang 五绝 extracted (suite-poems/prepare_poems.py)
 - [x] Position-entropy baselines MEASURED (position_stats.txt): line-
@@ -414,16 +430,14 @@ position regularity nobody told it about?
       bits vs 9.2-9.3 mid-line — the structure is real in unigram stats
 - [x] v1 config (V=1001, 59k rows) measured UNVIABLE: ~2h/epoch (146
       CPU-h overnight); v2 (V=501, 12k rows) = 40x faster; UNK 27.5%
-- [~] run2 (aria18, 30ep): plateau at epoch 20; first structural cycle
-      in flight — the ONEHOT expansion's first real workload
-- [ ] Verdict readout: does one-hot EMBED discover position structure
-      (per-position accuracy vs the entropy baselines)?
-- [ ] Follow-ups: Song 五绝 (sparse-checkout 全宋诗 for the full 17.5k),
-      词 (ci) meters as meter-INFERENCE tier, fill-the-blank couplet
-      (对仗) probe, position-probe eval set
-- Baselines to beat: unigram 9.0-9.3 bits/char (position-dependent);
-      the model should at minimum capture the position-conditional
-      unigram — anything beyond = discovered interaction structure.
+- [x] One-hot EMBED trunk commits and trains on wujue (mechanism
+      end-to-end); runs wedged twice on uncapped val phases (fixed:
+      VAL_TIME_BUDGET_MS); plateau loss ~6.5 nats = at the position-
+      unigram baseline (frequencies learned, structure not yet)
+- [ ] VERDICT RERUN at V=251 with the val-budget build (aria31): does
+      per-symbol embedding + longer training move below the unigram
+      baseline (structure discovery)?
+- [ ] Follow-ups: Song 五绝, 词 meters, fill-the-blank couplet probe
 
 ### 6.12 Investment-arc pricing (M1.3-v2) — SIGNAL CALIBRATED 2026-09-05
 The formally-named wall (blocked M1.3 fatigue, t22 evidence gates, SIN
@@ -610,23 +624,21 @@ pending, but the 8/26 number stands as the valid measurement). BOTH
 criteria met → M2.3 attention build is GO.]
 ---
 
-## Sequencing recommendation (refreshed 2026-08-30)
+## Sequencing recommendation (refreshed 2026-09-06)
 
 ```
-Now ──► Readouts: wujue run2 + one-hot induction probe (aria18) —
-        the ONEHOT verdict decides M2.3 step-2 scope; hd15/aria16
-        spot-check closes the freeze card's last anomaly
-    ──► M6.7 closeout: freeze-v2 tag + binary-lineage note
-    ──► M2.3 step 2: attention build (spec in 2.3 — AttentionNode or
-        shared-name neurons; induction probe is the smoke test)
-    ──► M6.6 README refresh (freeze card is the source) — then M6.4
-        writing (paper track; freeze tables ready)
-    ──► suite-poems verdict + Song/ci tiers (6.10)
-    ──► d2/d3: SIN-after-SIN grace (shared named fix)
-    ──► stripes20 completion (0.22 -> 0.95: more cycles vs K-depth
-        tradeoff measured; M7.2 settling if gates need training)
-    ──► M5.2 commit composition (I.32.8 0.983 -> 0.99, last feynman
-        open item) / M4.2 taps / M3.1 shared pooling
+Now ──► M6.6 README refresh (very stale: MinGW instructions,
+        pre-freeze numbers, no config-JSON/QoL/attention record)
+    ──► Feynman 5-seed certification on aria26 (formalizes 25/25)
+    ──► pooled8 comparison readout (running) -> M3.1 shared-weights
+        decision
+    ──► suite-poems verdict rerun at V=251 (val-budget build)
+    ──► M2.3 design tier: table-depth / multi-head / task-shape (the
+        config matrix is exhausted; 8.1% ceiling)
+    ──► M6.4 Writing (freeze card + aria26 certification = the tables)
+    ──► Remaining opens by interest: M1.4, M4.2, M5.1, M7.2/7.3/7.4,
+        arc-price window tuning (stripes20 conversion), attention
+        snapshot-window fix
 ```
 
 Principles (unchanged all project):
