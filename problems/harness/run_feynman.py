@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
-"""Feynman subset harness: run gpnn on all 25 equations, report test R虏.
+﻿#!/usr/bin/env python3
+"""Feynman subset harness: run gpnn on all 25 equations, report test R铏?
 
-Sequential (one equation at a time) 鈥?designed to coexist with other
+Sequential (one equation at a time) 閳?designed to coexist with other
 background chains. Writes results incrementally to results/feynman_results.csv
 so progress survives interruption. SRBench-style thresholds:
-  R虏 > 0.9999 = exact recovery, R虏 > 0.99 = solved.
+  R铏?> 0.9999 = exact recovery, R铏?> 0.99 = solved.
 """
 import csv, os, re, subprocess, sys, time
 
@@ -25,19 +25,30 @@ LOSS_RE = re.compile(r"Final loss:\s*([0-9.eE+-]+)")
 EXPR_RE = re.compile(r"\[Expression\]\s*(.*)")
 
 def main():
+    import os as _os
+    _ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))  # problems/
+    out_path = _os.path.join(_ROOT, "results",
+                             f"feynman_results_seed{SEED}.csv" if SEED != 1
+                             else "feynman_results.csv")
     results = []
     start = time.time()
-    out_path = f"results/feynman_results_seed{SEED}.csv" if SEED != 1 else "results/feynman_results.csv"
     with open(out_path, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["eq", "vars", "test_r2", "train_loss", "wall_s", "expression"])
         for i, (eid, nvars) in enumerate(EQS):
             t0 = time.time()
-            logpath = f"feynman_run_{eid}.txt"
-            args = [EXE, "--csv", f"suite-feynman/{eid}.csv",
+            logpath = f"feynman_run_{eid}_s{SEED}.txt"   # seed-suffixed: parallel seeds
+                                                      # shared cwd without log races
+                                                      # (observed: 4-slot pool stomped
+                                                      #  shared logs -> phantom FAILs)
+            args = [EXE, "--csv", _os.path.join(_ROOT, "suite-feynman", f"{eid}.csv"),
                     "--input-cols", str(nvars),
-                    "--eval-csv", f"suite-feynman/{eid}_test.csv",
-                    "--max-epochs", str(EPOCHS), "--seed", str(SEED)]
+                    "--eval-csv", _os.path.join(_ROOT, "suite-feynman", f"{eid}_test.csv"),
+                    "--max-epochs", str(EPOCHS), "--seed", str(SEED),
+                    "--save-graph", "none"]  # concurrent seeds share cwd:
+                                             # derived checkpoint paths collide
+                                             # (observed: procs spinning at the
+                                             # checkpoint/recall boundary)
             # Tee stdout to a per-equation log (crash-safe: parse from disk)
             try:
                 with open(logpath, "w", encoding="utf-8", errors="replace") as lf:
@@ -72,3 +83,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
