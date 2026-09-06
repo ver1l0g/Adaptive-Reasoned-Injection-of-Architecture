@@ -1,0 +1,58 @@
+{
+  "_doc": "Task registry — aria.exe --task <name> [--seed N] [--quiet]. Paths are relative to the CWD where you launch (default registry: ./tasks.json; --task-file <path> overrides). Explicit CLI flags override registry values. Add your own tasks here.",
+
+  "wujue": {
+    "csv": "suite-poems/bench_wujue_train.csv",
+    "eval-csv": "suite-poems/bench_wujue_test.csv",
+    "input-cols": 19,
+    "output-cols": 501,
+    "loss": "bce",
+    "max-epochs": 30
+  },
+  "induction": {
+    "csv": "induction/s1/train.csv",
+    "eval-csv": "induction/s1/test.csv",
+    "input-cols": 32,
+    "output-cols": 16,
+    "loss": "bce",
+    "max-epochs": 30
+  },
+  "digits": {
+    "csv": "suite-vision/bench_digits.csv",
+    "input-cols": 64,
+    "output-cols": 10,
+    "loss": "bce",
+    "max-epochs": 200
+  },
+  "cifar5k": {
+    "csv": "suite-vision/bench_cifar_gray_5k.csv",
+    "input-cols": 1024,
+    "output-cols": 10,
+    "loss": "bce",
+    "max-epochs": 100
+  },
+  "stripes20": {
+    "csv": "suite-limits/bench_stripes20.csv",
+    "input-cols": 1,
+    "max-epochs": 150
+  },
+  "hetero3": {
+    "csv": "suite-limits/bench_hetero3.csv",
+    "input-cols": 1,
+    "output-cols": 3,
+    "max-epochs": 150
+  },
+  "i328": {
+    "csv": "suite-feynman/I.32.8.csv",
+    "eval-csv": "suite-feynman/I.32.8_test.csv",
+    "input-cols": 3,
+    "max-epochs": 150
+  },
+  "w8": {
+    "csv": "suite-language/bench_shakespeare_w8.csv",
+    "input-cols": 8,
+    "output-cols": 65,
+    "loss": "bce",
+    "max-epochs": 30
+  }
+}

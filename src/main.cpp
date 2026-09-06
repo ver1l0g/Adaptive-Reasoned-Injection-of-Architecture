@@ -103,35 +103,133 @@ int main(int argc, char* argv[]) {
     std::string log_file;
 
     // Post-training prediction sweep across an input range.
-    // Used to measure empirical "switch point" on piecewise / cliff tasks.
     bool   sweep_enabled = false;
     double sweep_min     = config::DEFAULT_SWEEP_MIN;
     double sweep_max     = config::DEFAULT_SWEEP_MAX;
     double sweep_step    = config::DEFAULT_SWEEP_STEP;
 
-    // Held-out test-set evaluation (Feynman/SRBench harness support).
+    // Held-out test-set evaluation.
     std::string eval_csv_path;
 
-    // Structural analysis of the final graph (node histogram, depth, params).
+    // Structural analysis of the final graph.
     bool dump_graph = false;
 
-    // Periodic graph checkpointing (empty = derive default; "none" = off).
+    // Periodic checkpointing (QoL default: OFF — empty means off; pass a
+    // path to enable; ~95% of runs previously typed --save-graph none).
     std::string save_graph_path;
     int save_interval = 25;
 
-    // Offline mode: load a serialized graph instead of evolving from
-    // scratch. With --max-epochs 0 this enables standalone analysis
-    // (--dump-graph) and evaluation (--eval-csv) of checkpointed graphs
-    // without any training.
+    // Offline mode: load a serialized graph instead of evolving.
     std::string load_graph_path;
 
     // Dataset split + loss options.
-    bool   no_shuffle = false;                          // preserve row order (sequence/recurrence tasks)
-    Graph::LossType loss_type = Graph::LossType::MSE;   // --loss {mse,bce}
+    bool   no_shuffle = false;
+    Graph::LossType loss_type = Graph::LossType::MSE;
 
-    // Determinism. Default fixed seed => reproducible runs; --seed overrides
-    // (0 => non-deterministic, uses random_device).
+    // Determinism.
     unsigned int seed = config::DEFAULT_SEED;
+
+    // ---------- QoL: --task registry (applied BEFORE CLI parse so explicit
+    // flags override; registry file = --task-file <path> or ./tasks.json) ----------
+    // Registry format (flat per-task sections, see configs/tasks.json):
+    //   { "taskname": { "csv": "...", "eval-csv": "...", "input-cols": 19,
+    //                   "output-cols": 501, "loss": "bce", "max-epochs": 30,
+    //                   "no-shuffle": true } }
+    {
+        std::string task_name, task_file = "tasks.json";
+        for (int i = 1; i < argc - 1; ++i) {
+            if (std::string(argv[i]) == "--task") task_name = argv[i + 1];
+            else if (std::string(argv[i]) == "--task-file") task_file = argv[i + 1];
+        }
+        if (!task_name.empty()) {
+            std::ifstream tf(task_file);
+            if (!tf) {
+                std::cerr << "Error: --task registry not found: " << task_file
+                          << " (use --task-file <path>; default ./tasks.json)\n";
+                return 1;
+            }
+            std::stringstream ss;
+            ss << tf.rdbuf();
+            std::string txt = ss.str();
+            // Locate the task's section: "name" ... { ... }
+            std::string needle = "\"" + task_name + "\"";
+            size_t pos = 0;
+            bool found = false;
+            while (true) {
+                pos = txt.find(needle, pos);
+                if (pos == std::string::npos) break;
+                size_t brace = txt.find('{', pos + needle.size());
+                size_t nextq = txt.find('"', pos + needle.size());
+                if (brace != std::string::npos
+                    && (nextq == std::string::npos || brace < nextq)) {
+                    pos = brace;
+                    found = true;
+                    break;
+                }
+                ++pos;
+            }
+            if (!found) {
+                std::cerr << "Error: task '" << task_name << "' not in "
+                          << task_file << "\n";
+                return 1;
+            }
+            // Bound the section: task bodies are flat (no nested braces),
+            // so the first '}' after the opening brace closes it. This
+            // prevents greedy parsing into the NEXT task's entries
+            // (observed: --task i328 applying w8's csv).
+            size_t sec_end = txt.find('}', pos);
+            if (sec_end == std::string::npos) sec_end = txt.size();
+            // Parse flat key:value pairs until the section end.
+            int applied = 0;
+            while (true) {
+                size_t k1 = txt.find('"', pos);
+                if (k1 == std::string::npos || k1 > sec_end) break;
+                size_t k2 = txt.find('"', k1 + 1);
+                if (k2 == std::string::npos || k2 > sec_end) break;
+                std::string key = txt.substr(k1 + 1, k2 - k1 - 1);
+                size_t colon = txt.find(':', k2);
+                if (colon == std::string::npos) break;
+                size_t vstart = txt.find_first_not_of(" \t\r\n", colon + 1);
+                if (vstart == std::string::npos) break;
+                if (txt[vstart] == '}') break;
+                std::string val;
+                if (txt[vstart] == '"') {
+                    size_t v2 = txt.find('"', vstart + 1);
+                    val = txt.substr(vstart + 1, v2 - vstart - 1);
+                    pos = v2 + 1;
+                } else {
+                    size_t vend = txt.find_first_of(",}\n\r", vstart);
+                    val = txt.substr(vstart, vend - vstart);
+                    pos = vend;
+                }
+                // trim
+                {
+                    size_t a = val.find_first_not_of(" \t\r\n");
+                    size_t b = val.find_last_not_of(" \t\r\n");
+                    val = (a == std::string::npos) ? "" : val.substr(a, b - a + 1);
+                }
+                auto num = [&](double dflt) {
+                    try { return std::stod(val); } catch (...) { return dflt; }
+                };
+                if (key == "csv") csv_path = val;
+                else if (key == "eval-csv") eval_csv_path = val;
+                else if (key == "input-cols") input_cols = (int)num(input_cols);
+                else if (key == "output-cols") output_cols = (int)num(output_cols);
+                else if (key == "max-epochs") max_epochs = (int)num(max_epochs);
+                else if (key == "loss") {
+                    if (val == "bce") loss_type = Graph::LossType::BCE;
+                    else if (val == "sce") loss_type = Graph::LossType::SOFTMAX_CE;
+                    else loss_type = Graph::LossType::MSE;
+                }
+                else if (key == "no-shuffle") no_shuffle = (val == "true" || val == "1");
+                else if (key == "header") has_header = (val == "true" || val == "1");
+                else continue;
+                ++applied;
+            }
+            std::cout << "  [TASK] " << task_name << " (" << task_file
+                      << "): " << applied << " settings applied\n";
+        }
+    }
 
     // ---------- simple CLI parse ----------
     for (int i = 1; i < argc; ++i) {
@@ -202,11 +300,13 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    if (csv_path.empty() || input_cols <= 0) {
-        std::cerr << "Error: --csv and --input-cols are required.\n";
+    if (csv_path.empty()) {
+        std::cerr << "Error: --csv (or --task) is required.\n";
         std::cerr << "Run with --help for usage.\n";
         return 1;
     }
+    // QoL: header inference (full block lives at the ID-vector build,
+    // after the CLI/task defaults settle).
 
     Logger::init(verbose, log_file);
 
@@ -218,6 +318,52 @@ int main(int argc, char* argv[]) {
 
     std::vector<uint64_t> output_ids(output_cols);
     for (int i = 0; i < output_cols; ++i) output_ids[i] = static_cast<uint64_t>(i);
+
+    // ---------- QoL: header inference ----------
+    // Prep scripts write in_0..in_N, out_0..out_M column names. When
+    // --input-cols was not given, read the first CSV line: if it matches
+    // that pattern, derive both counts + has_header (a run shrinks to
+    // `aria.exe data.csv`).
+    if (input_cols == 0 && !csv_path.empty()) {
+        std::ifstream hf(csv_path);
+        if (hf) {
+            std::string hline;
+            if (std::getline(hf, hline)) {
+                int n_in = 0, n_out = 0, other = 0;
+                size_t p = 0;
+                while (p <= hline.size()) {
+                    size_t c = hline.find(',', p);
+                    std::string tok = hline.substr(
+                        p, (c == std::string::npos ? hline.size() : c) - p);
+                    // trim
+                    size_t a = tok.find_first_not_of(" \t\r");
+                    size_t b = tok.find_last_not_of(" \t\r");
+                    if (a != std::string::npos) tok = tok.substr(a, b - a + 1);
+                    if (tok.rfind("in_", 0) == 0 || tok.rfind("input_", 0) == 0) ++n_in;
+                    else if (tok.rfind("out_", 0) == 0 || tok.rfind("output_", 0) == 0) ++n_out;
+                    else ++other;
+                    if (c == std::string::npos) break;
+                    p = c + 1;
+                }
+                if (n_in > 0 && n_out > 0 && other == 0
+                    && n_in + n_out == static_cast<int>(
+                        std::count(hline.begin(), hline.end(), ',') + 1)) {
+                    input_cols = n_in;
+                    if (output_cols == config::DEFAULT_OUTPUT_COLS) {
+                        output_cols = n_out;
+                    }
+                    has_header = true;
+                    std::cout << "  [INFER] header: " << n_in << " inputs, "
+                              << n_out << " outputs\n";
+                }
+            }
+        }
+    }
+    if (input_cols == 0) {
+        std::cerr << "Error: --input-cols required (or use a header CSV with"
+                  << " in_*/out_* column names, or --task)\n";
+        return 1;
+    }
 
     // ---------- load dataset ----------
     std::cout << "Loading dataset from: " << csv_path << "\n";
@@ -408,7 +554,9 @@ int main(int argc, char* argv[]) {
     // Checkpoint path: problem-specific folder derived from the CSV name 鈥?    // checkpoints/<csv-stem>/graph.json (e.g. checkpoints/bench_digits/graph.json).
     // Explicit --save-graph overrides (uses the path verbatim as the FILE
     // path); "none" disables. Folder is created if missing.
-    if (save_graph_path != "none") {
+    // QoL: checkpointing is OPT-IN (empty = off). Derive the path only
+    // when explicitly enabled.
+    if (!save_graph_path.empty() && save_graph_path != "none") {
         std::string snap_path = save_graph_path;
         if (snap_path.empty()) {
             std::string stem = csv_path;
