@@ -439,6 +439,26 @@ position structure nobody told it about?
       baseline (structure discovery)?
 - [ ] Follow-ups: Song 五绝, 词 meters, fill-the-blank couplet probe
 
+
+### 6.13 Multiseed protocol: shared-cwd seeds are CORRELATED (found 2026-09-06)
+The freeze-v2 feynman multiseed (I.29.16 = 0.9993 +/- 0.0001) ran all
+seeds in ONE cwd — each seed's runs loaded library entries written by
+OTHER SEEDS' runs of the SAME equations. I.29.16's tight number was
+cross-seed library transfer (arguably the warm-start capability working
+— but it is NOT independent multiseed evidence).
+DECISIVE TESTS (aria12, I.29.16 solo, 50ep):
+- clean dir: 0.889
+- full warm library (1.9MB): 0.889 (the battery's edge needed the
+  in-flight concurrent entries, or recall of a same-task solution)
+- aria-cert isolated-dir certification: 0.64-0.93 across 5 seeds (the
+  TRUE independent spread)
+CONSEQUENCES: (1) error bars in the paper must use the isolated-dir
+protocol (feyn_seed.bat); (2) the freeze card's I.29.16 line reads
+"solo 0.6-0.97 seed-varies; 0.999+ achievable with cross-task warm-start
+(library)" — honest numbers for two different claims; (3) the apparent
+"aria-cert I.29.16 regression" was NOT the linear gain's fault: isolated
+protocols show both binaries ~0.8-0.9 solo. The I.32.8 gain verdict
+stands (helps, roulette-dependent).
 ### 6.12 Investment-arc pricing (M1.3-v2) — SIGNAL CALIBRATED 2026-09-05
 The formally-named wall (blocked M1.3 fatigue, t22 evidence gates, SIN
 grace) has its measuring stick. ARC-PRICE diagnostic (aria28d+): each
