@@ -9,43 +9,39 @@ Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-
   Loaded subgraph library: 6 entries
   Loaded failure library: 3 records
 Starting evolution...
-2026-09-06 14:01:57.423 [INFO] New best overall loss: 0.027467
-  [   1]   eval  loss=4.446467  |====================|  [   1]    sgd  loss=0.027467  ||2026-09-06 14:01:57.506 [INFO] New best overall loss: 0.010850
-  [   2]   eval  loss=0.027467  ||  [   2]    sgd  loss=0.010850  ||2026-09-06 14:01:57.540 [INFO] New best overall loss: 0.008752
-  [   3]   eval  loss=0.010850  ||  [   3]    sgd  loss=0.008752  ||2026-09-06 14:01:57.572 [INFO] New best overall loss: 0.008669
-  [   4]   eval  loss=0.008752  ||  [   4]    sgd  loss=0.008669  ||2026-09-06 14:01:57.602 [INFO] New best overall loss: 0.008609
-  [   5]   eval  loss=0.008669  ||  [   5]    sgd  loss=0.008609  ||2026-09-06 14:01:57.630 [INFO] New best overall loss: 0.008546
-  [   6]   eval  loss=0.008609  ||  [   6]    sgd  loss=0.008546  ||2026-09-06 14:01:57.663 [INFO] New best overall loss: 0.008490
-  [   7]   eval  loss=0.008546  ||  [   7]    sgd  loss=0.008490  ||2026-09-06 14:01:57.680 [INFO] New best overall loss: 0.008480
-  [   8]   eval  loss=0.008490  ||  [   8]    sgd  loss=0.008480  ||2026-09-06 14:01:57.704 [INFO] New best overall loss: 0.008461
-  [   9]   eval  loss=0.008480  ||  [   9]    sgd  loss=0.008461  ||2026-09-06 14:01:57.727 [INFO] New best overall loss: 0.008441
-  [  10]   eval  loss=0.008461  ||  [  10]    sgd  loss=0.008441  ||2026-09-06 14:01:57.745 [INFO] New best overall loss: 0.008422
-  [  11]   eval  loss=0.008441  ||  [  11]    sgd  loss=0.008422  ||2026-09-06 14:01:57.775 [INFO] New best overall loss: 0.008405
-  [  12]   eval  loss=0.008422  ||  [  12]    sgd  loss=0.008405  ||2026-09-06 14:01:57.795 [INFO] New best overall loss: 0.008390
-  [  13]   eval  loss=0.008405  ||  [  13]    sgd  loss=0.008390  ||2026-09-06 14:01:57.811 [INFO] New best overall loss: 0.008375
-  [  14]   eval  loss=0.008390  ||  [  14]    sgd  loss=0.008375  ||2026-09-06 14:01:57.832 [INFO] New best overall loss: 0.008362
-  [  15]   eval  loss=0.008375  ||  [  15]    sgd  loss=0.008362  ||2026-09-06 14:01:57.853 [INFO] New best overall loss: 0.008350
-  [  16]   eval  loss=0.008362  ||  [  16]    sgd  loss=0.008350  ||2026-09-06 14:01:57.870 [INFO] New best overall loss: 0.008339
-  [  17]   eval  loss=0.008350  ||  [  17]    sgd  loss=0.008339  ||2026-09-06 14:01:57.891 [INFO] New best overall loss: 0.008328
-  [  18]   eval  loss=0.008339  ||  [  18]    sgd  loss=0.008328  ||2026-09-06 14:01:57.908 [INFO] New best overall loss: 0.008318
-  [  19]   eval  loss=0.008328  ||  [  19]    sgd  loss=0.008318  ||2026-09-06 14:01:57.926 [INFO] New best overall loss: 0.008309
-  [  20]   eval  loss=0.008318  ||  [  20]    sgd  loss=0.008309  ||2026-09-06 14:01:57.927 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
-2026-09-06 14:01:57.927 [INFO] Plateau triggered at epoch 20 (counter=0, loss=0.008309)
-2026-09-06 14:01:57.934 [INFO] Structural inability detected 鈥?surfacing bottleneck node 4 (blame=0.034493)
-2026-09-06 14:01:57.934 [INFO] [PROFILE] F=2 N=267 var_r=0.2023 bound_ratio=4.8564 poly_r2=0.9924 a12=-0.0528 max_coef[i=2]=-0.6075 sobol_pair(0,1)=0.0711 quad=[1.457,1.457,1.457,1.457] L_max=57137.000 | flags: SHARP
-2026-09-06 14:01:57.934 [INFO] IFELSE set-guided split: thr=2.152734 (SSE reduction 16.224587 over 267 paired samples)
-2026-09-06 14:01:57.934 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=57137.000005 var_r=0.202281)
-2026-09-06 14:01:57.934 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
-2026-09-06 14:01:57.934 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
-2026-09-06 14:02:06.867 [INFO]   [ARC-DBG] pre-block enter
-2026-09-06 14:02:06.868 [INFO]   [ARC-DBG] computing fingerprint
-2026-09-06 14:02:06.868 [INFO]   [ARC-DBG] fingerprint done
-2026-09-06 14:02:06.872 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000014 train_loss=0.000012 new train_loss=0.000016
-2026-09-06 14:02:06.874 [INFO]   [ARC-PRICE] family=MULTI_LAYER_STACK fingerprint_move=46.761538 (val_delta=0.008080)
-2026-09-06 14:02:06.874 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-09-06 14:02:06.874 [INFO] Plateau state reset 鈥?best_phase2=0.000016
-2026-09-06 14:02:06.874 [INFO] Plateau state reset — best_phase2=0.000016
-  [  21]   eval  loss=0.000016  ||  [  21]    sgd  loss=0.000021  ||  [  22]   eval  loss=0.000021  ||  [  22]    sgd  loss=0.000022  ||  [  23]   eval  loss=0.000022  ||  [  23]    sgd  loss=0.000023  ||  [  24]   eval  loss=0.000023  ||  [  24]    sgd  loss=0.000024  ||  [  25]   eval  loss=0.000024  ||  [  25]    sgd  loss=0.000025  ||  [  26]   eval  loss=0.000025  ||  [  26]    sgd  loss=0.000027  ||  [  27]   eval  loss=0.000027  ||  [  27]    sgd  loss=0.000027  ||  [  28]   eval  loss=0.000027  ||  [  28]    sgd  loss=0.000026  ||  [  29]   eval  loss=0.000026  ||  [  29]    sgd  loss=0.000025  ||  [  30]   eval  loss=0.000025  ||  [  30]    sgd  loss=0.000025  ||  [  31]   eval  loss=0.000025  ||  [  31]    sgd  loss=0.000024  ||  [  32]   eval  loss=0.000024  ||  [  32]    sgd  loss=0.000024  ||  [  33]   eval  loss=0.000024  ||  [  33]    sgd  loss=0.000023  ||  [  34]   eval  loss=0.000023  ||  [  34]    sgd  loss=0.000023  ||  [  35]   eval  loss=0.000023  ||  [  35]    sgd  loss=0.000023  ||  [  36]   eval  loss=0.000023  ||  [  36]    sgd  loss=0.000023  ||  [  37]   eval  loss=0.000023  ||  [  37]    sgd  loss=0.000026  ||  [  38]   eval  loss=0.000026  ||  [  38]    sgd  loss=0.000028  ||  [  39]   eval  loss=0.000028  ||  [  39]    sgd  loss=0.000030  ||  [  40]   eval  loss=0.000030  ||  [  40]    sgd  loss=0.000029  ||  [  41]   eval  loss=0.000029  ||  [  41]    sgd  loss=0.000029  ||  [  42]   eval  loss=0.000029  ||  [  42]    sgd  loss=0.000028  ||  [  43]   eval  loss=0.000028  ||  [  43]    sgd  loss=0.000028  ||  [  44]   eval  loss=0.000028  ||  [  44]    sgd  loss=0.000028  ||  [  45]   eval  loss=0.000028  ||  [  45]    sgd  loss=0.000027  ||  [  46]   eval  loss=0.000027  ||  [  46]    sgd  loss=0.000027  ||  [  47]   eval  loss=0.000027  ||  [  47]    sgd  loss=0.000027  ||  [  48]   eval  loss=0.000027  ||  [  48]    sgd  loss=0.000026  ||  [  49]   eval  loss=0.000026  ||  [  49]    sgd  loss=0.000026  ||  [  50]   eval  loss=0.000026  ||  [  50]    sgd  loss=0.000026  ||2026-09-06 14:02:10.377 [INFO] Restored best-val graph snapshot (val=0.000014, train=0.000016)
+2026-09-06 14:55:27.643 [INFO] New best overall loss: 0.027467
+  [   1]   eval  loss=4.446467  |====================|  [   1]    sgd  loss=0.027467  ||2026-09-06 14:55:27.681 [INFO] New best overall loss: 0.010850
+  [   2]   eval  loss=0.027467  ||  [   2]    sgd  loss=0.010850  ||2026-09-06 14:55:27.699 [INFO] New best overall loss: 0.008752
+  [   3]   eval  loss=0.010850  ||  [   3]    sgd  loss=0.008752  ||2026-09-06 14:55:27.711 [INFO] New best overall loss: 0.008669
+  [   4]   eval  loss=0.008752  ||  [   4]    sgd  loss=0.008669  ||2026-09-06 14:55:27.723 [INFO] New best overall loss: 0.008609
+  [   5]   eval  loss=0.008669  ||  [   5]    sgd  loss=0.008609  ||2026-09-06 14:55:27.735 [INFO] New best overall loss: 0.008546
+  [   6]   eval  loss=0.008609  ||  [   6]    sgd  loss=0.008546  ||2026-09-06 14:55:27.747 [INFO] New best overall loss: 0.008490
+  [   7]   eval  loss=0.008546  ||  [   7]    sgd  loss=0.008490  ||2026-09-06 14:55:27.757 [INFO] New best overall loss: 0.008480
+  [   8]   eval  loss=0.008490  ||  [   8]    sgd  loss=0.008480  ||2026-09-06 14:55:27.766 [INFO] New best overall loss: 0.008461
+  [   9]   eval  loss=0.008480  ||  [   9]    sgd  loss=0.008461  ||2026-09-06 14:55:27.775 [INFO] New best overall loss: 0.008441
+  [  10]   eval  loss=0.008461  ||  [  10]    sgd  loss=0.008441  ||2026-09-06 14:55:27.784 [INFO] New best overall loss: 0.008422
+  [  11]   eval  loss=0.008441  ||  [  11]    sgd  loss=0.008422  ||2026-09-06 14:55:27.793 [INFO] New best overall loss: 0.008405
+  [  12]   eval  loss=0.008422  ||  [  12]    sgd  loss=0.008405  ||2026-09-06 14:55:27.802 [INFO] New best overall loss: 0.008390
+  [  13]   eval  loss=0.008405  ||  [  13]    sgd  loss=0.008390  ||2026-09-06 14:55:27.811 [INFO] New best overall loss: 0.008375
+  [  14]   eval  loss=0.008390  ||  [  14]    sgd  loss=0.008375  ||2026-09-06 14:55:27.820 [INFO] New best overall loss: 0.008362
+  [  15]   eval  loss=0.008375  ||  [  15]    sgd  loss=0.008362  ||2026-09-06 14:55:27.829 [INFO] New best overall loss: 0.008350
+  [  16]   eval  loss=0.008362  ||  [  16]    sgd  loss=0.008350  ||2026-09-06 14:55:27.838 [INFO] New best overall loss: 0.008339
+  [  17]   eval  loss=0.008350  ||  [  17]    sgd  loss=0.008339  ||2026-09-06 14:55:27.847 [INFO] New best overall loss: 0.008328
+  [  18]   eval  loss=0.008339  ||  [  18]    sgd  loss=0.008328  ||2026-09-06 14:55:27.857 [INFO] New best overall loss: 0.008318
+  [  19]   eval  loss=0.008328  ||  [  19]    sgd  loss=0.008318  ||2026-09-06 14:55:27.866 [INFO] New best overall loss: 0.008309
+  [  20]   eval  loss=0.008318  ||  [  20]    sgd  loss=0.008309  ||2026-09-06 14:55:27.866 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
+2026-09-06 14:55:27.866 [INFO] Plateau triggered at epoch 20 (counter=0, loss=0.008309)
+2026-09-06 14:55:27.869 [INFO] Structural inability detected 鈥?surfacing bottleneck node 4 (blame=0.034493)
+2026-09-06 14:55:27.869 [INFO] [PROFILE] F=2 N=267 var_r=0.2023 bound_ratio=4.8564 poly_r2=0.9924 a12=-0.0528 max_coef[i=2]=-0.6075 sobol_pair(0,1)=0.0711 quad=[1.457,1.457,1.457,1.457] L_max=57137.000 | flags: SHARP
+2026-09-06 14:55:27.869 [INFO] IFELSE set-guided split: thr=2.152734 (SSE reduction 16.224587 over 267 paired samples)
+2026-09-06 14:55:27.869 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=57137.000005 var_r=0.202281)
+2026-09-06 14:55:27.869 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
+2026-09-06 14:55:27.869 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
+2026-09-06 14:55:32.159 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000014 train_loss=0.000012 new train_loss=0.000016
+2026-09-06 14:55:32.159 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-06 14:55:32.159 [INFO] Plateau state reset 鈥?best_phase2=0.000016
+2026-09-06 14:55:32.159 [INFO] Plateau state reset — best_phase2=0.000016
+  [  21]   eval  loss=0.000016  ||  [  21]    sgd  loss=0.000021  ||  [  22]   eval  loss=0.000021  ||  [  22]    sgd  loss=0.000022  ||  [  23]   eval  loss=0.000022  ||  [  23]    sgd  loss=0.000023  ||  [  24]   eval  loss=0.000023  ||  [  24]    sgd  loss=0.000024  ||  [  25]   eval  loss=0.000024  ||  [  25]    sgd  loss=0.000025  ||  [  26]   eval  loss=0.000025  ||  [  26]    sgd  loss=0.000027  ||  [  27]   eval  loss=0.000027  ||  [  27]    sgd  loss=0.000027  ||  [  28]   eval  loss=0.000027  ||  [  28]    sgd  loss=0.000026  ||  [  29]   eval  loss=0.000026  ||  [  29]    sgd  loss=0.000025  ||  [  30]   eval  loss=0.000025  ||  [  30]    sgd  loss=0.000025  ||  [  31]   eval  loss=0.000025  ||  [  31]    sgd  loss=0.000024  ||  [  32]   eval  loss=0.000024  ||  [  32]    sgd  loss=0.000024  ||  [  33]   eval  loss=0.000024  ||  [  33]    sgd  loss=0.000023  ||  [  34]   eval  loss=0.000023  ||  [  34]    sgd  loss=0.000023  ||  [  35]   eval  loss=0.000023  ||  [  35]    sgd  loss=0.000023  ||  [  36]   eval  loss=0.000023  ||  [  36]    sgd  loss=0.000023  ||  [  37]   eval  loss=0.000023  ||  [  37]    sgd  loss=0.000026  ||  [  38]   eval  loss=0.000026  ||  [  38]    sgd  loss=0.000028  ||  [  39]   eval  loss=0.000028  ||  [  39]    sgd  loss=0.000030  ||  [  40]   eval  loss=0.000030  ||  [  40]    sgd  loss=0.000029  ||  [  41]   eval  loss=0.000029  ||  [  41]    sgd  loss=0.000029  ||  [  42]   eval  loss=0.000029  ||  [  42]    sgd  loss=0.000028  ||  [  43]   eval  loss=0.000028  ||  [  43]    sgd  loss=0.000028  ||  [  44]   eval  loss=0.000028  ||  [  44]    sgd  loss=0.000028  ||  [  45]   eval  loss=0.000028  ||  [  45]    sgd  loss=0.000027  ||  [  46]   eval  loss=0.000027  ||  [  46]    sgd  loss=0.000027  ||  [  47]   eval  loss=0.000027  ||  [  47]    sgd  loss=0.000027  ||  [  48]   eval  loss=0.000027  ||  [  48]    sgd  loss=0.000026  ||  [  49]   eval  loss=0.000026  ||  [  49]    sgd  loss=0.000026  ||  [  50]   eval  loss=0.000026  ||  [  50]    sgd  loss=0.000026  ||2026-09-06 14:55:34.175 [INFO] Restored best-val graph snapshot (val=0.000014, train=0.000016)
 
 
 ================================================
@@ -63,7 +59,7 @@ Starting evolution...
   Initial loss:         4.44647
   Final loss:           1.639e-05
   Best loss:            1.639e-05
-  Wall time:            13039 ms
+  Wall time:            6573 ms
 
   [Expression] 1.813*tanh(0.176*tanh(0.171*x0-0.337*x1-0.118)+0.079*tanh(0.171*x0-0.085*x1-0.021)-0.163*tanh(-0.101*x0+0.392*x1+0.053)-0.167*tanh(-0.105*x0+0.415*x1+0.039)+0.438*tanh(0.745*x0-0.058*x1+0.025)+0.07...
 

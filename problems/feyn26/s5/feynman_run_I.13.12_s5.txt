@@ -1,113 +1,0 @@
-================================================
-  ARIA — Adaptive Reasoned Injection of Architecture
-================================================
-
-Loading dataset from: C:\Users\banny\Documents\algorithm project\problems\suite-feynman\I.13.12.csv
-  Loaded 999 samples
-  Train: 799  Validation: 200
-
-  Loaded subgraph library: 17 entries
-  Loaded failure library: 30 records
-Starting evolution...
-2026-09-06 14:04:27.193 [INFO] New best overall loss: 4198.728884
-  [   1]   eval  loss=6175.985961  |====================|  [   1]    sgd  loss=4198.728884  |====================|2026-09-06 14:04:27.353 [INFO] New best overall loss: 2896.028700
-  [   2]   eval  loss=4198.728884  |====================|  [   2]    sgd  loss=2896.028700  |====================|2026-09-06 14:04:27.516 [INFO] New best overall loss: 1985.304401
-  [   3]   eval  loss=2896.028700  |====================|  [   3]    sgd  loss=1985.304401  |====================|2026-09-06 14:04:27.684 [INFO] New best overall loss: 1397.517883
-  [   4]   eval  loss=1985.304401  |====================|  [   4]    sgd  loss=1397.517883  |====================|2026-09-06 14:04:27.851 [INFO] New best overall loss: 993.735221
-  [   5]   eval  loss=1397.517883  |====================|  [   5]    sgd  loss=993.735221  |====================|2026-09-06 14:04:28.001 [INFO] New best overall loss: 723.137178
-  [   6]   eval  loss=993.735221  |====================|  [   6]    sgd  loss=723.137178  |====================|2026-09-06 14:04:28.147 [INFO] New best overall loss: 541.881127
-  [   7]   eval  loss=723.137178  |====================|  [   7]    sgd  loss=541.881127  |====================|2026-09-06 14:04:28.299 [INFO] New best overall loss: 419.617875
-  [   8]   eval  loss=541.881127  |====================|  [   8]    sgd  loss=419.617875  |====================|2026-09-06 14:04:28.456 [INFO] New best overall loss: 334.247201
-  [   9]   eval  loss=419.617875  |====================|  [   9]    sgd  loss=334.247201  |====================|2026-09-06 14:04:29.000 [INFO] New best overall loss: 274.366798
-  [  10]   eval  loss=334.247201  |====================|  [  10]    sgd  loss=274.366798  |====================|2026-09-06 14:04:29.761 [INFO] New best overall loss: 232.377047
-  [  11]   eval  loss=274.366798  |====================|  [  11]    sgd  loss=232.377047  |====================|2026-09-06 14:04:30.407 [INFO] New best overall loss: 201.927144
-  [  12]   eval  loss=232.377047  |====================|  [  12]    sgd  loss=201.927144  |====================|2026-09-06 14:04:30.835 [INFO] New best overall loss: 178.751808
-  [  13]   eval  loss=201.927144  |====================|  [  13]    sgd  loss=178.751808  |====================|2026-09-06 14:04:31.137 [INFO] New best overall loss: 160.528814
-  [  14]   eval  loss=178.751808  |====================|  [  14]    sgd  loss=160.528814  |====================|2026-09-06 14:04:31.432 [INFO] New best overall loss: 145.922759
-  [  15]   eval  loss=160.528814  |====================|  [  15]    sgd  loss=145.922759  |====================|2026-09-06 14:04:31.584 [INFO] New best overall loss: 134.240805
-  [  16]   eval  loss=145.922759  |====================|  [  16]    sgd  loss=134.240805  |====================|2026-09-06 14:04:31.748 [INFO] New best overall loss: 124.613029
-  [  17]   eval  loss=134.240805  |====================|  [  17]    sgd  loss=124.613029  |====================|2026-09-06 14:04:31.905 [INFO] New best overall loss: 116.471980
-  [  18]   eval  loss=124.613029  |====================|  [  18]    sgd  loss=116.471980  |====================|2026-09-06 14:04:32.131 [INFO] New best overall loss: 109.514350
-  [  19]   eval  loss=116.471980  |====================|  [  19]    sgd  loss=109.514350  |====================|2026-09-06 14:04:32.280 [INFO] New best overall loss: 103.509107
-  [  20]   eval  loss=109.514350  |====================|  [  20]    sgd  loss=103.509107  |====================|2026-09-06 14:04:32.280 [INFO] Forced structural trigger at epoch 20 (epochs since last structural: 20)
-2026-09-06 14:04:32.280 [INFO] Plateau triggered at epoch 20 (counter=0, loss=103.509107)
-2026-09-06 14:04:32.294 [INFO] Structural inability detected 鈥?surfacing bottleneck node 4 (blame=124.621006)
-2026-09-06 14:04:32.295 [INFO] [PROFILE] F=2 N=267 var_r=27.9929 bound_ratio=3.6505 poly_r2=0.8751 a12=-1.5013 max_coef[i=1]=15.5770 sobol_pair(0,1)=0.2580 quad=[16.757,16.757,16.757,16.757] L_max=1089195.444 | flags: BOUNDED SHARP
-2026-09-06 14:04:32.296 [INFO] IFELSE set-guided split: thr=1.683866 (SSE reduction 3092.796963 over 267 paired samples)
-2026-09-06 14:04:32.296 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=1089195.444453 var_r=27.992875)
-2026-09-06 14:04:32.296 [INFO] Candidate emitted: DIVIDE_INJECTION (input=1/input=2)
-2026-09-06 14:04:32.296 [INFO] Candidate emitted: DIVIDE_INJECTION (input=2/input=1)
-2026-09-06 14:04:48.443 [INFO]   [ARC-DBG] pre-block enter
-2026-09-06 14:04:48.444 [INFO]   [ARC-DBG] computing fingerprint
-2026-09-06 14:04:48.445 [INFO]   [ARC-DBG] fingerprint done
-2026-09-06 14:04:48.603 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=14.392826 train_loss=27.038544 new train_loss=14.592846
-2026-09-06 14:04:48.606 [INFO]   [ARC-PRICE] family=MULTI_LAYER_STACK fingerprint_move=807050.521140 (val_delta=88.359940)
-2026-09-06 14:04:48.606 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
-2026-09-06 14:04:48.606 [INFO] Plateau state reset 鈥?best_phase2=14.592846
-2026-09-06 14:04:48.606 [INFO] Plateau state reset — best_phase2=14.592846
-2026-09-06 14:04:49.418 [INFO] New best overall loss: 13.946666
-  [  21]   eval  loss=14.592846  |====================|  [  21]    sgd  loss=13.946666  |====================|2026-09-06 14:04:49.714 [INFO] New best overall loss: 13.512169
-  [  22]   eval  loss=13.946666  |====================|  [  22]    sgd  loss=13.512169  |====================|2026-09-06 14:04:49.948 [INFO] New best overall loss: 13.101070
-  [  23]   eval  loss=13.512169  |====================|  [  23]    sgd  loss=13.101070  |====================|2026-09-06 14:04:50.184 [INFO] New best overall loss: 12.699219
-  [  24]   eval  loss=13.101070  |====================|  [  24]    sgd  loss=12.699219  |====================|2026-09-06 14:04:50.408 [INFO] New best overall loss: 12.310699
-  [  25]   eval  loss=12.699219  |====================|  [  25]    sgd  loss=12.310699  |====================|2026-09-06 14:04:50.692 [INFO] New best overall loss: 11.882547
-  [  26]   eval  loss=12.310699  |====================|  [  26]    sgd  loss=11.882547  |====================|2026-09-06 14:04:51.053 [INFO] New best overall loss: 11.448230
-  [  27]   eval  loss=11.882547  |====================|  [  27]    sgd  loss=11.448230  |====================|2026-09-06 14:04:51.351 [INFO] New best overall loss: 11.026619
-  [  28]   eval  loss=11.448230  |====================|  [  28]    sgd  loss=11.026619  |====================|2026-09-06 14:04:51.725 [INFO] New best overall loss: 10.619221
-  [  29]   eval  loss=11.026619  |====================|  [  29]    sgd  loss=10.619221  |====================|2026-09-06 14:04:52.081 [INFO] New best overall loss: 10.228847
-  [  30]   eval  loss=10.619221  |====================|  [  30]    sgd  loss=10.228847  |====================|2026-09-06 14:04:52.363 [INFO] New best overall loss: 9.862578
-  [  31]   eval  loss=10.228847  |====================|  [  31]    sgd  loss=9.862578  |====================|2026-09-06 14:04:52.644 [INFO] New best overall loss: 9.512363
-  [  32]   eval  loss=9.862578  |====================|  [  32]    sgd  loss=9.512363  |====================|2026-09-06 14:04:52.890 [INFO] New best overall loss: 9.202628
-  [  33]   eval  loss=9.512363  |====================|  [  33]    sgd  loss=9.202628  |====================|2026-09-06 14:04:53.233 [INFO] New best overall loss: 8.876942
-  [  34]   eval  loss=9.202628  |====================|  [  34]    sgd  loss=8.876942  |====================|2026-09-06 14:04:54.195 [INFO] New best overall loss: 8.562226
-  [  35]   eval  loss=8.876942  |====================|  [  35]    sgd  loss=8.562226  |====================|2026-09-06 14:04:54.762 [INFO] New best overall loss: 8.292158
-  [  36]   eval  loss=8.562226  |====================|  [  36]    sgd  loss=8.292158  |====================|2026-09-06 14:04:55.097 [INFO] New best overall loss: 8.043998
-  [  37]   eval  loss=8.292158  |====================|  [  37]    sgd  loss=8.043998  |====================|2026-09-06 14:04:55.534 [INFO] New best overall loss: 7.793447
-  [  38]   eval  loss=8.043998  |====================|  [  38]    sgd  loss=7.793447  |====================|2026-09-06 14:04:55.956 [INFO] New best overall loss: 7.555547
-  [  39]   eval  loss=7.793447  |====================|  [  39]    sgd  loss=7.555547  |====================|2026-09-06 14:04:56.319 [INFO] New best overall loss: 7.329284
-  [  40]   eval  loss=7.555547  |====================|  [  40]    sgd  loss=7.329284  |====================|2026-09-06 14:04:57.467 [INFO] New best overall loss: 7.114507
-  [  41]   eval  loss=7.329284  |====================|  [  41]    sgd  loss=7.114507  |====================|2026-09-06 14:04:58.724 [INFO] New best overall loss: 6.911666
-  [  42]   eval  loss=7.114507  |====================|  [  42]    sgd  loss=6.911666  |====================|2026-09-06 14:04:59.738 [INFO] New best overall loss: 6.719996
-  [  43]   eval  loss=6.911666  |====================|  [  43]    sgd  loss=6.719996  |====================|2026-09-06 14:05:00.884 [INFO] New best overall loss: 6.538754
-  [  44]   eval  loss=6.719996  |====================|  [  44]    sgd  loss=6.538754  |====================|2026-09-06 14:05:01.857 [INFO] New best overall loss: 6.367166
-  [  45]   eval  loss=6.538754  |====================|  [  45]    sgd  loss=6.367166  |====================|2026-09-06 14:05:02.599 [INFO] New best overall loss: 6.204254
-  [  46]   eval  loss=6.367166  |====================|  [  46]    sgd  loss=6.204254  |====================|2026-09-06 14:05:03.233 [INFO] New best overall loss: 6.050053
-  [  47]   eval  loss=6.204254  |====================|  [  47]    sgd  loss=6.050053  |====================|2026-09-06 14:05:03.676 [INFO] New best overall loss: 5.904731
-  [  48]   eval  loss=6.050053  |====================|  [  48]    sgd  loss=5.904731  |====================|2026-09-06 14:05:04.189 [INFO] New best overall loss: 5.766194
-  [  49]   eval  loss=5.904731  |====================|  [  49]    sgd  loss=5.766194  |====================|2026-09-06 14:05:05.265 [INFO] New best overall loss: 5.632842
-  [  50]   eval  loss=5.766194  |====================|  [  50]    sgd  loss=5.632842  |====================|2026-09-06 14:05:05.267 [INFO] Restored best-val graph snapshot (val=6.642114, train=5.632842)
-
-
-================================================
-  Evolution Complete
-================================================
-
-  Total epochs:         50
-  SGD epochs run:       2500
-  Structural changes:   1
-  Failed commits:       6
-  Compiles performed:   0
-  Dead nodes removed:   0
-  Constants folded:     0
-  Neurons compressed:   0
-  Initial loss:         6175.99
-  Final loss:           5.63284
-  Best loss:            5.63284
-  Wall time:            38285 ms
-
-  [Expression] 140.665*tanh(0.141*tanh(0.595*x0-0.414*x1-0.171)+0.445*tanh(-0.456*x0+0.941*x1+1.636)+0.435*tanh(1.461*x0+1.477*x1+1.221)-0.193*tanh(0.422*x0-0.462*x1-0.687)-0.315*tanh(-0.961*x0+0.466*x1-0.893)+0....
-
-  [Library] Behavioral fingerprint: k=2 bounded=1 interact=0 sign_sym=0 sharp=1 lipsch=668.1
-  [Library] Closest existing entries:
-    I.6.2.csv (dist=11.191)
-    I.8.4.csv (dist=13.172)
-    I.7.9.csv (dist=17.696)
-  [Library] Pattern: tanh_stack
-  [Library] Saved (library now has 18 entries)
-  [FailureLib] Appended 6 failure records to failure_library.txt
-
-================================================
-  Held-out Evaluation  (499 samples)
-================================================
-  Eval R2[out0]:   0.998206
-  Eval MSE[out0]:  6.011809   MAE: 0.793652
