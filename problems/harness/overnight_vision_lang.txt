@@ -1,0 +1,21 @@
+# overnight_vision_lang.txt — full vision + language battery on aria-cert
+# (the certified minimal binary: freeze-v2 + linear divprod gain).
+# Sequential within each group; run_pool caps at 3 slots total.
+# Vision: MNIST digits x3 seeds, CIFAR gray-5k, CIFAR pooled8, CIFAR RGB-5k.
+# Language: Shakespeare ladder w1/w8/w16/w32 (EMBED trunk).
+
+cd ..\..\problems > nul 2>&1
+rem --- vision (aria-cert, task registry + quiet) ---
+..\..\aria-cert.exe --csv suite-vision\bench_digits.csv --input-cols 64 --output-cols 10 --loss bce --max-epochs 200 --seed 1 --save-graph none --quiet > vision_out\cert_digits_s1.txt 2>&1
+..\..\aria-cert.exe --csv suite-vision\bench_digits.csv --input-cols 64 --output-cols 10 --loss bce --max-epochs 200 --seed 2 --save-graph none --quiet > vision_out\cert_digits_s2.txt 2>&1
+..\..\aria-cert.exe --csv suite-vision\bench_digits.csv --input-cols 64 --output-cols 10 --loss bce --max-epochs 200 --seed 3 --save-graph none --quiet > vision_out\cert_digits_s3.txt 2>&1
+..\..\aria-cert.exe --csv suite-vision\bench_cifar_gray_5k.csv --input-cols 1024 --output-cols 10 --loss bce --max-epochs 100 --seed 1 --save-graph none --quiet > vision_out\cert_cifar5k.txt 2>&1
+..\..\aria-cert.exe --csv suite-vision\bench_cifar_gray_5k_pooled8.csv --input-cols 64 --output-cols 10 --loss bce --max-epochs 100 --seed 1 --save-graph none --quiet > vision_out\cert_cifar5k_pooled.txt 2>&1
+..\..\aria-cert.exe --csv suite-vision\bench_cifar_rgb_5k.csv --input-cols 3072 --output-cols 10 --loss bce --max-epochs 100 --seed 1 --save-graph none --quiet > vision_out\cert_cifar_rgb.txt 2>&1
+rem --- language ladder (aria-cert; isolated dirs to avoid library cross-contamination: M6.13) ---
+..\..\aria-cert.exe --csv suite-language\bench_shakespeare_w1.csv --input-cols 1 --output-cols 65 --loss bce --max-epochs 30 --seed 1 --save-graph none > lang_out\cert_w1.txt 2>&1
+..\..\aria-cert.exe --csv suite-language\bench_shakespeare_w8.csv --input-cols 8 --output-cols 65 --loss bce --max-epochs 30 --seed 1 --save-graph none > lang_out\cert_w8.txt 2>&1
+..\..\aria-cert.exe --csv suite-language\bench_shakespeare_w16.csv --input-cols 16 --output-cols 65 --loss bce --max-epochs 30 --seed 1 --save-graph none > lang_out\cert_w16.txt 2>&1
+..\..\aria-cert.exe --csv suite-language\bench_shakespeare_w32.csv --input-cols 32 --output-cols 65 --loss bce --max-epochs 30 --seed 1 --save-graph none > lang_out\cert_w32.txt 2>&1
+rem --- poems verdict rerun (V=501 v2 config; aria-cert lineage has one-hot) ---
+..\..\aria-cert.exe --csv suite-poems\bench_wujue_train.csv --input-cols 19 --output-cols 501 --loss bce --max-epochs 30 --seed 1 --save-graph none --eval-csv suite-poems\bench_wujue_test.csv > lang_out\cert_wujue.txt 2>&1

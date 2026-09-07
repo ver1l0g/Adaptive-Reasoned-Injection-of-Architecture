@@ -1,4 +1,4 @@
-# status.ps1 — one command, full picture of every ARIA run.
+﻿# status.ps1 鈥?one command, full picture of every ARIA run.
 # Scans known run locations; prints epoch/commit progress, freshness,
 # and liveness. Usage: powershell -File harness\status.ps1
 Set-Location (Split-Path $MyInvocation.MyCommand.Path -Parent | Split-Path)
@@ -47,7 +47,7 @@ Get-ChildItem arcprobe -Directory -ErrorAction SilentlyContinue | ForEach-Object
     }
 }
 Write-Host "-- misc runs (root-level logs) --"
-Get-ChildItem hd16_*, hd12_* -Directory -ErrorAction SilentlyContinue | ForEach-Object {
+Get-ChildItem scratch\runs -Directory -ErrorAction SilentlyContinue | ForEach-Object {
     foreach ($lg in @('log.txt','log2.txt','log3.txt')) {
         if (Test-Path "$($_.FullName)\$lg") { Show-Run $_.Name "$($_.FullName)\$lg" }
     }
@@ -55,3 +55,4 @@ Get-ChildItem hd16_*, hd12_* -Directory -ErrorAction SilentlyContinue | ForEach-
 Get-ChildItem i328ab -Directory -ErrorAction SilentlyContinue | ForEach-Object {
     if (Test-Path "$($_.FullName)\log.txt") { Show-Run "i328/$($_.Name)" "$($_.FullName)\log.txt" }
 }
+

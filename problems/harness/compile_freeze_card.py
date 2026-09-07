@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-"""M6.5/M6.7 freeze card compiler — aggregates every freeze-battery result
+﻿#!/usr/bin/env python3
+"""M6.5/M6.7 freeze card compiler 鈥?aggregates every freeze-battery result
 into results/FREEZE_CARD.md. Sources (aria12 lineage unless noted):
 
   standard   results/standard_results.csv          (aria11; aria16 spot-checks noted)
@@ -8,7 +8,7 @@ into results/FREEZE_CARD.md. Sources (aria12 lineage unless noted):
   limits     frz12_limits_out.txt + solo reruns    (aria12)
   feynman    results/feynman_results_seed{2..5}    (aria12; aria10 archive in
              results/aria10_multiseed/)
-  language   ladder12/w{1,8,16,32}/run_log.txt     (aria12; w32 = solo rerun)
+  language   scratch/runs/ladder12/w{1,8,16,32}/run_log.txt     (aria12; w32 = solo rerun)
 
 Usage: python harness/compile_freeze_card.py   (from problems/)
 """
@@ -64,7 +64,7 @@ def limits_card():
     lines = [l for l in txt.splitlines() if l.strip()]
     lines.append("")
     lines.append("| highdim20 solo rerun | 0.995278 PASS |")
-    lines.append("| highdim15 solo rerun | 0.905612 (aria10 freeze: 0.9982 —")
+    lines.append("| highdim15 solo rerun | 0.905612 (aria10 freeze: 0.9982;")
     lines.append("|                      |  build/trajectory-sensitive, see M6.8) |")
     return "\n".join(lines) if lines else "_missing_"
 
@@ -90,7 +90,7 @@ def feynman_card():
         ok = m > 0.99
         solved += ok
         tag = "" if ok else " **OPEN**"
-        lines.append(f"| {eq} | {m:.4f} ± {sd:.4f} (n={len(v)}) |{tag}")
+        lines.append(f"| {eq} | {m:.4f} 卤 {sd:.4f} (n={len(v)}) |{tag}")
     lines.insert(1, f"mean-of-means {means/len(seeds):.4f} | solved {solved}/{len(seeds)}")
     return "\n".join(lines)
 
@@ -101,7 +101,7 @@ BPC_RE = re.compile(r"Eval SoftmaxCE:\s*([0-9.]+)\s+\(([0-9.]+) bits/unit\)")
 def language_card():
     lines = []
     for w in ("w1", "w8", "w16", "w32"):
-        p = f"ladder12/{w}/run_log.txt"
+        p = f"scratch/runs/ladder12/{w}/run_log.txt"
         if not os.path.exists(p):
             continue
         m = None
@@ -118,13 +118,13 @@ def language_card():
 
 
 def main():
-    card = f"""# ARIA Freeze Card (M6.5/M6.7) — compiled 2026-08-30
+    card = f"""# ARIA Freeze Card (M6.5/M6.7) 鈥?compiled 2026-08-30
 
 Binary lineage: aria12 (aria10 + M7.5/M7.6 live + EMBED UAF fix + M1.5
 versioning) for all suites; aria11 for standard/korns/temporal (identical
 engine semantics to aria12 on those paths); aria16 spot-checks noted in
 place. Post-freeze development binaries (aria13-18: evidence path,
-one-hot) are NOT in this card — they are v2.
+one-hot) are NOT in this card 鈥?they are v2.
 Development binaries & deltas: see ROADMAP M6.7 for the freeze-binary
 decision record.
 
@@ -158,3 +158,4 @@ decision record.
 
 if __name__ == "__main__":
     main()
+

@@ -1,10 +1,10 @@
-# ARIA Freeze Card (M6.5/M6.7) — compiled 2026-08-30
+# ARIA Freeze Card (M6.5/M6.7) 鈥?compiled 2026-08-30
 
 Binary lineage: aria12 (aria10 + M7.5/M7.6 live + EMBED UAF fix + M1.5
 versioning) for all suites; aria11 for standard/korns/temporal (identical
 engine semantics to aria12 on those paths); aria16 spot-checks noted in
 place. Post-freeze development binaries (aria13-18: evidence path,
-one-hot) are NOT in this card — they are v2.
+one-hot) are NOT in this card 鈥?they are v2.
 Development binaries & deltas: see ROADMAP M6.7 for the freeze-binary
 decision record.
 
@@ -61,39 +61,39 @@ count8      out1=0.9999[PASS]  commits=NEURON_TANH_INJECTIONx4,MULTIPLY_INJECTIO
 firstpos8   out1=0.9858[FAIL]  commits=NEURON_TANH_INJECTIONx1,MULTIPLY_INJECTIONx2  (1min)
 
 | highdim20 solo rerun | 0.995278 PASS |
-| highdim15 solo rerun | 0.905612 (aria10 freeze: 0.9982 —
+| highdim15 solo rerun | 0.905612 (aria10 freeze: 0.9982;
 |                      |  build/trajectory-sensitive, see M6.8) |
 ```
 
 ## suite-feynman multiseed (aria12)
 aria12, 50 epochs, seeds 2-5 (aria10 archive: results/aria10_multiseed/)
-mean-of-means 0.9991 | solved 24/25
+mean-of-means 0.9903 | solved 23/25
 
-| I.10.7 | 0.9997 ± 0.0001 (n=4) |
-| I.12.5 | 0.9999 ± 0.0002 (n=4) |
-| I.13.12 | 0.9999 ± 0.0001 (n=4) |
-| I.14.3 | 0.9997 ± 0.0000 (n=4) |
-| I.15.10 | 0.9998 ± 0.0001 (n=4) |
-| I.15.3 | 0.9997 ± 0.0001 (n=4) |
-| I.18.14 | 0.9999 ± 0.0000 (n=4) |
-| I.18.4 | 0.9999 ± 0.0000 (n=4) |
-| I.24.6 | 0.9999 ± 0.0000 (n=4) |
-| I.25.9 | 0.9999 ± 0.0001 (n=4) |
-| I.29.16 | 0.9993 ± 0.0001 (n=4) |
-| I.32.8 | 0.9829 ± 0.0017 (n=4) | **OPEN**
-| I.34.6 | 0.9991 ± 0.0000 (n=4) |
-| I.43.27 | 0.9984 ± 0.0005 (n=4) |
-| I.47.23 | 0.9999 ± 0.0000 (n=4) |
-| I.48.20 | 0.9999 ± 0.0000 (n=3) |
-| I.6.2 | 1.0000 ± 0.0000 (n=4) |
-| I.6.2b | 0.9998 ± 0.0002 (n=4) |
-| I.7.9 | 1.0000 ± 0.0000 (n=3) |
-| I.8.4 | 0.9999 ± 0.0001 (n=4) |
-| I.9.5 | 0.9995 ± 0.0004 (n=4) |
-| II.11.27 | 0.9998 ± 0.0002 (n=4) |
-| II.34.29a | 0.9998 ± 0.0001 (n=4) |
-| III.10.19 | 0.9999 ± 0.0000 (n=4) |
-| III.4.33 | 1.0000 ± 0.0000 (n=4) |
+| I.10.7 | 0.9987 卤 0.0008 (n=5) |
+| I.12.5 | 0.9999 卤 0.0002 (n=5) |
+| I.13.12 | 0.9973 卤 0.0010 (n=5) |
+| I.14.3 | 0.9996 卤 0.0002 (n=5) |
+| I.15.10 | 0.9998 卤 0.0000 (n=5) |
+| I.15.3 | 0.9978 卤 0.0008 (n=5) |
+| I.18.14 | 0.9905 卤 0.0119 (n=5) |
+| I.18.4 | 0.9997 卤 0.0002 (n=5) |
+| I.24.6 | 0.9994 卤 0.0006 (n=5) |
+| I.25.9 | 0.9998 卤 0.0001 (n=5) |
+| I.29.16 | 0.7977 卤 0.1357 (n=5) | **OPEN**
+| I.32.8 | 0.9827 卤 0.0237 (n=5) | **OPEN**
+| I.34.6 | 0.9989 卤 0.0002 (n=5) |
+| I.43.27 | 0.9988 卤 0.0003 (n=5) |
+| I.47.23 | 0.9999 卤 0.0000 (n=5) |
+| I.48.20 | 0.9999 卤 0.0000 (n=5) |
+| I.6.2 | 0.9999 卤 0.0002 (n=5) |
+| I.6.2b | 0.9999 卤 0.0001 (n=5) |
+| I.7.9 | 0.9999 卤 0.0000 (n=5) |
+| I.8.4 | 0.9997 卤 0.0002 (n=5) |
+| I.9.5 | 0.9998 卤 0.0002 (n=5) |
+| II.11.27 | 0.9988 卤 0.0007 (n=5) |
+| II.34.29a | 0.9996 卤 0.0005 (n=5) |
+| III.10.19 | 0.9997 卤 0.0001 (n=5) |
+| III.4.33 | 0.9999 卤 0.0000 (n=5) |
 
 ## suite-language ladder (aria12, EMBED trunk)
 | w1 | 4.429599 bits/char |
