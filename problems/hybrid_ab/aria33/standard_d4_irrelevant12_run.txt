@@ -1,0 +1,88 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: suite-standard/bench_d4_irrelevant12.csv
+  Loaded 300 samples
+  Train: 240  Validation: 60
+
+  Loaded subgraph library: 1142 entries (subgraph_library.txt)
+  Loaded failure library: 9282 records
+Starting evolution...
+2026-09-07 13:33:50.163 [INFO] New best overall loss: 0.099348
+  [   1]   eval  loss=0.130736  |=|  [   1]    sgd  loss=0.099348  ||2026-09-07 13:33:50.175 [INFO] New best overall loss: 0.098915
+  [   2]   eval  loss=0.099348  ||  [   2]    sgd  loss=0.098915  ||2026-09-07 13:33:50.183 [INFO] New best overall loss: 0.098834
+  [   3]   eval  loss=0.098915  ||  [   3]    sgd  loss=0.098834  ||  [   4]   eval  loss=0.098834  ||  [   4]    sgd  loss=0.098857  ||  [   5]   eval  loss=0.098857  ||  [   5]    sgd  loss=0.098871  ||2026-09-07 13:33:50.198 [INFO] Plateau triggered at epoch 5 (counter=3, loss=0.098871)
+2026-09-07 13:33:50.203 [INFO] Structural inability detected 鈥?surfacing bottleneck node 14 (blame=0.007235)
+2026-09-07 13:33:50.205 [INFO] [PROFILE] F=12 N=240 var_r=0.1100 bound_ratio=5.4317 poly_r2=1.0000 a12=1.0000 max_coef[i=25]=1.0000 sobol_pair(0,1)=0.9160 quad=[0.222,-0.287,-0.214,0.280] L_max=10150.000 | flags: PAIRWISE SHARP
+2026-09-07 13:33:50.205 [INFO] IFELSE set-guided split: thr=0.969800 (SSE reduction 0.954062 over 240 paired samples)
+2026-09-07 13:33:50.205 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=10150.000000 var_r=0.109987)
+2026-09-07 13:33:50.205 [INFO] Candidate emitted: MUX_INJECTION (cond=node=10 thr=0.969800 a=node=9 b=node=1)
+2026-09-07 13:33:50.205 [INFO] MULTIPLY sources from poly fit: input=1*input=2 (max_coef_idx=25)
+2026-09-07 13:33:50.205 [INFO] Quadrant interaction gate: contrast 0.855525 boosts MULTIPLY
+2026-09-07 13:33:54.075 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:33:54.076 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:33:54.142 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:33:54.144 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.001250 train_loss=0.000234 new train_loss=0.000234
+2026-09-07 13:33:54.214 [INFO]   [ARC-PRICE] family=MULTI_LAYER_STACK fingerprint_move=177.106288 (val_delta=0.117955)
+2026-09-07 13:33:54.214 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-07 13:33:54.214 [INFO] Plateau state reset 鈥?best_phase2=0.000234
+2026-09-07 13:33:54.214 [INFO] Plateau state reset — best_phase2=0.000234
+  [   6]   eval  loss=0.000234  ||  [   6]    sgd  loss=0.000369  ||  [   7]   eval  loss=0.000369  ||  [   7]    sgd  loss=0.000635  ||  [   8]   eval  loss=0.000635  ||  [   8]    sgd  loss=0.000264  ||  [   9]   eval  loss=0.000264  ||  [   9]    sgd  loss=0.000578  ||  [  10]   eval  loss=0.000578  ||  [  10]    sgd  loss=0.000280  ||  [  11]   eval  loss=0.000280  ||  [  11]    sgd  loss=0.000624  ||  [  12]   eval  loss=0.000624  ||  [  12]    sgd  loss=0.000274  ||  [  13]   eval  loss=0.000274  ||  [  13]    sgd  loss=0.000683  ||  [  14]   eval  loss=0.000683  ||  [  14]    sgd  loss=0.000301  ||  [  15]   eval  loss=0.000301  ||  [  15]    sgd  loss=0.000753  ||  [  16]   eval  loss=0.000753  ||  [  16]    sgd  loss=0.000331  ||  [  17]   eval  loss=0.000331  ||  [  17]    sgd  loss=0.000822  ||  [  18]   eval  loss=0.000822  ||  [  18]    sgd  loss=0.000352  ||  [  19]   eval  loss=0.000352  ||  [  19]    sgd  loss=0.000761  ||  [  20]   eval  loss=0.000761  ||  [  20]    sgd  loss=0.000351  ||  [  21]   eval  loss=0.000351  ||  [  21]    sgd  loss=0.000800  ||  [  22]   eval  loss=0.000800  ||  [  22]    sgd  loss=0.000370  ||  [  23]   eval  loss=0.000370  ||  [  23]    sgd  loss=0.000761  ||  [  24]   eval  loss=0.000761  ||  [  24]    sgd  loss=0.000370  ||  [  25]   eval  loss=0.000370  ||  [  25]    sgd  loss=0.000786  ||  [  26]   eval  loss=0.000786  ||  [  26]    sgd  loss=0.000385  ||  [  27]   eval  loss=0.000385  ||  [  27]    sgd  loss=0.000757  ||  [  28]   eval  loss=0.000757  ||  [  28]    sgd  loss=0.000380  ||  [  29]   eval  loss=0.000380  ||  [  29]    sgd  loss=0.000785  ||  [  30]   eval  loss=0.000785  ||  [  30]    sgd  loss=0.000395  ||  [  31]   eval  loss=0.000395  ||  [  31]    sgd  loss=0.000759  ||  [  32]   eval  loss=0.000759  ||  [  32]    sgd  loss=0.000392  ||  [  33]   eval  loss=0.000392  ||  [  33]    sgd  loss=0.000786  ||  [  34]   eval  loss=0.000786  ||  [  34]    sgd  loss=0.000403  ||  [  35]   eval  loss=0.000403  ||  [  35]    sgd  loss=0.000756  ||  [  36]   eval  loss=0.000756  ||  [  36]    sgd  loss=0.000397  ||  [  37]   eval  loss=0.000397  ||  [  37]    sgd  loss=0.000784  ||  [  38]   eval  loss=0.000784  ||  [  38]    sgd  loss=0.000401  ||  [  39]   eval  loss=0.000401  ||  [  39]    sgd  loss=0.000776  ||  [  40]   eval  loss=0.000776  ||  [  40]    sgd  loss=0.000400  ||  [  41]   eval  loss=0.000400  ||  [  41]    sgd  loss=0.000776  ||  [  42]   eval  loss=0.000776  ||  [  42]    sgd  loss=0.000400  ||  [  43]   eval  loss=0.000400  ||  [  43]    sgd  loss=0.000774  ||  [  44]   eval  loss=0.000774  ||  [  44]    sgd  loss=0.000400  ||  [  45]   eval  loss=0.000400  ||  [  45]    sgd  loss=0.000772  ||  [  46]   eval  loss=0.000772  ||  [  46]    sgd  loss=0.000400  ||  [  47]   eval  loss=0.000400  ||  [  47]    sgd  loss=0.000757  ||  [  48]   eval  loss=0.000757  ||  [  48]    sgd  loss=0.000397  ||  [  49]   eval  loss=0.000397  ||  [  49]    sgd  loss=0.000794  ||  [  50]   eval  loss=0.000794  ||  [  50]    sgd  loss=0.000441  ||  [  51]   eval  loss=0.000441  ||  [  51]    sgd  loss=0.000684  ||  [  52]   eval  loss=0.000684  ||  [  52]    sgd  loss=0.000419  ||  [  53]   eval  loss=0.000419  ||  [  53]    sgd  loss=0.000760  ||  [  54]   eval  loss=0.000760  ||  [  54]    sgd  loss=0.000411  ||  [  55]   eval  loss=0.000411  ||  [  55]    sgd  loss=0.003272  ||  [  56]   eval  loss=0.003272  ||  [  56]    sgd  loss=0.000961  ||  [  57]   eval  loss=0.000961  ||  [  57]    sgd  loss=0.001202  ||  [  58]   eval  loss=0.001202  ||  [  58]    sgd  loss=0.001023  ||  [  59]   eval  loss=0.001023  ||  [  59]    sgd  loss=0.001162  ||  [  60]   eval  loss=0.001162  ||  [  60]    sgd  loss=0.001064  ||  [  61]   eval  loss=0.001064  ||  [  61]    sgd  loss=0.001146  ||  [  62]   eval  loss=0.001146  ||  [  62]    sgd  loss=0.001090  ||  [  63]   eval  loss=0.001090  ||  [  63]    sgd  loss=0.001145  ||  [  64]   eval  loss=0.001145  ||  [  64]    sgd  loss=0.001155  ||  [  65]   eval  loss=0.001155  ||  [  65]    sgd  loss=0.001240  ||2026-09-07 13:33:57.670 [INFO] Plateau triggered at epoch 65 (counter=3, loss=0.001240)
+2026-09-07 13:33:57.681 [INFO] Structural inability detected 鈥?surfacing bottleneck node 23 (blame=0.020942)
+2026-09-07 13:33:57.683 [INFO] [PROFILE] F=12 N=240 var_r=0.1100 bound_ratio=5.4317 poly_r2=1.0000 a12=1.0000 max_coef[i=25]=1.0000 sobol_pair(0,1)=0.9160 quad=[0.222,-0.287,-0.214,0.280] L_max=10150.000 | flags: PAIRWISE SHARP
+2026-09-07 13:33:57.683 [INFO] IFELSE set-guided split: thr=0.969800 (SSE reduction 0.954062 over 240 paired samples)
+2026-09-07 13:33:57.683 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=10150.000000 var_r=0.109987)
+2026-09-07 13:33:57.683 [INFO] Candidate emitted: MUX_INJECTION (cond=node=10 thr=0.969800 a=node=16 b=node=20)
+2026-09-07 13:33:57.683 [INFO] MULTIPLY sources from poly fit: input=1*input=2 (max_coef_idx=25)
+2026-09-07 13:33:57.683 [INFO] Quadrant interaction gate: contrast 0.855525 boosts MULTIPLY
+2026-09-07 13:34:05.089 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:05.092 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:05.163 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:05.165 [INFO]   COMMIT rank=0 type=MULTI_LAYER_STACK val_loss=0.000254 train_loss=0.000040 new train_loss=0.000040
+2026-09-07 13:34:05.241 [INFO]   [ARC-PRICE] family=MULTI_LAYER_STACK fingerprint_move=2.303008 (val_delta=0.002521)
+2026-09-07 13:34:05.242 [INFO] Compound grace period 鈥?50 extra epochs before next structural attempt
+2026-09-07 13:34:05.242 [INFO] Plateau state reset 鈥?best_phase2=0.000040
+2026-09-07 13:34:05.242 [INFO] Plateau state reset — best_phase2=0.000040
+  [  66]   eval  loss=0.000040  ||  [  66]    sgd  loss=0.001893  ||  [  67]   eval  loss=0.001893  ||  [  67]    sgd  loss=0.000209  ||2026-09-07 13:34:05.474 [INFO] Divergence safety: loss=0.000209 > 5.000000x best=0.000040 for 3 epochs; restoring best snapshot
+2026-09-07 13:34:05.477 [INFO] Divergence LR reduced to 0.500000x
+  [  68]   eval  loss=0.000040  ||  [  68]    sgd  loss=0.000526  ||  [  69]   eval  loss=0.000526  ||  [  69]    sgd  loss=0.000084  ||  [  70]   eval  loss=0.000084  ||  [  70]    sgd  loss=0.000631  ||  [  71]   eval  loss=0.000631  ||  [  71]    sgd  loss=0.000104  ||  [  72]   eval  loss=0.000104  ||  [  72]    sgd  loss=0.000700  ||  [  73]   eval  loss=0.000700  ||  [  73]    sgd  loss=0.000106  ||  [  74]   eval  loss=0.000106  ||  [  74]    sgd  loss=0.000835  ||  [  75]   eval  loss=0.000835  ||  [  75]    sgd  loss=0.000142  ||  [  76]   eval  loss=0.000142  ||  [  76]    sgd  loss=0.000901  ||  [  77]   eval  loss=0.000901  ||  [  77]    sgd  loss=0.000140  ||  [  78]   eval  loss=0.000140  ||  [  78]    sgd  loss=0.001067  ||  [  79]   eval  loss=0.001067  ||  [  79]    sgd  loss=0.000187  ||  [  80]   eval  loss=0.000187  ||  [  80]    sgd  loss=0.001150  ||  [  81]   eval  loss=0.001150  ||  [  81]    sgd  loss=0.000193  ||  [  82]   eval  loss=0.000193  ||  [  82]    sgd  loss=0.001234  ||  [  83]   eval  loss=0.001234  ||  [  83]    sgd  loss=0.000262  ||  [  84]   eval  loss=0.000262  ||  [  84]    sgd  loss=0.001065  ||2026-09-07 13:34:07.143 [INFO] Divergence safety: loss=0.001065 > 5.000000x best=0.000040 for 3 epochs; restoring best snapshot
+2026-09-07 13:34:07.145 [INFO] Divergence LR reduced to 0.500000x
+  [  85]   eval  loss=0.000040  ||  [  85]    sgd  loss=0.000526  ||  [  86]   eval  loss=0.000526  ||  [  86]    sgd  loss=0.000084  ||  [  87]   eval  loss=0.000084  ||  [  87]    sgd  loss=0.000631  ||  [  88]   eval  loss=0.000631  ||  [  88]    sgd  loss=0.000104  ||  [  89]   eval  loss=0.000104  ||  [  89]    sgd  loss=0.000700  ||  [  90]   eval  loss=0.000700  ||  [  90]    sgd  loss=0.000106  ||  [  91]   eval  loss=0.000106  ||  [  91]    sgd  loss=0.000835  ||  [  92]   eval  loss=0.000835  ||  [  92]    sgd  loss=0.000142  ||  [  93]   eval  loss=0.000142  ||  [  93]    sgd  loss=0.000901  ||  [  94]   eval  loss=0.000901  ||  [  94]    sgd  loss=0.000140  ||  [  95]   eval  loss=0.000140  ||  [  95]    sgd  loss=0.001067  ||  [  96]   eval  loss=0.001067  ||  [  96]    sgd  loss=0.000187  ||  [  97]   eval  loss=0.000187  ||  [  97]    sgd  loss=0.001150  ||  [  98]   eval  loss=0.001150  ||  [  98]    sgd  loss=0.000193  ||  [  99]   eval  loss=0.000193  ||  [  99]    sgd  loss=0.001234  ||  [ 100]   eval  loss=0.001234  ||  [ 100]    sgd  loss=0.000262  ||2026-09-07 13:34:08.694 [INFO] Restored best-val graph snapshot (val=0.000254, train=0.000040)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   2
+  Failed commits:       6
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         0.130736
+  Final loss:           4.04724e-05
+  Best loss:            4.04724e-05
+  Wall time:            18558 ms
+
+  [Expression] 1.835*tanh(-0.255*tanh(0.183*tanh(0.750*x0-0.669*x1+0.067*x2+0.012*x3+0.006*x4-0.008*x5+0.034*x6+0.036*x7+0.067*x8-0.070*x9+0.046*x10-0.093*x11-1.510)+0.311*tanh(0.739*x0+0.717*x1-0.007*x2-0.002*x3...
+
+  [Library] Behavioral fingerprint: k=12 bounded=1 interact=0 sign_sym=0 sharp=0 lipsch=1.9
+  [Library] Closest existing entries:
+    bench_d4_irrelevant12.csv (dist=0.025)
+    bench_d3_two_sines.csv (dist=0.552)
+    bench_d1_step.csv (dist=0.808)
+  [Library] arch: INPUT:12,NEURON:17,OUTPUT:1 depth=5
+  [Library] Pattern: tanh_stack
+  [Library] Saved (library now has 1143 entries)
+  [Library] Extracted 8 sub-expression block(s) (library now has 1151 entries)
+  [FailureLib] Appended 6 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (300 samples)
+================================================
+  Eval R2[out0]:   0.999244
+  Eval MSE[out0]:  0.000083   MAE: 0.005758

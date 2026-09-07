@@ -1,0 +1,204 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: suite-standard/bench_d5_extrap_cliff.csv
+  Loaded 200 samples
+  Train: 160  Validation: 40
+
+  Loaded subgraph library: 1151 entries (subgraph_library.txt)
+  Loaded failure library: 9288 records
+Starting evolution...
+2026-09-07 13:34:08.885 [INFO] New best overall loss: 0.087541
+  [   1]   eval  loss=0.202149  |==|  [   1]    sgd  loss=0.087541  ||2026-09-07 13:34:08.889 [INFO] New best overall loss: 0.085527
+  [   2]   eval  loss=0.087541  ||  [   2]    sgd  loss=0.085527  ||2026-09-07 13:34:08.894 [INFO] New best overall loss: 0.085365
+  [   3]   eval  loss=0.085527  ||  [   3]    sgd  loss=0.085365  ||  [   4]   eval  loss=0.085365  ||  [   4]    sgd  loss=0.085382  ||2026-09-07 13:34:08.899 [INFO] New best overall loss: 0.085364
+  [   5]   eval  loss=0.085382  ||  [   5]    sgd  loss=0.085364  ||  [   6]   eval  loss=0.085364  ||  [   6]    sgd  loss=0.085383  ||2026-09-07 13:34:08.902 [INFO] Plateau triggered at epoch 6 (counter=3, loss=0.085383)
+2026-09-07 13:34:08.903 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.014862)
+2026-09-07 13:34:08.903 [INFO] [PROFILE] F=1 N=160 var_r=0.0855 bound_ratio=3.4187 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.1250 | flags: BOUNDED
+2026-09-07 13:34:08.904 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-09-07 13:34:08.940 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:08.940 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:08.940 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:08.942 [INFO]   COMMIT rank=2 type=MULTIPLY_INJECTION val_loss=0.003984 train_loss=0.004128 new train_loss=0.004128
+2026-09-07 13:34:08.942 [INFO]   [ARC-PRICE] family=MULTIPLY_INJECTION fingerprint_move=0.082893 (val_delta=0.078787)
+2026-09-07 13:34:08.942 [INFO] Plateau state reset 鈥?best_phase2=0.004128
+2026-09-07 13:34:08.942 [INFO] Plateau state reset — best_phase2=0.004128
+2026-09-07 13:34:08.947 [INFO] New best overall loss: 0.000277
+  [   7]   eval  loss=0.004128  ||  [   7]    sgd  loss=0.000277  ||2026-09-07 13:34:08.950 [INFO] New best overall loss: 0.000130
+  [   8]   eval  loss=0.000277  ||  [   8]    sgd  loss=0.000130  ||2026-09-07 13:34:08.953 [INFO] New best overall loss: 0.000033
+  [   9]   eval  loss=0.000130  ||  [   9]    sgd  loss=0.000033  ||  [  10]   eval  loss=0.000033  ||  [  10]    sgd  loss=0.000083  ||  [  11]   eval  loss=0.000083  ||  [  11]    sgd  loss=0.000043  ||  [  12]   eval  loss=0.000043  ||  [  12]    sgd  loss=0.000063  ||  [  13]   eval  loss=0.000063  ||  [  13]    sgd  loss=0.000046  ||  [  14]   eval  loss=0.000046  ||  [  14]    sgd  loss=0.000058  ||  [  15]   eval  loss=0.000058  ||  [  15]    sgd  loss=0.000048  ||  [  16]   eval  loss=0.000048  ||  [  16]    sgd  loss=0.000056  ||  [  17]   eval  loss=0.000056  ||  [  17]    sgd  loss=0.000049  ||  [  18]   eval  loss=0.000049  ||  [  18]    sgd  loss=0.000055  ||  [  19]   eval  loss=0.000055  ||  [  19]    sgd  loss=0.000050  ||  [  20]   eval  loss=0.000050  ||  [  20]    sgd  loss=0.000054  ||  [  21]   eval  loss=0.000054  ||  [  21]    sgd  loss=0.000050  ||  [  22]   eval  loss=0.000050  ||  [  22]    sgd  loss=0.000054  ||  [  23]   eval  loss=0.000054  ||  [  23]    sgd  loss=0.000050  ||  [  24]   eval  loss=0.000050  ||  [  24]    sgd  loss=0.000054  ||  [  25]   eval  loss=0.000054  ||  [  25]    sgd  loss=0.000050  ||  [  26]   eval  loss=0.000050  ||  [  26]    sgd  loss=0.000055  ||2026-09-07 13:34:09.005 [INFO] Forced structural trigger at epoch 26 (epochs since last structural: 20)
+2026-09-07 13:34:09.005 [INFO] Plateau triggered at epoch 26 (counter=1, loss=0.000055)
+2026-09-07 13:34:09.006 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.026365)
+2026-09-07 13:34:09.006 [INFO] [PROFILE] F=1 N=160 var_r=0.0855 bound_ratio=3.4187 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.1250 | flags: BOUNDED
+2026-09-07 13:34:09.007 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.007 [INFO] Zero-plateau boundary: thr=-0.067100 mask_above (3 edges)
+2026-09-07 13:34:09.007 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=3 (first thr=-0.067100)
+2026-09-07 13:34:09.007 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-0.067100)
+2026-09-07 13:34:09.007 [INFO] Zero-plateau sibling boundary: thr=0.150900 mask_below
+2026-09-07 13:34:09.007 [INFO] Zero-plateau sibling boundary: thr=0.215350 mask_above
+2026-09-07 13:34:09.007 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-09-07 13:34:09.007 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.007 [INFO]   [EVIDENCE-CHAIN] K=3 region leaves (closed-form init), bands n=4
+2026-09-07 13:34:09.007 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.007 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=-0.067100 mask_above
+2026-09-07 13:34:09.007 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.150900 mask_below
+2026-09-07 13:34:09.007 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.215350 mask_above
+2026-09-07 13:34:09.011 [INFO]   [EVIDENCE-PRE] pre-train loss=0.030868
+2026-09-07 13:34:09.017 [INFO]   [EVIDENCE-PRE] pre-train loss=0.052989
+2026-09-07 13:34:09.018 [INFO]   [EVIDENCE-PRE] pre-train loss=0.085484
+2026-09-07 13:34:09.018 [INFO]   [EVIDENCE-PRE] pre-train loss=0.042752
+2026-09-07 13:34:09.019 [INFO]   [EVIDENCE-PRE] pre-train loss=0.167216
+2026-09-07 13:34:09.212 [INFO]   [EVIDENCE-REJECT] rank=0 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.078003 vs baseline_loss=0.000055)
+2026-09-07 13:34:09.212 [INFO]   [EVIDENCE-REJECT] rank=1 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.085458 vs baseline_loss=0.000055)
+2026-09-07 13:34:09.212 [INFO]   [EVIDENCE-REJECT] rank=3 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.058655 vs baseline_loss=0.000055)
+2026-09-07 13:34:09.212 [INFO]   [EVIDENCE-REJECT] rank=4 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.050835 vs baseline_loss=0.000055)
+2026-09-07 13:34:09.212 [INFO]   [EVIDENCE-REJECT] rank=5 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.041081 vs baseline_loss=0.000055)
+2026-09-07 13:34:09.212 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:09.212 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:09.212 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:09.214 [INFO]   COMMIT rank=2 type=CONTEXT_WIRE val_loss=0.000017 train_loss=0.000026 new train_loss=0.000026
+2026-09-07 13:34:09.214 [INFO]   [ARC-PRICE] family=CONTEXT_WIRE fingerprint_move=0.152344 (val_delta=0.000037)
+2026-09-07 13:34:09.214 [INFO] Plateau state reset 鈥?best_phase2=0.000026
+2026-09-07 13:34:09.214 [INFO] Plateau state reset — best_phase2=0.000026
+  [  27]   eval  loss=0.000026  ||  [  27]    sgd  loss=0.000157  ||  [  28]   eval  loss=0.000157  ||  [  28]    sgd  loss=0.000045  ||  [  29]   eval  loss=0.000045  ||  [  29]    sgd  loss=0.000089  ||  [  30]   eval  loss=0.000089  ||  [  30]    sgd  loss=0.000052  ||  [  31]   eval  loss=0.000052  ||  [  31]    sgd  loss=0.000078  ||  [  32]   eval  loss=0.000078  ||  [  32]    sgd  loss=0.000057  ||  [  33]   eval  loss=0.000057  ||  [  33]    sgd  loss=0.000073  ||  [  34]   eval  loss=0.000073  ||  [  34]    sgd  loss=0.000060  ||  [  35]   eval  loss=0.000060  ||  [  35]    sgd  loss=0.000070  ||  [  36]   eval  loss=0.000070  ||  [  36]    sgd  loss=0.000062  ||  [  37]   eval  loss=0.000062  ||  [  37]    sgd  loss=0.000068  ||  [  38]   eval  loss=0.000068  ||  [  38]    sgd  loss=0.000063  ||  [  39]   eval  loss=0.000063  ||  [  39]    sgd  loss=0.000067  ||  [  40]   eval  loss=0.000067  ||  [  40]    sgd  loss=0.000064  ||  [  41]   eval  loss=0.000064  ||  [  41]    sgd  loss=0.000066  ||  [  42]   eval  loss=0.000066  ||  [  42]    sgd  loss=0.000064  ||  [  43]   eval  loss=0.000064  ||  [  43]    sgd  loss=0.000066  ||  [  44]   eval  loss=0.000066  ||  [  44]    sgd  loss=0.000065  ||  [  45]   eval  loss=0.000065  ||  [  45]    sgd  loss=0.000066  ||  [  46]   eval  loss=0.000066  ||  [  46]    sgd  loss=0.000065  ||2026-09-07 13:34:09.279 [INFO] Forced structural trigger at epoch 46 (epochs since last structural: 20)
+2026-09-07 13:34:09.279 [INFO] Plateau triggered at epoch 46 (counter=0, loss=0.000065)
+2026-09-07 13:34:09.281 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.023008)
+2026-09-07 13:34:09.281 [INFO] [PROFILE] F=1 N=160 var_r=0.0855 bound_ratio=3.4187 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.1250 | flags: BOUNDED
+2026-09-07 13:34:09.281 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.281 [INFO] Zero-plateau boundary: thr=-0.067100 mask_above (3 edges)
+2026-09-07 13:34:09.281 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=3 (first thr=-0.067100)
+2026-09-07 13:34:09.281 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-0.067100)
+2026-09-07 13:34:09.281 [INFO] Zero-plateau sibling boundary: thr=0.150900 mask_below
+2026-09-07 13:34:09.281 [INFO] Zero-plateau sibling boundary: thr=0.215350 mask_above
+2026-09-07 13:34:09.281 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-09-07 13:34:09.281 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.282 [INFO]   [EVIDENCE-CHAIN] K=3 region leaves (closed-form init), bands n=4
+2026-09-07 13:34:09.282 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.282 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=-0.067100 mask_above
+2026-09-07 13:34:09.282 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.150900 mask_below
+2026-09-07 13:34:09.282 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.215350 mask_above
+2026-09-07 13:34:09.288 [INFO]   [EVIDENCE-PRE] pre-train loss=0.042791
+2026-09-07 13:34:09.288 [INFO]   [EVIDENCE-PRE] pre-train loss=0.053022
+2026-09-07 13:34:09.288 [INFO]   [EVIDENCE-PRE] pre-train loss=0.166466
+2026-09-07 13:34:09.291 [INFO]   [EVIDENCE-PRE] pre-train loss=0.030845
+2026-09-07 13:34:09.292 [INFO]   [EVIDENCE-PRE] pre-train loss=0.085494
+2026-09-07 13:34:09.466 [INFO]   [EVIDENCE-REJECT] rank=0 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.109332 vs baseline_loss=0.000065)
+2026-09-07 13:34:09.466 [INFO]   [EVIDENCE-REJECT] rank=1 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.085458 vs baseline_loss=0.000065)
+2026-09-07 13:34:09.466 [INFO]   [EVIDENCE-REJECT] rank=3 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.056497 vs baseline_loss=0.000065)
+2026-09-07 13:34:09.466 [INFO]   [EVIDENCE-REJECT] rank=4 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.049000 vs baseline_loss=0.000065)
+2026-09-07 13:34:09.466 [INFO]   [EVIDENCE-REJECT] rank=5 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.044320 vs baseline_loss=0.000065)
+2026-09-07 13:34:09.466 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:09.466 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:09.466 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:09.468 [INFO]   COMMIT rank=7 type=MULTIPLY_INJECTION val_loss=0.000015 train_loss=0.000024 new train_loss=0.000024
+2026-09-07 13:34:09.468 [INFO]   [ARC-PRICE] family=MULTIPLY_INJECTION fingerprint_move=0.035188 (val_delta=0.000036)
+2026-09-07 13:34:09.468 [INFO] Plateau state reset 鈥?best_phase2=0.000024
+2026-09-07 13:34:09.468 [INFO] Plateau state reset — best_phase2=0.000024
+  [  47]   eval  loss=0.000024  ||  [  47]    sgd  loss=0.000225  ||  [  48]   eval  loss=0.000225  ||  [  48]    sgd  loss=0.000216  ||  [  49]   eval  loss=0.000216  ||  [  49]    sgd  loss=0.000219  ||2026-09-07 13:34:09.480 [INFO] Divergence safety: loss=0.000219 > 5.000000x best=0.000024 for 3 epochs; restoring best snapshot
+2026-09-07 13:34:09.481 [INFO] Divergence LR reduced to 0.500000x
+  [  50]   eval  loss=0.000024  ||  [  50]    sgd  loss=0.000069  ||  [  51]   eval  loss=0.000069  ||  [  51]    sgd  loss=0.000030  ||  [  52]   eval  loss=0.000030  ||  [  52]    sgd  loss=0.000052  ||  [  53]   eval  loss=0.000052  ||  [  53]    sgd  loss=0.000036  ||  [  54]   eval  loss=0.000036  ||  [  54]    sgd  loss=0.000052  ||  [  55]   eval  loss=0.000052  ||  [  55]    sgd  loss=0.000043  ||  [  56]   eval  loss=0.000043  ||  [  56]    sgd  loss=0.000055  ||  [  57]   eval  loss=0.000055  ||  [  57]    sgd  loss=0.000050  ||  [  58]   eval  loss=0.000050  ||  [  58]    sgd  loss=0.000059  ||  [  59]   eval  loss=0.000059  ||  [  59]    sgd  loss=0.000058  ||  [  60]   eval  loss=0.000058  ||  [  60]    sgd  loss=0.000066  ||  [  61]   eval  loss=0.000066  ||  [  61]    sgd  loss=0.000066  ||  [  62]   eval  loss=0.000066  ||  [  62]    sgd  loss=0.000074  ||  [  63]   eval  loss=0.000074  ||  [  63]    sgd  loss=0.000077  ||  [  64]   eval  loss=0.000077  ||  [  64]    sgd  loss=0.000077  ||  [  65]   eval  loss=0.000077  ||  [  65]    sgd  loss=0.000077  ||  [  66]   eval  loss=0.000077  ||  [  66]    sgd  loss=0.000077  ||2026-09-07 13:34:09.537 [INFO] Forced structural trigger at epoch 66 (epochs since last structural: 20)
+2026-09-07 13:34:09.537 [INFO] Plateau triggered at epoch 66 (counter=7, loss=0.000077)
+2026-09-07 13:34:09.539 [INFO] Structural inability detected 鈥?surfacing bottleneck node 3 (blame=0.022784)
+2026-09-07 13:34:09.539 [INFO] [PROFILE] F=1 N=160 var_r=0.0855 bound_ratio=3.4187 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.1250 | flags: BOUNDED
+2026-09-07 13:34:09.539 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.539 [INFO] Zero-plateau boundary: thr=-0.067100 mask_above (3 edges)
+2026-09-07 13:34:09.539 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=3 (first thr=-0.067100)
+2026-09-07 13:34:09.539 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-0.067100)
+2026-09-07 13:34:09.539 [INFO] Zero-plateau sibling boundary: thr=0.150900 mask_below
+2026-09-07 13:34:09.539 [INFO] Zero-plateau sibling boundary: thr=0.215350 mask_above
+2026-09-07 13:34:09.539 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=-0.713450 a=node=4 b=node=5)
+2026-09-07 13:34:09.539 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-09-07 13:34:09.540 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.540 [INFO]   [EVIDENCE-CHAIN] K=3 region leaves (closed-form init), bands n=4
+2026-09-07 13:34:09.540 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.540 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=-0.067100 mask_above
+2026-09-07 13:34:09.540 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.150900 mask_below
+2026-09-07 13:34:09.540 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.215350 mask_above
+2026-09-07 13:34:09.550 [INFO]   [EVIDENCE-PRE] pre-train loss=0.030631
+2026-09-07 13:34:09.550 [INFO]   [EVIDENCE-PRE] pre-train loss=0.165668
+2026-09-07 13:34:09.550 [INFO]   [EVIDENCE-PRE] pre-train loss=0.053279
+2026-09-07 13:34:09.550 [INFO]   [EVIDENCE-PRE] pre-train loss=0.042964
+2026-09-07 13:34:09.551 [INFO]   [EVIDENCE-PRE] pre-train loss=0.085584
+2026-09-07 13:34:09.755 [INFO]   [EVIDENCE-REJECT] rank=0 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.120456 vs baseline_loss=0.000077)
+2026-09-07 13:34:09.755 [INFO]   [EVIDENCE-REJECT] rank=1 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.085458 vs baseline_loss=0.000077)
+2026-09-07 13:34:09.755 [INFO]   [EVIDENCE-REJECT] rank=3 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.062578 vs baseline_loss=0.000077)
+2026-09-07 13:34:09.755 [INFO]   [EVIDENCE-REJECT] rank=4 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.051426 vs baseline_loss=0.000077)
+2026-09-07 13:34:09.755 [INFO]   [EVIDENCE-REJECT] rank=5 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.049926 vs baseline_loss=0.000077)
+2026-09-07 13:34:09.755 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:09.755 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:09.756 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:09.757 [INFO]   COMMIT rank=2 type=CONTEXT_WIRE val_loss=0.000022 train_loss=0.000027 new train_loss=0.000027
+2026-09-07 13:34:09.757 [INFO]   [ARC-PRICE] family=CONTEXT_WIRE fingerprint_move=0.041510 (val_delta=0.000040)
+2026-09-07 13:34:09.757 [INFO] Plateau state reset 鈥?best_phase2=0.000027
+2026-09-07 13:34:09.757 [INFO] Plateau state reset — best_phase2=0.000027
+  [  67]   eval  loss=0.000027  ||  [  67]    sgd  loss=0.000181  ||  [  68]   eval  loss=0.000181  ||  [  68]    sgd  loss=0.000049  ||  [  69]   eval  loss=0.000049  ||  [  69]    sgd  loss=0.000105  ||  [  70]   eval  loss=0.000105  ||  [  70]    sgd  loss=0.000059  ||  [  71]   eval  loss=0.000059  ||  [  71]    sgd  loss=0.000091  ||  [  72]   eval  loss=0.000091  ||  [  72]    sgd  loss=0.000065  ||  [  73]   eval  loss=0.000065  ||  [  73]    sgd  loss=0.000084  ||  [  74]   eval  loss=0.000084  ||  [  74]    sgd  loss=0.000069  ||  [  75]   eval  loss=0.000069  ||  [  75]    sgd  loss=0.000081  ||  [  76]   eval  loss=0.000081  ||  [  76]    sgd  loss=0.000071  ||  [  77]   eval  loss=0.000071  ||  [  77]    sgd  loss=0.000079  ||  [  78]   eval  loss=0.000079  ||  [  78]    sgd  loss=0.000073  ||  [  79]   eval  loss=0.000073  ||  [  79]    sgd  loss=0.000077  ||  [  80]   eval  loss=0.000077  ||  [  80]    sgd  loss=0.000074  ||  [  81]   eval  loss=0.000074  ||  [  81]    sgd  loss=0.000077  ||  [  82]   eval  loss=0.000077  ||  [  82]    sgd  loss=0.000074  ||  [  83]   eval  loss=0.000074  ||  [  83]    sgd  loss=0.000076  ||  [  84]   eval  loss=0.000076  ||  [  84]    sgd  loss=0.000075  ||  [  85]   eval  loss=0.000075  ||  [  85]    sgd  loss=0.000076  ||  [  86]   eval  loss=0.000076  ||  [  86]    sgd  loss=0.000075  ||2026-09-07 13:34:09.844 [INFO] Forced structural trigger at epoch 86 (epochs since last structural: 20)
+2026-09-07 13:34:09.844 [INFO] Plateau triggered at epoch 86 (counter=0, loss=0.000075)
+2026-09-07 13:34:09.846 [INFO] [PROFILE] F=1 N=160 var_r=0.0855 bound_ratio=3.4187 poly_r2=1.0000 max_coef[i=2]=1.0000 L_max=2.1250 | flags: BOUNDED
+2026-09-07 13:34:09.846 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.846 [INFO] Zero-plateau boundary: thr=-0.067100 mask_above (3 edges)
+2026-09-07 13:34:09.846 [INFO] Candidate emitted: IFELSE_PRESERVE multi-split K=3 (first thr=-0.067100)
+2026-09-07 13:34:09.846 [INFO] Candidate emitted: IFELSE_PRESERVE (both-branches split, thr=-0.067100)
+2026-09-07 13:34:09.846 [INFO] Zero-plateau sibling boundary: thr=0.150900 mask_below
+2026-09-07 13:34:09.846 [INFO] Zero-plateau sibling boundary: thr=0.215350 mask_above
+2026-09-07 13:34:09.846 [INFO] MULTIPLY sources from poly fit: input=1^2 (max_coef_idx=2)
+2026-09-07 13:34:09.846 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.847 [INFO]   [EVIDENCE-CHAIN] K=3 region leaves (closed-form init), bands n=4
+2026-09-07 13:34:09.847 [INFO] Zero-plateau edges: 3 (flat fraction 0.156250)
+2026-09-07 13:34:09.847 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=-0.067100 mask_above
+2026-09-07 13:34:09.847 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.150900 mask_below
+2026-09-07 13:34:09.847 [INFO]   [EVIDENCE-BOUNDARY] wrapped OUTPUT source node=3 thr=0.215350 mask_above
+2026-09-07 13:34:09.853 [INFO]   [EVIDENCE-PRE] pre-train loss=0.001164
+2026-09-07 13:34:09.853 [INFO]   [EVIDENCE-PRE] pre-train loss=0.043137
+2026-09-07 13:34:09.854 [INFO]   [EVIDENCE-PRE] pre-train loss=0.166342
+2026-09-07 13:34:09.854 [INFO]   [EVIDENCE-PRE] pre-train loss=0.053536
+2026-09-07 13:34:09.855 [INFO]   [EVIDENCE-PRE] pre-train loss=0.030446
+2026-09-07 13:34:10.024 [INFO]   [EVIDENCE-REJECT] rank=0 type=IFELSE_PRESERVE val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.118573 vs baseline_loss=0.000075)
+2026-09-07 13:34:10.024 [INFO]   [EVIDENCE-REJECT] rank=3 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.062579 vs baseline_loss=0.000075)
+2026-09-07 13:34:10.024 [INFO]   [EVIDENCE-REJECT] rank=4 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.051090 vs baseline_loss=0.000075)
+2026-09-07 13:34:10.024 [INFO]   [EVIDENCE-REJECT] rank=5 type=IFELSE_BOUNDARY_SPLIT val=0.000000 REJECT — training loss regressed catastrophically (shadow_train=0.049674 vs baseline_loss=0.000075)
+2026-09-07 13:34:10.024 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:10.024 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:10.024 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:10.025 [INFO]   COMMIT rank=1 type=IFELSE_PRESERVE val_loss=0.000019 train_loss=0.000028 new train_loss=0.000028
+2026-09-07 13:34:10.025 [INFO]   [ARC-PRICE] family=IFELSE_PRESERVE fingerprint_move=1.216349 (val_delta=0.000058)
+2026-09-07 13:34:10.025 [INFO] Plateau state reset 鈥?best_phase2=0.000028
+2026-09-07 13:34:10.025 [INFO] Plateau state reset — best_phase2=0.000028
+  [  87]   eval  loss=0.000028  ||  [  87]    sgd  loss=0.000150  ||  [  88]   eval  loss=0.000150  ||  [  88]    sgd  loss=0.000047  ||  [  89]   eval  loss=0.000047  ||  [  89]    sgd  loss=0.000077  ||  [  90]   eval  loss=0.000077  ||  [  90]    sgd  loss=0.000053  ||  [  91]   eval  loss=0.000053  ||  [  91]    sgd  loss=0.000067  ||  [  92]   eval  loss=0.000067  ||  [  92]    sgd  loss=0.000057  ||  [  93]   eval  loss=0.000057  ||  [  93]    sgd  loss=0.000063  ||  [  94]   eval  loss=0.000063  ||  [  94]    sgd  loss=0.000059  ||  [  95]   eval  loss=0.000059  ||  [  95]    sgd  loss=0.000061  ||  [  96]   eval  loss=0.000061  ||  [  96]    sgd  loss=0.000061  ||  [  97]   eval  loss=0.000061  ||  [  97]    sgd  loss=0.000060  ||  [  98]   eval  loss=0.000060  ||  [  98]    sgd  loss=0.000061  ||  [  99]   eval  loss=0.000061  ||  [  99]    sgd  loss=0.000059  ||  [ 100]   eval  loss=0.000059  ||  [ 100]    sgd  loss=0.000062  ||2026-09-07 13:34:10.045 [INFO] Restored best-val graph snapshot (val=0.000015, train=0.000024)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   5
+  Failed commits:       26
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         0.202149
+  Final loss:           2.37499e-05
+  Best loss:            2.37499e-05
+  Wall time:            1167 ms
+
+  [Expression] 1.583*tanh(0.032*(x0*x0)+0.676*(x0*x0)-0.062*(x0*x0)-0.220)+0.342
+
+  [Library] Behavioral fingerprint: k=1 bounded=1 interact=1 sign_sym=1 sharp=0 lipsch=1.7
+  [Library] Closest existing entries:
+    bench_d3_two_sines.csv (dist=2.115)
+    bench_d1_step.csv (dist=2.318)
+    bench_d2_mod3.csv (dist=3.448)
+  [Library] arch: INPUT:1,MULTIPLY:2,NEURON:1,OUTPUT:1 depth=4
+  [Library] Pattern: single_tanh
+  [Library] Saved (library now has 1152 entries)
+  [Library] Extracted 1 sub-expression block(s) (library now has 1153 entries)
+  [FailureLib] Appended 25 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (200 samples)
+================================================
+  Eval R2[out0]:   0.999743
+  Eval MSE[out0]:  0.000022   MAE: 0.002870

@@ -1,0 +1,170 @@
+================================================
+  ARIA — Adaptive Reasoned Injection of Architecture
+================================================
+
+Loading dataset from: suite-standard/bench_d8_compose_absprod.csv
+  Loaded 240 samples
+  Train: 192  Validation: 48
+
+  Loaded subgraph library: 581 entries (subgraph_library.txt)
+  Loaded failure library: 9317 records
+Starting evolution...
+2026-09-07 13:34:12.492 [INFO] New best overall loss: 0.047259
+  [   1]   eval  loss=0.166527  |=|  [   1]    sgd  loss=0.047259  ||2026-09-07 13:34:12.497 [INFO] New best overall loss: 0.047150
+  [   2]   eval  loss=0.047259  ||  [   2]    sgd  loss=0.047150  ||2026-09-07 13:34:12.503 [INFO] New best overall loss: 0.047130
+  [   3]   eval  loss=0.047150  ||  [   3]    sgd  loss=0.047130  ||  [   4]   eval  loss=0.047130  ||  [   4]    sgd  loss=0.047137  ||  [   5]   eval  loss=0.047137  ||  [   5]    sgd  loss=0.047130  ||2026-09-07 13:34:12.510 [INFO] Plateau triggered at epoch 5 (counter=3, loss=0.047130)
+2026-09-07 13:34:12.511 [INFO] Structural inability detected 鈥?surfacing bottleneck node 4 (blame=0.008429)
+2026-09-07 13:34:12.512 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:12.512 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=2013.333333 var_r=0.047675)
+2026-09-07 13:34:12.512 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:12.512 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:13.178 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:13.178 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:13.178 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:13.180 [INFO]   COMMIT rank=1 type=COMPOUND_MULTIPLY_ABS val_loss=0.000957 train_loss=0.000800 new train_loss=0.000800
+2026-09-07 13:34:13.180 [INFO]   [ARC-PRICE] family=COMPOUND_MULTIPLY_ABS fingerprint_move=17.617890 (val_delta=0.037274)
+2026-09-07 13:34:13.180 [INFO] Plateau state reset 鈥?best_phase2=0.000800
+2026-09-07 13:34:13.180 [INFO] Plateau state reset — best_phase2=0.000800
+  [   6]   eval  loss=0.000800  ||  [   6]    sgd  loss=0.000997  ||  [   7]   eval  loss=0.000997  ||  [   7]    sgd  loss=0.000918  ||2026-09-07 13:34:13.197 [INFO] New best overall loss: 0.000797
+  [   8]   eval  loss=0.000918  ||  [   8]    sgd  loss=0.000797  ||2026-09-07 13:34:13.206 [INFO] New best overall loss: 0.000364
+  [   9]   eval  loss=0.000797  ||  [   9]    sgd  loss=0.000364  ||2026-09-07 13:34:13.210 [INFO] New best overall loss: 0.000323
+  [  10]   eval  loss=0.000364  ||  [  10]    sgd  loss=0.000323  ||  [  11]   eval  loss=0.000323  ||  [  11]    sgd  loss=0.000325  ||  [  12]   eval  loss=0.000325  ||  [  12]    sgd  loss=0.000327  ||  [  13]   eval  loss=0.000327  ||  [  13]    sgd  loss=0.000326  ||  [  14]   eval  loss=0.000326  ||  [  14]    sgd  loss=0.000327  ||  [  15]   eval  loss=0.000327  ||  [  15]    sgd  loss=0.000326  ||  [  16]   eval  loss=0.000326  ||  [  16]    sgd  loss=0.000327  ||2026-09-07 13:34:13.242 [INFO] New best overall loss: 0.000292
+  [  17]   eval  loss=0.000327  ||  [  17]    sgd  loss=0.000292  ||  [  18]   eval  loss=0.000292  ||  [  18]    sgd  loss=0.000292  ||  [  19]   eval  loss=0.000292  ||  [  19]    sgd  loss=0.000297  ||  [  20]   eval  loss=0.000297  ||  [  20]    sgd  loss=0.000296  ||  [  21]   eval  loss=0.000296  ||  [  21]    sgd  loss=0.000305  ||  [  22]   eval  loss=0.000305  ||  [  22]    sgd  loss=0.000314  ||  [  23]   eval  loss=0.000314  ||  [  23]    sgd  loss=0.000332  ||2026-09-07 13:34:13.271 [INFO] Plateau triggered at epoch 23 (counter=3, loss=0.000332)
+2026-09-07 13:34:13.274 [INFO] Structural inability detected 鈥?surfacing bottleneck node 13 (blame=0.012358)
+2026-09-07 13:34:13.274 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:13.275 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:13.275 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=2013.333333 var_r=0.047675)
+2026-09-07 13:34:13.275 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.016200 a=node=14 b=node=12)
+2026-09-07 13:34:13.275 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:13.275 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:14.158 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:14.158 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:14.158 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:14.161 [INFO]   COMMIT rank=1 type=COMPOUND_MULTIPLY_ABS val_loss=0.000027 train_loss=0.000095 new train_loss=0.000095
+2026-09-07 13:34:14.161 [INFO]   [ARC-PRICE] family=COMPOUND_MULTIPLY_ABS fingerprint_move=0.117835 (val_delta=0.000151)
+2026-09-07 13:34:14.161 [INFO] Plateau state reset 鈥?best_phase2=0.000095
+2026-09-07 13:34:14.161 [INFO] Plateau state reset — best_phase2=0.000095
+  [  24]   eval  loss=0.000095  ||  [  24]    sgd  loss=0.000296  ||  [  25]   eval  loss=0.000296  ||  [  25]    sgd  loss=0.000194  ||  [  26]   eval  loss=0.000194  ||  [  26]    sgd  loss=0.000243  ||  [  27]   eval  loss=0.000243  ||  [  27]    sgd  loss=0.000169  ||  [  28]   eval  loss=0.000169  ||  [  28]    sgd  loss=0.000215  ||  [  29]   eval  loss=0.000215  ||  [  29]    sgd  loss=0.000180  ||  [  30]   eval  loss=0.000180  ||  [  30]    sgd  loss=0.000200  ||  [  31]   eval  loss=0.000200  ||  [  31]    sgd  loss=0.000179  ||  [  32]   eval  loss=0.000179  ||  [  32]    sgd  loss=0.000195  ||  [  33]   eval  loss=0.000195  ||  [  33]    sgd  loss=0.000193  ||  [  34]   eval  loss=0.000193  ||  [  34]    sgd  loss=0.000208  ||  [  35]   eval  loss=0.000208  ||  [  35]    sgd  loss=0.000194  ||  [  36]   eval  loss=0.000194  ||  [  36]    sgd  loss=0.000204  ||  [  37]   eval  loss=0.000204  ||  [  37]    sgd  loss=0.000193  ||  [  38]   eval  loss=0.000193  ||  [  38]    sgd  loss=0.000201  ||  [  39]   eval  loss=0.000201  ||  [  39]    sgd  loss=0.000192  ||  [  40]   eval  loss=0.000192  ||  [  40]    sgd  loss=0.000194  ||  [  41]   eval  loss=0.000194  ||  [  41]    sgd  loss=0.000187  ||  [  42]   eval  loss=0.000187  ||  [  42]    sgd  loss=0.000191  ||  [  43]   eval  loss=0.000191  ||  [  43]    sgd  loss=0.000184  ||2026-09-07 13:34:14.302 [INFO] Forced structural trigger at epoch 43 (epochs since last structural: 20)
+2026-09-07 13:34:14.302 [INFO] Plateau triggered at epoch 43 (counter=0, loss=0.000184)
+2026-09-07 13:34:14.313 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:14.313 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:14.313 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:14.313 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:14.591 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:14.592 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:14.592 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:14.594 [INFO]   COMMIT rank=0 type=MULTIPLY_INJECTION val_loss=0.000033 train_loss=0.000095 new train_loss=0.000095
+2026-09-07 13:34:14.594 [INFO]   [ARC-PRICE] family=MULTIPLY_INJECTION fingerprint_move=1.084368 (val_delta=0.000065)
+2026-09-07 13:34:14.595 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:14.595 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:14.595 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:14.595 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-09-07 13:34:14.595 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:14.882 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:14.882 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:14.883 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:14.885 [INFO]   COMMIT rank=0 type=MULTIPLY_INJECTION val_loss=0.000028 train_loss=0.000058 new train_loss=0.000058
+2026-09-07 13:34:14.885 [INFO]   [ARC-PRICE] family=MULTIPLY_INJECTION fingerprint_move=0.098171 (val_delta=0.000004)
+2026-09-07 13:34:14.886 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:14.886 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:14.886 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:15.216 [INFO] Plateau state reset 鈥?best_phase2=0.000058
+2026-09-07 13:34:15.216 [INFO] Plateau state reset — best_phase2=0.000058
+  [  44]   eval  loss=0.000058  ||  [  44]    sgd  loss=0.000302  ||  [  45]   eval  loss=0.000302  ||  [  45]    sgd  loss=0.000353  ||  [  46]   eval  loss=0.000353  ||  [  46]    sgd  loss=0.000330  ||2026-09-07 13:34:15.246 [INFO] Divergence safety: loss=0.000330 > 5.000000x best=0.000058 for 3 epochs; restoring best snapshot
+2026-09-07 13:34:15.247 [INFO] Divergence LR reduced to 0.500000x
+  [  47]   eval  loss=0.000095  ||  [  47]    sgd  loss=0.000153  ||  [  48]   eval  loss=0.000153  ||  [  48]    sgd  loss=0.000132  ||  [  49]   eval  loss=0.000132  ||  [  49]    sgd  loss=0.000137  ||  [  50]   eval  loss=0.000137  ||  [  50]    sgd  loss=0.000128  ||  [  51]   eval  loss=0.000128  ||  [  51]    sgd  loss=0.000140  ||  [  52]   eval  loss=0.000140  ||  [  52]    sgd  loss=0.000135  ||  [  53]   eval  loss=0.000135  ||  [  53]    sgd  loss=0.000145  ||  [  54]   eval  loss=0.000145  ||  [  54]    sgd  loss=0.000146  ||  [  55]   eval  loss=0.000146  ||  [  55]    sgd  loss=0.000152  ||  [  56]   eval  loss=0.000152  ||  [  56]    sgd  loss=0.000172  ||  [  57]   eval  loss=0.000172  ||  [  57]    sgd  loss=0.000179  ||  [  58]   eval  loss=0.000179  ||  [  58]    sgd  loss=0.000187  ||  [  59]   eval  loss=0.000187  ||  [  59]    sgd  loss=0.000193  ||  [  60]   eval  loss=0.000193  ||  [  60]    sgd  loss=0.000203  ||  [  61]   eval  loss=0.000203  ||  [  61]    sgd  loss=0.000197  ||  [  62]   eval  loss=0.000197  ||  [  62]    sgd  loss=0.000201  ||  [  63]   eval  loss=0.000201  ||  [  63]    sgd  loss=0.000192  ||2026-09-07 13:34:15.353 [INFO] Forced structural trigger at epoch 63 (epochs since last structural: 20)
+2026-09-07 13:34:15.353 [INFO] Plateau triggered at epoch 63 (counter=0, loss=0.000192)
+2026-09-07 13:34:15.360 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:15.360 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:15.360 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:15.360 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:15.605 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:15.605 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:15.605 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:15.607 [INFO]   COMMIT rank=0 type=MULTIPLY_INJECTION val_loss=0.000034 train_loss=0.000095 new train_loss=0.000095
+2026-09-07 13:34:15.608 [INFO]   [ARC-PRICE] family=MULTIPLY_INJECTION fingerprint_move=0.079361 (val_delta=0.000082)
+2026-09-07 13:34:15.608 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:15.608 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:15.608 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:15.608 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-09-07 13:34:15.608 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:15.864 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:15.864 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:15.864 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:15.864 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-09-07 13:34:15.864 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:16.126 [INFO] Plateau state reset 鈥?best_phase2=0.000095
+2026-09-07 13:34:16.126 [INFO] Plateau state reset — best_phase2=0.000095
+  [  64]   eval  loss=0.000095  ||  [  64]    sgd  loss=0.000287  ||  [  65]   eval  loss=0.000287  ||  [  65]    sgd  loss=0.000186  ||  [  66]   eval  loss=0.000186  ||  [  66]    sgd  loss=0.000178  ||  [  67]   eval  loss=0.000178  ||  [  67]    sgd  loss=0.000188  ||  [  68]   eval  loss=0.000188  ||  [  68]    sgd  loss=0.000176  ||  [  69]   eval  loss=0.000176  ||  [  69]    sgd  loss=0.000211  ||  [  70]   eval  loss=0.000211  ||  [  70]    sgd  loss=0.000157  ||  [  71]   eval  loss=0.000157  ||  [  71]    sgd  loss=0.000234  ||  [  72]   eval  loss=0.000234  ||  [  72]    sgd  loss=0.000167  ||  [  73]   eval  loss=0.000167  ||  [  73]    sgd  loss=0.000265  ||  [  74]   eval  loss=0.000265  ||  [  74]    sgd  loss=0.000155  ||  [  75]   eval  loss=0.000155  ||  [  75]    sgd  loss=0.000224  ||  [  76]   eval  loss=0.000224  ||  [  76]    sgd  loss=0.000183  ||  [  77]   eval  loss=0.000183  ||  [  77]    sgd  loss=0.000255  ||  [  78]   eval  loss=0.000255  ||  [  78]    sgd  loss=0.000186  ||  [  79]   eval  loss=0.000186  ||  [  79]    sgd  loss=0.000262  ||  [  80]   eval  loss=0.000262  ||  [  80]    sgd  loss=0.000165  ||  [  81]   eval  loss=0.000165  ||  [  81]    sgd  loss=0.000236  ||  [  82]   eval  loss=0.000236  ||  [  82]    sgd  loss=0.000184  ||  [  83]   eval  loss=0.000184  ||  [  83]    sgd  loss=0.000246  ||2026-09-07 13:34:16.264 [INFO] Forced structural trigger at epoch 83 (epochs since last structural: 20)
+2026-09-07 13:34:16.264 [INFO] Plateau triggered at epoch 83 (counter=1, loss=0.000246)
+2026-09-07 13:34:16.272 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:16.272 [INFO] Candidate emitted: MULTI_LAYER_STACK (lipschitz=2013.333333 var_r=0.047675)
+2026-09-07 13:34:16.272 [INFO] Candidate emitted: MUX_INJECTION (cond=node=1 thr=1.016200 a=node=24 b=node=14)
+2026-09-07 13:34:16.272 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:16.272 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-09-07 13:34:16.273 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:17.734 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:17.734 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:17.734 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:17.736 [INFO]   COMMIT rank=5 type=MULTI_LAYER_STACK val_loss=0.000004 train_loss=0.000006 new train_loss=0.000006
+2026-09-07 13:34:17.737 [INFO]   [ARC-PRICE] family=MULTI_LAYER_STACK fingerprint_move=0.592585 (val_delta=0.000228)
+2026-09-07 13:34:17.737 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:17.737 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:17.737 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:17.737 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-09-07 13:34:17.737 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:18.023 [INFO]   [ARC-DBG] pre-block enter
+2026-09-07 13:34:18.024 [INFO]   [ARC-DBG] computing fingerprint
+2026-09-07 13:34:18.024 [INFO]   [ARC-DBG] fingerprint done
+2026-09-07 13:34:18.026 [INFO]   COMMIT rank=1 type=COMPOUND_MULTIPLY_ABS val_loss=0.000003 train_loss=0.000004 new train_loss=0.000004
+2026-09-07 13:34:18.027 [INFO]   [ARC-PRICE] family=COMPOUND_MULTIPLY_ABS fingerprint_move=0.323503 (val_delta=0.000001)
+2026-09-07 13:34:18.027 [INFO] [PROFILE] F=2 N=192 var_r=0.0477 bound_ratio=4.5263 poly_r2=0.7747 a12=0.0002 max_coef[i=4]=0.2085 sobol_pair(0,1)=0.1226 quad=[0.255,0.285,0.222,0.238] L_max=2013.333 | flags: SHARP
+2026-09-07 13:34:18.027 [INFO] IFELSE set-guided split: thr=1.016200 (SSE reduction 1.651691 over 192 paired samples)
+2026-09-07 13:34:18.027 [INFO] MULTIPLY sources from poly fit: input=2^2 (max_coef_idx=4)
+2026-09-07 13:34:18.027 [INFO] MULTIPLY dedup: switching to input=1^2
+2026-09-07 13:34:18.027 [INFO] Compound candidate emitted: MULTIPLY(input=2,input=1)鈫扐BS (sign-symmetric, interaction_dominant)
+2026-09-07 13:34:18.429 [INFO] Plateau state reset 鈥?best_phase2=0.000004
+2026-09-07 13:34:18.429 [INFO] Plateau state reset — best_phase2=0.000004
+  [  84]   eval  loss=0.000004  ||  [  84]    sgd  loss=0.000303  ||  [  85]   eval  loss=0.000303  ||  [  85]    sgd  loss=0.000282  ||  [  86]   eval  loss=0.000282  ||  [  86]    sgd  loss=0.000237  ||2026-09-07 13:34:18.460 [INFO] Divergence safety: loss=0.000237 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-07 13:34:18.462 [INFO] Divergence LR reduced to 0.500000x
+  [  87]   eval  loss=0.000004  ||  [  87]    sgd  loss=0.000090  ||  [  88]   eval  loss=0.000090  ||  [  88]    sgd  loss=0.000017  ||  [  89]   eval  loss=0.000017  ||  [  89]    sgd  loss=0.000044  ||  [  90]   eval  loss=0.000044  ||  [  90]    sgd  loss=0.000025  ||  [  91]   eval  loss=0.000025  ||  [  91]    sgd  loss=0.000045  ||2026-09-07 13:34:18.512 [INFO] Divergence safety: loss=0.000045 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-07 13:34:18.514 [INFO] Divergence LR reduced to 0.319070x
+  [  92]   eval  loss=0.000004  ||  [  92]    sgd  loss=0.000040  ||  [  93]   eval  loss=0.000040  ||  [  93]    sgd  loss=0.000010  ||  [  94]   eval  loss=0.000010  ||  [  94]    sgd  loss=0.000023  ||  [  95]   eval  loss=0.000023  ||  [  95]    sgd  loss=0.000036  ||  [  96]   eval  loss=0.000036  ||  [  96]    sgd  loss=0.000050  ||2026-09-07 13:34:18.573 [INFO] Divergence safety: loss=0.000050 > 5.000000x best=0.000004 for 3 epochs; restoring best snapshot
+2026-09-07 13:34:18.575 [INFO] Divergence LR reduced to 0.203612x
+  [  97]   eval  loss=0.000004  ||  [  97]    sgd  loss=0.000019  ||  [  98]   eval  loss=0.000019  ||  [  98]    sgd  loss=0.000006  ||  [  99]   eval  loss=0.000006  ||  [  99]    sgd  loss=0.000012  ||  [ 100]   eval  loss=0.000012  ||  [ 100]    sgd  loss=0.000016  ||2026-09-07 13:34:18.615 [INFO] Restored best-val graph snapshot (val=0.000003, train=0.000004)
+
+
+================================================
+  Evolution Complete
+================================================
+
+  Total epochs:         100
+  SGD epochs run:       5000
+  Structural changes:   7
+  Failed commits:       45
+  Compiles performed:   0
+  Dead nodes removed:   0
+  Constants folded:     0
+  Neurons compressed:   0
+  Initial loss:         0.166527
+  Final loss:           4.02078e-06
+  Best loss:            4.02078e-06
+  Wall time:            6133 ms
+
+  [Expression] 1.033*(tanh(-0.000*x0+0.000*x1+0.183)+(tanh(0.506*((((x1*x0)+tanh(0.000*tanh(0.000*(x1*x1)+0.000)-0.000*tanh(-0.000*(x1*x1)-0.000)+0.000*tanh(-0.000*(x1*x1)-0.000)-0.001))+tanh(-0.006*((x1*x0)*((1....
+
+  [Library] Behavioral fingerprint: k=2 bounded=1 interact=1 sign_sym=1 sharp=1 lipsch=76.0
+  [Library] Closest existing entries:
+    bench_d8_compose_absprod.csv (dist=0.011)
+    bench_d8_compose_absprod.csv (dist=0.027)
+    bench_d8_compose_absprod.csv (dist=0.045)
+  [Library] arch: ADD:4,CONSTANT:9,GREATER:3,INPUT:2,MULTIPLY:10,NEURON:9,OUTPUT:1,SUBTRACT:3 depth=7
+  [Library] Pattern: abs_product
+  [Library] Saved (library now has 582 entries)
+  [FailureLib] Appended 41 failure records to failure_library.txt
+
+================================================
+  Held-out Evaluation  (240 samples)
+================================================
+  Eval R2[out0]:   0.999914
+  Eval MSE[out0]:  0.000004   MAE: 0.001619
