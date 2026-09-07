@@ -172,9 +172,22 @@ public:
         size_t top_k,
         const std::string& current_task) const;
 
-    // Save / load (simple text format).
+    // Save / load. SAVE IS APPEND-ONLY for entries added since load
+    // (tracks loaded_count_): concurrent runs appending to the same
+    // library no longer erase each other's entries (the lost-update bug
+    // — a full-file rewrite meant the last finisher deleted everyone
+    // else's writes). File format is HEADERLESS (entries until EOF);
+    // the loader detects and skips a legacy integer count header.
+    // Malformed lines are SKIPPED, not fatal (version-skew landmines
+    // quarantine themselves instead of desyncing the stream).
     bool save(const std::string& filepath) const;
     bool load(const std::string& filepath);
+
+    // M7.7 helper: describe a graph architecturally (histogram, depth,
+    // params, recurrence). Used at save time (main.cpp) AND at match
+    // time (evolution.cpp builds the CURRENT graph's descriptor for
+    // hybrid matching).
+    static ArchitectureDescriptor describe_graph(const class Graph& g);
 
     size_t size() const { return entries_.size(); }
     const SubgraphLibraryEntry& entry(size_t i) const { return entries_[i]; }
@@ -182,6 +195,9 @@ public:
 
 private:
     std::vector<SubgraphLibraryEntry> entries_;
+    size_t loaded_count_ = 0;   // entries present at load time; save()
+                                // appends only entries_ beyond this — the
+                                // concurrent lost-update fix.
 };
 
 // ============================================================================

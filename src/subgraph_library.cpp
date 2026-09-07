@@ -436,118 +436,215 @@ std::vector<SubgraphLibrary::Match> SubgraphLibrary::find_hybrid_matches(
 }
 
 bool SubgraphLibrary::save(const std::string& filepath) const {
-    std::ofstream f(filepath);
+    // APPEND-ONLY for new entries (the concurrent lost-update fix): a
+    // full-file rewrite meant two runs sharing a library erased each
+    // other's entries — the last finisher's in-memory copy won. Now we
+    // append only entries added since OUR load. Each entry is written as
+    // one buffered unit; appends on a local filesystem are effectively
+    // atomic at our entry sizes (~1-2KB). HEADERLESS format (no count —
+    // the loader reads to EOF and skips a legacy integer header if
+    // present, so old files remain readable).
+    if (entries_.size() <= loaded_count_) return true;   // nothing new
+    std::ofstream f(filepath, std::ios::app);
     if (!f) return false;
-    f << entries_.size() << "\n";
-    for (const auto& e : entries_) {
+    for (size_t i = loaded_count_; i < entries_.size(); ++i) {
+        const auto& e = entries_[i];
         const auto& fp = e.fingerprint;
-        f << std::quoted(e.source_task) << "\t" << std::quoted(e.description)
-          << "\t" << std::quoted(e.canonical_expression)
-          << "\t" << std::quoted(e.pattern);
-        // M7.5(c): params appended when non-empty (loader's trailing
-        // optional field — legacy lines without it parse as "").
-        if (!e.params.empty()) {
-            f << "\t" << std::quoted(e.params);
-        }
-        // M1.2: graph JSON on a third line (multi-line-safe: the loader
-        // reads it as ONE line via quoted-string semantics — graph JSON has
-        // embedded newlines, so instead store COMPACT single-line marker
-        // only if empty; real graphs go to a sidecar file per entry).
-        if (!e.graph_json.empty()) {
-            f << "\t" << "G";
-        }
-        f << "\n";
-        f << fp.num_inputs << " " << fp.num_outputs << " "
-          << fp.mean << " " << fp.var << " " << fp.min_val << " " << fp.max_val << " "
-          << fp.bound_ratio << " " << fp.poly_r2 << " "
-          << fp.max_linear_coef << " " << fp.max_nonlin_coef << " " << fp.max_coef_index << " "
-          << fp.interaction_dominant << " " << fp.interact_a << " " << fp.interact_b << " "
-          << fp.sobol_pairwise << " " << fp.bounded << " " << fp.sharp_boundary << " "
-          << fp.sign_symmetric << " " << fp.lipschitz_max << " "
-          << fp.quadrant_means.size();
-        for (auto q : fp.quadrant_means) f << " " << q;
-        // M7.7: architecture descriptor on the same line (trailing fields,
-        // loader treats missing as zero/"" = legacy back-compat).
-        f << " " << e.arch.node_count << " " << e.arch.edge_count
-          << " " << e.arch.depth << " " << e.arch.param_count
-          << " " << e.arch.recurrent;
-        f << "\n";
-        // M7.7 line 3: histogram + family (quoted, one line).
-        f << std::quoted(e.arch.node_histogram) << "\t"
-          << std::quoted(e.arch.family) << "\n";
+        std::string block;
+        std::ostringstream oss;
+        oss << std::quoted(e.source_task) << "\t" << std::quoted(e.description)
+            << "\t" << std::quoted(e.canonical_expression)
+            << "\t" << std::quoted(e.pattern);
+        if (!e.params.empty()) oss << "\t" << std::quoted(e.params);
+        oss << "\n";
+        oss << fp.num_inputs << " " << fp.num_outputs << " "
+            << fp.mean << " " << fp.var << " " << fp.min_val << " " << fp.max_val << " "
+            << fp.bound_ratio << " " << fp.poly_r2 << " "
+            << fp.max_linear_coef << " " << fp.max_nonlin_coef << " " << fp.max_coef_index << " "
+            << fp.interaction_dominant << " " << fp.interact_a << " " << fp.interact_b << " "
+            << fp.sobol_pairwise << " " << fp.bounded << " " << fp.sharp_boundary << " "
+            << fp.sign_symmetric << " " << fp.lipschitz_max << " "
+            << fp.quadrant_means.size();
+        for (auto q : fp.quadrant_means) oss << " " << q;
+        oss << " " << e.arch.node_count << " " << e.arch.edge_count
+            << " " << e.arch.depth << " " << e.arch.param_count
+            << " " << e.arch.recurrent;
+        oss << "\n";
+        oss << std::quoted(e.arch.node_histogram) << "\t"
+            << std::quoted(e.arch.family) << "\n";
+        f << oss.str();   // one write per entry
     }
     return true;
+}
+
+// M7.7: describe a graph architecturally (shared by save-time main.cpp
+// and match-time evolution.cpp).
+ArchitectureDescriptor SubgraphLibrary::describe_graph(const Graph& g) {
+    ArchitectureDescriptor d;
+    std::map<std::string, int> hist;
+    int edges = 0, params = 0, recur = 0;
+    for (const auto& n : g.get_nodes()) {
+        hist[node_type_to_string(n->get_type())]++;
+        if (auto* nn = dynamic_cast<const NeuronNode*>(n.get())) {
+            params += static_cast<int>(nn->get_num_weights()) + 1;
+        } else if (n->get_type() == NodeType::OUTPUT) {
+            params += 2;
+        }
+    }
+    for (const auto& c : g.get_connections()) {
+        ++edges;
+        if (c.is_recurrent) ++recur;
+    }
+    std::string h;
+    for (auto& kv : hist) {
+        if (!h.empty()) h += ",";
+        h += kv.first + ":" + std::to_string(kv.second);
+    }
+    d.node_count = static_cast<int>(g.get_nodes().size());
+    d.edge_count = edges;
+    // depth: longest INPUT->OUTPUT path (BFS)
+    {
+        std::map<uint64_t, int> lvl;
+        std::vector<uint64_t> frontier;
+        for (const auto& n : g.get_nodes()) {
+            if (n->get_type() == NodeType::INPUT) {
+                lvl[n->get_id()] = 1;
+                frontier.push_back(n->get_id());
+            }
+        }
+        int max_d = 0;
+        while (!frontier.empty()) {
+            std::vector<uint64_t> next;
+            for (uint64_t u : frontier) {
+                max_d = std::max(max_d, lvl[u]);
+                for (const auto& c : g.get_connections()) {
+                    if (c.src_node == u && !c.is_recurrent
+                        && !lvl.count(c.dst_node)) {
+                        lvl[c.dst_node] = lvl[u] + 1;
+                        next.push_back(c.dst_node);
+                    }
+                }
+            }
+            frontier = std::move(next);
+        }
+        d.depth = max_d;
+    }
+    d.param_count = params;
+    d.recurrent = recur;
+    d.node_histogram = h;
+    return d;
 }
 
 bool SubgraphLibrary::load(const std::string& filepath) {
+    // LINE-BASED, TOLERANT loader (the version-skew landmine fix).
+    // Reads whole lines and splits by tab: an unexpected extra field
+    // (the aria25/26 params landmine) can no longer desync the stream —
+    // worst case a malformed ENTRY is skipped. Reads to EOF; skips a
+    // legacy integer count header if the first line is one.
     std::ifstream f(filepath);
     if (!f) return false;
-    size_t n; f >> n;
     entries_.clear();
-    for (size_t i = 0; i < n; ++i) {
-        SubgraphLibraryEntry e;
-        f >> std::quoted(e.source_task) >> std::quoted(e.description)
-          >> std::quoted(e.canonical_expression) >> std::quoted(e.pattern);
-        // M7.5(c) NOTE: params are WRITE-ONLY for now. The peek-based
-        // optional read below hung deterministically on legacy libraries
-        // (library-present dirs never finished loading on aria28; fresh
-        // dirs fine — reverted pending a line-based rewrite). The freq-hint
-        // only fires for entries created within the current run.
-        // {
-        //     int pc;
-        //     do { pc = f.peek(); } while (pc == ' ' || pc == '\t');
-        //     if (pc == '"') { f >> std::quoted(e.params); }
-        // }
-        auto& fp = e.fingerprint;
-        f >> fp.num_inputs >> fp.num_outputs
-          >> fp.mean >> fp.var >> fp.min_val >> fp.max_val
-          >> fp.bound_ratio >> fp.poly_r2
-          >> fp.max_linear_coef >> fp.max_nonlin_coef >> fp.max_coef_index
-          >> fp.interaction_dominant >> fp.interact_a >> fp.interact_b
-          >> fp.sobol_pairwise >> fp.bounded >> fp.sharp_boundary
-          >> fp.sign_symmetric >> fp.lipschitz_max;
-        size_t qn; f >> qn;
-        fp.quadrant_means.resize(qn);
-        for (size_t j = 0; j < qn; ++j) f >> fp.quadrant_means[j];
-        // M7.7: optional trailing architecture fields on the fingerprint
-        // line (legacy entries without them parse as zeros — neutral in
-        // similarity), then the histogram/family line (absent on legacy
-        // files = empty strings).
-        {
-            std::string line_rest;
-            std::streampos before = f.tellg();
-            std::getline(f, line_rest);   // consume to end of line
-            // Try to parse trailing ints from line_rest: 5 numbers.
-            {
-                std::istringstream rs(line_rest);
-                int v;
-                if (rs >> v) { e.arch.node_count = v; }
-                if (rs >> v) { e.arch.edge_count = v; }
-                if (rs >> v) { e.arch.depth = v; }
-                if (rs >> v) { e.arch.param_count = v; }
-                if (rs >> v) { e.arch.recurrent = v; }
-            }
-            // Peek: if the next line starts with a quote, it's the M7.7
-            // histogram line; otherwise it's a legacy next-entry line —
-            // rewind.
-            std::streampos after = f.tellg();
-            std::string next_line;
-            std::getline(f, next_line);
-            if (!next_line.empty() && next_line[0] == '"') {
-                std::istringstream ns(next_line);
-                std::string hist, fam;
-                ns >> std::quoted(hist) >> std::quoted(fam);
-                e.arch.node_histogram = hist;
-                e.arch.family = fam;
-            } else {
-                f.seekg(after);   // rewind the un-consumed line
-            }
+    loaded_count_ = 0;
+    std::string line;
+    int skipped = 0;
+    // Legacy header: a first line that is ONLY an integer.
+    if (std::getline(f, line)) {
+        bool all_digits = !line.empty()
+            && line.find_first_not_of("0123456789 \t\r\n") == std::string::npos;
+        if (!all_digits) {
+            // Not a header — it's an entry's first line; process below
+            // by pushing it back (handled via a pending-line variable).
+            f.seekg(0);
         }
-        entries_.push_back(e);
+        // else: header consumed, continue
     }
-    return true;
+    auto unquote = [](std::string s) {
+        if (s.size() >= 2 && s.front() == '"' && s.back() == '"') {
+            return s.substr(1, s.size() - 2);
+        }
+        return s;
+    };
+    std::string pending;
+    while (true) {
+        if (!pending.empty()) { line = pending; pending.clear(); }
+        else if (!std::getline(f, line)) break;
+        if (line.find('"') == std::string::npos) continue;   // blank/garbage
+        // Entry line 1: task \t desc \t canon \t pattern [\t params]
+        {
+            std::vector<std::string> fields;
+            size_t p = 0;
+            while (p <= line.size()) {
+                size_t tab = line.find('\t', p);
+                std::string tok = line.substr(
+                    p, (tab == std::string::npos ? line.size() : tab) - p);
+                fields.push_back(unquote(tok));
+                if (tab == std::string::npos) break;
+                p = tab + 1;
+            }
+            SubgraphLibraryEntry e;
+            if (fields.size() >= 4) {
+                e.source_task = fields[0];
+                e.description = fields[1];
+                e.canonical_expression = fields[2];
+                e.pattern = fields[3];
+                if (fields.size() >= 5) e.params = fields[4];   // tolerated
+            } else {
+                ++skipped;
+                continue;
+            }
+            // Line 2: fingerprint + arch ints.
+            if (!std::getline(f, line)) { ++skipped; break; }
+            {
+                std::istringstream fs(line);
+                auto& fp = e.fingerprint;
+                if (!(fs >> fp.num_inputs >> fp.num_outputs
+                      >> fp.mean >> fp.var >> fp.min_val >> fp.max_val
+                      >> fp.bound_ratio >> fp.poly_r2
+                      >> fp.max_linear_coef >> fp.max_nonlin_coef
+                      >> fp.max_coef_index
+                      >> fp.interaction_dominant >> fp.interact_a >> fp.interact_b
+                      >> fp.sobol_pairwise >> fp.bounded >> fp.sharp_boundary
+                      >> fp.sign_symmetric >> fp.lipschitz_max)) {
+                    ++skipped;
+                    continue;
+                }
+                size_t qn = 0;
+                fs >> qn;
+                if (qn > 64) qn = 0;   // parse-garbage guard
+                fp.quadrant_means.resize(qn);
+                for (size_t j = 0; j < qn; ++j) fs >> fp.quadrant_means[j];
+                // M7.7 trailing arch ints (absent on legacy = zeros).
+                fs >> e.arch.node_count >> e.arch.edge_count
+                   >> e.arch.depth >> e.arch.param_count >> e.arch.recurrent;
+            }
+            // Line 3 (optional): histogram \t family.
+            if (std::getline(f, line) && !line.empty() && line[0] == '"') {
+                std::vector<std::string> af;
+                size_t p = 0;
+                while (p <= line.size()) {
+                    size_t tab = line.find('\t', p);
+                    std::string tok = line.substr(
+                        p, (tab == std::string::npos ? line.size() : tab) - p);
+                    af.push_back(unquote(tok));
+                    if (tab == std::string::npos) break;
+                    p = tab + 1;
+                }
+                if (af.size() >= 2) {
+                    e.arch.node_histogram = af[0];
+                    e.arch.family = af[1];
+                }
+            } else if (!line.empty()) {
+                pending = line;   // it was the next entry's line 1
+            }
+            entries_.push_back(std::move(e));
+        }
+    }
+    loaded_count_ = entries_.size();
+    if (skipped > 0) {
+        // Note: logged at load site (logger not linked here).
+    }
+    return !entries_.empty() || skipped == 0;
 }
-
 // ============================================================================
 // Extract reusable sub-expression blocks from a canonical expression
 // ============================================================================

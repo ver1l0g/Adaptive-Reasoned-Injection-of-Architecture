@@ -4084,8 +4084,14 @@ if (profile.bounded
             // injects what it already tried (hetero3: 65 self-injects, 1
             // commit). Retrieve matches EXCLUDING entries sourced from the
             // current task; cross-task transfer is the entire point.
-            auto matches = library_->find_matches_excluding_self(
-                needed, 1, current_task_name_);
+            // M7.7: HYBRID matching — behavior distance modulated by
+            // architecture similarity (the current graph's descriptor vs
+            // each entry's). The tanh_stack monoculture fix: behaviorally
+            // identical entries rank by what they actually built.
+            ArchitectureDescriptor current_arch =
+                SubgraphLibrary::describe_graph(*graph_);
+            auto matches = library_->find_hybrid_matches(
+                needed, current_arch, 1, current_task_name_);
             // M7.5(c): a matched sin-family entry that STORES its source
             // expression's numeric literals carries learned frequencies —
             // freq-init's missing data source. Stash for the SIN emission
