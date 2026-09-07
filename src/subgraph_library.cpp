@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "node.h"
 #include <algorithm>
+#include <map>
 #include <cmath>
 #include <fstream>
 #include <iomanip>
@@ -375,6 +376,65 @@ std::vector<SubgraphLibrary::Match> SubgraphLibrary::find_matches_excluding_self
     return matches;
 }
 
+// ============================================================================
+// M7.7: architecture descriptor similarity + hybrid matching
+// ============================================================================
+double ArchitectureDescriptor::similarity(const ArchitectureDescriptor& other) const {
+    // Parse both histograms into type->count maps.
+    auto parse = [](const std::string& h) {
+        std::map<std::string, int> m;
+        size_t p = 0;
+        while (p < h.size()) {
+            size_t colon = h.find(':', p);
+            if (colon == std::string::npos) break;
+            std::string type = h.substr(p, colon - p);
+            size_t end = h.find(',', colon);
+            int cnt = 0;
+            try { cnt = std::stoi(h.substr(colon + 1, (end == std::string::npos ? h.size() : end) - colon - 1)); } catch (...) {}
+            m[type] = cnt;
+            if (end == std::string::npos) break;
+            p = end + 1;
+        }
+        return m;
+    };
+    auto a = parse(node_histogram);
+    auto b = parse(other.node_histogram);
+    if (a.empty() && b.empty()) return 0.5;   // both unknown: neutral
+    // L1 distance over the union, normalized by total node mass.
+    int total = 0, diff = 0;
+    for (auto& kv : a) { total += kv.second; diff += std::abs(kv.second - (b.count(kv.first) ? b.at(kv.first) : 0)); }
+    for (auto& kv : b) { total += kv.second; if (!a.count(kv.first)) diff += kv.second; }
+    if (total == 0) return 0.5;
+    double hist_sim = 1.0 - static_cast<double>(diff) / static_cast<double>(2 * total);
+    // Same creating family = architectural kin (even at different sizes).
+    double family_sim = (!family.empty() && family == other.family) ? 1.0 : 0.0;
+    return std::min(1.0, 0.6 * hist_sim + 0.4 * family_sim);
+}
+
+std::vector<SubgraphLibrary::Match> SubgraphLibrary::find_hybrid_matches(
+    const BehavioralFingerprint& needed,
+    const ArchitectureDescriptor& current_arch,
+    size_t top_k,
+    const std::string& current_task) const {
+    std::vector<Match> matches;
+    for (size_t i = 0; i < entries_.size(); ++i) {
+        if (entries_[i].source_task == current_task) continue;
+        if (entries_[i].fingerprint.num_inputs == 0) continue;   // M7.5(a)
+        if (!entries_[i].fingerprint.arity_compatible(needed.num_inputs)) continue;
+        double behav = fingerprint_distance(needed, entries_[i].fingerprint);
+        double arch_sim = entries_[i].arch.similarity(current_arch);
+        // Hybrid score: behaviorally close AND architecturally kin wins;
+        // behaviorally close but architecturally alien is demoted (the
+        // tanh_stack monoculture fix — the entry must have built the
+        // KIND of machine that works, not just solved a similar residual).
+        double score = behav * (1.4 - 0.4 * arch_sim);
+        matches.push_back({i, score});
+    }
+    std::sort(matches.begin(), matches.end(), [](const Match& a, const Match& b) { return a.distance < b.distance; });
+    if (matches.size() > top_k) matches.resize(top_k);
+    return matches;
+}
+
 bool SubgraphLibrary::save(const std::string& filepath) const {
     std::ofstream f(filepath);
     if (!f) return false;
@@ -406,7 +466,15 @@ bool SubgraphLibrary::save(const std::string& filepath) const {
           << fp.sign_symmetric << " " << fp.lipschitz_max << " "
           << fp.quadrant_means.size();
         for (auto q : fp.quadrant_means) f << " " << q;
+        // M7.7: architecture descriptor on the same line (trailing fields,
+        // loader treats missing as zero/"" = legacy back-compat).
+        f << " " << e.arch.node_count << " " << e.arch.edge_count
+          << " " << e.arch.depth << " " << e.arch.param_count
+          << " " << e.arch.recurrent;
         f << "\n";
+        // M7.7 line 3: histogram + family (quoted, one line).
+        f << std::quoted(e.arch.node_histogram) << "\t"
+          << std::quoted(e.arch.family) << "\n";
     }
     return true;
 }
@@ -441,6 +509,40 @@ bool SubgraphLibrary::load(const std::string& filepath) {
         size_t qn; f >> qn;
         fp.quadrant_means.resize(qn);
         for (size_t j = 0; j < qn; ++j) f >> fp.quadrant_means[j];
+        // M7.7: optional trailing architecture fields on the fingerprint
+        // line (legacy entries without them parse as zeros — neutral in
+        // similarity), then the histogram/family line (absent on legacy
+        // files = empty strings).
+        {
+            std::string line_rest;
+            std::streampos before = f.tellg();
+            std::getline(f, line_rest);   // consume to end of line
+            // Try to parse trailing ints from line_rest: 5 numbers.
+            {
+                std::istringstream rs(line_rest);
+                int v;
+                if (rs >> v) { e.arch.node_count = v; }
+                if (rs >> v) { e.arch.edge_count = v; }
+                if (rs >> v) { e.arch.depth = v; }
+                if (rs >> v) { e.arch.param_count = v; }
+                if (rs >> v) { e.arch.recurrent = v; }
+            }
+            // Peek: if the next line starts with a quote, it's the M7.7
+            // histogram line; otherwise it's a legacy next-entry line —
+            // rewind.
+            std::streampos after = f.tellg();
+            std::string next_line;
+            std::getline(f, next_line);
+            if (!next_line.empty() && next_line[0] == '"') {
+                std::istringstream ns(next_line);
+                std::string hist, fam;
+                ns >> std::quoted(hist) >> std::quoted(fam);
+                e.arch.node_histogram = hist;
+                e.arch.family = fam;
+            } else {
+                f.seekg(after);   // rewind the un-consumed line
+            }
+        }
         entries_.push_back(e);
     }
     return true;

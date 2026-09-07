@@ -111,6 +111,10 @@ int main(int argc, char* argv[]) {
     // Held-out test-set evaluation.
     std::string eval_csv_path;
 
+    // Library path (M7.7 central library): default run-local; --library
+    // overrides to a shared central store.
+    std::string library_path = "subgraph_library.txt";
+
     // Structural analysis of the final graph.
     bool dump_graph = false;
 
@@ -592,11 +596,23 @@ int main(int argc, char* argv[]) {
 
     // Load the subgraph library (if it exists) so the engine can use it as a
     // behavioral prior during candidate generation. The library accumulates
-    // across runs (post-evolution extraction saves to subgraph_library.txt).
+    // across runs (post-evolution extraction saves back to the same path).
+    // --library <path>: CENTRAL library (a shared cross-task store).
+    // Default: ./subgraph_library.txt (run-local). The central library is
+    // the deployment mode — every task learns from every other; the
+    // run-local default keeps measurements honest (M6.13).
+    {
+        std::string lib_flag;
+        for (int i = 1; i < argc - 1; ++i) {
+            if (std::string(argv[i]) == "--library") lib_flag = argv[i + 1];
+        }
+        if (!lib_flag.empty()) library_path = lib_flag;
+    }
     SubgraphLibrary global_lib;
-    if (global_lib.load("subgraph_library.txt")) {
+    if (global_lib.load(library_path)) {
         engine.set_library(&global_lib);
-        std::cout << "  Loaded subgraph library: " << global_lib.size() << " entries\n";
+        std::cout << "  Loaded subgraph library: " << global_lib.size()
+                  << " entries (" << library_path << ")\n";
     }
     {
         std::string tn = csv_path;
@@ -692,7 +708,7 @@ int main(int argc, char* argv[]) {
     // evolve() returns. On subsequent runs, the library is loaded and can be
     // queried to find previously-solved tasks with similar behavior.
     {
-        const std::string lib_path = "subgraph_library.txt";
+        const std::string lib_path = library_path;
 
         // Collect INPUT and OUTPUT node IDs from the trained graph.
         std::vector<uint64_t> input_ids;
@@ -747,10 +763,74 @@ int main(int argc, char* argv[]) {
             entry.fingerprint = fp;
             entry.source_task = task_name;
             entry.description = desc.str();
+            // M7.7: architecture descriptor — WHAT was built (node
+            // histogram, depth, params, recurrence, family), not just the
+            // residual's statistical shape. The tanh_stack monoculture
+            // fix: behaviorally identical entries become distinguishable.
+            {
+                const auto& g = engine.get_graph();
+                std::map<std::string, int> hist;
+                int edges = 0, params = 0, recur = 0;
+                for (const auto& n : g.get_nodes()) {
+                    hist[node_type_to_string(n->get_type())]++;
+                    if (auto* nn = dynamic_cast<const NeuronNode*>(n.get())) {
+                        params += static_cast<int>(nn->get_num_weights()) + 1;
+                    } else if (n->get_type() == NodeType::OUTPUT) {
+                        params += 2;
+                    }
+                }
+                for (const auto& c : g.get_connections()) {
+                    ++edges;
+                    if (c.is_recurrent) ++recur;
+                }
+                std::string h;
+                for (auto& kv : hist) {
+                    if (!h.empty()) h += ",";
+                    h += kv.first + ":" + std::to_string(kv.second);
+                }
+                entry.arch.node_count = static_cast<int>(g.get_nodes().size());
+                entry.arch.edge_count = edges;
+                // depth: longest INPUT->OUTPUT path (BFS over edges)
+                {
+                    std::map<uint64_t, int> lvl;
+                    std::vector<uint64_t> frontier;
+                    for (const auto& n : g.get_nodes()) {
+                        if (n->get_type() == NodeType::INPUT) {
+                            lvl[n->get_id()] = 1;
+                            frontier.push_back(n->get_id());
+                        }
+                    }
+                    int max_d = 0;
+                    while (!frontier.empty()) {
+                        std::vector<uint64_t> next;
+                        for (uint64_t u : frontier) {
+                            max_d = std::max(max_d, lvl[u]);
+                            for (const auto& c : g.get_connections()) {
+                                if (c.src_node == u && !c.is_recurrent
+                                    && !lvl.count(c.dst_node)) {
+                                    lvl[c.dst_node] = lvl[u] + 1;
+                                    next.push_back(c.dst_node);
+                                }
+                            }
+                        }
+                        frontier = std::move(next);
+                    }
+                    entry.arch.depth = max_d;
+                }
+                entry.arch.param_count = params;
+                entry.arch.recurrent = recur;
+                entry.arch.node_histogram = h;
+                // family = the semantic pattern tag (sin_chain = SIN-family
+                // machine, product = MULTIPLY-family machine...) — the
+                // recognized architecture class of what was built.
+                std::cout << "  [Library] arch: " << h << " depth="
+                          << entry.arch.depth << "\n";
+            }
             // Generate canonical expression + pattern for dedup and display.
             std::string raw_expr = engine.get_graph().to_expression(first_output);
             entry.canonical_expression = canonicalize_expression(raw_expr);
             entry.pattern = recognize_pattern(entry.canonical_expression);
+            entry.arch.family = entry.pattern;   // M7.7: semantic arch class
                         // M7.5(c) DEFERRED: the params writer corrupted the library format
             // (unbounded literal dumps broke every subsequent loader —
             // bad_alloc on resize; see session log 2026-09-05).

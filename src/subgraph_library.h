@@ -92,8 +92,34 @@ BehavioralFingerprint fingerprint_subgraph(const Graph& g,
 // SubgraphLibraryEntry 鈥?one stored subgraph template + its fingerprint +
 // provenance (which task/commit produced it).
 // ============================================================================
+// ============================================================================
+// ArchitectureDescriptor — WHAT was built, independent of the residual's
+// statistical shape. The behavioral fingerprint answers "what problem did
+// this solve"; the architecture descriptor answers "what machine solved it".
+// Matching on BOTH is the fix for the tanh_stack monoculture: 568 entries
+// with near-identical behavior fingerprints but very different machines
+// (MULTIPLY chains vs DELAY taps vs PRESERVE splits) polluted match
+// selection under behavior-only distance (M7.5 audit).
+// ============================================================================
+struct ArchitectureDescriptor {
+    int node_count = 0;      // total nodes in the committed graph
+    int edge_count = 0;      // total connections
+    int depth = 0;           // longest INPUT->OUTPUT path
+    int param_count = 0;     // trainable parameters (weights+biases+scales)
+    int recurrent = 0;       // recurrent edges
+    std::string node_histogram;   // "NEURON:5,MULTIPLY:2,DIVIDE:1,ADD:3" (sorted)
+    std::string family;      // hypothesis family that created the entry
+                                   // ("MULTIPLY_INJECTION", "EMBED_TRUNK", ...)
+
+    // Histogram similarity in [0,1]: 1 - normalized L1 distance of the
+    // type histograms + family bonus (same family = architecturally
+    // kin regardless of size).
+    double similarity(const ArchitectureDescriptor& other) const;
+};
+
 struct SubgraphLibraryEntry {
     BehavioralFingerprint fingerprint;
+    ArchitectureDescriptor arch;       // M7.7: architecture descriptor (v2)
     std::string source_task;          // task name that produced this
     std::string description;          // human-readable summary
     std::string canonical_expression; // abstracted formula (variables→v, numbers→c)
@@ -132,6 +158,18 @@ public:
     // self-echo loop (a task matching its own earlier save).
     std::vector<Match> find_matches_excluding_self(
         const BehavioralFingerprint& needed, size_t top_k,
+        const std::string& current_task) const;
+
+    // M7.7: architecture+behavior hybrid matching. Score =
+    // behavior_distance * (1.4 - 0.4 * arch_similarity): a behaviorally
+    // close entry with an architecturally DIFFERENT machine is demoted;
+    // same-architecture kin rises. The fix for the tanh_stack monoculture:
+    // behavior-identical entries are now distinguishable by what they
+    // actually built.
+    std::vector<Match> find_hybrid_matches(
+        const BehavioralFingerprint& needed,
+        const ArchitectureDescriptor& current_arch,
+        size_t top_k,
         const std::string& current_task) const;
 
     // Save / load (simple text format).
