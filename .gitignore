@@ -2,7 +2,12 @@
 *.exe
 *.o
 *.obj
+*.ilk
+*.pdb
 build_err.txt
+
+# build/ — intermediates (obj/pdb/ilk) from build.bat
+build/
 
 # ===== Generated datasets (reproducible via problems/prepare_*.py) =====
 problems/*.csv
@@ -46,6 +51,7 @@ problems/korns_results*.csv
 subgraph_library.txt
 problems/subgraph_library.txt
 problems/checkpoints/
+problems/scratch/
 
 # Keep test binary ignored too
 problems/tests/*.exe
@@ -63,3 +69,6 @@ problems/digits_output/
 problems/suite-*/*.csv
 problems/suite-language/tinyshakespeare.txt
 problems/gpnn_test.exe
+
+# worktree copies (aria-cert build lives outside the repo)
+aria-cert.*
